@@ -1,7 +1,7 @@
 ---
-layout: post
-title: "Craft Beer"
-date: 2016-02-19
+layout: suzhengpeng
+title: "欢迎来到我的Github主页"
+date: 2017-04-19
 categories:
   - Juice
 description: 
