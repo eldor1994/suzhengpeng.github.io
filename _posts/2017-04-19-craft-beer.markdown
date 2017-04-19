@@ -3,7 +3,7 @@ layout: post
 title: "Craft Beer"
 date: 2017-04-19
 categories:
-  - suzhengpeng
+  - 生活
 description: 
 image: https://raw.githubusercontent.com/suzhengpeng/suzhengpeng.github.io/master/img/20170419152414.jpg
 image-sm: hhttps://raw.githubusercontent.com/suzhengpeng/suzhengpeng.github.io/master/img/20170419152414.jpg
