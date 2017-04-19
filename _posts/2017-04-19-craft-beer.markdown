@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Craft Beer"
+title: "Welcome To My Blog in Github"
 date: 2017-04-19
 categories:
   - Life
