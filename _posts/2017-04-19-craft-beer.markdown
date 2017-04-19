@@ -3,7 +3,7 @@ layout: post
 title: "Craft Beer"
 date: 2017-04-19
 categories:
-  - Juice
+  - suzhengpeng
 description: 
 image: https://unsplash.it/2000/1200?image=1003
 image-sm: https://unsplash.it/500/300?image=1003
