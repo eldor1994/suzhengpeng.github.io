@@ -1,131 +1,295 @@
-## About
-Monochrome is a minimal, responsive, ready to use Jekyll theme for blogging. [Demo](https://dyutibarma.github.io/monochrome/)
-(Built on top of Emerald Jekyll theme)
+# whiteglass
 
-## Features
+[![Gem Version](https://badge.fury.io/rb/jekyll-whiteglass.svg)](https://badge.fury.io/rb/jekyll-whiteglass)
+[![Build Status](https://travis-ci.org/yous/whiteglass.svg?branch=master)](https://travis-ci.org/yous/whiteglass)
+[![Dependency Status](https://gemnasium.com/badges/github.com/yous/whiteglass.svg)](https://gemnasium.com/github.com/yous/whiteglass)
 
-- Completely responsive and mobile first
-- Clean SEO friendly URLs, auto-generated from post title (no messy dates in the url)
-- SEO title/description integration
-- Sitemap ready
-- Pagination support
-- Mobile friendly navigation menu
-- Easy customization for header, footer, navigation links, colors, favicon etc
-- Default Monochrome Color Palette - black, white, greys
-- About page
-- 404 page
-- ..and a lot more
+Minimal, responsive Jekyll theme for hackers.
 
-## Install/Setup Jekyll
+![whiteglass theme](screenshot.png)
 
-(Skip if you already have Jekyll 2.2)
+## Installation
 
-1. Make sure Ruby 2.2 is installed 
-```
-sudo apt-get install ruby2.2
-sudo apt-get install ruby2.2-dev
-```
-2. Install bundle: `sudo gem install bundler`
-3. Install jekyll: `sudo gem install jekyll`
+Add this line to your Jekyll site's Gemfile:
 
-### Resources
-
-- We found the jekyll tutorials on youtube very quick and useful to get started
-- [Jekyll documentation](http://jekyllrb.com)   
-
-
-## Install Monochrome dependencies
-
-```
-sudo gem install jekyll-paginate
-sudo gem install jekyll-sitemap
-
+``` ruby
+gem "jekyll-whiteglass"
 ```
 
-## Get Started with Monochrome
+And add this line to your Jekyll site's `_config.yml`:
 
-### Option 1 
+``` yaml
+theme: jekyll-whiteglass
+```
 
-- Fork this repository
-- (Optional) Change the 'baseurl' value in the 'config.yml' file, from '/blog' to your preferred directory/project name (example '/xyz' or '/' to install in root)
-- Clone the forked repository to your local machine to make changes
-- Run 'jekyll serve' and open browser to 'localhost:4000/blog/' to see your changes
-- (Optional) Host with github pages
+And then execute:
 
-Note: If you fork the repository, your version of the repository will not be searchable. If you want searchability, we suggest you use the next option.
+``` sh
+bundle
+```
 
+Or install it yourself as:
 
-### Option 2
+``` sh
+gem install jekyll-whiteglass
+```
 
-- Simply download the .zip folder from the repository github page
-- Extract the contents from the .zip folder into your local folder
-- cd into monochrome/
-- Run 'jekyll serve' and open browser to 'localhost:4000/blog/' to see your changes
-- Create a repository in github and push the files
-- (Optional) Host with github pages
+## Quick Start
 
-## Write a Post
+1. Generate a new Jekyll blog:
 
-- cd into  ``_posts/``
-- create new file with format yyyy-mm-dd-title-of-post.md
-- add title/description (refer any of the test posts)
-- add markdown and save
+   ``` sh
+   jekyll new blog --skip-bundle
+   cd blog
+   ```
 
+2. Edit `Gemfile` to use whiteglass theme:
 
-## Customization Options
+   ``` ruby
+   gem "jekyll-whiteglass"
+   ```
 
-You can customize this layout using instructions below. 
+3. Edit `_config.yml` to use whiteglass theme and its plugins:
 
-### Header/Footer/Navigation
+   ``` yaml
+   theme: jekyll-whiteglass
+   gems:
+     - jekyll-archives
+     - jekyll-paginate
+     - jekyll-sitemap
 
-Set a custom header tag by setting the related option in the ``_config.yml`` file to "true". Then insert your custom code into the ``header-custom.html`` file.
-In the same way, you can customize the footer of the navigation menu, by setting to "true" the related option and put your code into the ``nav-footer-custom.html`` file.
-Moreover select a reverse option that allows to move the navigation menu to the left side, by setting it to "true".
+   permalink: /:year/:month/:day/:title/
+   paginate_path: /posts/:num/
+   paginate: 5
 
-### Colors
+   jekyll-archives:
+     enabled:
+       - categories
+     layout: category_archives
+     permalinks:
+       category: /categories/:name/
+   ```
 
-The basic colors are set into the ``base.scss`` file:
-- $background-color: used for background and links in the navigation menu
-- $text-color: used for text and title in posts and pages 
-- $text-light-color: used for text lighter than text-color
-- $text-dark-color: used for text darker than text-color
+4. Copy
+   [`index.html`](https://github.com/yous/whiteglass/blob/master/index.html),
+   [`about.md`](https://github.com/yous/whiteglass/blob/master/about.md),
+   [`archives.md`](https://github.com/yous/whiteglass/blob/master/archives.md),
+   [`feed.xml`](https://github.com/yous/whiteglass/blob/master/feed.xml), and
+   [`_data/navigation.yml`](https://github.com/yous/whiteglass/blob/master/_data/navigation.yml)
+   from the theme:
 
-To customize the colors, just set the values in HEX, RGB (or RGBa) or any other format accepted by CSS.
+   ``` sh
+   rm index.md
+   curl -L -O "https://github.com/yous/whiteglass/raw/master/{index.html,about.md,archives.md,feed.xml}"
+   curl -L --create-dirs -o _data/navigation.yml https://github.com/yous/whiteglass/raw/master/_data/navigation.yml
+   ```
 
-### Navigation menu
+5. Install gems and you're good to go! The blog will be available on
+   `http://127.0.0.1:4000`.
 
-The links inside the navigation menu are autogenerated from pages having the layout set to ``page``.
-You can set custom links, by putting in the ``<a>`` tag into the ``link.html`` file.
+   ``` sh
+   bundle install
+   bundle exec jekyll serve
+   ```
 
-### Branch
-There are two branches: 
-- ``master``: is for development.
-- ``gh-pages``: is only for demo site.  
+## Usage
 
-### Baseurl
+### Customization
 
-You can change the 'baseurl' value in the 'config.yml' file, from '/monochrome' to your preferred directory/project name (example '/xyz' or '/' to install in root)
+To override the default structure and style of whiteglass, simply create the
+concerned directory at the root of your site, copy the file you wish to
+customize to that directory, and then edit the file. e.g., to override the
+[`_includes/footer_content.html`](_includes/footer_content.html) file to add
+contents to footer, create an `_includes` directory, copy
+`_includes/footer_content.html` from jekyll-whiteglass gem folder to
+`<your-site>/_includes` and start editing that file.
 
-### Typography
+For example, you can add favicons to `_includes/head_custom.html`:
 
-To maintain the vertical rhythm, it has been applied a **Typographic scale** as a modular scale, with a baseline set to 24px. To maintain this rhythm you need to insert elements like image, video or other contents with a 24px (or multiple) height as refer.
+``` html
+<link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relative_url }}">
+<link rel="apple-touch-icon" href="{{ "/apple-touch-icon.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ "/apple-touch-icon-76x76.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ "/apple-touch-icon-120x120.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ "/apple-touch-icon-152x152.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon-180x180.png" | relative_url }}">
+```
 
-## Resources
+The site's default CSS is in the gem itself,
+[`assets/main.scss`](assets/main.scss). To override the default CSS, the file
+has to exist at your site source. Do either of the following:
 
-- We found the jekyll tutorials on youtube very quick and useful to get started
-- [Jekyll documentation](http://jekyllrb.com)   
+- Create a new instance of `main.scss` at site source
+  - Create a new file `main.scss` at `<your-site>/assets/`
+  - Add the frontmatter dashes, and
+  - Add `@import "whiteglass";`, to `<your-site>/assets/main.scss`
+  - Add your custom CSS
+- Download the file from this repo
+  - Create a new file `main.scss` at `<your-site>/assets/`
+  - Copy the contents at [`assets/main.scss`](assets/main.scss) onto the `main.scss` you just created, and edit away
+- Copy directly from jekyll-whiteglass gem
+  - Go to your local jekyll-whiteglass gem installation directory (run `bundle show jekyll-whiteglass` to get the path to it)
+  - Copy the `assets/` folder from there into the root of `<your-site>`
+  - Change whatever values you want, inside `<your-site>/assets/main.scss`
 
-## Todo
+### Locale
 
-- Google Analytics integration
-- Footer to stick to bottom even when content is less
+`site.lang` is used to declare the primary language for each web page within the
+site.
 
-## Author
+`lang: en-US` sets the `lang` attribute for the site to the United States flavor
+of English, while `en-GB` would be for the United Kingdom style of English.
+Country codes are optional and the shorter variation `lang: en` is also
+acceptable. You may want to write a post in different language, then add `lang`
+attribute to the frontmatter of that post:
 
-### TheReviewIndex
+``` yaml
+layout: post
+title: "안녕하세요"
+lang: ko
+```
 
-- Dyuti Barma
-- Web site: [Review Aggregation and Summary Site for India - TheReviewIndex.com](https://thereviewindex.com)
+### Description
+
+`site.description` describes the site. This is mainly used in meta descriptions
+for improving SEO. Also, you can set `description` attribute for each post:
+
+``` yaml
+layout: post
+title: Awesome Post
+description: This is an awesome post.
+```
+
+If you don't specify `post.description`, then `post.excerpt` will be used if it
+exist.
+
+### External URL
+
+`external-url` turns the title of your post to a link. Specify a URL which you
+want to link to.
+
+``` yaml
+layout: post
+title: Jekyll whiteglass theme
+external-url: https://github.com/yous/whiteglass
+```
+
+Then the title of your post would look like a link with text
+`Jekyll whiteglass theme →`. This also applies to your blog feed.
+
+### Category
+
+Each post can have `categories` attribute. It can be a string or an array. This
+will be displayed on index, archive and each post, and provide a link to the
+archive of category.
+
+``` yaml
+layout: post
+title: Awesome Post
+categories: Misc
+```
+
+``` yaml
+layout: post
+title: Another Awesome Post
+categories:
+  - Misc
+  - Idea
+```
+
+### Feed
+
+Create `<your-site>/feed.xml` with:
+
+``` yaml
+---
+layout: feed
+---
+```
+
+If you want to use another path for feed, you can specify a non-default path via
+your site's config.
+
+``` yaml
+feed:
+  path: atom.xml
+```
+
+Then create `<your-site>/atom.xml` with the same content of `feed.xml` above.
+
+### Metadata for SEO
+
+#### Keywords
+
+Each post can have `keywords` attribute. This is a comma-separated list which is
+used in meta descriptions for improving SEO.
+
+``` yaml
+layout: post
+title: How to configure jekyll-whiteglass
+keywords: jekyll, whiteglass, github pages
+```
+
+#### Twitter
+
+- `site.twitter_username` sets `twitter:site` and `twitter:creator` meta tag
+- `site.twitter_image` sets `twitter:image:src` meta tag
+- `page.twitter_card.type` sets `twitter:card` meta tag (default: `summary`)
+  - If `page.twitter_card.type` is `gallery`, it sets `twitter:image0`, `twitter:image1`, `twitter:image2` and `twitter:image3` meta tags with `page.twitter_card.image`, `page.twitter_card.image1`, `page.twitter_card.image2` and `page.twitter_card.image3`, respectively
+  - If `page.twitter_card.type` is `photo`, `page.twitter_card.width` sets `twitter:image:width` meta tag and `page.twitter_card.height` sets `twitter:image:height` meta tag
+- `page.twitter_card.creator` sets `twitter:creator` meta tag. It overrides `site.twitter_username`
+- `page.twitter_card.image` sets `twitter:image:src` meta tag if `page.twitter_card.type` is not `gallery`. It overrides `site.twitter_image`
+
+#### Facebook
+
+- `site.facebook_app_id` sets `fb:admins` meta tag
+- `site.facebook_page` sets `article:author` meta tag
+- `site.facebook_image` sets `og:image` meta tag
+- `page.facebook.image` sets `og:image` meta tag. It overrides `site.facebook_image`
+
+### Navigation
+
+To define header links, add titles and URLs under the `main` key in
+`_data/navigation.yml`:
+
+``` yaml
+main:
+  - title: "About"
+    url: /about/
+  - title: "Archives"
+    url: /archives/
+  - title: "GitHub"
+    url: https://github.com/yous/whiteglass
+```
+
+### Enabling Google Analytics
+
+To enable Google Analytics, add the following lines to your Jekyll site:
+
+``` yaml
+google_analytics: UA-NNNNNNNN-N
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+<https://github.com/yous/whiteglass>. This project is intended to be a safe,
+welcoming space for collaboration, and contributors are expected to adhere to
+the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Development
+
+To set up your environment to develop this theme, run `bundle install`.
+
+Your theme is setup just like a normal Jekyll site! To test your theme, run
+`bundle exec jekyll serve` and open your browser at
+`http://localhost:4000/whiteglass/`. This starts a Jekyll server using your
+theme. Add pages, documents, data, etc. like normal to test your theme's
+contents. As you make modifications to your theme and to your content, your site
+will regenerate and you should see the changes in the browser after a refresh,
+just like normal.
 
 ## License
-Released under [MIT License](license.md).
+
+The theme is available as open source under the terms of the
+[MIT License](http://opensource.org/licenses/MIT).
