@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-04-22T13:31:41+08:00</updated>
+ <updated>2017-04-22T13:56:10+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -18,7 +18,8 @@
    <link href="http://localhost:4000/hello-world"/>
    <id>http://localhost:4000/hello-world</id>
    <updated>2017-04-20T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/update/20170422135316.jpg&quot; alt=&quot;avatar&quot; /&gt;
+经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。&lt;/p&gt;
 </content>
  </entry>
 
