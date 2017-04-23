@@ -433,6 +433,7 @@ code {
 
 /* Paginator */
 .pagination {
+  display: none;
   text-align: center;
   margin: 2.666668em; }
   .pagination span {
@@ -458,6 +459,31 @@ footer {
   color: #333333;
   text-align: center;
   padding: 0.6667em 0; }
+
+.pagination-x {
+  text-align: center; }
+
+.pagination-x a, .curr-page {
+  border: 1px solid #aeaeae;
+  display: inline-block;
+  margin: 0 3px 0 0;
+  line-height: 20px;
+  text-align: center;
+  color: #333333;
+  border-radius: 2px;
+  text-decoration: none;
+  width: 22px; }
+
+.pagination-x a:hover {
+  border: 1px solid #666666;
+  background-color: #ffffff; }
+
+.pagination-x span {
+  border: none; }
+
+.pagination-x .curr-page {
+  font-weight: bold;
+  width: 15px; }
 
 /*
  * A Github stylesheet to highlight code snippet
