@@ -10,7 +10,8 @@
 html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, img {
   margin: 0;
   padding: 0;
-  border: 0; }
+  border: 0;
+  font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei"; }
 
 /*- Base color -*/
 /*- Base settings -*/
@@ -454,11 +455,13 @@ code {
   border-radius: 4px; }
 
 /* Footer */
-footer {
+.footer {
+  /* border-top:1px solid rgba(0, 0, 0, 0.14);*/
   background-color: #FFFFFF;
-  color: #333333;
-  text-align: center;
-  padding: 0.6667em 0; }
+  color: #4C556E;
+  text-align: right;
+  padding: 0.6667em 0;
+  font-size: 7px; }
 
 .pagination-x {
   text-align: center; }
