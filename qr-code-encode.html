@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>QR码编码方式</title>
+  <meta name="description" content="http://suzhengpeng.com/img/update/91809411.jpg">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+        
+		
+</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	<nav id="nav">
+	<div id="nav-list">
+		<a href="/">Home</a>
+
+		<!-- Nav pages -->
+	  
+	    
+	  
+	    
+	      <a href="/about" title="Me">Me</a>
+	    
+	  
+	    
+	  
+	    
+	      <a href="/friend" title="Friends">Friends</a>
+	    
+	  
+	    
+	  
+	    
+	      <a href="/link" title="Links">Links</a>
+	    
+	  
+	    
+	  
+	    
+	      <a href="/museum" title="Museums">Museums</a>
+	    
+	  
+	    
+	      <a href="/railway" title="Railways">Railways</a>
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+	    
+	  
+    
+    <!-- Nav links -->
+	  
+
+	</div>
+  
+  <!-- Nav footer -->
+	
+	  <footer>
+	
+	<span>version 1.0.0</span>
+
+</footer>
+	
+
+</nav>
+
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <span class="f-left">  
+      <a href="/">
+        <h1>
+          <span>Suzhengpeng</span>'S Blog
+        </h1>
+      </a>
+    </span>
+    <span id="nav-links" class="absolute right bottom">
+      <!-- Nav pages -->
+	    
+	      
+	    
+	      
+	        <a href="/about" title="Me">Me</a>
+	      
+	    
+	      
+	    
+	      
+	        <a href="/friend" title="Friends">Friends</a>
+	      
+	    
+	      
+	    
+	      
+	        <a href="/link" title="Links">Links</a>
+	      
+	    
+	      
+	    
+	      
+	        <a href="/museum" title="Museums">Museums</a>
+	      
+	    
+	      
+	        <a href="/railway" title="Railways">Railways</a>
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+	      
+	    
+      
+      <!-- Nav links -->
+	    
+
+    </span>
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+	
+	24 Apr 2017
+	<h3>QR码编码方式 </h3>		
+	<div class="content">
+
+		<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th>Mode Indicator</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>numeric mode</td>
+      <td>0001</td>
+    </tr>
+    <tr>
+      <td>alphanumeric mode</td>
+      <td>0010</td>
+    </tr>
+    <tr>
+      <td>8bit byte mode</td>
+      <td>0100</td>
+    </tr>
+    <tr>
+      <td>日本汉字（KANJI mode）</td>
+      <td>1000</td>
+    </tr>
+    <tr>
+      <td>中国汉字(GB2312)</td>
+      <td>1101</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Table 2 ↑ 不同模式下的模式指示符(Mode Indicator)</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Numeric Mo</th>
+      <th>Alph Mo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>M1</td>
+      <td>3</td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <td>M2</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>M3</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>M4</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>1-9</td>
+      <td>10</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>10-26</td>
+      <td>12</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>27-40</td>
+      <td>14</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Table 3 ↑不同版本的字符计数指示符(Character Count Indicator)的长度</strong></p>
+
+<h4 id="numeric-mode">Numeric Mode</h4>
+<p><strong>例 1：</strong></p>
+
+<p>输入：01234567 
+1、将输入组划分为数字 012 345 67
+2、转化为对应的二进制数</p>
+
+<blockquote>
+  <p>67–&gt;1000011
+345–&gt;0101011001
+012–&gt;0000001100</p>
+</blockquote>
+
+<p>3、将二进制数连接在一起</p>
+
+<blockquote>
+  <p>0000001100 0101011001 1000011</p>
+</blockquote>
+
+<p>4、将字符计数指示符转换为二进制 (10 bits for version 1-H)</p>
+
+<blockquote>
+  <p>(Number of input data characters 8 –&gt; 0000001000)</p>
+</blockquote>
+
+<p>5、将模式指示符和字符计数指示符加入到最前面</p>
+
+<blockquote>
+  <p>0001 0000001000 0000001100 0101011001 1000011</p>
+</blockquote>
+
+<h4 id="alphanumeric-mode">Alphanumeric Mode</h4>
+
+<p><strong>编码表</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Char</th>
+      <th>Value</th>
+      <th>Char</th>
+      <th>Value</th>
+      <th>Char</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>6</td>
+      <td>7</td>
+      <td>7</td>
+      <td>8</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>9</td>
+      <td>A</td>
+      <td>10</td>
+      <td>B</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>……</td>
+      <td>……</td>
+      <td>Y</td>
+      <td>34</td>
+      <td>Z</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>SP</td>
+      <td>36</td>
+      <td>$</td>
+      <td>37</td>
+      <td>%</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>*</td>
+      <td>39</td>
+      <td>+</td>
+      <td>40</td>
+      <td>-</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>42</td>
+      <td>/</td>
+      <td>43</td>
+      <td>:</td>
+      <td>44</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>例 1：</strong></p>
+
+<p>输入：AC-42</p>
+
+<p>1、根据编码表将输入数据翻译为符号值</p>
+
+<blockquote>
+  <p>AC-42 –&gt; 10、12、41、4、2</p>
+</blockquote>
+
+<p>2、将每两个数字划分为一组</p>
+
+<blockquote>
+  <p>(10、12)、(41 4)、(2)</p>
+</blockquote>
+
+<p>3、将每一组数转换为对应的11位二进制数</p>
+
+<blockquote>
+  <p>(11、12)–&gt;462–&gt;00111001110</p>
+</blockquote>
+
+<blockquote>
+  <p>(41、4)–&gt;1849–&gt;11100111001</p>
+</blockquote>
+
+<blockquote>
+  <p>2–&gt;2–&gt;000010</p>
+</blockquote>
+
+<p>4、将二进制数连接在一起</p>
+<blockquote>
+  <p>00111001110 11100111001 000010</p>
+</blockquote>
+
+<p>5、将字符计数指示符转换为二进制 (9 bits for version 1-H)</p>
+
+<blockquote>
+  <p>(Number of input data characters 5 –&gt; 000000101)</p>
+</blockquote>
+
+<p>6、将模式指示符和字符计数指示符加入到最前面</p>
+
+<blockquote>
+  <p>0010 000000101 00111001110 11100111001 000010</p>
+</blockquote>
+
+<h4 id="byte-mode">Byte Mode</h4>
+
+<p>在此种模式下，一个八位码字直接替代输入数据字符的字节值(8 bits/character)</p>
+
+<p><strong>按8bits重排</strong></p>
+
+<p>如果所有的编码加起来不是8个倍数我们还要在后面加上足够的0</p>
+
+
+		
+	</div>
+	Tags: <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    
+<footer><span>
+
+<div class="footer">
+
+Suzhengpeng @ Tsingtao 
+</div>
+</span></footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>
