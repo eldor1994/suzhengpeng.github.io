@@ -225,12 +225,20 @@
       <td>0100</td>
     </tr>
     <tr>
-      <td>日本汉字（KANJI mode）</td>
+      <td>日本汉字(KANJI mode)</td>
       <td>1000</td>
     </tr>
     <tr>
       <td>中国汉字(GB2312)</td>
       <td>1101</td>
+    </tr>
+    <tr>
+      <td>ECI</td>
+      <td>0111</td>
+    </tr>
+    <tr>
+      <td>结构链接</td>
+      <td>0011</td>
     </tr>
   </tbody>
 </table>
@@ -243,6 +251,7 @@
       <th>Version</th>
       <th>Numeric Mo</th>
       <th>Alph Mo</th>
+      <th>GB2312</th>
     </tr>
   </thead>
   <tbody>
@@ -250,36 +259,43 @@
       <td>M1</td>
       <td>3</td>
       <td>n/a</td>
+      <td>n/a</td>
     </tr>
     <tr>
       <td>M2</td>
       <td>4</td>
       <td>3</td>
+      <td>n/a</td>
     </tr>
     <tr>
       <td>M3</td>
       <td>5</td>
       <td>4</td>
+      <td>n/a</td>
     </tr>
     <tr>
       <td>M4</td>
       <td>6</td>
       <td>5</td>
+      <td>n/a</td>
     </tr>
     <tr>
       <td>1-9</td>
       <td>10</td>
       <td>9</td>
+      <td>8</td>
     </tr>
     <tr>
       <td>10-26</td>
       <td>12</td>
       <td>11</td>
+      <td>10</td>
     </tr>
     <tr>
       <td>27-40</td>
       <td>14</td>
       <td>13</td>
+      <td>12</td>
     </tr>
   </tbody>
 </table>
@@ -290,28 +306,41 @@
 <p><strong>例 1：</strong></p>
 
 <p>输入：01234567 
-1、将输入组划分为数字 012 345 67
-2、转化为对应的二进制数</p>
+1、将输入组划分为数字 012 345 67</p>
+
+<p>2、转化为对应的二进制数</p>
 
 <blockquote>
-  <p>67–&gt;1000011
-345–&gt;0101011001
-012–&gt;0000001100</p>
+  <p>67–&gt;1000011</p>
 </blockquote>
 
-<p>3、将二进制数连接在一起</p>
+<blockquote>
+  <p>345–&gt;0101011001</p>
+</blockquote>
+
+<blockquote>
+  <p>012–&gt;0000001100</p>
+</blockquote>
+
+<ol>
+  <li>将二进制数连接在一起</li>
+</ol>
 
 <blockquote>
   <p>0000001100 0101011001 1000011</p>
 </blockquote>
 
-<p>4、将字符计数指示符转换为二进制 (10 bits for version 1-H)</p>
+<ol>
+  <li>将字符计数指示符转换为二进制 (10 bits for version 1-H)</li>
+</ol>
 
 <blockquote>
   <p>(Number of input data characters 8 –&gt; 0000001000)</p>
 </blockquote>
 
-<p>5、将模式指示符和字符计数指示符加入到最前面</p>
+<ol>
+  <li>将模式指示符和字符计数指示符加入到最前面</li>
+</ol>
 
 <blockquote>
   <p>0001 0000001000 0000001100 0101011001 1000011</p>
@@ -413,7 +442,7 @@
 <p>2、将每两个数字划分为一组</p>
 
 <blockquote>
-  <p>(10、12)、(41 4)、(2)</p>
+  <p>(10、12)、(41、4)、(2)</p>
 </blockquote>
 
 <p>3、将每一组数转换为对应的11位二进制数</p>
@@ -431,6 +460,7 @@
 </blockquote>
 
 <p>4、将二进制数连接在一起</p>
+
 <blockquote>
   <p>00111001110 11100111001 000010</p>
 </blockquote>
@@ -451,10 +481,67 @@
 
 <p>在此种模式下，一个八位码字直接替代输入数据字符的字节值(8 bits/character)</p>
 
+<h4 id="gb2312-中国汉字">GB2312 中国汉字</h4>
+
+<p>GB2312中规定中国汉字和非汉字字符共7445个（其中汉字字符6768个）。GB2312规定字符由两个字节表示。字符值为GB2312中图形字符的内码值。</p>
+
+<p><strong>例1：</strong></p>
+
+<p>输入：安</p>
+
+<p>1、字符值：BOB2</p>
+
+<p>2、第一字节 B0在B0<sub>hex</sub>到FA<sub>hex</sub>之间。计算：</p>
+
+<blockquote>
+  <p>B0-A6=0A A*60<sub>hex</sub>=3C0</p>
+</blockquote>
+
+<p>3、第二字节 B2在A1<sub>hex</sub>到FE<sub>hex</sub>之间。计算：</p>
+
+<blockquote>
+  <p>B2-A1=11</p>
+</blockquote>
+
+<p>4、计算</p>
+
+<blockquote>
+  <p>3C0+11=3D1=0 0011 1101 0001</p>
+</blockquote>
+
+<p><strong>例2：</strong></p>
+
+<p>输入：Ⅲ</p>
+
+<p>1、字符值：A2F3</p>
+
+<p>2、第一字节 A2在A1<sub>hex</sub>到AA<sub>hex</sub>之间。计算：</p>
+
+<blockquote>
+  <p>A2-A1=1 1*60<sub>hex</sub>=60</p>
+</blockquote>
+
+<p>3、第二字节 F3在A1<sub>hex</sub>到FE<sub>hex</sub>之间。计算：</p>
+
+<blockquote>
+  <p>F3-A1=52</p>
+</blockquote>
+
+<p>4、计算</p>
+
+<blockquote>
+  <p>60+52=BO=0 0000 1011 0000</p>
+</blockquote>
+
+<p>随后，将二进制数据连接起来并在前面加上模式指示符（见 Table 3）、中国汉字子集指示符（GB2312的子集指示符为 0001）和字符计数指示符（位数见Table 4）。</p>
+
 <p><strong>按8bits重排</strong></p>
 
 <p>如果所有的编码加起来不是8个倍数我们还要在后面加上足够的0</p>
 
+<h4 id="附">附：</h4>
+
+<p><a href="http://tools.jb51.net/table/gb2312">GB2312简体中文编码表</a></p>
 
 		
 	</div>
