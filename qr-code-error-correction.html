@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>夜游五四广场</title>
-  <meta name="description" content="http://suzhengpeng.com/img/update/IMG_4153.JPG">
+	<title>QR码纠错编码</title>
+  <meta name="description" content="http://suzhengpeng.com/img/update/20170425142608.jpg">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -206,17 +206,63 @@
 
 			<article id="post-page">
 	
-	18 Mar 2017
-	<h3>夜游五四广场 </h3>		
+	24 Apr 2017
+	<h3>QR码纠错编码 </h3>		
 	<div class="content">
 
-		<p><img src="http://suzhengpeng.com/img/update/IMG_4153.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/update/IMG_4109.JPG" alt="avatar" />
-夜游五四广场</p>
+		<p><img src="http://suzhengpeng.com/img/update/20170425142608.jpg" alt="avatar" /></p>
+
+<h2 id="纠错能力">纠错能力</h2>
+
+<p>QR码使用RS(Reed-Solomon)差错控制编码来检查和纠正编码的错误。不同纠错等级对应着不同的纠错能力(见 Table 1)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>纠错等级</th>
+      <th>纠错能力%<br />(大约)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>L</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>M</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>Q</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>H</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Table 1 不同纠错等级所对应的纠错能力</strong></p>
+
+<p>注：H级对Micro QR码不适用</p>
+
+<h2 id="纠错码字的计算">纠错码字的计算</h2>
+
+<p>对于一组给定的数据码字，根据选定的符号标识版本及纠错等级，将数据码字分成相应的数据块。对每一块所对应的纠错码字，根据Reed-Solomon差错控制码算法进行计算。</p>
+
+<p>计算步骤如下：</p>
+
+<h3 id="建立数据码字多项式">建立数据码字多项式</h3>
+
+<h3 id="建立纠正码字的生成多项式">建立纠正码字的生成多项式</h3>
+
+<h3 id="纠错码字的计算-1">纠错码字的计算</h3>
+
 
 		
 	</div>
-	Tags: <a href="/tag/tsingtao.html" rel="tag">Tsingtao</a>, <a href="/tag/photograph.html" rel="tag">photograph</a>
+	Tags: <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/encode.html" rel="tag">encode</a>
 </article>
 
 

@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>QR码编码方式</title>
+	<title>QR码数据码字编码方式</title>
   <meta name="description" content="http://suzhengpeng.com/img/update/20170424222140.jpg">
 
 	<!-- CSS & fonts -->
@@ -59,6 +59,10 @@
 	  
 	    
 	      <a href="/railway" title="Railways">Railways</a>
+	    
+	  
+	    
+	  
 	    
 	  
 	    
@@ -178,6 +182,10 @@
 	    
 	      
 	    
+	      
+	    
+	      
+	    
       
       <!-- Nav links -->
 	    
@@ -199,10 +207,12 @@
 			<article id="post-page">
 	
 	24 Apr 2017
-	<h3>QR码编码方式 </h3>		
+	<h3>QR码数据码字编码方式 </h3>		
 	<div class="content">
 
 		<p><img src="http://suzhengpeng.com/img/update/20170424222140.jpg" alt="avatar" /></p>
+
+<p>QR码数据码字(date code)的生成主要有扩展解释模式(ECI)、数字模式(NC)字母数字模式(AC)、八位字节模式、中国汉字模式等，将数据信息转化为二进制的位流序列，然后按每八位一个码字将位流序列转化为码字序列</p>
 
 <table>
   <thead>
@@ -213,11 +223,11 @@
   </thead>
   <tbody>
     <tr>
-      <td>numeric mode</td>
+      <td>数字模式(numeric mode)</td>
       <td>0001</td>
     </tr>
     <tr>
-      <td>alphanumeric mode</td>
+      <td>字母数字模式(alphanumeric mode)</td>
       <td>0010</td>
     </tr>
     <tr>
@@ -252,6 +262,7 @@
       <th>Numeric Mo</th>
       <th>Alph Mo</th>
       <th>GB2312</th>
+      <th>byte mode</th>
     </tr>
   </thead>
   <tbody>
@@ -260,11 +271,13 @@
       <td>3</td>
       <td>n/a</td>
       <td>n/a</td>
+      <td>n/a</td>
     </tr>
     <tr>
       <td>M2</td>
       <td>4</td>
       <td>3</td>
+      <td>n/a</td>
       <td>n/a</td>
     </tr>
     <tr>
@@ -272,17 +285,20 @@
       <td>5</td>
       <td>4</td>
       <td>n/a</td>
+      <td>4</td>
     </tr>
     <tr>
       <td>M4</td>
       <td>6</td>
       <td>5</td>
       <td>n/a</td>
+      <td>5</td>
     </tr>
     <tr>
       <td>1-9</td>
       <td>10</td>
       <td>9</td>
+      <td>8</td>
       <td>8</td>
     </tr>
     <tr>
@@ -290,12 +306,14 @@
       <td>12</td>
       <td>11</td>
       <td>10</td>
+      <td>16</td>
     </tr>
     <tr>
       <td>27-40</td>
       <td>14</td>
       <td>13</td>
       <td>12</td>
+      <td>16</td>
     </tr>
   </tbody>
 </table>
@@ -539,7 +557,7 @@
 
 		
 	</div>
-	Tags: <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>
+	Tags: <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/encode.html" rel="tag">encode</a>
 </article>
 
 
