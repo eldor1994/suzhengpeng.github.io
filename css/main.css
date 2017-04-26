@@ -476,8 +476,8 @@ code {
   width: 22px; }
 
 .pagination-x a:hover {
-  border: 1px solid #666666;
-  background-color: #ffffff; }
+  border: 1px solid #aeaeae;
+  background-color: #C5C8C9; }
 
 .pagination-x span {
   border: none; }
