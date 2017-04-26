@@ -220,7 +220,7 @@
   <thead>
     <tr>
       <th>纠错等级</th>
-      <th>纠错能力%<br />(大约)</th>
+      <th>纠错能力% (约)</th>
     </tr>
   </thead>
   <tbody>
@@ -255,9 +255,32 @@
 
 <h3 id="建立数据码字多项式">建立数据码字多项式</h3>
 
-<h3 id="建立纠正码字的生成多项式">建立纠正码字的生成多项式</h3>
+<p>数据码字多项式</p>
 
+<blockquote>
+  <p>c(x)=c<sub>n-1</sub>x<sup>n-1</sup>+c<sub>n-2</sub>x<sup>n-2</sup>…………c<sub>1</sub>x+c<sub>0</sub></p>
+</blockquote>
+
+<p>其中，最高次项的系数为第一个码字，最低次项的系数是该数据块中的最后一个码字。</p>
+
+<h3 id="建立纠错码字的生成多项式">建立纠错码字的生成多项式</h3>
+
+<p>对于k个纠错码字的生成多项式如下</p>
+
+<blockquote>
+  <p>g(x)=(x-2<sup>0</sup>)(x-2<sup>1</sup>)…………(x-2<sub>k-1</sub>)</p>
+</blockquote>
+
+<p>根据GB/T 18284 根据k的不同，共有31个纠错码字生成多项式，根据 ISO/IEC 则有36个纠错码字生成多项式见下表：</p>
+
+<p><img src="/img/qrcode/eccp.png" alt="image" />
+<img src="/img/qrcode/eccp2.png" alt="image" />
+<img src="/img/qrcode/eccp3.png" alt="image" />
+<img src="/img/qrcode/eccp4.png" alt="image" />
+<img src="/img/qrcode/eccp5.png" alt="image" /></p>
 <h3 id="纠错码字的计算-1">纠错码字的计算</h3>
+
+<h3 id="纠错译码步骤">纠错译码步骤</h3>
 
 
 		
