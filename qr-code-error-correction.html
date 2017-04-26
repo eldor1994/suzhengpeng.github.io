@@ -214,7 +214,7 @@
 
 			<article id="post-page">
 	
-	24 Apr 2017
+	25 Apr 2017
 	<h3>QR码纠错编码 </h3>		
 	<div class="content">
 
@@ -276,7 +276,7 @@
 <p>对于k个纠错码字的生成多项式如下</p>
 
 <blockquote>
-  <p>g(x)=(x-2<sup>0</sup>)(x-2<sup>1</sup>)…………(x-2<sub>k-1</sub>)</p>
+  <p>g(x)=(x-2<sup>0</sup>)(x-2<sup>1</sup>)…………(x-2<sup>k-1</sup>)</p>
 </blockquote>
 
 <p>根据GB/T 18284 根据k的不同，共有31个纠错码字生成多项式，根据 ISO/IEC 则有36个纠错码字生成多项式见下表：</p>
@@ -295,7 +295,48 @@
 
 <p><img src="/img/qrcode/eccec.png" alt="image" /></p>
 
+<p>如上图所示：寄存器b<sub>0</sub>~b<sub>k-1</sub>初始值为0，整个电路使用分为两个过程：</p>
+
+<p>1、开关向下拨，输入的数据码字直接输出。</p>
+
+<p>2、开关向上拨，纠错码字可以依次输出。</p>
+
+<h3 id="构造最终码字序列">构造最终码字序列</h3>
+
+<p>具体步骤：</p>
+
+<p>1、根据QR码的版本和纠错等级，将数据码字序列分为n块；</p>
+
+<p>2、对每一块数据码字计算相应的纠错码字；</p>
+
+<p>3、依次将每一块的数据码字和纠错码字装配成最终的序列(sequence)；</p>
+
+<blockquote>
+  <p>例如：QR码的版本的：V5-H，纠错码字的个数为88，数据码字的个数为46,共134个码字，分成四个数据块。</p>
+</blockquote>
+
+<blockquote>
+  <p>具体装配成的序列如下：</p>
+</blockquote>
+
+<blockquote>
+  <p>[B1D1]+[B2D12]+……+[B4D36]+[B1D2]……[B4D46]+[B1E1]+……+[B4E88]</p>
+</blockquote>
+
+<blockquote>
+  <p>字符布置如图所示：</p>
+</blockquote>
+
+<blockquote>
+  <p><img src="/img/qrcode/cfmcs.png" alt="image" /></p>
+</blockquote>
+
+<blockquote>
+  <p>对于空白的位置，使用剩余位添加在信息流中，以填满编码区域的模块数。</p>
+</blockquote>
+
 <h3 id="纠错译码步骤">纠错译码步骤</h3>
+
 
 		
 	</div>
