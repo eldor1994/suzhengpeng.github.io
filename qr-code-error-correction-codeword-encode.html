@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>QR码纠错编码</title>
+	<title>QR码纠错码字编码方式</title>
   <meta name="description" content="http://suzhengpeng.com/img/update/20170425142608.jpg">
 
 	<!-- CSS & fonts -->
@@ -63,6 +63,8 @@
 	  
 	    
 	      <a href="/img/travelWithMyThinkpad" title="Thinkpad">Thinkpad</a>
+	    
+	  
 	    
 	  
 	    
@@ -194,6 +196,8 @@
 	    
 	      
 	    
+	      
+	    
       
       <!-- Nav links -->
 	    
@@ -215,7 +219,7 @@
 			<article id="post-page">
 	
 	25 Apr 2017
-	<h3>QR码纠错编码 </h3>		
+	<h3>QR码纠错码字编码方式 </h3>		
 	<div class="content">
 
 		<p><img src="http://suzhengpeng.com/img/update/20170425142608.jpg" alt="avatar" /></p>
@@ -312,30 +316,13 @@
 <p>3、依次将每一块的数据码字和纠错码字装配成最终的序列(sequence)；</p>
 
 <blockquote>
-  <p>例如：QR码的版本的：V5-H，纠错码字的个数为88，数据码字的个数为46,共134个码字，分成四个数据块。</p>
+  <p><strong>例如</strong>：QR码的版本的：V5-H，纠错码字的个数为88，数据码字的个数为46,共134个码字，分成四个数据块。<br /><br />
+具体装配成的序列如下：<br /><br />
+[B1D1]+[B2D12]+……+[B4D36]+[B1D2]……[B4D46]+[B1E1]+……+[B4E88]<br /><br />
+字符布置如图所示：<br /><br />
+<img src="/img/qrcode/cfmcs.png" alt="image" /><br /><br />
+对于空白的位置，使用剩余位添加在信息流中，以填满编码区域的模块数。</p>
 </blockquote>
-
-<blockquote>
-  <p>具体装配成的序列如下：</p>
-</blockquote>
-
-<blockquote>
-  <p>[B1D1]+[B2D12]+……+[B4D36]+[B1D2]……[B4D46]+[B1E1]+……+[B4E88]</p>
-</blockquote>
-
-<blockquote>
-  <p>字符布置如图所示：</p>
-</blockquote>
-
-<blockquote>
-  <p><img src="/img/qrcode/cfmcs.png" alt="image" /></p>
-</blockquote>
-
-<blockquote>
-  <p>对于空白的位置，使用剩余位添加在信息流中，以填满编码区域的模块数。</p>
-</blockquote>
-
-<h3 id="纠错译码步骤">纠错译码步骤</h3>
 
 
 		
