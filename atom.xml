@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-05-02T21:52:13+08:00</updated>
+ <updated>2017-05-02T22:37:37+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -19,6 +19,37 @@
    <id>http://localhost:4000/fill-in-encoding-region-</id>
    <updated>2017-04-30T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;&lt;img src=&quot;/img/update/IMG_5959.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;QR码的编码区包括格式信息、版本信息以及数据码字和纠错码字。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/qrcode/enregion.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;格式信息的填充&quot;&gt;格式信息的填充&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/qrcode/forinfoposition.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;&lt;center&gt;格式信息位置&lt;/center&gt;&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;格式信息位共有15位，包括：5个数据位和10个用BCH（15,5）编码计算得到的纠错位。数据位的前两位是纠错等级指示符。第三到五位是为数据掩模图形参考（the data mask pattern reference）&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;纠错等级&lt;/th&gt; &lt;th&gt;L&lt;/th&gt; &lt;th&gt;M&lt;/th&gt; &lt;th&gt;Q&lt;/th&gt; &lt;th&gt;H&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;二进制&lt;/td&gt; &lt;td&gt;01&lt;/td&gt; &lt;td&gt;00&lt;/td&gt; &lt;td&gt;11&lt;/td&gt; &lt;td&gt;10&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt; &lt;p&gt;&lt;strong&gt;Table 1 纠错等级指示符&lt;/strong&gt;&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;掩模图形参考&lt;/th&gt; &lt;th&gt;掩模图形&lt;/th&gt; &lt;/tr&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>青啤博物馆与信号山公园</title>
+   <link href="http://localhost:4000/tbm-and-signal-hill"/>
+   <id>http://localhost:4000/tbm-and-signal-hill</id>
+   <updated>2017-04-28T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_5938.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_5942.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;△青岛啤酒博物馆&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_5993.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_5998.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_6004.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_6010.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_6011.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;△在信号山观景台俯瞰青岛海岸线&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_6052.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;△胶澳总督府旧址（今市南区人大常委会所在地）&lt;/p&gt;
+</content>
  </entry>
 
  
