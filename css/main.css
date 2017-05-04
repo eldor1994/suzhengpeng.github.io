@@ -19,7 +19,7 @@ html {
   background-color: #FFFFFF;
   font-size: 16px;
   line-height: 1.5;
-  color: #333333; }
+  color: #333; }
   @media (min-width: 940px) {
     html {
       font-size: 18px; } }
@@ -31,7 +31,7 @@ body {
 
 /*- Link -*/
 a {
-  color: #333333;
+  color: #333;
   text-decoration: none;
   font-weight: 700; }
   a:hover, a:focus {
@@ -195,7 +195,7 @@ blockquote {
 /* Navigation */
 #nav a, #nav-left a {
   display: block;
-  color: #333333;
+  color: #333;
   padding: 0.33334em 0;
   font-size: 1.5em;
   font-weight: 400; }
@@ -203,7 +203,7 @@ blockquote {
     #nav a, #nav-left a {
       font-size: 1em; } }
   #nav a:hover, #nav-left a:hover {
-    background-color: rgba(13, 13, 13, 0.6); }
+    background-color: #404040; }
 #nav span, #nav-left span {
   font-weight: 200; }
 
@@ -267,7 +267,7 @@ blockquote {
     display: none; } }
 #nav-links a {
   padding-left: 10px;
-  color: #333333;
+  color: #333;
   font-weight: 300; }
 
 /* Separator after menu */
@@ -277,7 +277,7 @@ blockquote {
   width: 5rem;
   height: 1px;
   margin: 23px auto;
-  background-color: #333333; }
+  background-color: #333; }
 
 /* Icon menu */
 #nav-menu {
@@ -305,7 +305,7 @@ blockquote {
 #menu {
   height: 4px;
   width: 1.5em;
-  background-color: #333333;
+  background-color: #333;
   margin-top: 8px; }
   #menu:after, #menu:before {
     content: "";
@@ -313,7 +313,7 @@ blockquote {
     position: relative;
     height: 4px;
     width: 1.5em;
-    background-color: #333333;
+    background-color: #333;
     transition: all 0.3s ease-in; }
   #menu:before {
     top: -8px; }
@@ -327,14 +327,14 @@ blockquote {
     -moz-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     transform: rotate(-45deg);
-    background-color: #333333; }
+    background-color: #333; }
   #menu.btn-close:after {
     top: -4px;
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-    background-color: #333333; }
+    background-color: #333; }
 
 /* Main content */
 .fixed {
@@ -439,7 +439,7 @@ code {
   margin: 2.666668em; }
   .pagination span {
     background-color: #f2f2f2;
-    color: #333333; }
+    color: #333; }
   .pagination a:hover {
     background-color: #404040; }
 
@@ -456,10 +456,17 @@ code {
 
 /* Footer */
 .footer {
-  /* border-top:1px solid rgba(0, 0, 0, 0.14);*/
+  font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei";
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
   background-color: #FFFFFF;
-  text-align: center;
+  /* text-align: center;*/
+  color: #7E8282;
+  font-size: 100%;
   padding: 0.6667em 0; }
+  .footer a {
+    color: #7E8282;
+    font-weight: 200;
+    font-size: 80%; }
 
 .pagination-x {
   text-align: center; }
@@ -485,6 +492,38 @@ code {
 .pagination-x .curr-page {
   font-weight: bold;
   width: 15px; }
+
+#posts-out-x {
+  color: #FFFFFF;
+  background-color: #000000;
+  border: 10px solid #000000;
+  opacity: 0.4;
+  position: absolute;
+  top: 20%;
+  max-width: 570px;
+  width: 60%; }
+  #posts-out-x a:link, #posts-out-x a:visited, #posts-out-x a:hover, #posts-out-x a:active {
+    color: #FFFFFF; }
+
+#posts-out-x:hover {
+  opacity: 0.6;
+  color: #000;
+  background-color: #FFF;
+  border: 10px solid #FFF; }
+  #posts-out-x:hover a:link, #posts-out-x:hover a:visited, #posts-out-x:hover a:hover, #posts-out-x:hover a:active {
+    color: #000; }
+
+#cover-x {
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #FE4C40;
+  border: 10px solid #FE4C40;
+  opacity: 0.7;
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  max-width: 100px;
+  font-size: 80%; }
 
 /*
  * A Github stylesheet to highlight code snippet
