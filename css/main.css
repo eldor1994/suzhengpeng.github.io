@@ -456,12 +456,14 @@ code {
 
 /* Footer */
 .footer {
+  border-radius: 2px;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei";
   border-top: 1px solid rgba(0, 0, 0, 0.14);
   background-color: #FFFFFF;
   /* text-align: center;*/
   color: #7E8282;
-  font-size: 100%;
+  font-size: 90%;
+  font-weight: 200;
   padding: 0.6667em 0; }
   .footer a {
     color: #7E8282;
@@ -471,19 +473,30 @@ code {
 .pagination-x {
   text-align: center; }
 
-.pagination-x a, .curr-page {
+.curr-page {
   border: 1px solid #aeaeae;
   display: inline-block;
   margin: 0 3px 0 0;
   line-height: 20px;
   text-align: center;
   color: #333333;
+  text-decoration: none;
+  width: 22px; }
+
+.pagination-x a {
   border-radius: 2px;
+  border: 1px solid #000000;
+  display: inline-block;
+  margin: 0 3px 0 0;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  background-color: #000000;
   text-decoration: none;
   width: 22px; }
 
 .pagination-x a:hover {
-  border: 1px solid #aeaeae;
+  border: 0px solid #aeaeae;
   background-color: #C5C8C9; }
 
 .pagination-x span {
@@ -494,6 +507,7 @@ code {
   width: 15px; }
 
 #posts-out-x {
+  border-radius: 2px;
   font-size: 0.8em;
   color: #FFFFFF;
   background-color: #000000;
