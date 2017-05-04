@@ -466,7 +466,7 @@ code {
   .footer a {
     color: #7E8282;
     font-weight: 200;
-    font-size: 80%; }
+    font-size: 0.2em; }
 
 .pagination-x {
   text-align: center; }
@@ -494,25 +494,19 @@ code {
   width: 15px; }
 
 #posts-out-x {
-  font-size: 90%;
+  font-size: 0.8em;
   color: #FFFFFF;
   background-color: #000000;
-  border: 10px solid #000000;
+  border: 1em solid #000000;
   opacity: 0.4;
   position: absolute;
-  top: 20%;
-  max-width: 570px;
+  top: 15em;
+  max-width: 57em;
+  min-width: 22em;
   width: 60%; }
   #posts-out-x a:link, #posts-out-x a:visited, #posts-out-x a:hover, #posts-out-x a:active {
-    color: #FFFFFF; }
-
-#posts-out-x:hover {
-  opacity: 0.6;
-  color: #000;
-  background-color: #FFF;
-  border: 10px solid #FFF; }
-  #posts-out-x:hover a:link, #posts-out-x:hover a:visited, #posts-out-x:hover a:hover, #posts-out-x:hover a:active {
-    color: #000; }
+    color: #FFFFFF;
+    font-size: 110%; }
 
 #cover-x {
   text-align: center;
@@ -522,7 +516,7 @@ code {
   opacity: 0.7;
   position: absolute;
   top: 20%;
-  right: 10%;
+  right: 40em;
   max-width: 100px;
   font-size: 80%; }
 
