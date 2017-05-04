@@ -466,7 +466,7 @@ code {
   .footer a {
     color: #7E8282;
     font-weight: 200;
-    font-size: 0.2em; }
+    font-size: 80%; }
 
 .pagination-x {
   text-align: center; }
@@ -507,18 +507,6 @@ code {
   #posts-out-x a:link, #posts-out-x a:visited, #posts-out-x a:hover, #posts-out-x a:active {
     color: #FFFFFF;
     font-size: 110%; }
-
-#cover-x {
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #FE4C40;
-  border: 10px solid #FE4C40;
-  opacity: 0.7;
-  position: absolute;
-  top: 20%;
-  right: 40em;
-  max-width: 100px;
-  font-size: 80%; }
 
 /*
  * A Github stylesheet to highlight code snippet
