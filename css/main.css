@@ -35,7 +35,7 @@ body {
 a {
   color: #333;
   text-decoration: none;
-  font-weight: 700; }
+  /*- font-weight: 200;-*/ }
   a:hover, a:focus {
     color: #262626; }
 
@@ -460,9 +460,9 @@ code {
 .footer {
   border-radius: 2px;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei";
-  /* border-top:1px solid rgba(0, 0, 0, 0.14);* /
-  background-color: $background-color;
-  /* text-align: center;*/
+  /* border-top:1px solid rgba(0, 0, 0, 0.14); */
+  background-color: #FFFFFF;
+  text-align: center;
   color: #7E8282;
   font-size: 100%;
   font-weight: 200;
@@ -471,6 +471,33 @@ code {
     color: #7E8282;
     font-weight: 200;
     font-size: 80%; }
+
+.footer-ico {
+  margin: 0 auto;
+  background: url(/img/favicon_01.png);
+  width: 60px;
+  height: 60px;
+  border-radius: 30px; }
+  .footer-ico:hover {
+    border-radius: 30px;
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg); }
+
+.footer-ico-con li {
+  list-style: none;
+  display: inline; }
+.footer-ico-con table {
+  margin: 0 auto; }
+.footer-ico-con img {
+  width: 35px;
+  border-radius: 18px;
+  border: 5px solid #FFFFFF;
+  opacity: 1; }
+  .footer-ico-con img:hover {
+    opacity: 0.5; }
 
 .pagination-x {
   text-align: center; }
@@ -519,10 +546,13 @@ code {
   top: 15em;
   max-width: 57em;
   min-width: 22em;
-  width: 60%; }
+  width: 40%; }
   #posts-out-x a:link, #posts-out-x a:visited, #posts-out-x a:hover, #posts-out-x a:active {
     color: #FFFFFF;
-    font-size: 110%; }
+    font-size: 110%;
+    font-weight: 300; }
+  #posts-out-x:hover {
+    opacity: 0.8; }
 
 /*
  * A Github stylesheet to highlight code snippet
