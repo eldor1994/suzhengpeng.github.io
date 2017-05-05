@@ -16,7 +16,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, img {
 /*- Base color -*/
 /*- Base settings -*/
 html {
-  background-color: #FFFFFF;
+  /*background-color: $background-color;*/
   font-size: 16px;
   line-height: 1.5;
   color: #333; }
@@ -25,7 +25,8 @@ html {
       font-size: 18px; } }
 
 body {
-  max-width: 1000px;
+  max-width: 1080px;
+  min-width: 25em;
   margin: 0 auto;
   padding: 0 10px; }
 
@@ -348,7 +349,7 @@ blockquote {
   margin: 0 auto; }
 
 #header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+  /* border-bottom:  1px solid rgba(0,0,0,0.14);*/
   text-align: center;
   margin-bottom: 3em;
   height: 5em;
@@ -458,8 +459,8 @@ code {
 .footer {
   border-radius: 2px;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei";
-  border-top: 1px solid rgba(0, 0, 0, 0.14);
-  background-color: #FFFFFF;
+  /* border-top:1px solid rgba(0, 0, 0, 0.14);* /
+  background-color: $background-color;
   /* text-align: center;*/
   color: #7E8282;
   font-size: 90%;
