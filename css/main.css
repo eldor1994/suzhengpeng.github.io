@@ -204,8 +204,6 @@ blockquote {
   @media (min-width: 940px) {
     #nav a, #nav-left a {
       font-size: 1em; } }
-  #nav a:hover, #nav-left a:hover {
-    background-color: #404040; }
 #nav span, #nav-left span {
   font-weight: 200; }
 
@@ -267,10 +265,6 @@ blockquote {
 @media (max-width: 940px) {
   #nav-links {
     display: none; } }
-#nav-links a {
-  padding-left: 10px;
-  color: #333;
-  font-weight: 300; }
 
 /* Separator after menu */
 #nav-list:after {
@@ -405,6 +399,7 @@ blockquote {
 
 img {
   max-width: 100%;
+  max-height: 100%;
   display: block;
   margin: 0 auto;
   margin-bottom: 24px;
@@ -513,8 +508,8 @@ code {
   width: 22px; }
 
 .pagination-x a {
-  border-radius: 2px;
-  border: 1px solid #000000;
+  border-radius: 4px;
+  border: 2px solid #000000;
   display: inline-block;
   margin: 0 3px 0 0;
   line-height: 20px;
@@ -525,8 +520,9 @@ code {
   width: 22px; }
 
 .pagination-x a:hover {
-  border: 0px solid #aeaeae;
-  background-color: #C5C8C9; }
+  color: #E9F01D;
+  /* border: 0px solid #aeaeae;*/
+  /*  background-color: #C5C8C9;*/ }
 
 .pagination-x span {
   border: none; }
@@ -536,23 +532,29 @@ code {
   width: 15px; }
 
 #posts-out-x {
-  border-radius: 2px;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  background-color: #000000;
-  border: 1em solid #000000;
-  opacity: 0.4;
-  position: absolute;
-  top: 15em;
-  max-width: 57em;
+  font-size: 1em;
+  color: #000;
+  background-color: #FFF;
+  border-bottom: 4px solid #000;
+  max-width: 1080px;
   min-width: 22em;
-  width: 40%; }
+  width: 100%; }
   #posts-out-x a:link, #posts-out-x a:visited, #posts-out-x a:hover, #posts-out-x a:active {
-    color: #FFFFFF;
-    font-size: 110%;
-    font-weight: 300; }
-  #posts-out-x:hover {
-    opacity: 0.8; }
+    color: #000;
+    font-size: 110%; }
+
+#posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
+  color: #F8F1F0;
+  font-size: 90%;
+  font-weight: 300;
+  background-color: #000;
+  border: 2px solid #000;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+#posts-out-tags a:hover {
+  color: #E9F01D; }
 
 /*
  * A Github stylesheet to highlight code snippet
