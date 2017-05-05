@@ -195,17 +195,15 @@ blockquote {
       /* 24px/18px */ } }
 /* -- General Layout -- */
 /* Navigation */
-#nav a, #nav-left a {
-  display: block;
-  color: #333;
-  padding: 0.33334em 0;
-  font-size: 1.5em;
-  font-weight: 400; }
-  @media (min-width: 940px) {
-    #nav a, #nav-left a {
-      font-size: 1em; } }
-#nav span, #nav-left span {
-  font-weight: 200; }
+#nav, #nav-left {
+  font-size: 80%; }
+  #nav a, #nav-left a {
+    display: inline;
+    color: #333;
+    padding: 0.33334em 0;
+    font-weight: 200; }
+  #nav span, #nav-left span {
+    font-weight: 200; }
 
 #nav {
   width: 14rem;
@@ -267,13 +265,8 @@ blockquote {
     display: none; } }
 
 /* Separator after menu */
-#nav-list:after {
-  display: block;
-  content: '';
-  width: 5rem;
-  height: 1px;
-  margin: 23px auto;
-  background-color: #333; }
+#nav-list {
+  color: #000; }
 
 /* Icon menu */
 #nav-menu {
@@ -399,7 +392,6 @@ blockquote {
 
 img {
   max-width: 100%;
-  max-height: 100%;
   display: block;
   margin: 0 auto;
   margin-bottom: 24px;
@@ -488,6 +480,7 @@ code {
   margin: 0 auto; }
 .footer-ico-con img {
   width: 35px;
+  height: 35px;
   border-radius: 18px;
   border: 5px solid #FFFFFF;
   opacity: 1; }
