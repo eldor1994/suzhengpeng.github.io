@@ -196,7 +196,8 @@ blockquote {
 /* -- General Layout -- */
 /* Navigation */
 #nav, #nav-left {
-  font-size: 80%; }
+  font-size: 80%;
+  font-weight: 200; }
   #nav a, #nav-left a {
     display: inline;
     color: #333;
