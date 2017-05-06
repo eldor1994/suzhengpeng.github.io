@@ -25,7 +25,7 @@ html {
       font-size: 18px; } }
 
 body {
-  background: url(/img/def/polygon01.png) no-repeat fixed;
+  background-color: #FDFCF9;
   width: 100%;
   max-width: 1080px;
   min-width: 20em;
