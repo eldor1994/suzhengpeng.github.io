@@ -196,10 +196,7 @@ blockquote {
 /* -- General Layout -- */
 /* Navigation */
 #nav, #nav-left {
-  background-image: url(/img/def/polygon.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0% 0%;
+  background-color: #E9F01D;
   font-size: 100%;
   font-weight: 200; }
   #nav a, #nav-left a {
@@ -353,10 +350,10 @@ blockquote {
   #header div {
     margin: 0 auto; }
   #header h1 {
-    font-size: 1.6em; }
+    font-size: 1.7em; }
     @media (max-width: 700px) {
       #header h1 {
-        font-size: 1.2em; } }
+        font-size: 1.4em; } }
     #header h1 span {
       color: rgba(0, 0, 0, 0.6);
       font-weight: 300; }
@@ -573,15 +570,14 @@ code {
 .f-logo {
   margin: 0 auto;
   position: relative;
-  top: 50px;
-  width: 40%;
-  min-width: 10em;
-  height: 60px;
+  top: 40px;
+  width: 80px;
+  height: 80px;
   background-color: #E9F01D;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  -ms-border-radius: 45px;
+  border-radius: 45px;
   border: 10px solid #E9F01D; }
   @media (max-width: 700px) {
     .f-logo {
