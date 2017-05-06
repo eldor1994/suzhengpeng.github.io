@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>RS码基础算法与java实现</title>
+  <meta name="description" content="RS码的基础知识与JAVA编程实现">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -263,36 +263,119 @@ Suzhengpeng @ Tsingtao
 		  
 		<main>
 
-			<h2>Tag：photograph</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<div style="width:170px;float:left">
-<a href="/tbm-and-signal-hill"><img src="http://suzhengpeng.com/img/20170428/IMG_5938.JPG"  width=150 height=150/></a>
-<a href="/tbm-and-signal-hill">&nbsp;&nbsp;&nbsp;青啤博物馆与信...</a><br> &nbsp;&nbsp;&nbsp;(28 Apr 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/railway-station-to-54-square"><img src="http://suzhengpeng.com/img/20170423/IMG_5543.jpg"  width=150 height=150/></a>
-<a href="/railway-station-to-54-square">&nbsp;&nbsp;&nbsp;红石绿海</a><br> &nbsp;&nbsp;&nbsp;(23 Apr 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/roaming-xi'an"><img src="http://suzhengpeng.com/img/201703xi'an/IMG_4783.JPG"  width=150 height=150/></a>
-<a href="/roaming-xi'an">&nbsp;&nbsp;&nbsp;西安漫行</a><br> &nbsp;&nbsp;&nbsp;(31 Mar 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/night-54-square"><img src="http://suzhengpeng.com/img/update/IMG_4153.JPG"  width=150 height=150/></a>
-<a href="/night-54-square">&nbsp;&nbsp;&nbsp;夜游五四广场</a><br> &nbsp;&nbsp;&nbsp;(18 Mar 2017)<br><br>
-</div>
+			<article id="post-page">
+	
+	05 May 2017
+	<h3>RS码基础算法与java实现 </h3>		
+	<div class="content">
 
-</div>
+		<h3 id="1-总论">1 总论</h3>
 
-<div id="tag-cloud"> 
- All Tags : <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/qrcode.html" class="set-4">QRcode</a> <a href="/tag/rscode.html" class="set-1">RScode</a> <a href="/tag/tsingtao.html" class="set-3">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-1">Xi'an</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/encode.html" class="set-5">encode</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/photograph.html" class="set-4">photograph</a> <a href="/tag/technology.html" class="set-5">technology</a>
-</div>
-<br>
+<p>RS码即Reed-Solomon码，是m=1的q进制BCH码。以纪念它们的发现者Irving S.Reed和Gustave Solomon。</p>
+
+<p>RS码广泛应用于数字通信和存储系统，以进行差错控制。</p>
+
+<h3 id="2-数学基础">2 数学基础</h3>
+
+<h4 id="21-伽罗华域">2.1 伽罗华域</h4>
+
+<p>因为RS码时在伽罗华域中运算的，故需要了解伽罗华域的相关知识。</p>
+
+<p><strong>2.1.1什么是域？</strong></p>
+
+<p>域是一组元素的集合，在这个集合中进行加、减、乘、除后其结果仍在这个集合中。加法和乘法必须满足交换律、结合律和分配律。</p>
+
+<p>域正式定义如下：</p>
+
+<p><img src="/img/rscode/001.png" alt="image" /></p>
+
+<p>从定义可以看出：</p>
+
+<p>一个域至少包含两个元素，加法单位元和乘法单位元。域中元素的个数称为域的阶（order），一个含有有限个元素的域称为有限域（finite field）。</p>
+
+<p><strong>2.1.2什么是伽罗华域？</strong></p>
+
+<p>已知，对任意素数p，存在一个含p个元素的有限域。（证明见《差错控制编码（第二版）》例2-6林舒（Lin，S.），（美）科斯特洛（Costello，D.J.））</p>
+
+<p>事实上，对任意正整数m，都可以吧一个素域GF(p)扩展成为一个pm个元素的域，称为GF(p)的扩域（extension field），记作GF(pm)。更进一步说，已经证明任何有限域的阶都是一个素数的幂，为纪念它们的发现者，将有限域称作伽罗华域（Galois field）</p>
+
+<p><strong>2.1.3二元域算术</strong></p>
+
+<p>在数字通信和存储系统中最常用的还是由二元域GF(2)或它的扩展域GF(2m)构造出的码，这是因为在这些系统中，信息往往使用二进制编码。因而，我们只关心二进制码和从GF(2m)中的符号生成的码。</p>
+
+<p>下面我们考虑系数是二元域GF(2)中元素的多项式的计算：</p>
+
+<p>以x为变量（variable），GF(2)中元素为系数的多项式f(x)由如下形式：</p>
+
+<center>f(x)=f<sub>0</sub>+f<sub>1</sub>x+⋯+f<sub>n</sub>x<sup>n</sup> f<sub>i</sub>=0或1,0≤i≤n</center>
+
+<p>多项式的次数（degree）是系数非零的x的最高幂次。</p>
+
+<p>在GF(2)上有两个一次多项式：x和1+x；四个2次多项式：x2,1+x2，x+x2,1+x+x2。一般来说，GF(2)上有2n个n次多项式。</p>
+
+<p>GF(2)上的多项式可以按通常的方式进行多项式的四则运算。令：</p>
+
+<center>g(x)=g<sub>0</sub>+g<sub>1</sub>x+⋯+g<sub>n</sub>x<sup>n</sup> g<sub>i</sub>=0或1,0≤i≤n</center>
+
+<p>1、计算f(x)和g(x)和：</p>
+
+<p><img src="/img/rscode/004.png" alt="image" /></p>
+
+<p>其中，fi+gi使用模2加法。</p>
+
+<p>2、计算f(x)和g(x)积：</p>
+
+<p><img src="/img/rscode/002.png" alt="image" /></p>
+
+<p>其中：</p>
+
+<blockquote>
+  <p>c<sub>0</sub>=f<sub>0</sub>g<sub>0</sub>,c<sub>1</sub>=f<sub>0</sub>g<sub>1</sub>+f<sub>1</sub>g<sub>0</sub><br />
+c<sub>i</sub>=f<sub>0</sub>g<sub>i</sub>+f<sub>1</sub>g<sub>i-1</sub>+……+f<sub>i</sub>g<sub>0</sub><br />
+c<sub>n+m</sub>=f<sub>n</sub>g<sub>m</sub><br />
+f<sub>i</sub>g<sub>j</sub>使用模2乘法。</p>
+</blockquote>
+
+<p><img src="/img/rscode/003.png" alt="image" /></p>
+
+<p><strong>2.1.4伽罗华域的构造</strong></p>
+
+<p><img src="/img/rscode/005.png" alt="image" /></p>
+
+<p><img src="/img/rscode/006.png" alt="image" /></p>
+
+<h4 id="22-线性分组码">2.2 线性分组码</h4>
+
+<p><strong>2.2.1概述</strong></p>
+
+<p>信源输出为一系列的二进制数字0和1，在分组码中，这些二进制信息序列分成固定长度的消息分组(message block)。每个消息分组记为u，由<strong>k个信息位</strong>组成。因此共有2<sup>k</sup>种不同的消息。</p>
+
+<p>编码器按照一定的规则将输入的消息u转换为二进制n维向量v，这里n&gt;k。n维向量v就叫做消息u的码字(codeword)或码向量(code vector)。</p>
+
+<p>对应于2<sup>k</sup>种不同的消息，也有2<sup>k</sup>种码字。这2<sup>k</sup>个码字的集合就叫做一个分组码(block code)。</p>
+
+<p>一个长度为n，由2<sup>k</sup>个码字的分组码，当且仅当其2<sup>k</sup>个码字构成域GF(2)上所有n维向量组成的向量空间的一个k维子空间时被称为<strong>线性(linear)(n,k)码</strong>。即：一个二进制分组码字的充要条件时其任意两个码字的模2和仍然是该分组码中的一个码字。</p>
+
+<p><strong>2.2.2系统结构</strong></p>
+
+<p>对于线性分组码，其系统结构(systematic structure)共计n位，前n-k位为冗余校验部分，后k位为消息部分。消息部分由k个未经改变的原始消息位构成，冗余校验部分则是n-k个奇偶校验位。具有这种结构的线性分组码被称为<strong>线性系统分组码(linear systematic block code)</strong>。</p>
+
+<h4 id="23-非二进制bch码">2.3 非二进制BCH码</h4>
+
+<h4 id="24-rs码">2.4 RS码</h4>
+
+<h3 id="3-编程实现">3 编程实现</h3>
+
+<h4 id="31-算法流图">3.1 算法流图</h4>
+
+<h4 id="32-实现">3.2 实现</h4>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/rscode.html" rel="tag">RScode</a>, <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/encode.html" rel="tag">encode</a> </div> 
+</article>
+
+
 
 	  </main>
 		

@@ -196,6 +196,10 @@ blockquote {
 /* -- General Layout -- */
 /* Navigation */
 #nav, #nav-left {
+  background-image: url(/img/def/polygon.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 0%;
   font-size: 100%;
   font-weight: 200; }
   #nav a, #nav-left a {
@@ -361,6 +365,10 @@ blockquote {
 
 #post-page {
   margin-bottom: 1.5em; }
+  #post-page h3 {
+    font-size: 1.4em; }
+  #post-page h4 {
+    font-size: 1.1em; }
   @media (min-width: 940px) {
     #post-page {
       margin-bottom: 1.3334em; } }
@@ -480,10 +488,9 @@ code {
 .footer-ico-con table {
   margin: 0 auto; }
 .footer-ico-con img {
-  width: 35px;
-  height: 35px;
-  border-radius: 18px;
-  border: 5px solid #FFFFFF;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
   opacity: 1; }
   .footer-ico-con img:hover {
     opacity: 0.5; }
