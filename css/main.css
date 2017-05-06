@@ -31,9 +31,6 @@ body {
   min-width: 20em;
   margin: 0 auto;
   padding: 0 10px; }
-  @media (max-width: 940px) {
-    body {
-      background: #fff; } }
 
 /*- Link -*/
 a {
@@ -354,7 +351,7 @@ blockquote {
   #header div {
     margin: 0 auto; }
   #header h1 {
-    font-size: 1.7em; }
+    font-size: 1.4em; }
     @media (max-width: 700px) {
       #header h1 {
         font-size: 1.4em; } }
@@ -413,10 +410,10 @@ img {
   display: block;
   margin: 0 auto;
   margin-bottom: 24px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px; }
+  /*  -webkit-border-radius: $border-radius;
+      -moz-border-radius: $border-radius;
+       -ms-border-radius: $border-radius;
+           border-radius: $border-radius;*/ }
 
 img[title="Monochrome"] {
   box-shadow: 0 2px 6px #ddd; }
@@ -555,7 +552,7 @@ code {
   font-size: 1em;
   color: #000;
   /* background-color:#FFF;*/
-  border-bottom: 4px solid #000;
+  border-bottom: 2px solid #000;
   max-width: 1080px;
   min-width: 22em;
   width: 100%; }
@@ -583,15 +580,10 @@ code {
   width: 80px;
   height: 80px;
   background-color: #E9F01D;
-  -webkit-border-radius: 45px;
-  -moz-border-radius: 45px;
-  -ms-border-radius: 45px;
-  border-radius: 45px;
   border: 10px solid #E9F01D; }
   @media (max-width: 700px) {
     .f-logo {
-      top: 30px;
-      height: 70px; } }
+      top: 30px; } }
 
 /*
  * A Github stylesheet to highlight code snippet
