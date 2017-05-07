@@ -583,12 +583,7 @@ code {
   margin: 0 auto;
   background: url(/img/def/china_map_01.png);
   width: 500px;
-  height: 350px; }
-  @media (max-width: 500px) {
-    .china_map {
-      width: 300px;
-      height: 210px;
-      background: url(/img/def/china_map_02.png); } }
+  height: 450px; }
 
 .china_map_city {
   background-color: #E9F01D;
@@ -602,6 +597,7 @@ code {
     font-size: 10px; }
   @media (max-width: 500px) {
     .china_map_city {
+      background-color: #D6006F;
       width: 4px;
       height: 4px;
       border-radius: 2px; } }
@@ -609,22 +605,22 @@ code {
 #city_tsingtao {
   position: relative;
   top: 48%;
-  left: 78%; }
+  left: 81%; }
 
 #city_jinan {
   position: relative;
-  top: 45%;
-  left: 74%; }
+  top: 46%;
+  left: 76%; }
 
 #city_xian {
   position: relative;
-  top: 50%;
-  left: 60%; }
+  top: 52%;
+  left: 61%; }
 
 #city_shanghai {
   position: relative;
-  top: 54%;
-  left: 83%; }
+  top: 55%;
+  left: 86%; }
 
 #china_map_footprint {
   font-size: 30px;
