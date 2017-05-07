@@ -25,7 +25,7 @@ html {
       font-size: 18px; } }
 
 body {
-  background-color: #FDFCF9;
+  background: url(/img/def/polygon01.png) fixed;
   width: 100%;
   max-width: 1080px;
   min-width: 20em;
@@ -352,9 +352,6 @@ blockquote {
     margin: 0 auto; }
   #header h1 {
     font-size: 1.4em; }
-    @media (max-width: 700px) {
-      #header h1 {
-        font-size: 1.4em; } }
     #header h1 span {
       color: rgba(0, 0, 0, 0.6);
       font-weight: 300; }
@@ -583,6 +580,7 @@ code {
   border: 10px solid #E9F01D; }
   @media (max-width: 700px) {
     .f-logo {
+      top: 30px;
       top: 30px; } }
 
 /*
