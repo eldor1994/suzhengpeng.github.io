@@ -584,6 +584,11 @@ code {
   background: url(/img/def/china_map_01.png);
   width: 500px;
   height: 450px; }
+  @media (max-width: 500px) {
+    .china_map {
+      width: 300px;
+      height: 270px;
+      background: url(/img/def/china_map_02.png); } }
 
 .china_map_city {
   background-color: #E9F01D;
