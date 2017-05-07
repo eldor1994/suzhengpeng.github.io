@@ -25,7 +25,7 @@ html {
       font-size: 18px; } }
 
 body {
-  background: url(/img/def/polygon01.png) fixed;
+  background: #F5F5F5;
   width: 100%;
   max-width: 1080px;
   min-width: 20em;
@@ -573,15 +573,63 @@ code {
 .f-logo {
   margin: 0 auto;
   position: relative;
-  top: 40px;
+  top: 30px;
   width: 80px;
   height: 80px;
   background-color: #E9F01D;
   border: 10px solid #E9F01D; }
-  @media (max-width: 700px) {
-    .f-logo {
-      top: 30px;
-      top: 30px; } }
+
+.china_map {
+  margin: 0 auto;
+  background: url(/img/def/china_map_01.png);
+  width: 500px;
+  height: 350px; }
+  @media (max-width: 500px) {
+    .china_map {
+      width: 300px;
+      height: 210px;
+      background: url(/img/def/china_map_02.png); } }
+
+.china_map_city {
+  background-color: #E9F01D;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  font-size: 0px; }
+  .china_map_city:hover {
+    opacity: 1;
+    border: 2px solid #E9F01D;
+    font-size: 10px; }
+  @media (max-width: 500px) {
+    .china_map_city {
+      width: 4px;
+      height: 4px;
+      border-radius: 2px; } }
+
+#city_tsingtao {
+  position: relative;
+  top: 48%;
+  left: 78%; }
+
+#city_jinan {
+  position: relative;
+  top: 45%;
+  left: 74%; }
+
+#city_xian {
+  position: relative;
+  top: 50%;
+  left: 60%; }
+
+#city_shanghai {
+  position: relative;
+  top: 54%;
+  left: 83%; }
+
+#china_map_footprint {
+  font-size: 30px;
+  margin: 0 auto;
+  text-align: left; }
 
 /*
  * A Github stylesheet to highlight code snippet
