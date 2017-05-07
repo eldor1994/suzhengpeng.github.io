@@ -586,9 +586,10 @@ code {
   height: 450px; }
   @media (max-width: 500px) {
     .china_map {
+      background: url(/img/def/china_map_01.png);
       width: 300px;
       height: 270px;
-      background: url(/img/def/china_map_02.png); } }
+      background-size: 300px 270px; } }
 
 .china_map_city {
   background-color: #E9F01D;
@@ -630,7 +631,8 @@ code {
 #china_map_footprint {
   font-size: 30px;
   margin: 0 auto;
-  text-align: left; }
+  text-align: left;
+  font-family: "FZYaoti"; }
 
 /*
  * A Github stylesheet to highlight code snippet
