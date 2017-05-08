@@ -642,6 +642,9 @@ code {
   font-size: 30px;
   margin: 0 auto;
   text-align: left; }
+  @media (max-width: 500px) {
+    #block_homepage {
+      font-size: 20px; } }
 
 .row {
   margin-left: -15px;
