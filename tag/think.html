@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>QR码纠错码字编码方式-Su'S Blog </title>
-  <meta name="description" content="QR码纠错码字编码算法的过程细节 ">
+	<title>Suzhengpeng'S Blog</title>
+  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -243,149 +243,21 @@ Suzhengpeng @ Tsingtao
 		  
 		<main>
 
-			<article id="post-page">
-	
-	25 Apr 2017
-	<h3>QR码纠错码字编码方式 </h3>
-	<!-- JiaThis Button BEGIN -->
-<div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_weixin"></a>
-<a class="jiathis_button_tsina"></a>
-<a class="jiathis_button_fb"></a>
-<a class="jiathis_button_twitter"></a>
-<a class="jiathis_button_ydnote"></a>
-<a class="jiathis_button_linkedin"></a>
-<a href="http://www.jiathis.com/share?uid=2133390" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-	data_track_clickback:true,
-	summary:"",
-	ralateuid:{
-		"tsina":"@ShannonSS"
-	},
-	shortUrl:false,
-	hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2133390" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+			<h2>Tag：think</h2>
 <br>
-	<div class="content">
+<div style="width:100%;overflow:hidden;white-space:nowrap;">
+ 
+<div style="width:170px;float:left">
+<a href="/think-about-nandu"><img src="/img/update/20170511090051.jpg"  width=150 height=150/></a>
+<a href="/think-about-nandu">&nbsp;&nbsp;&nbsp;关于南渡政权的思考</a><br> &nbsp;&nbsp;&nbsp;(05 May 2017)<br><br>
+</div>
 
-		<p><img src="http://suzhengpeng.com/img/update/20170425142608.jpg" alt="avatar" /></p>
+</div>
 
-<h2 id="纠错能力">纠错能力</h2>
-
-<p>QR码使用RS(Reed-Solomon)差错控制编码来检查和纠正编码的错误。不同纠错等级对应着不同的纠错能力(见 Table 1)</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>纠错等级</th>
-      <th>纠错能力% (约)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>L</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <td>M</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <td>Q</td>
-      <td>25</td>
-    </tr>
-    <tr>
-      <td>H</td>
-      <td>30</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>Table 1 不同纠错等级所对应的纠错能力</strong></p>
-
-<p>注：H级对Micro QR码不适用</p>
-
-<h2 id="纠错码字的计算">纠错码字的计算</h2>
-
-<p>对于一组给定的数据码字，根据选定的符号标识版本及纠错等级，将数据码字分成相应的数据块。对每一块所对应的纠错码字，根据Reed-Solomon差错控制码算法进行计算。</p>
-
-<p>计算步骤如下：</p>
-
-<h3 id="建立数据码字多项式">建立数据码字多项式</h3>
-
-<p>数据码字多项式</p>
-
-<blockquote>
-  <p>c(x)=c<sub>n-1</sub>x<sup>n-1</sup>+c<sub>n-2</sub>x<sup>n-2</sup>…………c<sub>1</sub>x+c<sup>0</sup></p>
-</blockquote>
-
-<p>其中，最高次项的系数为第一个码字，最低次项的系数是该数据块中的最后一个码字。</p>
-
-<h3 id="建立纠错码字的生成多项式">建立纠错码字的生成多项式</h3>
-
-<p>对于k个纠错码字的生成多项式如下</p>
-
-<blockquote>
-  <p>g(x)=(x-2<sup>0</sup>)(x-2<sup>1</sup>)…………(x-2<sup>k-1</sup>)</p>
-</blockquote>
-
-<p>根据GB/T 18284 根据k的不同，共有31个纠错码字生成多项式，根据 ISO/IEC 则有36个纠错码字生成多项式见下表：</p>
-
-<p><img src="/img/qrcode/eccp.png" alt="image" />
-<img src="/img/qrcode/eccp2.png" alt="image" />
-<img src="/img/qrcode/eccp3.png" alt="image" />
-<img src="/img/qrcode/eccp4.png" alt="image" />
-<img src="/img/qrcode/eccp5.png" alt="image" /></p>
-
-<h3 id="纠错码字的计算-1">纠错码字的计算</h3>
-
-<p>对每一数据块中的数据码字所对应的纠错码字的值，他是用纠错码字生成多项式g(x)除数据码字多项式c(x)所得剩余多项式的系数。其中，剩余多项式的最高次项系数为第一个纠错码字的值，最低次项的系数对应最后一个纠错码字的值。</p>
-
-<p>上述过程可用下面的除法电路来实现：</p>
-
-<p><img src="/img/qrcode/eccec.png" alt="image" /></p>
-
-<p>如上图所示：寄存器b<sub>0</sub>~b<sub>k-1</sub>初始值为0，整个电路使用分为两个过程：</p>
-
-<p>1、开关向下拨，输入的数据码字直接输出。</p>
-
-<p>2、开关向上拨，纠错码字可以依次输出。</p>
-
-<h3 id="构造最终码字序列">构造最终码字序列</h3>
-
-<p>具体步骤：</p>
-
-<p>1、根据QR码的版本和纠错等级，将数据码字序列分为n块；</p>
-
-<p>2、对每一块数据码字计算相应的纠错码字；</p>
-
-<p>3、依次将每一块的数据码字和纠错码字装配成最终的序列(sequence)；</p>
-
-<blockquote>
-  <p><strong>例如</strong>：QR码的版本的：V5-H，纠错码字的个数为88，数据码字的个数为46,共134个码字，分成四个数据块。<br /><br />
-具体装配成的序列如下：<br /><br />
-[B1D1]+[B2D12]+……+[B4D36]+[B1D2]……[B4D46]+[B1E1]+……+[B4E88]<br /><br />
-字符布置如图所示：<br /><br />
-<img src="/img/qrcode/cfmcs.png" alt="image" /><br /><br />
-对于空白的位置，使用剩余位添加在信息流中，以填满编码区域的模块数。</p>
-</blockquote>
-
-
-		
-	</div>
-
-
-	
-	<div id="posts-out-tags"># <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/encode.html" rel="tag">encode</a> </div> 
-	
-</article>
-
-
+<div id="tag-cloud"> 
+ All Tags : <div id="posts-out-tags"><a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/qrcode.html" class="set-4">QRcode</a> <a href="/tag/rscode.html" class="set-1">RScode</a> <a href="/tag/tsingtao.html" class="set-3">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-1">Xi'an</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/encode.html" class="set-5">encode</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/history.html" class="set-1">history</a> <a href="/tag/photograph.html" class="set-4">photograph</a> <a href="/tag/technology.html" class="set-5">technology</a> <a href="/tag/think.html" class="set-1">think</a></div> 
+</div>
+<br>
 
 	  </main>
 		
