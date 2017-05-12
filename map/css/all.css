@@ -30,6 +30,7 @@ body,td,th {font-family: "微软雅黑";}
 .box ul li ul li a:hover{color:#FFF}
 .box ul li ul li ul li a:hover{color:#FFF;}
 /*导航结束*/
-
+.jiathis_style{margin: 0 auto;border: 5px solid #005ca2;}
+.jiathis_txt{font-size:6px;}
 /*轮播图开始*/
 
