@@ -1,0 +1,35 @@
+
+ @charset "utf-8";
+ * { padding: 0;margin: 0;}
+body {background-color: #fff;padding:0px;   }
+body,td,th {font-family: "微软雅黑";}
+/*DIV位置居中宽980PX*/
+.center{MARGIN-RIGHT: auto; MARGIN-LEFT: auto; width:980px;}
+/*自适应宽度*/
+.self{MARGIN-RIGHT: auto; MARGIN-LEFT: auto; width:100%;}
+
+#top{height:80px;}
+#naive{height:28px; background-color:#005ca2;position:relative;z-index:3}
+#content{height:515px; background-color:#fff;position:relative;z-index:1}
+#foot_a{height:5px; background-color:#005ca2;}
+#foot{height:40px; font-size:12px;text-align:center}
+/*导航开始*/
+.box{ padding:0px; width:980px; font-size:13px;font-weight:bold;}
+.box ul{margin:0px; padding:0px; list-style:none; color:#FFF}
+.box ul li{margin:0px 2px 0px 0px; padding:0px; width:120px; height:28px; display:inline; float:left;  border-radius:0px; box-shadow:#444547 0px 0px 0px;background:#005ca2; color:#000}
+.box ul li a:hover{color:#FFF;}
+.box ul li:hover ul{display:block; }
+.box ul li a{text-align:center; width:120px; height:28px; line-height:28px; display:block; text-decoration:none;color:#FFF }
+.box ul li ul{display:none; color:#000;font-size:12px;}
+.box ul li ul a:hover{font-size:10px;}
+.box ul li ul li{margin:0px; padding:0px;}
+
+.box ul li ul li:hover ul{visibility:visible;}
+.box ul li ul li ul{visibility:hidden; position:relative; top:-28px; left:100px; }
+.box ul li ul li ul li{background:#005ca2; color:#FFF}
+.box ul li ul li a:hover{color:#FFF}
+.box ul li ul li ul li a:hover{color:#FFF;}
+/*导航结束*/
+
+/*轮播图开始*/
+
