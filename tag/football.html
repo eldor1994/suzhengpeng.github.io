@@ -18,7 +18,110 @@
 
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
-        
+    <style type="text/css">
+
+</style>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(37.916527,106.397128);
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+    var map = new qq.maps.Map(document.getElementById('container-map'),{
+        center: center,
+        zoom: 0
+    });
+	//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="/tag/tsingtao.html">山东省青岛市</a>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="/tag/ji%27nan.html">山东省济南市</a>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="/tag/xi%27an.html">陕西省西安市</a>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="#">河南省新安县</a>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="#">上海市</a>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="#">江苏省昆山市</a>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<a href="#">江苏省丰县</a>');
+        info.setPosition(fengxian); 
+    });
+	
+	
+}
+
+</script>    
 		</head>
 
 
@@ -104,7 +207,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com//tag/football">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/tag/football">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
@@ -338,7 +441,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com//tag/football">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/tag/football">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>

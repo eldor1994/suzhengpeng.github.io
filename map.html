@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+*{
+    margin:0px;
+    padding:0px;
+}
+body, button, input, select, textarea {
+    font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+}
+#info {
+    margin-top: 10px;
+}
+#container{
+	min-width:600px;
+	min-height:767px;
+}
+</style>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(30.916527,116.397128);
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+    var map = new qq.maps.Map(document.getElementById('container'),{
+        center: center,
+        zoom: 0
+    });
+	//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">山东省青岛市</div>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">山东省济南市</div>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">陕西省西安市</div>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">河南省新安县</div>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">上海市</div>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">江苏省昆山市</div>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<div style="text-align:center;white-space:nowrap;'+
+        'margin:10px;">江苏省丰县</div>');
+        info.setPosition(fengxian); 
+    });
+	
+	
+}
+
+</script>
+</head>
+<body onload="init()">
+    <div id="container"></div>
+    <div id="info">
+    <p>调用open方法打开一个信息窗，内容为一张图片和一段文字。</p>
+</div>
+</body>
+</html>
