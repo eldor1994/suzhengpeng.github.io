@@ -678,7 +678,10 @@ code {
   margin: 0 auto;
   min-width: 200px;
   min-height: 500px;
-  border-radius: 10px; }
+  border-radius: 5px; }
+  @media (max-width: 500px) {
+    #container-map {
+      min-height: 200px; } }
 
 /*
  * A Github stylesheet to highlight code snippet
