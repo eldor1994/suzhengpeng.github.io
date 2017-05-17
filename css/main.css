@@ -132,6 +132,7 @@ h3, h4, h5, h6 {
   /* 12px/18px * 2 (Use padding instead of margin to maintain proximity with paragraph) */ }
 
 blockquote {
+  font-family: "Roboto Mono";
   /* font-style: italic; */
   margin: 1.5em;
   /* 24px/18px */
@@ -182,6 +183,7 @@ blockquote {
 
   blockquote {
     /* font-style: italic; */
+    font-family: "Roboto Mono";
     margin: 1.3334em;
     /* 24px/18px */
     -webkit-border-radius: 4px;
@@ -414,10 +416,6 @@ img {
 
 img[title="Monochrome"] {
   box-shadow: 0 2px 6px #ddd; }
-
-code {
-  color: #8c8c8c;
-  background-color: white; }
 
 /* Set the vertical rhythm (and padding-left) for lists inside post content */
 .content ul, .content ol {
@@ -687,12 +685,39 @@ code {
  * A Github stylesheet to highlight code snippet
  * https://github.com/mojombo/tpw/blob/master/css/syntax.css
  */
+code {
+  font-family: "Roboto Mono";
+  color: #8c8c8c;
+  background-color: #4C556E; }
+
+.highlight {
+  margin: 1.5em;
+  /* 24px/18px */
+  font-family: "Roboto Mono";
+  background-color: #4C556E;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  padding: 0 1.5em;
+  /* 24px/18px */ }
+  .highlight p, .highlight ul, .highlight ol {
+    padding: 1.5em 0;
+    /* 24px/18px */ }
+
+@media (min-width: 940px) {
+  .highlight {
+    padding: 0 1.33334em;
+    /* 24px/18px */ }
+    .highlight p, .highlight ul, .highlight ol {
+      padding: 1.33334em 0;
+      /* 24px/18px */ } }
 .lineno {
   color: #bfbfbf;
   margin-right: 1em; }
 
 .highlight .c {
-  color: #999988;
+  color: #20F856;
   font-style: italic; }
 
 /* Comment */
@@ -702,6 +727,7 @@ code {
 
 /* Error */
 .highlight .k {
+  color: #fedcbd;
   font-weight: bold; }
 
 /* Keyword */
@@ -720,7 +746,7 @@ code {
 
 /* Comment.Preproc */
 .highlight .c1 {
-  color: #999988;
+  color: #2A8FBD;
   font-style: italic; }
 
 /* Comment.Single */
@@ -787,6 +813,7 @@ code {
 
 /* Keyword.Constant */
 .highlight .kd {
+  color: #BF0A10;
   font-weight: bold; }
 
 /* Keyword.Declaration */
@@ -799,7 +826,7 @@ code {
 
 /* Keyword.Reserved */
 .highlight .kt {
-  color: #445588;
+  color: #EEE7CE;
   font-weight: bold; }
 
 /* Keyword.Type */
@@ -809,6 +836,14 @@ code {
 /* Literal.Number */
 .highlight .s {
   color: #d14; }
+
+/* Literal.String */
+.highlight .n {
+  color: #00EBC0; }
+
+/* Literal.String */
+.highlight .o {
+  color: #00EBC0; }
 
 /* Literal.String */
 .highlight .na {
@@ -871,7 +906,7 @@ code {
 
 /* Literal.Number.Hex */
 .highlight .mi {
-  color: #009999; }
+  color: #00EBC0; }
 
 /* Literal.Number.Integer */
 .highlight .mo {

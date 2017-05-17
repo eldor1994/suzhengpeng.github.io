@@ -343,14 +343,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
         </h1>
       </a>
     </div>
-    <span id="nav-links" class="absolute right bottom">
-      <!-- Nav pages -->
-	    
-      
-      <!-- Nav links -->
-	    
 
-    </span>
   </div>
 </header>
 
@@ -485,15 +478,382 @@ f<sub>i</sub>g<sub>j</sub>使用模2乘法。</p>
 
 <p>对于线性分组码，其系统结构(systematic structure)共计n位，前n-k位为冗余校验部分，后k位为消息部分。消息部分由k个未经改变的原始消息位构成，冗余校验部分则是n-k个奇偶校验位。具有这种结构的线性分组码被称为<strong>线性系统分组码(linear systematic block code)</strong>。</p>
 
-<h4 id="23-非二进制bch码">2.3 非二进制BCH码</h4>
+<h4 id="23-非二进制q进制bch码">2.3 非二进制(q进制)BCH码</h4>
+
+<p>BCH码是对汉明码的一种重要推广，可用于纠正多个错误。</p>
+
+<p>q进制BCH码的q个元素取自伽罗华域GF(q)，GF(q)上q<sup>n</sup>个n维向量组成向量空间(v<sub>0</sub>,v<sub>1</sub>,…v<sub>n-1</sub>)。</p>
+
+<p>对于任意正整数m，具有q<sup>m</sup>个元素的伽罗华域GF(q<sup>m</sup>)可以由基础域GF(q)构造得到。</p>
 
 <h4 id="24-rs码">2.4 RS码</h4>
+
+<p>Reed-Solomon码是m=1的q进制BCH码，其广泛应用在数字通信和存储系统中，以进行差错控制。Reed-Solomon码由[n,k,d]三个系数定义，其中：n为码字的分组长度；k为码字的信息符号（information digit）的长度，n-k为奇偶校验符号数；d为相邻码字的最小码距，其最多可以纠正t=(d-1)/2个错误。</p>
+
+<p>令α为伽罗华域GF(q)中的本原元，纠错码的生成多项式为：</p>
+<blockquote>
+  <p>g(X)=(X-α)(X-α<sup>2</sup> )……(X-α<sup>2t</sup> )=g<sub>0</sub>+g<sub>1</sub>X+⋯+g<sub>2t-1</sub>X<sup>2t-1</sup>+X<sup>2t</sup>
+其中g<sub>i</sub>=GF(q)，0≤i＜2t</p>
+</blockquote>
+
+<p>由于α，α<sub>2</sub>……α<sub>2t</sub>是 X<sup>(q-1)</sup>-1的根，因此 X<sup>(q-1)</sup>-1 能被g(X)整除。所以g(X)将生成恰好2t个奇偶校验符号，长度为n=q-1的q进制循环码，故该码的最小码距d=2t+1。</p>
+
+<blockquote>
+  <p>令：
+a(x)=a<sub>0</sub>+a<sub>1</sub>X+⋯+a<sub>k-1</sub>X<sup>k-1</sup></p>
+</blockquote>
+
+<p>其中a<sub>i</sub>(0≤i≤k-1)为需要编码的k位信息。其中k=n-2t。在系统编码形式下，信息多项式X<sup>2t</sup> a(X)除以生成多项式g(x)得到的余式：</p>
+
+<blockquote>
+  <p>b(x)=b<sub>0</sub>+b<sub>1</sub>X+⋯+b<sub>2t-1</sub> X<sup>2t-1</sup></p>
+</blockquote>
+
+<p>其系数即为2t个奇偶校验符号。GF(q)，可纠正t个错误的RS码具有吐下参数：</p>
+
+<blockquote>
+  <p>分组长度 n=q-1<br />
+奇偶校验符号数 n-k=2t<br />
+维数 k=q-1-2t<br />
+最小码距 d<sub>min</sub>=2t+1</p>
+</blockquote>
 
 <h3 id="3-编程实现">3 编程实现</h3>
 
 <h4 id="31-算法流图">3.1 算法流图</h4>
 
 <h4 id="32-实现">3.2 实现</h4>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//部分宏定义</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MM</span> <span class="o">=</span> <span class="mi">8</span><span class="o">;</span> <span class="c1">//生成伽罗华域 GF(2^MM)空间</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">NN</span> <span class="o">=</span> <span class="mi">255</span><span class="o">;</span><span class="c1">//纠错码字+数据码字长度</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="n">KK</span> <span class="o">=</span> <span class="mi">14</span><span class="o">;</span><span class="c1">//数据码字长度</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">TT</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+
+	
+	<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">pp</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">};</span>
+	<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">alphaTo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+	<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">indexOf</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+	<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">gg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+	<span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">recd</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">];</span><span class="c1">//纠错码字+数据码字</span>
+	<span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">KK</span><span class="o">];</span><span class="c1">//数据码字</span>
+	<span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">bb</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">];</span><span class="c1">//纠错码字</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//生成GF(2^MM MM=8)空间</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">generateGF</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">mask</span><span class="o">;</span>
+		<span class="n">mask</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">alphaTo</span><span class="o">[</span><span class="n">MM</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">MM</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+			<span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">mask</span><span class="o">;</span>
+			<span class="n">indexOf</span><span class="o">[</span><span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">pp</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">){</span>
+				<span class="n">alphaTo</span><span class="o">[</span><span class="n">MM</span><span class="o">]</span> <span class="o">^=</span> <span class="n">mask</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="n">mask</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span>
+		
+		<span class="n">indexOf</span><span class="o">[</span><span class="n">alphaTo</span><span class="o">[</span><span class="n">MM</span><span class="o">]]</span> <span class="o">=</span> <span class="n">MM</span><span class="o">;</span>
+		<span class="n">mask</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="o">;</span>
+		
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="n">MM</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">mask</span><span class="o">){</span>
+				<span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">MM</span><span class="o">]</span> <span class="o">^</span> <span class="o">((</span><span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]^</span><span class="n">mask</span><span class="o">)&lt;&lt;</span><span class="mi">1</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+				<span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]&lt;&lt;</span><span class="mi">1</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="n">indexOf</span><span class="o">[</span><span class="n">alphaTo</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+		<span class="o">}</span>
+		
+		<span class="n">indexOf</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+		<span class="c1">//输出GF空间</span>
+        <span class="cm">/*System.out.println("GF空间:");
+		for(i=0; i&lt;=NN; i++){
+			System.out.println(i + "   " + alphaTo[i] + "   " + indexOf[i]);
+		}*/</span>
+	<span class="o">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//产生相应的生成多项式的各项系数</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">generatePolynomial</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">;</span>
+		<span class="n">gg</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+		<span class="n">gg</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">gg</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+			<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">--){</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span>
+					<span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">^</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">indexOf</span><span class="o">[</span><span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]]+</span><span class="n">i</span><span class="o">)</span> <span class="o">%</span> <span class="n">NN</span><span class="o">];</span>
+				<span class="k">else</span>
+					<span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">];</span>
+			<span class="o">}</span>
+			<span class="n">gg</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">indexOf</span><span class="o">[</span><span class="n">gg</span><span class="o">[</span><span class="mi">0</span><span class="o">]]+</span><span class="n">i</span><span class="o">)</span> <span class="o">%</span> <span class="n">NN</span><span class="o">];</span>
+		<span class="o">}</span>
+		
+		<span class="c1">//转换其到</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">gg</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">gg</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+		<span class="o">}</span>
+		
+		<span class="c1">//输出生成多项式的各项系数</span>
+		<span class="c1">//System.out.println("生成多项式系数:");</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="c1">//System.out.println(gg[i]);</span>
+		<span class="o">}</span>
+	<span class="o">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//进行RS编码</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">rsEncode</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">feedback</span><span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">bb</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="n">KK</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+			<span class="c1">//逐步的将下一步要减的，存入bb(i)</span>
+			<span class="n">feedback</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">^</span> <span class="n">bb</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">-</span><span class="mi">1</span><span class="o">]];</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">feedback</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span>
+					<span class="k">if</span><span class="o">(</span><span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+						<span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">^</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">gg</span><span class="o">[</span><span class="n">j</span><span class="o">]+</span><span class="n">feedback</span><span class="o">)%</span><span class="n">NN</span><span class="o">];</span>
+					<span class="k">else</span>
+						<span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+				<span class="n">bb</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">gg</span><span class="o">[</span><span class="mi">0</span><span class="o">]+</span><span class="n">feedback</span><span class="o">)%</span><span class="n">NN</span><span class="o">];</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span>
+					<span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">bb</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+				<span class="n">bb</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="c1">//输出编码结果</span>
+		<span class="c1">//System.out.println("编码结果:");</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bb</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>
+	<span class="o">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="c1">//进行RS解码</span>
+    <span class="c1">//发现错误的位置并纠正</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">rsDecode</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">u</span><span class="o">,</span> <span class="n">q</span><span class="o">;</span>
+		<span class="kt">int</span><span class="o">[][]</span> <span class="n">elp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">2</span><span class="o">][</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">2</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">2</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">u_lu</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">2</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+		
+		<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">syn_error</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">TT</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">loc</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">TT</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">z</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">TT</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">err</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NN</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">reg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">TT</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+		
+		<span class="c1">//转换成GF空间</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+				<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="k">else</span>
+				<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+		<span class="o">}</span>
+		
+		<span class="c1">//求伴随多项式</span>
+		<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+					<span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">^=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">recd</span><span class="o">[</span><span class="n">j</span><span class="o">]+</span><span class="n">i</span><span class="o">*</span><span class="n">j</span><span class="o">)%</span><span class="n">NN</span><span class="o">];</span>
+			<span class="o">}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span>
+				<span class="n">syn_error</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+			<span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+		<span class="o">}</span>
+		<span class="c1">//System.out.println("syn_error=" + syn_error);</span>
+		
+		<span class="c1">//如果有错，则进行纠正</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">syn_error</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">//BM迭代求错误多项式的系数</span>
+			<span class="n">d</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="n">d</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">s</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+			<span class="n">elp</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="n">elp</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+			<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="n">elp</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+				<span class="n">elp</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="n">l</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="n">l</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="n">u_lu</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+			<span class="n">u_lu</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="n">u</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="k">do</span> <span class="o">{</span>
+				<span class="n">u</span><span class="o">++;</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">];</span>
+						<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]];</span>
+					<span class="o">}</span>
+				<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+					<span class="n">q</span> <span class="o">=</span> <span class="n">u</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+					<span class="k">while</span><span class="o">((</span><span class="n">d</span><span class="o">[</span><span class="n">q</span><span class="o">]==-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">q</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+						<span class="n">q</span><span class="o">--;</span>
+					<span class="o">}</span>
+					<span class="k">if</span><span class="o">(</span><span class="n">q</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">j</span> <span class="o">=</span> <span class="n">q</span><span class="o">;</span>
+						<span class="k">do</span> <span class="o">{</span>
+							<span class="n">j</span><span class="o">--;</span>
+							<span class="k">if</span><span class="o">((</span><span class="n">d</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">u_lu</span><span class="o">[</span><span class="n">q</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">u_lu</span><span class="o">[</span><span class="n">j</span><span class="o">]))</span> <span class="o">{</span>
+								<span class="n">q</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+							<span class="o">}</span>
+						<span class="o">}</span><span class="k">while</span><span class="o">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">);</span>
+					<span class="o">}</span>
+					
+					<span class="k">if</span><span class="o">(</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">l</span><span class="o">[</span><span class="n">q</span><span class="o">]</span> <span class="o">+</span> <span class="n">u</span> <span class="o">-</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span>
+					<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+						<span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">l</span><span class="o">[</span><span class="n">q</span><span class="o">]</span> <span class="o">+</span> <span class="n">u</span> <span class="o">-</span><span class="n">q</span><span class="o">;</span>
+					<span class="o">}</span>
+					
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+					<span class="o">}</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">q</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="k">if</span><span class="o">(</span><span class="n">elp</span><span class="o">[</span><span class="n">q</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+							<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">+</span><span class="n">u</span><span class="o">-</span><span class="n">q</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">]+</span><span class="n">NN</span><span class="o">-</span><span class="n">d</span><span class="o">[</span><span class="n">q</span><span class="o">]+</span><span class="n">elp</span><span class="o">[</span><span class="n">q</span><span class="o">][</span><span class="n">i</span><span class="o">])%</span><span class="n">NN</span><span class="o">];</span>
+					<span class="o">}</span>
+					
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">^=</span> <span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">];</span>
+						<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]];</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+				<span class="n">u_lu</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">u</span><span class="o">-</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+				
+				<span class="k">if</span><span class="o">(</span><span class="n">u</span> <span class="o">&lt;</span> <span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">)</span> <span class="o">{</span>
+					<span class="k">if</span><span class="o">(</span><span class="n">s</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]];</span>
+					<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+						<span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+					<span class="o">}</span>
+					
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="k">if</span><span class="o">((</span><span class="n">s</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+							<span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">^=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">s</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="o">]+</span><span class="n">indexOf</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">i</span><span class="o">]])%</span><span class="n">NN</span><span class="o">];</span>
+						<span class="o">}</span>
+					<span class="o">}</span>
+					<span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">d</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]];</span>
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">while</span><span class="o">((</span><span class="n">u</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">-</span><span class="n">KK</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">+</span><span class="mi">1</span><span class="o">]&lt;=</span><span class="n">TT</span><span class="o">));</span>
+			<span class="n">u</span><span class="o">++;</span>
+			<span class="c1">//System.out.println("错误数目:" + l[u]);</span>
+			
+			<span class="c1">//求错误位置，以及改正错误</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">&lt;=</span> <span class="n">TT</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+					<span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]];</span>
+				<span class="o">}</span>
+				<span class="c1">//求错误位置多项式的根</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+					<span class="n">reg</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">];</span>
+				<span class="o">}</span>
+				<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+					<span class="n">q</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="k">if</span><span class="o">(</span><span class="n">reg</span><span class="o">[</span><span class="n">j</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+							<span class="n">reg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">reg</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">j</span><span class="o">)%</span><span class="n">NN</span><span class="o">;</span>
+							<span class="n">q</span> <span class="o">^=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">reg</span><span class="o">[</span><span class="n">j</span><span class="o">]];</span>
+						<span class="o">}</span>
+					<span class="o">}</span>
+					
+					<span class="k">if</span><span class="o">(</span><span class="n">q</span><span class="o">==</span><span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">root</span><span class="o">[</span><span class="n">count</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+						<span class="n">loc</span><span class="o">[</span><span class="n">count</span><span class="o">]</span> <span class="o">=</span> <span class="n">NN</span><span class="o">-</span><span class="n">i</span><span class="o">;</span>
+						<span class="c1">//System.out.println("错误位置:" + loc[count]);</span>
+						<span class="n">count</span><span class="o">++;</span>						
+					<span class="o">}</span>
+				<span class="o">}</span>
+				
+				<span class="c1">//</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">])</span> <span class="o">{</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="k">if</span><span class="o">((</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+							<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">^</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]];</span>
+						<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">((</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]==-</span><span class="mi">1</span><span class="o">))</span> <span class="o">{</span>
+							<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+						<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">((</span><span class="n">s</span><span class="o">[</span><span class="n">i</span><span class="o">]==-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">))</span> <span class="o">{</span>
+							<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">]]</span> <span class="o">;</span>
+						<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+							<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+						<span class="o">}</span>
+						
+						<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+							<span class="k">if</span><span class="o">((</span><span class="n">s</span><span class="o">[</span><span class="n">j</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">))</span> <span class="o">{</span>
+								<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">^=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">elp</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">s</span><span class="o">[</span><span class="n">j</span><span class="o">])%</span><span class="n">NN</span><span class="o">];</span>
+							<span class="o">}</span>
+						<span class="o">}</span>
+						
+						<span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">z</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+					<span class="o">}</span>
+					
+					<span class="c1">//计算错误图样</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="n">err</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+						<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+							<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+						<span class="k">else</span>
+							<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+					<span class="o">}</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+						<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+							<span class="k">if</span><span class="o">(</span><span class="n">z</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+								<span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">^=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">z</span><span class="o">[</span><span class="n">j</span><span class="o">]+</span><span class="n">j</span><span class="o">*</span><span class="n">root</span><span class="o">[</span><span class="n">i</span><span class="o">])%</span><span class="n">NN</span><span class="o">];</span>
+						<span class="o">}</span>
+						
+						<span class="k">if</span><span class="o">(</span><span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+							<span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="n">indexOf</span><span class="o">[</span><span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]];</span>
+							<span class="n">q</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+							<span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">l</span><span class="o">[</span><span class="n">u</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+								<span class="k">if</span><span class="o">(</span><span class="n">j</span><span class="o">!=</span><span class="n">i</span><span class="o">)</span>
+									<span class="n">q</span> <span class="o">+=</span> <span class="n">indexOf</span><span class="o">[</span><span class="mi">1</span><span class="o">^</span><span class="n">alphaTo</span><span class="o">[(</span><span class="n">loc</span><span class="o">[</span><span class="n">j</span><span class="o">]+</span><span class="n">root</span><span class="o">[</span><span class="n">i</span><span class="o">])%</span><span class="n">NN</span><span class="o">]];</span>
+							<span class="o">}</span>
+							<span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">%</span><span class="n">NN</span><span class="o">;</span>
+							<span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[(</span><span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]-</span><span class="n">q</span><span class="o">+</span><span class="n">NN</span><span class="o">)%</span><span class="n">NN</span><span class="o">];</span>
+							<span class="n">recd</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">^=</span> <span class="n">err</span><span class="o">[</span><span class="n">loc</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+						<span class="o">}</span>
+					<span class="o">}</span>
+				<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+					<span class="c1">//错误太多，无法改正</span>
+					<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+						<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+							<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+						<span class="k">else</span>
+							<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="c1">//错误太多，无法改正</span>
+				<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+					<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+						<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+					<span class="k">else</span>
+						<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NN</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+					<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">alphaTo</span><span class="o">[</span><span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]];</span>
+				<span class="k">else</span>
+					<span class="n">recd</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	</code></pre></figure>
 
 		
 	</div>
