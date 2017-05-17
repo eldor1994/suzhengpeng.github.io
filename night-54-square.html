@@ -34,9 +34,18 @@ var init = function() {
 	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
     var map = new qq.maps.Map(document.getElementById('container-map'),{
         center: center,
-        zoom: 0
+        zoom: 7
     });
-	//添加到提示窗
+	   //获取城市列表接口设置中心点
+    citylocation = new qq.maps.CityService({
+        complete : function(result){
+            map.setCenter(result.detail.latLng);
+        }
+    });
+    //调用searchLocalCity();方法    根据用户IP查询城市信息。
+    citylocation.searchLocalCity();
+	
+		//添加到提示窗
 	var info = new qq.maps.InfoWindow({
         map: map
     });
