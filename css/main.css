@@ -536,6 +536,8 @@ img[title="Monochrome"] {
     opacity: 0.5; }
 
 .pagination-x {
+  word-wrap: break-word;
+  word-break: normal;
   text-align: center; }
 
 .curr-page {
