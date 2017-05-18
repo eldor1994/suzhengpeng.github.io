@@ -35,7 +35,7 @@ body {
 /*- Link -*/
 a {
   word-wrap: break-word;
-  word-break: break-all;
+  word-break: keep-all;
   color: #333;
   text-decoration: none;
   /*- font-weight: 200;-*/ }
