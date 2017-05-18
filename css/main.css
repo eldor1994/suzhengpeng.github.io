@@ -36,7 +36,6 @@ body {
 a {
   word-wrap: break-word;
   word-break: break-all;
-  overflow: auto;
   color: #333;
   text-decoration: none;
   /*- font-weight: 200;-*/ }
