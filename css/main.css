@@ -685,12 +685,15 @@ img[title="Monochrome"] {
  * A Github stylesheet to highlight code snippet
  * https://github.com/mojombo/tpw/blob/master/css/syntax.css
  */
-code {
+.code {
   font-family: "Roboto Mono";
   color: #8c8c8c;
   background-color: #4C556E; }
 
 .highlight {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: auto;
   margin: 1.5em;
   /* 24px/18px */
   font-family: "Roboto Mono";
@@ -705,7 +708,7 @@ code {
     padding: 1.5em 0;
     /* 24px/18px */ }
 
-@media (min-width: 940px) {
+@media (max-width: 940px) {
   .highlight {
     padding: 0 1.33334em;
     /* 24px/18px */ }
