@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>About-Su'S Blog </title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>ZXing 公共支持代码-类-Su'S Blog </title>
+  <meta name="description" content="ZXing Class Summary ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -220,7 +220,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/pages/about">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/01-zxing-common-support-code-class">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
@@ -363,18 +363,138 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 			<article id="post-page">
 	
-  <h2 id="about-me">About Me</h2>
-<p>My name is Su Zhengpeng (苏政鹏).I was born in 1994 . I am an ITer focusing on  multimedia communication . In my spare time,I like football,documentary and travel around.</p>
+	18 May 2017
+	<h3>ZXing 公共支持代码-类 </h3>
+	<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_weixin"></a>
+<a class="jiathis_button_tsina"></a>
+<a class="jiathis_button_fb"></a>
+<a class="jiathis_button_twitter"></a>
+<a class="jiathis_button_ydnote"></a>
+<a class="jiathis_button_linkedin"></a>
+<a href="http://www.jiathis.com/share?uid=2133390" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+	data_track_clickback:true,
+	summary:"",
+	ralateuid:{
+		"tsina":"@ShannonSS"
+	},
+	shortUrl:false,
+	hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2133390" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
 
-<h3 id="social-contact">Social Contact</h3>
-<p><a href="http://weibo.com/sdustem">Weibo</a>
-<a href="https://github.com/suzhengpeng">Github</a></p>
+		<p><strong>Common support code</strong></p>
 
-<h3 id="blog">Blog</h3>
-<p>This web site is based on Jekyll，and hosted on Github Pages.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>com.google.zxing</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.client.result</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common.detector</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common.reedsolomon</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
+<h4 id="package-comgooglezxing"><strong>Package com.google.zxing</strong></h4>
 
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Binarizer</td>
+      <td>This class hierarchy provides a set of methods to convert luminance data to 1 bit data.<br />提供一系列的方法将灰度值二值化处理</td>
+    </tr>
+    <tr>
+      <td>BinaryBitmap</td>
+      <td>This class is the core bitmap class used by ZXing to represent 1 bit data.</td>
+    </tr>
+    <tr>
+      <td>Dimension</td>
+      <td>Simply encapsulates a width and height.<br />简单的封装宽度和高度</td>
+    </tr>
+    <tr>
+      <td>HtmlAssetTranslator</td>
+      <td>A utility which auto-translates the English-language text in a directory of HTML documents using Google Translate.</td>
+    </tr>
+    <tr>
+      <td>InvertedLuminanceSource</td>
+      <td>A wrapper implementation of LuminanceSource which inverts the luminances it returns – black becomes white and vice versa, and each value becomes (255-value).<br />将灰度值进行翻转。白-&gt;黑 黑-&gt;白</td>
+    </tr>
+    <tr>
+      <td>LuminanceSource</td>
+      <td>The purpose of this class hierarchy is to abstract different bitmap implementations across platforms into a standard interface for requesting greyscale luminance values.<br />该类层次结构的目的是将跨平台的不同位图实现抽象为用于请求灰度亮度值的标准接口。</td>
+    </tr>
+    <tr>
+      <td>MultiFormatReader</td>
+      <td>MultiFormatReader is a convenience class and the main entry point into the library for most uses.</td>
+    </tr>
+    <tr>
+      <td>MultiFormatWriter</td>
+      <td>This is a factory class which finds the appropriate Writer subclass for the BarcodeFormat requested and encodes the barcode with the supplied contents.</td>
+    </tr>
+    <tr>
+      <td>PlanarYUVLuminanceSource</td>
+      <td>This object extends LuminanceSource around an array of YUV data returned from the camera driver, with the option to crop to a rectangle within the full data.<br />该对象将LuminanceSource延伸到从相机驱动程序返回的YUV数据数组中，并可以选择在完整数据内裁剪到矩形。</td>
+    </tr>
+    <tr>
+      <td>Result</td>
+      <td>Encapsulates the result of decoding a barcode within an image.</td>
+    </tr>
+    <tr>
+      <td>ResultPoint</td>
+      <td>Encapsulates a point of interest in an image containing a barcode.</td>
+    </tr>
+    <tr>
+      <td>RGBLuminanceSource</td>
+      <td>This class is used to help decode images from files which arrive as RGB data from an ARGB pixel array.<br />该类用于解码从argb像素阵列到RGB数据的图像文件</td>
+    </tr>
+    <tr>
+      <td>StringsResourceTranslator</td>
+      <td>A utility which auto-translates English strings in Android string resources using Google Translate.</td>
+    </tr>
+  </tbody>
+</table>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/zxing.html" rel="tag">ZXing</a>, <a href="/tag/technology.html" rel="tag">technology</a> </div> 
 </article>
+
+
 
 	  </main>
 		
@@ -456,7 +576,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/pages/about">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/01-zxing-common-support-code-class">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>

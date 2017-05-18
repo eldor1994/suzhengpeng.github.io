@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>关于南渡政权的思考-Su'S Blog </title>
-  <meta name="description" content="南渡之人未能有北返者 ">
+	<title>ZXing 公共支持代码-接口-Su'S Blog </title>
+  <meta name="description" content="ZXing Interface Summary ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -220,7 +220,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/think-about-nandu">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/00-zxing-common-support-code-interface">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
@@ -363,8 +363,8 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 			<article id="post-page">
 	
-	10 May 2017
-	<h3>关于南渡政权的思考 </h3>
+	18 May 2017
+	<h3>ZXing 公共支持代码-接口 </h3>
 	<!-- JiaThis Button BEGIN -->
 <div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
 <a class="jiathis_button_weixin"></a>
@@ -391,30 +391,230 @@ var jiathis_config={
 <br>
 	<div class="content">
 
-		<p>稽之往史<br />
-我民族若不能立之于中原<br />
-偏安江表，称曰南渡<br /></p>
+		<p><strong>Common support code</strong></p>
 
-<p>南渡之人未能有北返者<br />
-晋人南渡，其例一也<br />
-宋人南渡，其例二也<br />
-明人南渡，其例三也<br /></p>
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>com.google.zxing</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.client.result</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common.detector</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>com.google.zxing.common.reedsolomon</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
-<p>风景不殊，晋人之深悲<br />
-还我河山，宋人之虚愿<br /></p>
+<h4 id="package-comgooglezxing"><strong>Package com.google.zxing</strong></h4>
 
-<p>冯友兰 国立西南联合大学纪念碑</p>
+<table>
+  <thead>
+    <tr>
+      <th>Interface</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Reader</td>
+      <td>Implementations of this interface can decode an image of a barcode in some format into the String it encodes.<br />将某些格式下的条形码图形转换为字符串的实现方法</td>
+    </tr>
+    <tr>
+      <td>ResultPointCallback</td>
+      <td>Callback which is invoked when a possible result point (significant point in the barcode image such as a corner) is found.</td>
+    </tr>
+    <tr>
+      <td>Writer</td>
+      <td>The base class for all objects which encode/generate a barcode image.<br />生成一个条形码图形的基础类</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>纵观中国历史，凡建都于江南的王朝或者说政权，大多偏安一隅，其结果往往被北方政权所灭或被己所灭。<br />
-远者如东晋，以及之后的南唐，再如南宋，南明。<br />
-明初建都于南京，再传于建文帝，便被成祖所取代。其后迁都北京而得以安稳。<br />
-明末清军入关，明政府南迁，旋即被灭。<br />
-民国建都于南京，一九四五年之后，解放军自东北到长江不费吹之力即取而代之。</p>
+<h5 id="interface-reader"><strong>Interface Reader</strong></h5>
 
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Reader</span></code></pre></figure>
+
+<p>Implementations of this interface can decode an image of a barcode in some format into the String it encodes. For example, <strong>QRCodeReader</strong> can decode a QR code. The decoder may optionally receive hints from the caller which may help it decode more quickly or accurately. See <strong>MultiFormatReader</strong>, which attempts to determine what barcode format is present within the image as well, and then decodes it accordingly.</p>
+
+<p>Class MultiFormatReader：<a href="https://zxing.github.io/zxing/apidocs/com/google/zxing/MultiFormatReader.html">https://zxing.github.io/zxing/apidocs/com/google/zxing/MultiFormatReader.html</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modifier and Type</th>
+      <th>Method and Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Result</td>
+      <td>decode(BinaryBitmap image)<br />Locates and decodes a barcode in some format within an image.<br />发现并检测图像中的条形码</td>
+    </tr>
+    <tr>
+      <td>Result</td>
+      <td>decode(BinaryBitmap image,Map&lt;DecodeHintType,?&gt; hints)<br />发现并检测图像中的条形码</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td>reset()<br />Resets any internal state the implementation has after a decode, to prepare it for reuse.<br />完成一次解码后，将内部状态复位，等待下次使用</td>
+    </tr>
+  </tbody>
+</table>
+
+<h6 id="decode">decode</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Result</span> <span class="nf">decode</span><span class="o">(</span><span class="n">BinaryBitmap</span> <span class="n">image</span><span class="o">)</span>
+       <span class="kd">throws</span> <span class="n">NotFoundException</span><span class="o">,</span>
+              <span class="n">ChecksumException</span><span class="o">,</span>
+              <span class="n">FormatException</span></code></pre></figure>
+
+<p>Locates and decodes a barcode in some format within an image.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<p>image - image of barcode to decode</p>
+
+<p><strong>Returns:</strong></p>
+
+<p>String which the barcode encodes</p>
+
+<p><strong>Throws:</strong></p>
+
+<p>NotFoundException - if no potential barcode is found 潜在的条形码未发现</p>
+
+<p>ChecksumException - if a potential barcode is found but does not pass its checksum 潜在的条形码发现，但是未经过校验</p>
+
+<p>FormatException - if a potential barcode is found but format is invalid 潜在的条形码发现，但是格式是无效的</p>
+
+<h6 id="decode-1">decode</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Result</span> <span class="nf">decode</span><span class="o">(</span><span class="n">BinaryBitmap</span> <span class="n">image</span><span class="o">,</span>
+              <span class="n">Map</span><span class="o">&lt;</span><span class="n">DecodeHintType</span><span class="o">,?&gt;</span> <span class="n">hints</span><span class="o">)</span>
+       <span class="kd">throws</span> <span class="n">NotFoundException</span><span class="o">,</span>
+              <span class="n">ChecksumException</span><span class="o">,</span>
+              <span class="n">FormatException</span></code></pre></figure>
+
+<p>Locates and decodes a barcode in some format within an image. This method also accepts hints, each possibly associated to some data, which may help the implementation decode.<br />相比于前一种方法，该方法可以接受Hints，每个可能相关的一些数据，以帮助实现解码。</p>
+
+<p>Parameters:</p>
+
+<p>image - image of barcode to decode</p>
+
+<p>hints - passed as a Map from DecodeHintType to arbitrary data. The meaning of the data depends upon the hint type. The implementation may or may not do anything with these hints.</p>
+
+<p>Returns:</p>
+
+<p>String which the barcode encodes</p>
+
+<p>Throws:</p>
+
+<p>NotFoundException - if no potential barcode is found</p>
+
+<p>ChecksumException - if a potential barcode is found but does not pass its checksum</p>
+
+<p>FormatException - if a potential barcode is found but format is invalid</p>
+
+<h6 id="reset">reset</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span></code></pre></figure>
+
+<p>Resets any internal state the implementation has after a decode, to prepare it for reuse.</p>
+
+<h5 id="interface-resultpointcallback">Interface ResultPointCallback</h5>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ResultPointCallback</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">foundPossibleResultPoint</span><span class="o">(</span><span class="n">ResultPoint</span> <span class="n">point</span><span class="o">)</span></code></pre></figure>
+
+<h5 id="interface-writer">Interface Writer</h5>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Writer</span></code></pre></figure>
+
+<p>Modifier and Type | Method and Description
+—|—
+BitMatrix | encode(String contents, BarcodeFormat format, int width, int height)
+Encode a barcode using the default settings.
+BitMatrix | encode(String contents, BarcodeFormat format, int width, int height, Map&lt;EncodeHintType,?&gt; hints)</p>
+
+<h6 id="encode">encode</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">BitMatrix</span> <span class="nf">encode</span><span class="o">(</span><span class="n">String</span> <span class="n">contents</span><span class="o">,</span>
+                 <span class="n">BarcodeFormat</span> <span class="n">format</span><span class="o">,</span>
+                 <span class="kt">int</span> <span class="n">width</span><span class="o">,</span>
+                 <span class="kt">int</span> <span class="n">height</span><span class="o">)</span>
+          <span class="kd">throws</span> <span class="n">WriterException</span></code></pre></figure>
+
+<p>Encode a barcode using the default settings.</p>
+
+<p>Parameters:</p>
+
+<p>contents - The contents to encode in the barcode 需要编码的内容</p>
+
+<p>format - The barcode format to generate 条形码的格式</p>
+
+<p>width - The preferred width in pixels 条形码的宽度值</p>
+
+<p>height - The preferred height in pixels 条形码的高度值</p>
+
+<p>Returns:</p>
+
+<p>BitMatrix representing encoded barcode image</p>
+
+<p>Throws:</p>
+
+<p>WriterException - if contents cannot be encoded legally in a format 内容无法使用合法的编码成一个格式</p>
+
+<h6 id="encode-1">encode</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">BitMatrix</span> <span class="nf">encode</span><span class="o">(</span><span class="n">String</span> <span class="n">contents</span><span class="o">,</span>
+                 <span class="n">BarcodeFormat</span> <span class="n">format</span><span class="o">,</span>
+                 <span class="kt">int</span> <span class="n">width</span><span class="o">,</span>
+                 <span class="kt">int</span> <span class="n">height</span><span class="o">,</span>
+                 <span class="n">Map</span><span class="o">&lt;</span><span class="n">EncodeHintType</span><span class="o">,?&gt;</span> <span class="n">hints</span><span class="o">)</span>
+          <span class="kd">throws</span> <span class="n">WriterException</span></code></pre></figure>
+
+<p>Parameters:</p>
+
+<p>contents - The contents to encode in the barcode</p>
+
+<p>format - The barcode format to generate</p>
+
+<p>width - The preferred width in pixels</p>
+
+<p>height - The preferred height in pixels</p>
+
+<p>hints - Additional parameters to supply to the encoder</p>
+
+<p>Returns:</p>
+
+<p>BitMatrix representing encoded barcode image</p>
+
+<p>Throws:</p>
+
+<p>WriterException - if contents cannot be encoded legally in a format</p>
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/history.html" rel="tag">history</a>, <a href="/tag/think.html" rel="tag">think</a> </div> 
+	<div id="posts-out-tags"># <a href="/tag/zxing.html" rel="tag">ZXing</a>, <a href="/tag/technology.html" rel="tag">technology</a> </div> 
 </article>
 
 
@@ -499,7 +699,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/think-about-nandu">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/00-zxing-common-support-code-interface">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
