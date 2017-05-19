@@ -149,7 +149,7 @@ blockquote {
     padding: 1.5em 0;
     /* 24px/18px */ }
 
-table {
+.content table {
   word-wrap: break-word;
   word-break: break-all;
   overflow: auto;
@@ -162,7 +162,24 @@ table {
   border: 2px solid #f2f2f2;
   background-color: #f2f2f2;
   padding: 0 1.5em;
-  /* 24px/18px */ }
+  /* 24px/18px */
+  border-width: 1px;
+  border-color: #666666;
+  border-collapse: collapse; }
+
+.content table th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #666666;
+  background-color: #dedede; }
+
+.content table td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #666666;
+  background-color: #ffffff; }
 
 /*- Typography for big screen, based on 18px font-size -*/
 @media (min-width: 940px) {
@@ -730,13 +747,14 @@ img[title="Monochrome"] {
   margin: 1.5em;
   /* 24px/18px */
   font-family: "Roboto Mono";
-  background-color: #4C556E;
+  background-color: #373e40;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   border-radius: 4px;
   padding: 0 1.5em;
-  /* 24px/18px */ }
+  /* 24px/18px */
+  border: 10px solid #373e40; }
   .highlight p, .highlight ul, .highlight ol {
     padding: 1.5em 0;
     /* 24px/18px */ }
@@ -758,8 +776,11 @@ img[title="Monochrome"] {
 
 /* Comment */
 .highlight .err {
-  color: #a61717;
-  background-color: #e3d2d2; }
+  color: #a61717; }
+
+/* Error */
+.highlight .p {
+  color: #00EBC0; }
 
 /* Error */
 .highlight .k {
@@ -849,7 +870,7 @@ img[title="Monochrome"] {
 
 /* Keyword.Constant */
 .highlight .kd {
-  color: #BF0A10;
+  color: #FAC000;
   font-weight: bold; }
 
 /* Keyword.Declaration */
@@ -909,7 +930,7 @@ img[title="Monochrome"] {
 
 /* Name.Exception */
 .highlight .nf {
-  color: #990000;
+  color: #EDC2BE;
   font-weight: bold; }
 
 /* Name.Function */
