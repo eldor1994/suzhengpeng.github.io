@@ -131,7 +131,6 @@ var init = function() {
 }
 
 </script>    
-<meta name="domain_verify" content="pmrgi33nmfuw4ir2ejzxk6timvxgo4dfnzts4y3pnurcyithovuwiir2ei3dmmbugzswenjshftdanbygi4tqnrzgaztmnztg4zdinlgmi3wmirmej2gs3lfknqxmzjchiytiojvgi4dembtg44deol5">
 		</head>
 
 
@@ -1148,10 +1147,45 @@ more evidence that the location is in fact a finder pattern center
 stateCount - reading state module counts from horizontal scan 读取水平扫描的状态模块计数<br />
 i - row where finder pattern may be found 位置探测图形可能存在行<br />
 j - end of possible finder pattern in row 位置探测图形可能存在最终的行<br />
-pureBarcode - true if in “pure barcode” mode</p>
+pureBarcode - true if in “pure barcode” mode 在纯条形码模式是为true</p>
 
 <p>Returns:<br />
-true if a finder pattern candidate was found this time</p>
+true if a finder pattern candidate was found this time 如果候选位置探测图形在此次中发现，则为true</p>
+
+<h5 id="FinderPatternInfo">Class FinderPatternInfo</h5>
+
+<p>Encapsulates information about finder patterns in an image, including the location of the three finder 
+patterns, and their estimated module size.
+<br />封装图像中位置探测图形的信息。包括三个位置探测图形的位置和估计的大小。</p>
+
+<p>Constructors:FinderPatternInfo(FinderPattern[] patternCenters)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modifier and Type</th>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FinderPattern</td>
+      <td>getBottomLeft()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FinderPattern</td>
+      <td>getTopLeft()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FinderPattern</td>
+      <td>getTopRight()</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <h4 id="com.google.zxing.qrcode.encoder">Package com.google.zxing.qrcode.encoder</h4>
 
