@@ -149,6 +149,11 @@ blockquote {
     padding: 1.5em 0;
     /* 24px/18px */ }
 
+.content {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: auto; }
+
 .content table {
   word-wrap: break-word;
   word-break: break-all;

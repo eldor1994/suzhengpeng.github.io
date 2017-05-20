@@ -131,6 +131,7 @@ var init = function() {
 }
 
 </script>    
+<meta name="domain_verify" content="pmrgi33nmfuw4ir2ejzxk6timvxgo4dfnzts4y3pnurcyithovuwiir2ei3dmmbugzswenjshftdanbygi4tqnrzgaztmnztg4zdinlgmi3wmirmej2gs3lfknqxmzjchiytiojvgi4dembtg44deol5">
 		</head>
 
 
@@ -894,6 +895,263 @@ points - Array of points to apply mirror correction to.</p>
 <h5 id="Mode">Enum Mode</h5>
 <p>This enum encapsulates the various modes in which data can be encoded to bits in the QR code standard.
 <br />这一枚举类型封装了四种标准QR码所定义的数据编码的编码模式。See ISO 18004:2006, 6.4.1, Tables 2 and 3</p>
+
+<h4 id="com.google.zxing.qrcode.detector">Package com.google.zxing.qrcode.detector</h4>
+
+<h5 id="AlignmentPattern">Class AlignmentPattern</h5>
+
+<p>Encapsulates an alignment pattern, which are the smaller square patterns found in all but the simplest QR Codes.
+<br />封装了一个校正图案。</p>
+
+<h5 id="Detector">Class Detector</h5>
+<p>Encapsulates logic that can detect a QR Code in an image, even if the QR Code is rotated or skewed, or partially obscured.
+<br />一个可以检测到图像中QR码的封装逻辑，即使该QR码发生了旋转、倾斜、或部分模糊。</p>
+
+<p><strong>Constructor:Detector(BitMatrix image)</strong></p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">Detector</span><span class="o">(</span><span class="n">BitMatrix</span> <span class="n">image</span><span class="o">)</span></code></pre></figure>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modifier and Type</th>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>protected float</td>
+      <td>calculateModuleSize(ResultPoint topLeft, ResultPoint topRight, ResultPoint bottomLeft)</td>
+      <td>Computes an average estimated module size based on estimated derived from the positions of the three finder patterns.</td>
+    </tr>
+    <tr>
+      <td>DetectorResult</td>
+      <td>detect()</td>
+      <td>Detects a QR Code in an image.</td>
+    </tr>
+    <tr>
+      <td>DetectorResult</td>
+      <td>detect(Map&lt;DecodeHintType,?&gt; hints)</td>
+      <td>Detects a QR Code in an image.</td>
+    </tr>
+    <tr>
+      <td>protected AlignmentPattern</td>
+      <td>findAlignmentInRegion(float overallEstModuleSize, int estAlignmentX, int estAlignmentY, float allowanceFactor)</td>
+      <td>Attempts to locate an alignment pattern in a limited region of the image, which is guessed to contain it.</td>
+    </tr>
+    <tr>
+      <td>protected BitMatrix</td>
+      <td>getImage()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>protected ResultPointCallback</td>
+      <td>getResultPointCallback()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>protected DetectorResult</td>
+      <td>processFinderPatternInfo(FinderPatternInfo info)</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h6 id="calculateModuleSize">calculateModuleSize</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kd">final</span> <span class="kt">float</span> <span class="nf">calculateModuleSize</span><span class="o">(</span><span class="n">ResultPoint</span> <span class="n">topLeft</span><span class="o">,</span>
+                                          <span class="n">ResultPoint</span> <span class="n">topRight</span><span class="o">,</span>
+                                          <span class="n">ResultPoint</span> <span class="n">bottomLeft</span><span class="o">)</span>
+  </code></pre></figure>
+
+<p>Computes an average estimated module size based on estimated derived from the positions of the three finder patterns.
+<br />从三个探测图形 Finder Pattern的位置推断出平均估计模块的大小。</p>
+
+<p>Parameters:<br />
+topLeft - detected top-left finder pattern center 左上侧探测图形的中心位置<br />
+topRight - detected top-right finder pattern center 右上侧探测图形的中心位置<br />
+bottomLeft - detected bottom-left finder pattern center 左下侧探测图形的中心位置</p>
+
+<p>Returns:<br />
+estimated module size 估计模块大小</p>
+
+<h6 id="detect1">detect</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">DetectorResult</span> <span class="nf">detect</span><span class="o">()</span>
+                      <span class="kd">throws</span> <span class="n">NotFoundException</span><span class="o">,</span>
+                             <span class="n">FormatException</span>
+ </code></pre></figure>
+
+<p>Returns:<br />
+DetectorResult encapsulating results of detecting a QR Code
+<br />DetectorResult 封装了QR码的检测结果</p>
+
+<p>Throws:<br />
+NotFoundException - if QR Code cannot be found  <br />
+FormatException - if a QR Code cannot be decoded</p>
+
+<h6 id="detect2">detect</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">final</span> <span class="n">DetectorResult</span> <span class="nf">detect</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">DecodeHintType</span><span class="o">,?&gt;</span> <span class="n">hints</span><span class="o">)</span>
+                            <span class="kd">throws</span> <span class="n">NotFoundException</span><span class="o">,</span>
+                                   <span class="n">FormatException</span>
+ </code></pre></figure>
+
+<p>Detects a QR Code in an image.</p>
+
+<p>Parameters:<br />
+hints - optional hints to detector</p>
+
+<p>Returns:<br />
+DetectorResult encapsulating results of detecting a QR Code</p>
+
+<p>Throws:<br />
+NotFoundException - if QR Code cannot be found<br />
+FormatException - if a QR Code cannot be decoded</p>
+
+<h6 id="findAlignmentInRegion">findAlignmentInRegion</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kd">final</span> <span class="n">AlignmentPattern</span> <span class="nf">findAlignmentInRegion</span><span class="o">(</span><span class="kt">float</span> <span class="n">overallEstModuleSize</span><span class="o">,</span>
+                                                       <span class="kt">int</span> <span class="n">estAlignmentX</span><span class="o">,</span>
+                                                       <span class="kt">int</span> <span class="n">estAlignmentY</span><span class="o">,</span>
+                                                       <span class="kt">float</span> <span class="n">allowanceFactor</span><span class="o">)</span>
+                                                <span class="kd">throws</span> <span class="n">NotFoundException</span></code></pre></figure>
+
+<p>Attempts to locate an alignment pattern in a limited region of the image, which is guessed to contain it. This method uses AlignmentPattern.
+<br />在一个可能存在的图像中寻找校正图形 Alignment Pattern。
+<br />此方法使用<a href="#AlignmentPattern">AlignmentPattern</a></p>
+
+<p>Parameters:<br />
+overallEstModuleSize - estimated module size so far 直到估计模块大小为止<br />
+estAlignmentX - x coordinate of center of area probably containing alignment pattern 可能存在校正图形的X坐标<br />
+estAlignmentY - y coordinate of above 可能存在校正图形的Y坐标<br />
+allowanceFactor - number of pixels in all directions to search from the center 要从中心搜索的所有方向的像素数<br /></p>
+
+<p>Returns:<br />
+AlignmentPattern if found, or null otherwise 如果发现了校正图形则返回，否则返回NULL</p>
+
+<p>Throws:<br />
+NotFoundException - if an unexpected error occurs during detection</p>
+
+<h6 id="findAlignmentInRegion">processFinderPatternInfo</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kd">final</span> <span class="n">DetectorResult</span> <span class="nf">processFinderPatternInfo</span><span class="o">(</span><span class="n">FinderPatternInfo</span> <span class="n">info</span><span class="o">)</span>
+                                                 <span class="kd">throws</span> <span class="n">NotFoundException</span><span class="o">,</span>
+                                                        <span class="n">FormatException</span></code></pre></figure>
+
+<p>Throws:<br />
+NotFoundException<br />
+FormatException</p>
+
+<h5 id="FinderPattern">Class FinderPattern</h5>
+
+<p>Encapsulates a finder pattern, which are the three square patterns found in the corners of QR Codes. It also encapsulates a count of similar finder patterns, as a convenience to the finder’s bookkeeping.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modifier and Type</th>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>float</td>
+      <td>getEstimatedModuleSize()</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="FinderPatternFinder">Class FinderPatternFinder</h5>
+
+<p>This class attempts to find finder patterns in a QR Code. Finder patterns are the square markers at three corners of a QR Code.
+<br />寻找在QR码三个角上的位置探测图形</p>
+
+<p>This class is thread-safe but not reentrant. Each thread must allocate its own object.
+<br />这个类是线程安全的，但不可重入。每个线程都必须分配自己的对象。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modifier and Type</th>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>protected static int</td>
+      <td>MAX_MODULES</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <td>protected static int</td>
+      <td>MIN_SKIP</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>See</strong>:https://zxing.github.io/zxing/apidocs/constant-values.html#com.google.zxing.qrcode.detector.FinderPatternFinder</p>
+
+<p>Constructor:FinderPatternFinder(BitMatrix image)</p>
+
+<p>Creates a finder that will search the image for three finder patterns.
+<br />创建一个查找器，将搜索图像的三个位置探测图形。</p>
+
+<p>Constructor:FinderPatternFinder(BitMatrix image, ResultPointCallback resultPointCallback)</p>
+
+<p>Modifier and Type|Method|Description
+protected static boolean|foundPatternCross(int[] stateCount) 
+protected BitMatrix|getImage() 
+protected List<FinderPattern>|getPossibleCenters() 
+protected boolean|handlePossibleCenter(int[] stateCount, int i, int j, boolean pureBarcode)|This is called when a horizontal scan finds a possible alignment pattern.</FinderPattern></p>
+
+<h6 id="foundPatternCross">foundPatternCross</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">foundPatternCross</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">stateCount</span><span class="o">)</span></code></pre></figure>
+
+<p>Parameters:<br />
+stateCount - count of black/white/black/white/black pixels just read 黑白间隔的像素数量</p>
+
+<p>Returns:<br />
+true iff the proportions of the counts is close enough to the 1/1/3/1/1 ratios used by 
+finder patterns to be considered a match
+<br />当且仅的接近1 1 3 1 1 时确认位置探测图形匹配为真</p>
+
+<h6 id="handlePossibleCenter">handlePossibleCenter</h6>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">protected</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="nf">handlePossibleCenter</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">stateCount</span><span class="o">,</span>
+                                             <span class="kt">int</span> <span class="n">i</span><span class="o">,</span>
+                                             <span class="kt">int</span> <span class="n">j</span><span class="o">,</span>
+                                             <span class="kt">boolean</span> <span class="n">pureBarcode</span><span class="o">)</span></code></pre></figure>
+
+<p>This is called when a horizontal scan finds a possible alignment pattern. 
+It will cross check with a vertical scan, and if successful, will, ah, cross-cross-check 
+with another horizontal scan. This is needed primarily to locate the real horizontal 
+center of the pattern in cases of extreme skew. And then we cross-cross-cross check 
+with another diagonal scan.
+<br />当水平扫描发现可能存在的校正图形时调用。这将会使用垂直扫描进行交叉检查，如果成功，进行
+另一次水平交叉检查。这主要是为了图像在极端倾斜的情况下确定真正的水平中心。之后使用对角扫描
+进行交叉检查</p>
+
+<p>If that succeeds the finder pattern location is added to a list that tracks the number of 
+times each location has been nearly-matched as a finder pattern. Each additional find is 
+more evidence that the location is in fact a finder pattern center
+如果成功，则将位置探测图形的位置添加到一个追踪每次定位接近匹配为一个探测图形的次数的列表
+每次多一次的发现将增加该位置实际上是位置探测图形的中心的证据。</p>
+
+<p>Parameters:<br />
+stateCount - reading state module counts from horizontal scan 读取水平扫描的状态模块计数<br />
+i - row where finder pattern may be found 位置探测图形可能存在行<br />
+j - end of possible finder pattern in row 位置探测图形可能存在最终的行<br />
+pureBarcode - true if in “pure barcode” mode</p>
+
+<p>Returns:<br />
+true if a finder pattern candidate was found this time</p>
 
 <h4 id="com.google.zxing.qrcode.encoder">Package com.google.zxing.qrcode.encoder</h4>
 
