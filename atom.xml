@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-05-20T20:20:21+08:00</updated>
+ <updated>2017-05-27T19:20:55+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -18,7 +18,7 @@
    <link href="http://localhost:4000/zxing-qrcode-support"/>
    <id>http://localhost:4000/zxing-qrcode-support</id>
    <updated>2017-05-19T00:00:00+08:00</updated>
-   <content type="html">&lt;h4 id=&quot;QR Code support&quot;&gt;QR Code support&lt;/h4&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Package&lt;/th&gt; &lt;th&gt;Class&lt;/th&gt; &lt;th&gt;Enum&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode&quot;&gt;com.google.zxing.qrcode&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;QRCodeReader QRCodeWriter&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.decoder&quot;&gt;com.google.zxing.qrcode.decoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;Decoder QRCodeDecoderMetaData Version Version.ECB Version.ECBlocks&lt;/td&gt; &lt;td&gt;ErrorCorrectionLevel Mode&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.detector&quot;&gt;com.google.zxing.qrcode.detector&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;AlignmentPattern Detector FinderPattern FinderPatternFinder FinderPatternInfo&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.encoder&quot;&gt;com.google.zxing.qrcode.encoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;ByteMatrix Encoder QRCode&lt;/td&gt; &lt;td&gt; &lt;/td&gt;...</content>
+   <content type="html">&lt;h4 id=&quot;QR Code support&quot;&gt;QR Code support&lt;/h4&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Package&lt;/th&gt; &lt;th&gt;Class&lt;/th&gt; &lt;th&gt;Enum&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode&quot;&gt;com.google.zxing.qrcode&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;QRCodeReader QRCodeWriter&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.decoder&quot;&gt;com.google.zxing.qrcode.decoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;Decoder QRCodeDecoderMetaData Version &lt;br /&gt;Version.ECB Version.ECBlocks&lt;/td&gt; &lt;td&gt;ErrorCorrectionLevel Mode&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.detector&quot;&gt;com.google.zxing.qrcode.detector&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;AlignmentPattern Detector FinderPattern &lt;br /&gt;FinderPatternFinder FinderPatternInfo&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.encoder&quot;&gt;com.google.zxing.qrcode.encoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;ByteMatrix Encoder...</content>
  </entry>
 
  
