@@ -4,12 +4,39 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-05-27T19:30:59+08:00</updated>
+ <updated>2017-06-04T16:58:33+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>初识决策论</title>
+   <link href="http://localhost:4000/decision-theory"/>
+   <id>http://localhost:4000/decision-theory</id>
+   <updated>2017-06-04T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/update/20170604165258.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;决策论是一个跨学科的研究课题，和数学、统计、经济学、哲学、管理和心理学相关。它主要研究实际决策者如何进行决策，以及如何达到最优决策。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;规范性决策论 normative decision theory&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;日常中，大多数的决策论属于规范性决策论。&lt;/p&gt;
+
+&lt;p&gt;假设一个理想决策者拥有和掌握全部的信息，可以进行进度计算，且拥有完全的理性思维。&lt;/p&gt;
+
+&lt;p&gt;理想决策者作出最优的决策称为规范性决策。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;描述性决策论 descriptive decision theory&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;描述性决策则关注于描述观察到的决策者在一定条件（consistent rules）下是如何作出决策的。&lt;/p&gt;
+
+&lt;p&gt;这一条件包括程序框架（procedural framework）或者公理框架（axiomatic framework）&lt;/p&gt;
+</content>
+ </entry>
 
  
 
@@ -164,22 +191,6 @@
    <id>http://localhost:4000/qr-code-date-encoding</id>
    <updated>2017-04-24T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/update/20170424222140.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;QR码数据码字(date code)的生成主要有扩展解释模式(ECI)、数字模式(NC)字母数字模式(AC)、八位字节模式、中国汉字模式等，将数据信息转化为二进制的位流序列，然后按每八位一个码字将位流序列转化为码字序列&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Mode&lt;/th&gt; &lt;th&gt;Mode Indicator&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;数字模式(numeric mode)&lt;/td&gt; &lt;td&gt;0001&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;字母数字模式(alphanumeric mode)&lt;/td&gt; &lt;td&gt;0010&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;8bit byte mode&lt;/td&gt; &lt;td&gt;0100&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;日本汉字(KANJI mode)&lt;/td&gt; &lt;td&gt;1000&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;中国汉字(GB2312)&lt;/td&gt; &lt;td&gt;1101&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;ECI&lt;/td&gt; &lt;td&gt;0111&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;结构链接&lt;/td&gt; &lt;td&gt;0011&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>红石绿海</title>
-   <link href="http://localhost:4000/railway-station-to-54-square"/>
-   <id>http://localhost:4000/railway-station-to-54-square</id>
-   <updated>2017-04-23T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170423/IMG_5549.jpg&quot; alt=&quot;avatar&quot; /&gt;
-钓鱼的人。&lt;br /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://suzhengpeng.com/img/20170423/IMG_5543.jpg&quot; alt=&quot;avatar&quot; /&gt;
-浪花。&lt;br /&gt;&lt;br /&gt;
-&lt;img src=&quot;http://suzhengpeng.com/img/20170423/IMG_5803.jpg&quot; alt=&quot;avatar&quot; /&gt;
-在大窑沟随手拍到一趟列车。&lt;/p&gt;
-</content>
  </entry>
 
  
