@@ -399,7 +399,9 @@ var jiathis_config={
 <br>
 	<div class="content">
 
-		<h3 id="1-总论">1 总论</h3>
+		<p>Updatetime 2017-6-9:增加说明线性分组码的一个特点,以及循环码的定义。</p>
+
+<h3 id="1-总论">1 总论</h3>
 
 <p>RS码即Reed-Solomon码，是m=1的q进制BCH码。以纪念它们的发现者Irving S.Reed和Gustave Solomon。</p>
 
@@ -480,17 +482,31 @@ f<sub>i</sub>g<sub>j</sub>使用模2乘法。</p>
 
 <p>信源输出为一系列的二进制数字0和1，在分组码中，这些二进制信息序列分成固定长度的消息分组(message block)。每个消息分组记为u，由<strong>k个信息位</strong>组成。因此共有2<sup>k</sup>种不同的消息。</p>
 
-<p>编码器按照一定的规则将输入的消息u转换为二进制n维向量v，这里n&gt;k。n维向量v就叫做消息u的码字(codeword)或码向量(code vector)。</p>
+<p><strong>编码器</strong>按照一定的规则将输入的消息u转换为二进制n维向量v，这里n&gt;k。n维向量v就叫做消息u的码字(codeword)或码向量(code vector)。</p>
 
-<p>对应于2<sup>k</sup>种不同的消息，也有2<sup>k</sup>种码字。这2<sup>k</sup>个码字的集合就叫做一个分组码(block code)。</p>
+<p>对应于2<sup>k</sup>种不同的消息，也有2<sup>k</sup>种码字。这2<sup>k</sup>个码字的集合就叫做一个<strong>分组码(block code)</strong>。</p>
+
+<p>线性分组码的定义如下：</p>
 
 <p>一个长度为n，由2<sup>k</sup>个码字的分组码，当且仅当其2<sup>k</sup>个码字构成域GF(2)上所有n维向量组成的向量空间的一个k维子空间时被称为<strong>线性(linear)(n,k)码</strong>。即：一个二进制分组码字的充要条件时其任意两个码字的模2和仍然是该分组码中的一个码字。</p>
+
+<p>当分组码是线性分组码时，可以大大降低编码器的编码复杂度。</p>
 
 <p><strong>2.2.2系统结构</strong></p>
 
 <p>对于线性分组码，其系统结构(systematic structure)共计n位，前n-k位为冗余校验部分，后k位为消息部分。消息部分由k个未经改变的原始消息位构成，冗余校验部分则是n-k个奇偶校验位。具有这种结构的线性分组码被称为<strong>线性系统分组码(linear systematic block code)</strong>。</p>
 
-<h4 id="23-非二进制q进制bch码">2.3 非二进制(q进制)BCH码</h4>
+<h4 id="23-循环码">2.3 循环码</h4>
+
+<p>循环码构成了线性分组码的一个重要子类。1957年Eugene Prange首次对循环码进行了研究。之后，随着众多数学家的努力，循环码在<strong>随机差错纠正</strong>和<strong>突发错误纠正</strong>两方面的研究突飞猛进。如：RS码，BCH码都是循环码。</p>
+
+<p>循环码的定义就它的名字一样直接了当。具体定义如下表述：</p>
+
+<p>已知一个线性分组码长度为n，写作一个n维向量 v=(v<sub>0</sub>,v<sub>1</sub>,……,v<sub>n-1</sub>)。如果将该向量右移一位，可得v<sup>1</sup>=(v<sub>n-1</sub>,v<sub>0</sub>,……,v<sub>n-2</sub>)。如果将向量右移i位，可得v<sup>i</sup>=(v<sub>n-i</sub>,v<sub>n-i+1</sub>,……,v<sub>n-i-1</sub>)。</p>
+
+<p>如果一个线性分组码C的任意码字循环移位后仍然是C的码字，则称其为<strong>循环码(Cyclic Code)</strong></p>
+
+<h4 id="24-非二进制q进制bch码">2.4 非二进制(q进制)BCH码</h4>
 
 <p>BCH码是对汉明码的一种重要推广，可用于纠正多个错误。</p>
 
@@ -498,7 +514,7 @@ f<sub>i</sub>g<sub>j</sub>使用模2乘法。</p>
 
 <p>对于任意正整数m，具有q<sup>m</sup>个元素的伽罗华域GF(q<sup>m</sup>)可以由基础域GF(q)构造得到。</p>
 
-<h4 id="24-rs码">2.4 RS码</h4>
+<h4 id="25-rs码">2.5 RS码</h4>
 
 <p>Reed-Solomon码是m=1的q进制BCH码，其广泛应用在数字通信和存储系统中，以进行差错控制。Reed-Solomon码由[n,k,d]三个系数定义，其中：n为码字的分组长度；k为码字的信息符号（information digit）的长度，n-k为奇偶校验符号数；d为相邻码字的最小码距，其最多可以纠正t=(d-1)/2个错误。</p>
 
