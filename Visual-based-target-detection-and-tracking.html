@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>西安漫行-Su'S Blog </title>
-  <meta name="description" content="第三次到西安，去了大明宫国家遗址公园、西安博物院。 ">
+	<title>基于视觉的目标检测与跟踪 概念梳理-Su'S Blog </title>
+  <meta name="description" content="基于视觉的目标检测与跟踪是图像处理、计算机视觉、模式识别等众多学科的交叉研究课题, 在视频监控、虚拟现实、人机交互、自主导航等领域, 具有重要的理论研究意义和实际应用价值 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -226,7 +226,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/roaming-xian">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/Visual-based-target-detection-and-tracking">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
@@ -375,8 +375,8 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 			<article id="post-page">
 	
-	31 Mar 2017
-	<h3>西安漫行 </h3>
+	31 Jul 2017
+	<h3>基于视觉的目标检测与跟踪 概念梳理 </h3>
 	<!-- JiaThis Button BEGIN -->
 <div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
 <a class="jiathis_button_weixin"></a>
@@ -403,41 +403,110 @@ var jiathis_config={
 <br>
 	<div class="content">
 
-		<p>第三次到西安，去了大明宫国家遗址公园、西安博物院。第一次坐大巴去，第二次坐火车去，这次坐飞机去。</p>
+		<div class="highlighter-rouge">运动目标的检测和跟踪主要用于获取运动目标的位置、 姿态、 轨迹等基本运动信息, 是理解服务对象或对目标进行控制的前提和基础
+</div>
 
-<p>在大明宫遗址公园的地下博物馆里，看了各种出土文物和复原的建筑模型，有一种穿越的感觉，好像千年之前的场景就在眼前，很是震撼。可以想象，昔日大唐盛世的威武雄壮，宫墙高耸，直插霄汉。而至今日，王朝崩塌，盛世不再，宫阙万间都做了土。哎。</p>
+<p><img src="/img/201708/02.PNG" alt="image" /></p>
 
-<p><img src="http://suzhengpeng.com/img/201703xi'an/IMG_4387.JPG" alt="avatar" />
-在飞机上<br /><br />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4464.JPG" alt="avatar" />
-西安街景<br /><br />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4533.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4735.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4736.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4737.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4803.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4783.JPG" alt="avatar" />
-长安花<br /><br />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4572.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4613.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4616.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4630.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4631.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4632.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4633.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4653.JPG" alt="avatar" />
-大明宫遗址<br /><br />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4886.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4946.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4897.JPG" alt="avatar" />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4962.JPG" alt="avatar" />
-西安博物院<br /><br />
-<img src="http://suzhengpeng.com/img/201703xi'an/IMG_4994.JPG" alt="avatar" />
-西安北站<br /><br /></p>
+<h3 id="1-目标检测">1 目标检测</h3>
+
+<p>目标检测的目的是从不同复杂程度的背景中辨识出运动目标, 并分离背景（分离“我们不关心”的背景）, 从而完成跟踪、 识别等后续任务（获取“ 我们所关心” 的前景目标）。</p>
+
+<p>按算法所处理的数据对象的不同, 将目标检测分为<strong>基于背景建模</strong>与<strong>基于目标建模</strong>的检测方法。</p>
+
+<p><img src="/img/201708/03.PNG" alt="image" /></p>
+
+<h4 id="11-基于背景建模的目标检测方法">1.1 基于背景建模的目标检测方法</h4>
+
+<p>基于背景建模的方法将当前帧与背景参考模型进行比对, 再通过阈值法来判断各个像素是否属于运动前景, 最终对检测出的运动前景进行分割得到跟踪目标.</p>
+
+<h4 id="背景初始化-background-initialization">背景初始化 Background initialization</h4>
+
+<p>即：对背景模型的初始化工作。</p>
+
+<p>最简单的初始化方法：得到一帧不包含任何运动目标的背景图像</p>
+
+<p>通常的初始化模型：从一段较短且不包含前景目标的训练序列中获取。</p>
+
+<p>实际的初始化模型：使用包含前景目标的一组序列去获取背景</p>
+
+<p>实际场景中背景因受光照变化、 场景中目标的进入或退出等因素的影响而时刻发生变化, 准确的背景模型变得难以获取。所以构造<strong>鲁棒、自适应的背景模型</strong>是<strong>基于背景建模的运动目标检测算法</strong>的关键。</p>
+
+<h4 id="12-基于前景目标建模的目标检测方法">1.2 基于前景目标建模的目标检测方法</h4>
+
+<p>基于目标建模的目标检测方法通常分为离线训练与在线检测两个阶段。</p>
+
+<p><strong>离线训练</strong>阶段对训练样本中的<strong>前景目标</strong>与<strong>背景</strong>分别进行<strong>特征表达</strong>, 建立起目标或背景<strong>表观模型</strong>, 再进行<strong>分类器训练</strong>得到<strong>分类器模型</strong>。</p>
+
+<p><strong>在线检测</strong>阶段对测试样本在<strong>多个尺度</strong>上进行<strong>滑动窗口</strong>扫描后, 采用同样的<strong>特征表达方法</strong>建立起<strong>表观模型</strong>, 然后再用离线阶段训练得到的<strong>分类器模型</strong>对其进行分类, 从而判断各个窗口是否为前景目标。</p>
+
+<p>表达特征要能够有效地反映检测目标的本质。</p>
+
+<h4 id="121特征表达">1.2.1特征表达</h4>
+
+<p>特征表达就是将<strong>原始图像像素</strong>映射到一个可区分维度空间数据，用以打破底层像素与高层语义之间的语义鸿沟。</p>
+
+<h4 id="1211基于人工设计的特征">1.2.1.1基于人工设计的特征</h4>
+
+<p>利用人类先验知识与智慧, 并将这类知识应用于目标检测、 识别等任务。相对容易、 计算也比较简单, 但其极大地依赖了人类知识、 经验的总结。</p>
+
+<p>基于人工设计的特征是人们通过手动设计提取得到的特征, 即存在一个对输入信号“显式”的预处理过程。</p>
+
+<p>人工设计的特征按<strong>视觉特性与特征计算</strong>的不同可以大致分为四类: 梯度特征、 模式特征、形状特征以及颜色特征.</p>
+
+<h4 id="1212基于学习的特征">1.2.1.2基于学习的特征</h4>
+
+<p>通过无监督学习的方式, 让机器自动地从样本中学习到表征这些样本更加本质的特征。</p>
+
+<p>该类方法中最常用的是基于深度学习的特征表达方法, 其通过逐层地构建一个多层网络,使机器自动地学习隐含在数据内部的关系。</p>
+
+<p>基于深度学习的特征表达按其构成单元的不同, 一般可以分为基于限制玻尔兹曼机 (Restricted Boltzmann machine, RBM)、 基于自编码机 (Auto encoder, AE)和基于卷积神经网络(Convolutional neural network, CNN)的特征表达方法.</p>
+
+<h4 id="122-分类器">1.2.2 分类器</h4>
+
+<p>支持向量机 (SVM) 是使用最为广泛的分类器。</p>
+
+<h3 id="2-目标跟踪">2 目标跟踪</h3>
+
+<p>运动目标跟踪问题可以等价为在连续的图像帧之间, 构建基于目标位置、 速度、 形状、 纹理、 色彩等有关特征的对应匹配问题。</p>
+
+<p><img src="/img/201708/01.PNG" alt="image" /></p>
+
+<p>主要过程由：目标状态初始化、表观建模、运动估计和目标定位四部分组成。</p>
+
+<p><strong>目标状态初始化</strong>：一般采用人工标定或目标检测的方法进行实现。</p>
+
+<p><strong>表观建模</strong>：主要包括了对目标的视觉特征 (颜色、 纹理、 边缘等) 的描述, 以及如何度量视觉特征之间的相似性, 它是实现鲁棒跟踪的关键所在.</p>
+
+<p><strong>运动估计</strong>：采用某种运动假设来预估目标可能出现的位置。常用的运动估计方法：线性回归、均值漂移、隐马尔科夫模型、卡尔曼滤波以及粒子滤波等。</p>
+
+<p><strong>目标定位</strong>：在表观建模与运动估计的基础上, 采用某种最优化策略获取目标最可能的位置。</p>
+
+<p>目标跟踪按有无检测过程的参与, 可以分为<strong>生成式跟踪</strong>与<strong>判别式跟踪</strong></p>
+
+<h4 id="21-生成式跟踪方法">2.1 生成式跟踪方法</h4>
+
+<p>假设跟踪目标可以由某种生成过程所描述，其目标是从众多候选目标中寻找<strong>最优的候选目标</strong>。<strong>关键</strong>在于如何精确地对跟踪目标进行重构表达。</p>
+
+<p>生成式表观模型的建立分为：基于<strong>核</strong>的方法、 基于<strong>子空间</strong>的方法以及基于<strong>稀疏表示</strong>的方法。</p>
+
+<h4 id="22-判别式跟踪方法">2.2 判别式跟踪方法</h4>
+
+<p>基本思路：寻求跟踪目标与背景间的决策边界. 判别式跟踪方法通常采用在线增量学习的方法, 获取前景目标与背景的分界面, 降低计算成本, 提升计算效率</p>
+
+<p>该方法通常是对每一帧图像进行目标检测来获取目标状态, 因此这类方法也常被称为基于检测的跟踪方法。目前, 判别式跟踪方法可以分为基于<strong>在线 Boosting **的方法、 基于</strong>支持向量机<strong>的方法、 基于</strong>随机学习<strong>的方法以及基于</strong>判别分析**的方法 4 类。</p>
+
+<h4 id="计算机视觉三大会议">计算机视觉三大会议：</h4>
+
+<blockquote>
+  <p>CVPR,Computer Vision and Pattern Recognition<br />
+ICCV,International Conference on Computer Vision<br />
+ECCV,European Conference on Computer Vision</p>
+</blockquote>
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/xi%27an.html" rel="tag">Xi'an</a>, <a href="/tag/photograph.html" rel="tag">photograph</a> </div> 
+	<div id="posts-out-tags"># <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/comptervision.html" rel="tag">compterVision</a> </div> 
 </article>
 
 
@@ -528,7 +597,7 @@ Suzhengpeng @ Tsingtao
 	      
 	    
 <br><br> <div class="footer-qrcode">
- <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/roaming-xian">
+ <img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/Visual-based-target-detection-and-tracking">
  </div><br>
  <div class="footer-ico-con">
  <table><tr>
