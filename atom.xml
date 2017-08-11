@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-08-01T11:30:00+08:00</updated>
+ <updated>2017-08-11T22:17:12+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,9 +14,19 @@
  
 
  <entry>
+   <title>机器学习有关的数学知识基础</title>
+   <link href="http://localhost:4000/math-knowledge-of-machine-learning"/>
+   <id>http://localhost:4000/math-knowledge-of-machine-learning</id>
+   <updated>2017-07-31T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;1、线性代数&lt;/p&gt; &lt;p&gt;Introduction to Linear Algebra, 4th edition ,GILBERT STRANG&lt;/p&gt; &lt;p&gt;麻省理工公开课：线性代数 –&amp;gt; http://open.163.com/special/opencourse/daishu.html&lt;/p&gt; &lt;p&gt;2、PRML、Pattern Recognition and Machine Learning 模式识别与机器学习 Andrew Ng&lt;/p&gt; &lt;p&gt;斯坦福大学公开课 ：机器学习课程 –&amp;gt; http://open.163.com/special/opencourse/machinelearning.html&lt;/p&gt; &lt;p&gt;3、凸优化 Convex Optimization Stephen Boyd&lt;/p&gt; &lt;p&gt;讲义下载：https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf&lt;/p&gt; &lt;p&gt;EE364a: Convex Optimization I –&amp;gt; https://stanford.edu/class/ee364a/index.html&lt;/p&gt; &lt;p&gt;4、微积分&lt;/p&gt; &lt;p&gt;5、Multivariate Statistical Analysis多元统计分析&lt;/p&gt; &lt;p&gt;应用多元统计分析 高惠璇 编著, 北京大学出版社&lt;/p&gt; &lt;p&gt;Applied Multivariate Statistical Analysis (6th Edition)...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>基于视觉的目标检测与跟踪 概念梳理</title>
-   <link href="http://localhost:4000/Visual-based-target-detection-and-tracking"/>
-   <id>http://localhost:4000/Visual-based-target-detection-and-tracking</id>
+   <link href="http://localhost:4000/Visual-based-target-detection-and-tracking-%E5%89%AF%E6%9C%AC"/>
+   <id>http://localhost:4000/Visual-based-target-detection-and-tracking - 副本</id>
    <updated>2017-07-31T00:00:00+08:00</updated>
    <content type="html">&lt;div class=&quot;highlighter-rouge&quot;&gt;运动目标的检测和跟踪主要用于获取运动目标的位置、 姿态、 轨迹等基本运动信息, 是理解服务对象或对目标进行控制的前提和基础 &lt;/div&gt; &lt;p&gt;&lt;img src=&quot;/img/201708/02.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;1-目标检测&quot;&gt;1 目标检测&lt;/h3&gt; &lt;p&gt;目标检测的目的是从不同复杂程度的背景中辨识出运动目标, 并分离背景（分离“我们不关心”的背景）, 从而完成跟踪、 识别等后续任务（获取“ 我们所关心” 的前景目标）。&lt;/p&gt; &lt;p&gt;按算法所处理的数据对象的不同, 将目标检测分为&lt;strong&gt;基于背景建模&lt;/strong&gt;与&lt;strong&gt;基于目标建模&lt;/strong&gt;的检测方法。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/201708/03.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;h4 id=&quot;11-基于背景建模的目标检测方法&quot;&gt;1.1 基于背景建模的目标检测方法&lt;/h4&gt; &lt;p&gt;基于背景建模的方法将当前帧与背景参考模型进行比对, 再通过阈值法来判断各个像素是否属于运动前景, 最终对检测出的运动前景进行分割得到跟踪目标.&lt;/p&gt; &lt;h4 id=&quot;背景初始化-background-initialization&quot;&gt;背景初始化 Background initialization&lt;/h4&gt; &lt;p&gt;即：对背景模型的初始化工作。&lt;/p&gt; &lt;p&gt;最简单的初始化方法：得到一帧不包含任何运动目标的背景图像&lt;/p&gt; &lt;p&gt;通常的初始化模型：从一段较短且不包含前景目标的训练序列中获取。&lt;/p&gt; &lt;p&gt;实际的初始化模型：使用包含前景目标的一组序列去获取背景&lt;/p&gt; &lt;p&gt;实际场景中背景因受光照变化、 场景中目标的进入或退出等因素的影响而时刻发生变化, 准确的背景模型变得难以获取。所以构造&lt;strong&gt;鲁棒、自适应的背景模型&lt;/strong&gt;是&lt;strong&gt;基于背景建模的运动目标检测算法&lt;/strong&gt;的关键。&lt;/p&gt; &lt;h4 id=&quot;12-基于前景目标建模的目标检测方法&quot;&gt;1.2 基于前景目标建模的目标检测方法&lt;/h4&gt; &lt;p&gt;基于目标建模的目标检测方法通常分为离线训练与在线检测两个阶段。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;离线训练&lt;/strong&gt;阶段对训练样本中的&lt;strong&gt;前景目标&lt;/strong&gt;与&lt;strong&gt;背景&lt;/strong&gt;分别进行&lt;strong&gt;特征表达&lt;/strong&gt;, 建立起目标或背景&lt;strong&gt;表观模型&lt;/strong&gt;, 再进行&lt;strong&gt;分类器训练&lt;/strong&gt;得到&lt;strong&gt;分类器模型&lt;/strong&gt;。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;在线检测&lt;/strong&gt;阶段对测试样本在&lt;strong&gt;多个尺度&lt;/strong&gt;上进行&lt;strong&gt;滑动窗口&lt;/strong&gt;扫描后,...</content>
  </entry>
@@ -168,37 +178,6 @@
    <id>http://localhost:4000/fill-in-encoding-region</id>
    <updated>2017-04-30T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;QR码的编码区包括格式信息、版本信息以及数据码字和纠错码字。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/qrcode/enregion.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;格式信息的填充&quot;&gt;格式信息的填充&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/qrcode/forinfoposition.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;&lt;center&gt;格式信息位置&lt;/center&gt;&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;格式信息位共有15位，包括：5个数据位和10个用BCH（15,5）编码计算得到的纠错位。数据位的前两位是纠错等级指示符。第三到五位是为数据掩模图形参考（the data mask pattern reference）&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;纠错等级&lt;/th&gt; &lt;th&gt;L&lt;/th&gt; &lt;th&gt;M&lt;/th&gt; &lt;th&gt;Q&lt;/th&gt; &lt;th&gt;H&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;二进制&lt;/td&gt; &lt;td&gt;01&lt;/td&gt; &lt;td&gt;00&lt;/td&gt; &lt;td&gt;11&lt;/td&gt; &lt;td&gt;10&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt; &lt;p&gt;&lt;strong&gt;Table 1 纠错等级指示符&lt;/strong&gt;&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;掩模图形参考&lt;/th&gt; &lt;th&gt;掩模图形&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;000&lt;/td&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>青啤博物馆与信号山公园</title>
-   <link href="http://localhost:4000/tbm-and-signal-hill"/>
-   <id>http://localhost:4000/tbm-and-signal-hill</id>
-   <updated>2017-04-28T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_5938.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_5942.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;△青岛啤酒博物馆&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_5993.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_5998.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_6004.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_6010.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/20170428/IMG_6011.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;△在信号山观景台俯瞰青岛海岸线&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170428/IMG_6052.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;△胶澳总督府旧址（今市南区人大常委会所在地）&lt;/p&gt;
-</content>
  </entry>
 
  
