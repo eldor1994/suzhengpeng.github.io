@@ -495,9 +495,11 @@ img[title="Monochrome"] {
 /* Footer */
 .footer {
   border-radius: 2px;
+  border: 50px solid #F5F5F5;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei";
   /* border-top:1px solid rgba(0, 0, 0, 0.14); */
-  text-align: center;
+  /*text-align: center;*/
+  height: 250px;
   color: #000;
   font-size: 100%;
   font-weight: 200;
@@ -506,6 +508,20 @@ img[title="Monochrome"] {
     color: #000;
     font-weight: 200;
     font-size: 80%; }
+
+.footer-one {
+  text-align: center;
+  float: left;
+  width: 40%; }
+
+.footer-two {
+  float: left;
+  width: 10%; }
+
+.footer-three {
+  border-left: 50px solid #F5F5F5;
+  float: left;
+  width: 40%; }
 
 .footer-ico {
   margin: 0 auto;
@@ -522,7 +538,6 @@ img[title="Monochrome"] {
     -o-transform: rotate(45deg); }
 
 .footer-qrcode {
-  margin: 0 auto;
   width: 100px;
   height: 100px;
   border-radius: 30px; }
@@ -530,14 +545,12 @@ img[title="Monochrome"] {
     border-radius: 30px; }
 
 .footer-power {
-  margin: 0 auto;
+  text-align: center;
   font-size: 10px; }
 
 .footer-ico-con li {
   list-style: none;
   display: inline; }
-.footer-ico-con table {
-  margin: 0 auto; }
 .footer-ico-con img {
   width: 26px;
   height: 26px;
