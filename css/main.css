@@ -518,10 +518,15 @@ img[title="Monochrome"] {
   float: left;
   width: 10%; }
 
-.footer-three {
-  border-left: 50px solid #F5F5F5;
+.footer-two-1 {
+  border-left: 30px solid #F5F5F5;
   float: left;
-  width: 40%; }
+  width: 15%; }
+
+.footer-three {
+  border-left: 30px solid #F5F5F5;
+  float: left;
+  width: 25%; }
 
 .footer-ico {
   margin: 0 auto;
@@ -541,8 +546,6 @@ img[title="Monochrome"] {
   width: 100px;
   height: 100px;
   border-radius: 30px; }
-  .footer-qrcode:hover {
-    border-radius: 30px; }
 
 .footer-power {
   text-align: center;
