@@ -548,27 +548,32 @@ img[title="Monochrome"] {
   text-align: center;
   font-size: 10px; }
 
-.footer-ico-con li {
-  list-style: none;
-  display: inline; }
-.footer-ico-con img {
-  width: 26px;
-  height: 26px;
-  border-radius: 13px;
-  opacity: 1;
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -ms-filter: grayscale(100%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
-  filter: gray; }
-  .footer-ico-con img:hover {
-    -webkit-filter: grayscale(0%);
-    -moz-filter: grayscale(0%);
-    -ms-filter: grayscale(0%);
-    -o-filter: grayscale(0%);
-    filter: grayscale(0%);
-    opacity: 0.5; }
+.footer-ico-con {
+  margin: 0 auto; }
+  .footer-ico-con li {
+    list-style: none;
+    display: inline; }
+  .footer-ico-con table {
+    margin: 0 auto; }
+  .footer-ico-con img {
+    margin: 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    opacity: 1;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray; }
+    .footer-ico-con img:hover {
+      -webkit-filter: grayscale(0%);
+      -moz-filter: grayscale(0%);
+      -ms-filter: grayscale(0%);
+      -o-filter: grayscale(0%);
+      filter: grayscale(0%);
+      opacity: 0.5; }
 
 .pagination-x {
   text-align: center; }
