@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Links-Su'S Blog </title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>分类尺度空间追踪 DSST 算法 学习笔记-Su'S Blog </title>
+  <meta name="description" content="一篇DSST算法的学习笔记 Accurate Scale Estimation for Robust Visual Tracking ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -430,7 +430,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/pages/page/link">
+			<img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/accurate-scale-estimation-for-robust-visual-tracking">
 			</div><br>
 
 
@@ -656,39 +656,202 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 			<article id="post-page">
 	
-  <h2 id="外部链接">外部链接</h2>
-<p><br />
-<a href="http://www.sdust.edu.cn">山东科技大学</a>
-<a href="http://www.xidian.edu.cn">西安电子科技大学</a>
-<a href="https://pages.github.com">GitHub_Pages</a>
-<br /><br />
-<a href="http://jekyllrb.com">Jekyll</a>
-<a href="http://jekyll.com.cn">Jekyll(中文网)</a>
-<a href="https://hexo.io/">Hexo</a>
-<a href="https://github.com/zxing">ZXing</a>
-<a href="http://www.libtom.net">Libtom</a>
-<br /><br />
-<a href="http://taobaofed.org">淘宝前端团队</a>
-<a href="http://www.pris.net.cn">北邮模式识别实验室</a>
-<a href="http://www.nlpr.ia.ac.cn">中科院模式识别国家重点实验室</a>
-<a href="http://cvrs.whu.edu.cn/">武汉大学计算机视觉与遥感实验室</a>
-<br /><br />
-<a href="https://shuge.org">书格</a>
-<a href="https://www.daoon.com">道卬</a>
-<a href="http://www.peise.net">配色网</a>
-<a href="http://www.tinyvga.com">VGA_Microcontroller_projects</a>
-<br /><br />
-<a href="http://mateuszurbanowicz.com">Mateusz_Urbanowicz</a>
-<a href="http://www.ruanyifeng.com">阮一峰</a>
-<br /><br />
-<a href="http://www.andrewng.org">Andrew_Ng(吴恩达)</a>
-<a href="http://ai.stanford.edu/~koller/index.html">Daphne_Koller</a>
-<a href="http://www.letpub.com.cn/index.php?page=journalapp">SCI影响因子查询及期刊投稿分析系统</a>
-<br /><br />
-<a href="http://www.visionbib.com/bibliography/contents.html">Annotated Computer Vision Bibliography : Table of Contents</a></p>
+	26 Aug 2017
+	<h3>分类尺度空间追踪 DSST 算法 学习笔记 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:40%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+		<div class="jiathis_style" style="padding: 10px; background:#E9F01D;">
+				<span class="jiathis_txt">分享到：</span>
+				<a class="jiathis_button_weixin"></a>
+				<a class="jiathis_button_tsina"></a>
+				<a class="jiathis_button_fb"></a>
+				<a class="jiathis_button_twitter"></a>
+				<a class="jiathis_button_ydnote"></a>
+				<a class="jiathis_button_linkedin"></a>
+				<a href="http://www.jiathis.com/share?uid=2133390" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+		</div>
+				<script type="text/javascript" >
+				var jiathis_config={
+					data_track_clickback:true,
+					summary:"",
+					ralateuid:{
+						"tsina":"@ShannonSS"
+					},
+					shortUrl:false,
+					hideMore:false
+				}
+				</script>
+				<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2133390" charset="utf-8"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<h3 id="综述">综述</h3>
+
+<p>DSST（Discriminative Scale Space Tracker、分类尺度空间追踪器）是一种对追踪目标进行尺度估计的算法。对于大范围的尺度估计具有较强的鲁棒性。</p>
+
+<p>DSST算法的提出是基于尺度金字塔（Scale Pyramid Representation）的分类相关滤波器（Discriminative Correlation Filters）。</p>
+
+<h3 id="分类相关滤波器">分类相关滤波器</h3>
+
+<p>DSST 通过学习分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f<sub>1</sub>……f<sub>t</sub>作为训练样本。将其滤波器的输出分别标记为g<sub>1</sub>……g<sub>t</sub>。则在第t次计算时最佳的相关滤波器h<sub>t</sub>可以通过计算最小平方差来获得：</p>
+
+<p>公式1–<img src="/img/dsst/function1.PNG" alt="公式1" /></p>
+
+<p>在公式中：</p>
+
+<blockquote>
+  <p>1、f<sub>i</sub>,g<sub>j</sub>和h<sub>t</sub>的大小都是M×N<br /></p>
+</blockquote>
+
+<blockquote>
+  <p>2、*表示循环相关（Circular Correlation）计算<br /></p>
+</blockquote>
+
+<blockquote>
+  <p>3、大写字母表示对应的离散傅里叶变换DFT<br /></p>
+</blockquote>
+
+<blockquote>
+  <p>4、带有上横线的H<sub>t</sub>表示对应项的复共轭。<br /></p>
+</blockquote>
+
+<blockquote>
+  <p>5、H<sub>t</sub>F<sub>j</sub>表示逐点相乘。</p>
+</blockquote>
+
+<p>通过选择公式2可以使公式1最小化：</p>
+
+<p>公式2–<img src="/img/dsst/function2.PNG" alt="公式2" /></p>
+
+<p>理想相关输出g<sub>j</sub>由高斯函数峰值所在的目标中心f<sub>j</sub>构造得到。设公式2H<sub>t</sub>中分子为A<sub>t</sub>分母为B<sub>t</sub>，其由每次新的目标观察值f<sub>t</sub>进行加权平均（Weight Average）得到。</p>
+
+<p>当从一帧新的图像中获取到一个大小为M×N的图像块时，其相关性得分（Correlation Score）y可以由以下的方程计算得到：</p>
+
+<p><img src="/img/dsst/function22.PNG" alt="公式22" /></p>
+
+<p>通过计算得到y的最大值，继而确定得到目标位置。</p>
+
+<h3 id="分类相关滤波器for多维特征">分类相关滤波器for多维特征</h3>
+
+<p>DCF在多维特征方面的应用主要有：visual tracking 、object detection 、 object alignment。在DSST算法中，主要使用HOG（Histogram of Oriented Gradient、方向梯度直方图）特征串联图形灰度特征（image intensity feature）作为转换滤波器（Translation Filter）。在这里介绍的算法一般用于搜索空间的维数。</p>
+
+<p>一维滤波器用于测算尺度，二维滤波器只是用于转换，而三维滤波器则用于穷尽所有的尺度空间来确定目标的位置。</p>
+
+<p>我们考虑使用d维特征来表示一个图像（一个信号）。设 f 为一个由特征映射（feature map）目标的矩形块。将 f 的特征维数 l ∈ {1,……,d} 表示为 f<sup>l</sup>。其目标就是寻找一个最优滤波器h，包含滤波器 h<sup>l</sup> 每一个特征维度。通过最小化损耗函数可以得到：</p>
+
+<p>公式3–<img src="/img/dsst/function3.PNG" alt="公式3" /></p>
+
+<p>在公式中：</p>
+
+<blockquote>
+  <p>1、g是根据训练样本f求得的理想输出。</p>
+</blockquote>
+
+<blockquote>
+  <p>2、参数λ&gt;=0控制了 the impact of the regularization term</p>
+</blockquote>
+
+<p>公式3 只是考虑了一个训练样本，于是在公式1 t=1的情况下，公式3的解可以是：</p>
+
+<p>公式4–<img src="/img/dsst/function4.PNG" alt="公式4" /></p>
+
+<p>在这里我们使用如下的公式来分别更新滤波器（H<sub>t</sub><sup>l</sup>）的分子 A<sub>t</sub><sup>l</sup> 和分母 B<sub>t</sub><sup>l</sup>：</p>
+
+<p>公式5–<img src="/img/dsst/function5.PNG" alt="公式5" /></p>
+
+<p>在公式5中，η是一个learn rate参数，每一个特征映射矩形区域z的相关性得分y可以由公式6计算得到。使其最大化即可确定新的目标的状态（target state）。</p>
+
+<p>公式6–<img src="/img/dsst/function6.PNG" alt="公式5" /></p>
+
+<p>总结：</p>
+
+<blockquote>
+  <div class="highlighter-rouge">我们使用HOG特征作转换估计（translation estimation）来学习一个滤波器。
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">为了训练一个滤波器我们将目标图象块抽象为特征映射（feature map） f 。
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">使用公式5来更新滤波器 h&lt;sub&gt;trans&lt;/sub&gt;
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">我们通过提取（extract）出估计位置的特征映射来估计出新的一帧图象中目标的位置。
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">通过使用公式6来计算出相关性得分
+  </div>
+</blockquote>
+
+<h3 id="全尺度空间追踪-exhaustive-scale-space-tacking">全尺度空间追踪 Exhaustive Scale Space Tacking</h3>
+
+<blockquote>
+  <div class="highlighter-rouge">这一部分主要描述分类相关滤波器在尺度估计中的应用
+  </div>
+</blockquote>
+
+<p>我们提出了一种基于3-D<strong>尺度空间相关滤波器</strong>的 translation-scale tracking 。滤波器的大小为M×N×S，M和N分别指滤波器的高和宽，S指尺度的个数。</p>
+
+<p>为了更新这个滤波器：</p>
+
+<blockquote>
+  <div class="highlighter-rouge">首先，在围绕目标的矩形区域内计算一个特征金字塔。金字塔根据目标的尺度构建为大小为M×N，训练样本 f 之后设置为一个特征金字塔的立方体（rectangular cuboid），这个立方体大小为M×N×S其中心就是目标的估计估计位置和尺度。
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">其次，我们使用3-D高斯函数作为作为对应的理想的相关输出 g
+  </div>
+</blockquote>
+
+<blockquote>
+  <div class="highlighter-rouge">最后，使用公式5更新尺度空间滤波器。
+  </div>
+</blockquote>
+
+<p>为了在新一帧的图像中确定目标，我们从特征金字塔中抽象出一个M×N×S的立方体z。这个立方体的中心即为预计的目标的位置和尺度。使用公式6计算相关性得分。通过计算的到最大的得分来确定新目标的尺度和位置。</p>
+
+<p>算法流程图–<img src="/img/dsst/dsstaf.svg" alt="算法流程图" /></p>
 
 
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/papers.html" rel="tag">papers</a>, <a href="/tag/computervision.html" rel="tag">computerVision</a>, <a href="/tag/dsst.html" rel="tag">DSST</a> </div> 
 </article>
+
+
 
 	  </main>
 		
@@ -980,7 +1143,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/pages/page/link">
+			<img src="http://s.jiathis.com/qrcode.php?url=http://suzhengpeng.com/accurate-scale-estimation-for-robust-visual-tracking">
 			</div><br>
 
 

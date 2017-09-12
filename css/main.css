@@ -154,7 +154,7 @@ blockquote {
   word-break: break-all;
   overflow: auto; }
 
-.content table {
+.content table, #post-page table {
   word-wrap: break-word;
   word-break: break-all;
   overflow: auto;
@@ -172,14 +172,14 @@ blockquote {
   border-color: #666666;
   border-collapse: collapse; }
 
-.content table th {
+.content table th, #post-page table th {
   border-width: 1px;
   padding: 8px;
   border-style: solid;
   border-color: #666666;
   background-color: #dedede; }
 
-.content table td {
+.content table td, #post-page table td {
   border-width: 1px;
   padding: 8px;
   border-style: solid;

@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-08-28T16:15:10+08:00</updated>
+ <updated>2017-09-12T23:03:00+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>分类尺度空间追踪 DSST 算法 学习笔记</title>
+   <link href="http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking"/>
+   <id>http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking</id>
+   <updated>2017-08-26T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;综述&quot;&gt;综述&lt;/h3&gt; &lt;p&gt;DSST（Discriminative Scale Space Tracker、分类尺度空间追踪器）是一种对追踪目标进行尺度估计的算法。对于大范围的尺度估计具有较强的鲁棒性。&lt;/p&gt; &lt;p&gt;DSST算法的提出是基于尺度金字塔（Scale Pyramid Representation）的分类相关滤波器（Discriminative Correlation Filters）。&lt;/p&gt; &lt;h3 id=&quot;分类相关滤波器&quot;&gt;分类相关滤波器&lt;/h3&gt; &lt;p&gt;DSST 通过学习分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f&lt;sub&gt;1&lt;/sub&gt;……f&lt;sub&gt;t&lt;/sub&gt;作为训练样本。将其滤波器的输出分别标记为g&lt;sub&gt;1&lt;/sub&gt;……g&lt;sub&gt;t&lt;/sub&gt;。则在第t次计算时最佳的相关滤波器h&lt;sub&gt;t&lt;/sub&gt;可以通过计算最小平方差来获得：&lt;/p&gt; &lt;p&gt;公式1–&lt;img src=&quot;/img/dsst/function1.PNG&quot; alt=&quot;公式1&quot; /&gt;&lt;/p&gt; &lt;p&gt;在公式中：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;1、f&lt;sub&gt;i&lt;/sub&gt;,g&lt;sub&gt;j&lt;/sub&gt;和h&lt;sub&gt;t&lt;/sub&gt;的大小都是M×N&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;2、*表示循环相关（Circular Correlation）计算&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;3、大写字母表示对应的离散傅里叶变换DFT&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;4、带有上横线的H&lt;sub&gt;t&lt;/sub&gt;表示对应项的复共轭。&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;5、H&lt;sub&gt;t&lt;/sub&gt;F&lt;sub&gt;j&lt;/sub&gt;表示逐点相乘。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;通过选择公式2可以使公式1最小化：&lt;/p&gt; &lt;p&gt;公式2–&lt;img src=&quot;/img/dsst/function2.PNG&quot; alt=&quot;公式2&quot; /&gt;&lt;/p&gt; &lt;p&gt;理想相关输出g&lt;sub&gt;j&lt;/sub&gt;由高斯函数峰值所在的目标中心f&lt;sub&gt;j&lt;/sub&gt;构造得到。设公式2H&lt;sub&gt;t&lt;/sub&gt;中分子为A&lt;sub&gt;t&lt;/sub&gt;分母为B&lt;sub&gt;t&lt;/sub&gt;，其由每次新的目标观察值f&lt;sub&gt;t&lt;/sub&gt;进行加权平均（Weight Average）得到。&lt;/p&gt; &lt;p&gt;当从一帧新的图像中获取到一个大小为M×N的图像块时，其相关性得分（Correlation...</content>
+ </entry>
 
  
 
@@ -204,36 +214,6 @@
 &lt;p&gt;输球了，很难受，很压抑。在上赛季的艰苦保级路上，鲁能在主场3:0击败苏宁之后才取得了联赛的首胜。而这赛季的联赛中，苏宁已经八轮不胜，而亚冠确高奏凯歌，像极了上赛季的鲁能。这场比赛就当是来还愿了吧，说是一种玄学，一种宿命也不为过。我们曾在南京的奥体中心绝杀当时的江苏舜天，夺得足协杯的冠军。如今被绝杀，送给了对手首胜，也是一种轮回吧。&lt;/p&gt;
 
 &lt;p&gt;静静的想一想，这场输球虽说裁判的因素很大，但是鲁能自己的问题也不少，防守端的问题，中场存在的问题尤为突出。希望下一场客战延边，能拿三分吧。也希望鲁能能进亚冠。&lt;/p&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>关于南渡政权的思考</title>
-   <link href="http://localhost:4000/think-about-nandu"/>
-   <id>http://localhost:4000/think-about-nandu</id>
-   <updated>2017-05-10T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;稽之往史&lt;br /&gt;
-我民族若不能立之于中原&lt;br /&gt;
-偏安江表，称曰南渡&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;南渡之人未能有北返者&lt;br /&gt;
-晋人南渡，其例一也&lt;br /&gt;
-宋人南渡，其例二也&lt;br /&gt;
-明人南渡，其例三也&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;风景不殊，晋人之深悲&lt;br /&gt;
-还我河山，宋人之虚愿&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;冯友兰 国立西南联合大学纪念碑&lt;/p&gt;
-
-&lt;p&gt;纵观中国历史，凡建都于江南的王朝或者说政权，大多偏安一隅，其结果往往被北方政权所灭或被己所灭。&lt;br /&gt;
-远者如东晋，以及之后的南唐，再如南宋，南明。&lt;br /&gt;
-明初建都于南京，再传于建文帝，便被成祖所取代。其后迁都北京而得以安稳。&lt;br /&gt;
-明末清军入关，明政府南迁，旋即被灭。&lt;br /&gt;
-民国建都于南京，一九四五年之后，解放军自东北到长江不费吹之力即取而代之。&lt;/p&gt;
-
 </content>
  </entry>
 
