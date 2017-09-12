@@ -720,7 +720,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 <p>DSST 通过学习分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f<sub>1</sub>……f<sub>t</sub>作为训练样本。将其滤波器的输出分别标记为g<sub>1</sub>……g<sub>t</sub>。则在第t次计算时最佳的相关滤波器h<sub>t</sub>可以通过计算最小平方差来获得：</p>
 
-<p>公式1–<img src="/img/dsst/function1.PNG" alt="公式1" /></p>
+<p>公式1–<img src="/img/dsst/function1.png" alt="公式1" /></p>
 
 <p>在公式中：</p>
 
@@ -746,13 +746,13 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 <p>通过选择公式2可以使公式1最小化：</p>
 
-<p>公式2–<img src="/img/dsst/function2.PNG" alt="公式2" /></p>
+<p>公式2–<img src="/img/dsst/function2.png" alt="公式2" /></p>
 
 <p>理想相关输出g<sub>j</sub>由高斯函数峰值所在的目标中心f<sub>j</sub>构造得到。设公式2H<sub>t</sub>中分子为A<sub>t</sub>分母为B<sub>t</sub>，其由每次新的目标观察值f<sub>t</sub>进行加权平均（Weight Average）得到。</p>
 
 <p>当从一帧新的图像中获取到一个大小为M×N的图像块时，其相关性得分（Correlation Score）y可以由以下的方程计算得到：</p>
 
-<p><img src="/img/dsst/function22.PNG" alt="公式22" /></p>
+<p><img src="/img/dsst/function22.png" alt="公式22" /></p>
 
 <p>通过计算得到y的最大值，继而确定得到目标位置。</p>
 
@@ -764,7 +764,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 <p>我们考虑使用d维特征来表示一个图像（一个信号）。设 f 为一个由特征映射（feature map）目标的矩形块。将 f 的特征维数 l ∈ {1,……,d} 表示为 f<sup>l</sup>。其目标就是寻找一个最优滤波器h，包含滤波器 h<sup>l</sup> 每一个特征维度。通过最小化损耗函数可以得到：</p>
 
-<p>公式3–<img src="/img/dsst/function3.PNG" alt="公式3" /></p>
+<p>公式3–<img src="/img/dsst/function3.png" alt="公式3" /></p>
 
 <p>在公式中：</p>
 
@@ -778,15 +778,15 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 <p>公式3 只是考虑了一个训练样本，于是在公式1 t=1的情况下，公式3的解可以是：</p>
 
-<p>公式4–<img src="/img/dsst/function4.PNG" alt="公式4" /></p>
+<p>公式4–<img src="/img/dsst/function4.png" alt="公式4" /></p>
 
 <p>在这里我们使用如下的公式来分别更新滤波器（H<sub>t</sub><sup>l</sup>）的分子 A<sub>t</sub><sup>l</sup> 和分母 B<sub>t</sub><sup>l</sup>：</p>
 
-<p>公式5–<img src="/img/dsst/function5.PNG" alt="公式5" /></p>
+<p>公式5–<img src="/img/dsst/function5.png" alt="公式5" /></p>
 
 <p>在公式5中，η是一个learn rate参数，每一个特征映射矩形区域z的相关性得分y可以由公式6计算得到。使其最大化即可确定新的目标的状态（target state）。</p>
 
-<p>公式6–<img src="/img/dsst/function6.PNG" alt="公式5" /></p>
+<p>公式6–<img src="/img/dsst/function6.png" alt="公式5" /></p>
 
 <p>总结：</p>
 
