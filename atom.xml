@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-09-12T23:10:55+08:00</updated>
+ <updated>2017-09-17T22:27:34+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,11 +14,21 @@
  
 
  <entry>
-   <title>分类尺度空间追踪 DSST 算法 学习笔记</title>
+   <title>目标追踪~方向梯度直方图（HOG、Histogram of Oriented Gradient）算法</title>
+   <link href="http://localhost:4000/histogram-of-oriented-gradient"/>
+   <id>http://localhost:4000/histogram-of-oriented-gradient</id>
+   <updated>2017-08-26T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;设计思路&quot;&gt;设计思路&lt;/h3&gt; &lt;p&gt;对目标进行检测需要一个鲁棒性好的特征集，这样就可以对不同的目标进行清晰的分类。&lt;/p&gt; &lt;p&gt;这种算法是基于对一个密度网格（dense grid）中图像梯度方向的充分归一化的局部直方图（well-normalize local histogram）的计算。&lt;/p&gt; &lt;p&gt;其基本思想是：局部的目标的外观（sppearance）和形状（shape）可以根据局部灰度梯度（intensity gradients）和边缘方向（edge directions）进行相当好的特点判断，甚至不需要准确的知道相应的梯度和边缘位置。&lt;/p&gt; &lt;p&gt;在实际的运用中，首先将图像划分为小空间区域（small spatial region）即所谓的胞体（cells）；然后对每一个胞体的全部像素累计一个1维的梯度方向或者边缘方向的直方图。&lt;/p&gt; &lt;p&gt;为了在光照或者阴暗等条件下保持更好的不变性，在使用之前对局部的反应进行 contrast-normalize 。这一过程可以累计大的空间区域（large spatial region、称之为”block“，“块”）局部直方图”能量“（energy），然后进行对所有块中所有的胞体进行归一化。&lt;/p&gt; &lt;p&gt;我们称块的归一化描述符为方向梯度直方图（Histogram of Oriented Gradient、HOG）。&lt;/p&gt; &lt;h3 id=&quot;优点&quot;&gt;优点&lt;/h3&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;这种方法： &lt;/div&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;可以捕捉到边缘或者说梯度结构，而这一结构正式局部边缘的特点。 &lt;/div&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;具有容易控制局部的几何和光度变化中不变程度：如果局部空间或者方向足够小，变换或者旋转或产生一小部分的差别。（即：可以通过控制空间的大小来控制变化） &lt;/div&gt; &lt;/blockquote&gt; &lt;p&gt;对于人类检测，精细的定向取样和强烈的局部光度归一可以带来最好的策略。这大概是因为这样可以允许四肢和躯干可以自由的变化和移动，并且可以保持一个大致向上的方向。&lt;/p&gt; &lt;h3 id=&quot;算法细节及流程&quot;&gt;算法细节及流程&lt;/h3&gt; &lt;p&gt;检测器的属性：&lt;/p&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;1、没有经过Gamma校正的RGB空间 &lt;/div&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;2、没有经过平滑处理的[-1,0,1]梯度滤波 &lt;/div&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>目标追踪~分类尺度空间追踪 DSST 算法</title>
    <link href="http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking"/>
    <id>http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking</id>
    <updated>2017-08-26T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;综述&quot;&gt;综述&lt;/h3&gt; &lt;p&gt;DSST（Discriminative Scale Space Tracker、分类尺度空间追踪器）是一种对追踪目标进行尺度估计的算法。对于大范围的尺度估计具有较强的鲁棒性。&lt;/p&gt; &lt;p&gt;DSST算法的提出是基于尺度金字塔（Scale Pyramid Representation）的分类相关滤波器（Discriminative Correlation Filters）。&lt;/p&gt; &lt;h3 id=&quot;分类相关滤波器&quot;&gt;分类相关滤波器&lt;/h3&gt; &lt;p&gt;DSST 通过学习分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f&lt;sub&gt;1&lt;/sub&gt;……f&lt;sub&gt;t&lt;/sub&gt;作为训练样本。将其滤波器的输出分别标记为g&lt;sub&gt;1&lt;/sub&gt;……g&lt;sub&gt;t&lt;/sub&gt;。则在第t次计算时最佳的相关滤波器h&lt;sub&gt;t&lt;/sub&gt;可以通过计算最小平方差来获得：&lt;/p&gt; &lt;p&gt;公式1–&lt;img src=&quot;/img/dsst/function1.png&quot; alt=&quot;公式1&quot; /&gt;&lt;/p&gt; &lt;p&gt;在公式中：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;1、f&lt;sub&gt;i&lt;/sub&gt;,g&lt;sub&gt;j&lt;/sub&gt;和h&lt;sub&gt;t&lt;/sub&gt;的大小都是M×N&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;2、*表示循环相关（Circular Correlation）计算&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;3、大写字母表示对应的离散傅里叶变换DFT&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;4、带有上横线的H&lt;sub&gt;t&lt;/sub&gt;表示对应项的复共轭。&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;5、H&lt;sub&gt;t&lt;/sub&gt;F&lt;sub&gt;j&lt;/sub&gt;表示逐点相乘。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;通过选择公式2可以使公式1最小化：&lt;/p&gt; &lt;p&gt;公式2–&lt;img src=&quot;/img/dsst/function2.png&quot; alt=&quot;公式2&quot; /&gt;&lt;/p&gt; &lt;p&gt;理想相关输出g&lt;sub&gt;j&lt;/sub&gt;由高斯函数峰值所在的目标中心f&lt;sub&gt;j&lt;/sub&gt;构造得到。设公式2H&lt;sub&gt;t&lt;/sub&gt;中分子为A&lt;sub&gt;t&lt;/sub&gt;分母为B&lt;sub&gt;t&lt;/sub&gt;，其由每次新的目标观察值f&lt;sub&gt;t&lt;/sub&gt;进行加权平均（Weight Average）得到。&lt;/p&gt; &lt;p&gt;当从一帧新的图像中获取到一个大小为M×N的图像块时，其相关性得分（Correlation...</content>
+   <content type="html">&lt;p&gt;Updatedata»2017-09-16&lt;/p&gt; &lt;h3 id=&quot;综述&quot;&gt;综述&lt;/h3&gt; &lt;p&gt;DSST（Discriminative Scale Space Tracker、分类尺度空间追踪器）是一种对追踪目标进行尺度估计的算法。对于大范围的尺度估计具有较强的鲁棒性。&lt;/p&gt; &lt;p&gt;DSST算法的提出是基于尺度金字塔（Scale Pyramid Representation）的分类相关滤波器（Discriminative Correlation Filters）。&lt;/p&gt; &lt;h3 id=&quot;分类相关滤波器&quot;&gt;分类相关滤波器&lt;/h3&gt; &lt;p&gt;DSST 使用分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f&lt;sub&gt;1&lt;/sub&gt;……f&lt;sub&gt;t&lt;/sub&gt;作为训练样本。将其滤波器的输出分别标记为g&lt;sub&gt;1&lt;/sub&gt;……g&lt;sub&gt;t&lt;/sub&gt;。则在第t次计算时最佳的相关滤波器h&lt;sub&gt;t&lt;/sub&gt;可以通过计算最小平方差来获得：&lt;/p&gt; &lt;p&gt;公式1–&lt;img src=&quot;/img/dsst/function1.png&quot; alt=&quot;公式1&quot; /&gt;&lt;/p&gt; &lt;p&gt;在公式中：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;1、f&lt;sub&gt;i&lt;/sub&gt;,g&lt;sub&gt;j&lt;/sub&gt;和h&lt;sub&gt;t&lt;/sub&gt;的大小都是M×N&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;2、*表示循环相关（Circular Correlation）计算&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;3、大写字母表示对应的离散傅里叶变换DFT&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;4、带有上横线的H&lt;sub&gt;t&lt;/sub&gt;表示对应项的复共轭。&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;5、H&lt;sub&gt;t&lt;/sub&gt;F&lt;sub&gt;j&lt;/sub&gt;表示逐点相乘。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;通过选择公式2可以使公式1最小化：&lt;/p&gt; &lt;p&gt;公式2–&lt;img src=&quot;/img/dsst/function2.png&quot; alt=&quot;公式2&quot; /&gt;&lt;/p&gt; &lt;p&gt;理想相关输出g&lt;sub&gt;j&lt;/sub&gt;由高斯函数峰值所在的目标中心f&lt;sub&gt;j&lt;/sub&gt;构造得到。设公式2H&lt;sub&gt;t&lt;/sub&gt;中分子为A&lt;sub&gt;t&lt;/sub&gt;分母为B&lt;sub&gt;t&lt;/sub&gt;，其由每次新的目标观察值f&lt;sub&gt;t&lt;/sub&gt;进行加权平均（Weight Average）得到。&lt;/p&gt;...</content>
  </entry>
 
  
@@ -198,23 +208,6 @@
    <id>http://localhost:4000/zxing-qrcode-support</id>
    <updated>2017-05-19T00:00:00+08:00</updated>
    <content type="html">&lt;h4 id=&quot;QR Code support&quot;&gt;QR Code support&lt;/h4&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Package&lt;/th&gt; &lt;th&gt;Class&lt;/th&gt; &lt;th&gt;Enum&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode&quot;&gt;com.google.zxing.qrcode&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;QRCodeReader QRCodeWriter&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.decoder&quot;&gt;com.google.zxing.qrcode.decoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;Decoder QRCodeDecoderMetaData Version &lt;br /&gt;Version.ECB Version.ECBlocks&lt;/td&gt; &lt;td&gt;ErrorCorrectionLevel Mode&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.detector&quot;&gt;com.google.zxing.qrcode.detector&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;AlignmentPattern Detector FinderPattern &lt;br /&gt;FinderPatternFinder FinderPatternInfo&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.encoder&quot;&gt;com.google.zxing.qrcode.encoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;ByteMatrix Encoder...</content>
- </entry>
-
- 
-
- <entry>
-   <title>宿命</title>
-   <link href="http://localhost:4000/a-fate"/>
-   <id>http://localhost:4000/a-fate</id>
-   <updated>2017-05-14T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com//img/update/20170514232852.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;今天在无限的憋屈中看完了鲁能客战苏宁的比赛，结果鲁能惨遭绝杀送给了苏宁的本赛季的首胜。&lt;/p&gt;
-
-&lt;p&gt;输球了，很难受，很压抑。在上赛季的艰苦保级路上，鲁能在主场3:0击败苏宁之后才取得了联赛的首胜。而这赛季的联赛中，苏宁已经八轮不胜，而亚冠确高奏凯歌，像极了上赛季的鲁能。这场比赛就当是来还愿了吧，说是一种玄学，一种宿命也不为过。我们曾在南京的奥体中心绝杀当时的江苏舜天，夺得足协杯的冠军。如今被绝杀，送给了对手首胜，也是一种轮回吧。&lt;/p&gt;
-
-&lt;p&gt;静静的想一想，这场输球虽说裁判的因素很大，但是鲁能自己的问题也不少，防守端的问题，中场存在的问题尤为突出。希望下一场客战延边，能拿三分吧。也希望鲁能能进亚冠。&lt;/p&gt;
-</content>
  </entry>
 
  
