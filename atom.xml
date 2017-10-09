@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-09-18T22:43:21+08:00</updated>
+ <updated>2017-10-09T22:24:12+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,10 +14,41 @@
  
 
  <entry>
+   <title>深入学习数字图像处理~图像的离散傅里叶变换</title>
+   <link href="http://localhost:4000/cvip-discrete-fourier-transform"/>
+   <id>http://localhost:4000/cvip discrete fourier transform</id>
+   <updated>2017-10-09T00:00:00+08:00</updated>
+   <content type="html">
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>2017年十一：大象中原 郑州行</title>
+   <link href="http://localhost:4000/zhengzhou"/>
+   <id>http://localhost:4000/zhengzhou</id>
+   <updated>2017-10-03T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;河南省博物馆&quot;&gt;河南省博物馆&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9518.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9486.JPG&quot; alt=&quot;图2&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9487.JPG&quot; alt=&quot;图3&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9488.JPG&quot; alt=&quot;图4&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9497.JPG&quot; alt=&quot;图5&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9498.JPG&quot; alt=&quot;图7&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9499.JPG&quot; alt=&quot;图8&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9507.JPG&quot; alt=&quot;图9&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9514.JPG&quot; alt=&quot;图10&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/01/IMG_9517.JPG&quot; alt=&quot;图11&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;二七大罢工纪念馆&quot;&gt;二七大罢工纪念馆&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/02/IMG_9583.JPG&quot; alt=&quot;图12&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001zz/02/IMG_9555.JPG&quot;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>深入学习数字图像处理~灰度变换 Intensity Transformations</title>
+   <link href="http://localhost:4000/cvip-intensity-transformations"/>
+   <id>http://localhost:4000/cvip intensity transformations</id>
+   <updated>2017-09-26T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;空间域（定义）：图像像素所在的平面&lt;/p&gt; &lt;h2 id=&quot;灰度变换函数&quot;&gt;灰度变换函数&lt;/h2&gt; &lt;p&gt;r表示变换前的图像，s表示变换后的图像&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.3.png&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;线性变换反转和恒等变换&quot;&gt;线性变换（反转和恒等变换）&lt;/h3&gt; &lt;p&gt;一幅图像的灰度等级为[0,L-1]，图像的反转右边的公式给出：s=L-1-r&lt;/p&gt; &lt;p&gt;这类处理可以增强一幅图像的暗区域中的白色或灰色细节，特别是当黑色面积在尺寸上占主导地位时（如：X射线照片）。&lt;/p&gt; &lt;h3 id=&quot;对数变换对数和反对数变换&quot;&gt;对数变换（对数和反对数变换）&lt;/h3&gt; &lt;p&gt;对数变换的通用形式为：s=c log(1+r) (r≥0)&lt;/p&gt; &lt;p&gt;对数变换可以将输入图像中范围较窄的低灰度值映射为输出图像范围较宽的灰度值（灰度级的扩展）。反对数变换可以将输入图像中范围较宽的灰度值映射为输出图像范围较窄的低灰度值（灰度级的压缩）。&lt;/p&gt; &lt;h3 id=&quot;幂律伽马变换n次幂和n次根变换&quot;&gt;幂律（伽马）变换（n次幂和n次根变换）&lt;/h3&gt; &lt;p&gt;幂律变换的基本形式：s=c(r+ε)&lt;sup&gt;γ&lt;/sup&gt; (c和ε为常数，ε为偏移量)&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.6.png&quot; alt=&quot;图2&quot; /&gt;&lt;/p&gt; &lt;p&gt;如上图所示：在γ值较低（＜1）时，可以将灰度值较窄的输入值映射为灰度值较宽的输出值。在γ值较大（＞1）时，则可以取得相反的效果。&lt;/p&gt; &lt;p&gt;伽马校正：在幂律方程中的指数称为伽马，而伽马校正则用于校正这些幂律响应现象（由于设备的原因而产生，如图像的显示，为了对图像进行精确显示而必须进行校正）的处理称为伽马校正。&lt;/p&gt; &lt;h3 id=&quot;分段线性变换&quot;&gt;分段线性变换&lt;/h3&gt; &lt;p&gt;主要优点：分段线性函数的形式可以任意的复杂。&lt;/p&gt; &lt;p&gt;1）对比度拉伸&lt;/p&gt; &lt;p&gt;扩展图像灰度级动态范围处理&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.10-1.png&quot; alt=&quot;图3&quot; /&gt;&lt;/p&gt; &lt;p&gt;变换函数的形式如上图所示。上面的两个点的位置控制变换函数的形状。&lt;/p&gt; &lt;p&gt;2）灰度级分层&lt;/p&gt; &lt;p&gt;用于突出图像中特定灰度范围的亮度。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.11.png&quot; alt=&quot;图4&quot; /&gt;&lt;/p&gt; &lt;p&gt;① 将感兴趣的范围内的灰度值设置为一个值，其他的设置为另一个值。② 将感兴趣的灰度变量或变暗，其他的灰度值保持不变。&lt;/p&gt; &lt;p&gt;3）比特平面分层&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.13.png&quot;...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>目标追踪~方向梯度直方图（HOG、Histogram of Oriented Gradient）算法</title>
    <link href="http://localhost:4000/histogram-of-oriented-gradient"/>
    <id>http://localhost:4000/histogram-of-oriented-gradient</id>
-   <updated>2017-08-26T00:00:00+08:00</updated>
+   <updated>2017-09-13T00:00:00+08:00</updated>
    <content type="html">&lt;h3 id=&quot;设计思路&quot;&gt;设计思路&lt;/h3&gt; &lt;p&gt;对目标进行检测需要一个鲁棒性好的特征集，这样就可以对不同的目标进行清晰的分类。&lt;/p&gt; &lt;p&gt;这种算法是基于对一个密度网格（dense grid）中图像梯度方向的充分归一化的局部直方图（well-normalize local histogram）的计算。&lt;/p&gt; &lt;p&gt;其基本思想是：局部的目标的外观（sppearance）和形状（shape）可以根据局部灰度梯度（intensity gradients）和边缘方向（edge directions）进行相当好的特点判断，甚至不需要准确的知道相应的梯度和边缘位置。&lt;/p&gt; &lt;p&gt;在实际的运用中，首先将图像划分为小空间区域（small spatial region）即所谓的胞体（cells）；然后对每一个胞体的全部像素累计一个1维的梯度方向或者边缘方向的直方图。&lt;/p&gt; &lt;p&gt;为了在光照或者阴暗等条件下保持更好的不变性，在使用之前对局部的反应进行 contrast-normalize 。这一过程可以累计大的空间区域（large spatial region、称之为”block“，“块”）局部直方图”能量“（energy），然后进行对所有块中所有的胞体进行归一化。&lt;/p&gt; &lt;p&gt;我们称块的归一化描述符为方向梯度直方图（Histogram of Oriented Gradient、HOG）。&lt;/p&gt; &lt;h3 id=&quot;优点&quot;&gt;优点&lt;/h3&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;这种方法： &lt;/div&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;可以捕捉到边缘或者说梯度结构，而这一结构正式局部边缘的特点。 &lt;/div&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;具有容易控制局部的几何和光度变化中不变程度：如果局部空间或者方向足够小，变换或者旋转或产生一小部分的差别。（即：可以通过控制空间的大小来控制变化） &lt;/div&gt; &lt;/blockquote&gt; &lt;p&gt;对于人类检测，精细的定向取样和强烈的局部光度归一可以带来最好的策略。这大概是因为这样可以允许四肢和躯干可以自由的变化和移动，并且可以保持一个大致向上的方向。&lt;/p&gt; &lt;h3 id=&quot;算法细节及流程&quot;&gt;算法细节及流程&lt;/h3&gt; &lt;p&gt;检测器的属性：&lt;/p&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;1、没有经过Gamma校正的RGB空间 &lt;/div&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;div class=&quot;highlighter-rouge&quot;&gt;2、没有经过平滑处理的[-1,0,1]梯度滤波 &lt;/div&gt;...</content>
  </entry>
 
@@ -27,7 +58,7 @@
    <title>目标追踪~分类尺度空间追踪 DSST 算法</title>
    <link href="http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking"/>
    <id>http://localhost:4000/accurate-scale-estimation-for-robust-visual-tracking</id>
-   <updated>2017-08-26T00:00:00+08:00</updated>
+   <updated>2017-09-11T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;Updatedata»2017-09-16&lt;/p&gt; &lt;h3 id=&quot;综述&quot;&gt;综述&lt;/h3&gt; &lt;p&gt;DSST（Discriminative Scale Space Tracker、分类尺度空间追踪器）是一种对追踪目标进行尺度估计的算法。对于大范围的尺度估计具有较强的鲁棒性。&lt;/p&gt; &lt;p&gt;DSST算法的提出是基于尺度金字塔（Scale Pyramid Representation）的分类相关滤波器（Discriminative Correlation Filters）。&lt;/p&gt; &lt;h3 id=&quot;分类相关滤波器&quot;&gt;分类相关滤波器&lt;/h3&gt; &lt;p&gt;DSST 使用分类相关滤波器来确定最新接收到的一帧图像中目标的位置。这种方法需要数个目标出现的灰度图像块（Grayscale Image Patch）f&lt;sub&gt;1&lt;/sub&gt;……f&lt;sub&gt;t&lt;/sub&gt;作为训练样本。将其滤波器的输出分别标记为g&lt;sub&gt;1&lt;/sub&gt;……g&lt;sub&gt;t&lt;/sub&gt;。则在第t次计算时最佳的相关滤波器h&lt;sub&gt;t&lt;/sub&gt;可以通过计算最小平方差来获得：&lt;/p&gt; &lt;p&gt;公式1–&lt;img src=&quot;/img/dsst/function1.png&quot; alt=&quot;公式1&quot; /&gt;&lt;/p&gt; &lt;p&gt;在公式中：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;1、f&lt;sub&gt;i&lt;/sub&gt;,g&lt;sub&gt;j&lt;/sub&gt;和h&lt;sub&gt;t&lt;/sub&gt;的大小都是M×N&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;2、*表示循环相关（Circular Correlation）计算&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;3、大写字母表示对应的离散傅里叶变换DFT&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;4、带有上横线的H&lt;sub&gt;t&lt;/sub&gt;表示对应项的复共轭。&lt;br /&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;5、H&lt;sub&gt;t&lt;/sub&gt;F&lt;sub&gt;j&lt;/sub&gt;表示逐点相乘。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;通过选择公式2可以使公式1最小化：&lt;/p&gt; &lt;p&gt;公式2–&lt;img src=&quot;/img/dsst/function2.png&quot; alt=&quot;公式2&quot; /&gt;&lt;/p&gt; &lt;p&gt;理想相关输出g&lt;sub&gt;j&lt;/sub&gt;由高斯函数峰值所在的目标中心f&lt;sub&gt;j&lt;/sub&gt;构造得到。设公式2H&lt;sub&gt;t&lt;/sub&gt;中分子为A&lt;sub&gt;t&lt;/sub&gt;分母为B&lt;sub&gt;t&lt;/sub&gt;，其由每次新的目标观察值f&lt;sub&gt;t&lt;/sub&gt;进行加权平均（Weight Average）得到。&lt;/p&gt;...</content>
  </entry>
 
@@ -155,59 +186,6 @@
 
 &lt;p&gt;铁瓦殿遗址。铁瓦殿在清朝时毁于大火，目前仅剩石柱。&lt;/p&gt;
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>二元Golay码的生成算法</title>
-   <link href="http://localhost:4000/Binary-Golay-code"/>
-   <id>http://localhost:4000/Binary-Golay-code</id>
-   <updated>2017-06-07T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;在数学和电子工程领域，二元Golay码（Binary Golay code）是一种应用于数字通信的线性纠错码，其与三进制Golay码（Ternary Golay Code）在数学领域的有限散乱论的理论（the theory of finite sporadic groups）中有着深刻而有趣的联系。&lt;/p&gt; &lt;p&gt;二元Golay码分为两种一种是扩展二元Golay码（extended binary Golay code，EBGC）另一种是完美二元Golay码（perfect binary Golay code，FBGC）EBGC的码字长度为24，数据向量长度为12，可以纠正任意三位的错误或发现任意7位的错误。而FBGC的码字长度为23，包括2&lt;sup&gt;23&lt;/sup&gt;=4096种长度为23的码字（可以说FBGC是EBGC去掉一个坐标位，或EBGC是FBGC加上一个奇偶校验位（Parity bit））&lt;/p&gt; &lt;p&gt;对于EBGC[24,12,8]和FBGC[23,12,7]分表表示码字长度，编码的维度和相邻码字的最小汉明距离。&lt;/p&gt; &lt;h5 id=&quot;构造-golay-code&quot;&gt;构造 Golay Code：&lt;/h5&gt; &lt;h6 id=&quot;fbgc&quot;&gt;FBGC&lt;/h6&gt; &lt;p&gt;其生成矩阵如下：G=(I&lt;sub&gt;11&lt;/sub&gt; P)，其中I&lt;sub&gt;11&lt;/sub&gt;是11维的单位矩阵，P是12×11的矩阵。如下所示&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/NumberedEquation/1.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;p&gt;则其奇偶校验矩阵H=(P&lt;sup&gt;T&lt;/sup&gt; I&lt;sub&gt;12&lt;/sub&gt;) 又因为P&lt;sup&gt;T&lt;/sup&gt;=P 故 H=(P&lt;sup&gt;T&lt;/sup&gt; I&lt;sub&gt;12&lt;/sub&gt;)&lt;/p&gt; &lt;p&gt;（生成方法见参考资料4）&lt;/p&gt; &lt;p&gt;设s为任意数据向量，长度为12。w为线性码字中的一个码字。则：w=sG&lt;/p&gt; &lt;h5 id=&quot;ebgc&quot;&gt;EBGC&lt;/h5&gt; &lt;p&gt;相比于FBGC，EBGC多了一位就校验位。由[23,12,7]变为了[24,12,8]。&lt;/p&gt; &lt;p&gt;除此之外，还有两种直接生产的方法。&lt;/p&gt; &lt;p&gt;其生成矩阵如下：G=(I&lt;sub&gt;12&lt;/sub&gt; P),其中I&lt;sub&gt;12&lt;/sub&gt;是12维的单位矩阵，P是12×12的矩阵，如下所示&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/NumberedEquation/2.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;p&gt;则其奇偶校验矩阵H=(P&lt;sup&gt;T&lt;/sup&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>初识决策论</title>
-   <link href="http://localhost:4000/decision-theory"/>
-   <id>http://localhost:4000/decision-theory</id>
-   <updated>2017-06-04T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/update/20170604165258.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;决策论是一个跨学科的研究课题，和数学、统计、经济学、哲学、管理和心理学相关。它主要研究实际决策者如何进行决策，以及如何达到最优决策。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;规范性决策论 normative decision theory&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;日常中，大多数的决策论属于规范性决策论。&lt;/p&gt;
-
-&lt;p&gt;假设一个理想决策者拥有和掌握全部的信息，可以进行进度计算，且拥有完全的理性思维。&lt;/p&gt;
-
-&lt;p&gt;理想决策者作出最优的决策称为规范性决策。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;描述性决策论 descriptive decision theory&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;描述性决策则关注于描述观察到的决策者在一定条件（consistent rules）下是如何作出决策的。&lt;/p&gt;
-
-&lt;p&gt;这一条件包括程序框架（procedural framework）或者公理框架（axiomatic framework）&lt;/p&gt;
-
-&lt;p&gt;参考资料：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%86%B3%E7%AD%96%E8%AE%BA&quot;&gt;https://zh.wikipedia.org/wiki/决策论&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Decision_theory&quot;&gt;https://en.wikipedia.org/wiki/Decision_theory&lt;/a&gt;&lt;/p&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>ZXing QR码支持类程序细节分析</title>
-   <link href="http://localhost:4000/zxing-qrcode-support"/>
-   <id>http://localhost:4000/zxing-qrcode-support</id>
-   <updated>2017-05-19T00:00:00+08:00</updated>
-   <content type="html">&lt;h4 id=&quot;QR Code support&quot;&gt;QR Code support&lt;/h4&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Package&lt;/th&gt; &lt;th&gt;Class&lt;/th&gt; &lt;th&gt;Enum&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode&quot;&gt;com.google.zxing.qrcode&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;QRCodeReader QRCodeWriter&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.decoder&quot;&gt;com.google.zxing.qrcode.decoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;Decoder QRCodeDecoderMetaData Version &lt;br /&gt;Version.ECB Version.ECBlocks&lt;/td&gt; &lt;td&gt;ErrorCorrectionLevel Mode&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.detector&quot;&gt;com.google.zxing.qrcode.detector&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;AlignmentPattern Detector FinderPattern &lt;br /&gt;FinderPatternFinder FinderPatternInfo&lt;/td&gt; &lt;td&gt; &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;&lt;a href=&quot;#com.google.zxing.qrcode.encoder&quot;&gt;com.google.zxing.qrcode.encoder&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/td&gt; &lt;td&gt;ByteMatrix Encoder...</content>
  </entry>
 
  

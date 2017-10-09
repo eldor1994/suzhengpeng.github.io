@@ -32,6 +32,7 @@ var init = function() {
 	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
 	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
 	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+	var zhengzhou = new qq.maps.LatLng(34.745509,113.657212);
     var map = new qq.maps.Map(document.getElementById('container-map'),{
         center: center,
         zoom: 7
@@ -57,7 +58,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br> 17 Jun 2017 <a href="/laoshan-jufeng">崂山巨峰游览小记</a> <br>28 Apr 2017 <a href="/tbm-and-signal-hill">青啤博物馆与信号山公园</a> <br>23 Apr 2017 <a href="/railway-station-to-54-square">红石绿海</a> <br>18 Mar 2017 <a href="/night-54-square">夜游五四广场</a> <br>                      </small>');
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br> 17 Jun 2017 <a href="/laoshan-jufeng">崂山巨峰游览小记</a> <br>28 Apr 2017 <a href="/tbm-and-signal-hill">青啤博物馆与信号山公园</a> <br>23 Apr 2017 <a href="/railway-station-to-54-square">红石绿海</a> <br>18 Mar 2017 <a href="/night-54-square">夜游五四广场</a> <br>                        </small>');
         info.setPosition(tsingtao); 
     });
 	//济南
@@ -68,7 +69,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     15 Apr 2017 <a href="/welcome-to-the-hell">Welcome to the hell</a> <br>                   </small>');
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     15 Apr 2017 <a href="/welcome-to-the-hell">Welcome to the hell</a> <br>                     </small>');
         info.setPosition(jinan); 
     });
 	//xian
@@ -79,7 +80,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>    05 Aug 2017 <a href="/the-site-of-weiyang-palace">汉长安城未央宫遗址</a> <br> 31 Mar 2017 <a href="/roaming-xian">西安漫行</a> <br>                    </small>');
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>    05 Aug 2017 <a href="/the-site-of-weiyang-palace">汉长安城未央宫遗址</a> <br> 31 Mar 2017 <a href="/roaming-xian">西安漫行</a> <br>                      </small>');
         info.setPosition(xian); 
     });
 	//xin-an
@@ -126,6 +127,17 @@ var init = function() {
         info.setContent('<small>📍 <a href="#">江苏省丰县</a></small>');
         info.setPosition(fengxian); 
     });
+		//郑州 zhengzhou
+	    var marker = new qq.maps.Marker({
+        position: zhengzhou,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>                          03 Oct 2017 <a href="/zhengzhou">2017年十一：大象中原 郑州行</a> <br></small>');
+        info.setPosition(zhengzhou); 
+    });
 	
 	
 }
@@ -166,6 +178,9 @@ var init = function() {
 	
 	<div class="footer-two">
 	
+		
+
+	    
 		
 
 	    
@@ -318,6 +333,15 @@ var init = function() {
 		
 
 	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		<br>
 
 	</div>
@@ -350,8 +374,16 @@ var init = function() {
 				
 				
 				
+				
+				
 			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -466,12 +498,20 @@ var init = function() {
 				
 				
 				
+				
+				
 			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
 		
 				
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -571,6 +611,8 @@ var init = function() {
 		
 	    
 		
+	    
+		
 			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;
 		
 	    
@@ -592,6 +634,12 @@ var init = function() {
 	    
 		
 			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
 		
 	    
 		
@@ -701,8 +749,16 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 	  		
 				
+	  		
+				
 			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
 		
+	  		
+				
+	  		
+				
+	  		
+				
 	  		
 				
 	  		
@@ -814,12 +870,12 @@ Proudly hosted by Github and powered by Jekyll <br><br>
  
 <div style="width:170px;float:left">
 <a href="/accurate-scale-estimation-for-robust-visual-tracking"><img src="/img/update/20170831102058.jpg"  width=150 height=150/></a>
-<a href="/accurate-scale-estimation-for-robust-visual-tracking">&nbsp;&nbsp;&nbsp;目标追踪~分类...</a><br> &nbsp;&nbsp;&nbsp;(26 Aug 2017)<br><br>
+<a href="/accurate-scale-estimation-for-robust-visual-tracking">&nbsp;&nbsp;&nbsp;目标追踪~分类...</a><br> &nbsp;&nbsp;&nbsp;(11 Sep 2017)<br><br>
 </div>
 
 </div>
 
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/dsst.html" class="set-1">DSST</a> <a href="/tag/hog.html" class="set-1">HOG</a> <a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/qrcode.html" class="set-3">QRcode</a> <a href="/tag/rscode.html" class="set-1">RScode</a> <a href="/tag/tsingtao.html" class="set-2">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-1">Xi'an</a> <a href="/tag/zxing.html" class="set-1">ZXing</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/computervision.html" class="set-2">computerVision</a> <a href="/tag/decisiontheory.html" class="set-1">decisionTheory</a> <a href="/tag/encode.html" class="set-3">encode</a> <a href="/tag/featureextract.html" class="set-1">featureExtract</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/golaycode.html" class="set-1">golayCode</a> <a href="/tag/history.html" class="set-1">history</a> <a href="/tag/imagefeature.html" class="set-1">imageFeature</a> <a href="/tag/machinelearning.html" class="set-1">machineLearning</a> <a href="/tag/papers.html" class="set-2">papers</a> <a href="/tag/photograph.html" class="set-3">photograph</a> <a href="/tag/technology.html" class="set-5">technology</a> <a href="/tag/think.html" class="set-1">think</a></div> 
+<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/dsst.html" class="set-1">DSST</a> <a href="/tag/hog.html" class="set-1">HOG</a> <a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/qrcode.html" class="set-3">QRcode</a> <a href="/tag/rscode.html" class="set-1">RScode</a> <a href="/tag/tsingtao.html" class="set-2">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-1">Xi'an</a> <a href="/tag/zxing.html" class="set-1">ZXing</a> <a href="/tag/zheng%27zhou.html" class="set-1">Zheng'zhou</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/computervision.html" class="set-3">computerVision</a> <a href="/tag/decisiontheory.html" class="set-1">decisionTheory</a> <a href="/tag/encode.html" class="set-3">encode</a> <a href="/tag/featureextract.html" class="set-1">featureExtract</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/golaycode.html" class="set-1">golayCode</a> <a href="/tag/history.html" class="set-1">history</a> <a href="/tag/imagefeature.html" class="set-1">imageFeature</a> <a href="/tag/imageprocessing.html" class="set-1">imageProcessing</a> <a href="/tag/machinelearning.html" class="set-1">machineLearning</a> <a href="/tag/papers.html" class="set-2">papers</a> <a href="/tag/photograph.html" class="set-4">photograph</a> <a href="/tag/technology.html" class="set-5">technology</a> <a href="/tag/think.html" class="set-1">think</a></div> 
 </div></center>
 <br>
 
@@ -849,6 +905,9 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	
 	<div class="footer-two">
 	
+		
+
+	    
 		
 
 	    
@@ -1001,6 +1060,15 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 		
 
 	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		<br>
 
 	</div>
@@ -1033,8 +1101,16 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 				
 				
+				
+				
 			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -1149,12 +1225,20 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 				
 				
+				
+				
 			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
 		
 				
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
