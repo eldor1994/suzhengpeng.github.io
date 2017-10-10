@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>QR码编码区填充方式-Su'S Blog </title>
-  <meta name="description" content="QR码编码区填充方式,包括格式信息、版本信息和数据码字和纠错码字的填充。 ">
+	<title>Suzhengpeng'S Blog</title>
+  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -575,7 +575,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/fill-in-encoding-region&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/opencv&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -875,211 +875,20 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 		  
 		<main>
 
-			<article id="post-page">
-	
-	30 Apr 2017
-	<h3>QR码编码区填充方式 </h3>
-	<!-- JiaThis Button BEGIN -->
-	
-<div style="padding: 10px; background:#fff;">
-
-	<div style="position: relative; 
-				border: 2px solid #E9F01D; 
-				padding: 10px; 
-				padding-bottom:20px;
-				width:40%;
-				min-width:300px;
-				background:#E9F01D;
-				color:#404040;
-				border-radius:4px;
-				" >
-		<span style="position: absolute; 
-					left: 30px; top: -32px; 
-					width: 0; height: 0; 
-					font-size: 0; 
-					border-width: 16px; 
-					border-style: dashed dashed solid dashed; 
-					border-color: transparent transparent #E9F01D transparent;" ></span>
-<div class="bshare-custom"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
-	</div>
+			<h2>Tag：OpenCV</h2>
+<br>
+<div style="width:100%;overflow:hidden;white-space:nowrap;">
+ 
+<div style="width:170px;float:left">
+<a href="/cvip-discrete-fourier-transform"><img src="/img/update/IMG_9295.JPG"  width=150 height=150/></a>
+<a href="/cvip-discrete-fourier-transform">&nbsp;&nbsp;&nbsp;深入学习数字图...</a><br> &nbsp;&nbsp;&nbsp;(09 Oct 2017)<br><br>
 </div>
 
-	
+</div>
 
-<!-- JiaThis Button END -->
+<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/dsst.html" class="set-1">DSST</a> <a href="/tag/hog.html" class="set-1">HOG</a> <a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/qrcode.html" class="set-3">QRcode</a> <a href="/tag/rscode.html" class="set-1">RScode</a> <a href="/tag/tsingtao.html" class="set-2">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-1">Xi'an</a> <a href="/tag/zxing.html" class="set-1">ZXing</a> <a href="/tag/zheng%27zhou.html" class="set-1">Zheng'zhou</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/computervision.html" class="set-3">computerVision</a> <a href="/tag/decisiontheory.html" class="set-1">decisionTheory</a> <a href="/tag/encode.html" class="set-3">encode</a> <a href="/tag/featureextract.html" class="set-1">featureExtract</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/golaycode.html" class="set-1">golayCode</a> <a href="/tag/history.html" class="set-1">history</a> <a href="/tag/imagefeature.html" class="set-1">imageFeature</a> <a href="/tag/imageprocessing.html" class="set-1">imageProcessing</a> <a href="/tag/machinelearning.html" class="set-1">machineLearning</a> <a href="/tag/papers.html" class="set-2">papers</a> <a href="/tag/photograph.html" class="set-4">photograph</a> <a href="/tag/technology.html" class="set-5">technology</a> <a href="/tag/think.html" class="set-1">think</a></div> 
+</div></center>
 <br>
-	<div class="content">
-
-		<p>QR码的编码区包括格式信息、版本信息以及数据码字和纠错码字。</p>
-
-<p><img src="/img/qrcode/enregion.jpg" alt="avatar" /></p>
-
-<h3 id="格式信息的填充">格式信息的填充</h3>
-
-<p><img src="/img/qrcode/forinfoposition.jpg" alt="avatar" /></p>
-
-<p><strong><center>格式信息位置</center></strong></p>
-
-<p>格式信息位共有15位，包括：5个数据位和10个用BCH（15,5）编码计算得到的纠错位。数据位的前两位是纠错等级指示符。第三到五位是为数据掩模图形参考（the data mask pattern reference）</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>纠错等级</th>
-      <th>L</th>
-      <th>M</th>
-      <th>Q</th>
-      <th>H</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>二进制</td>
-      <td>01</td>
-      <td>00</td>
-      <td>11</td>
-      <td>10</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>Table 1 纠错等级指示符</strong></p>
-
-<table>
-  <thead>
-    <tr>
-      <th>掩模图形参考</th>
-      <th>掩模图形</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>000</td>
-      <td>(i+j) mod 2=0</td>
-    </tr>
-    <tr>
-      <td>001</td>
-      <td>i mod 2=0</td>
-    </tr>
-    <tr>
-      <td>010</td>
-      <td>j mod 3=0</td>
-    </tr>
-    <tr>
-      <td>011</td>
-      <td>(i+j) mod 3=0</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>((i div 2)+(j div 3)) mod 2=0</td>
-    </tr>
-    <tr>
-      <td>101</td>
-      <td>(i j) mod 2 + (i j) mod 3=0</td>
-    </tr>
-    <tr>
-      <td>110</td>
-      <td>((i j) mod 2 + (i j) mod 3) mod 2=0</td>
-    </tr>
-    <tr>
-      <td>111</td>
-      <td>((i j) mod 3 + (i j) mod 2) mod 2=0</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>Table 2 掩模图形</strong></p>
-
-<p><strong>纠错位的计算</strong></p>
-
-<blockquote>
-  <p><strong>例：</strong> <br />
-设：纠错等级为M(二进制符=00)；掩模图形参考=101 <br />
-则：5个数据位为：00101 <br />
-纠错位的计算： <br />
-以数据位为系数的生成多项式为：x<sup>2</sup>+1 <br />
-将系数升至10(=15-5)：x<sup>12</sup>+x<sup>10</sup> <br />
-被G(x)=x<sup>10</sup>+x<sup>8</sup>+x<sup>5</sup>+x<sup>4</sup>+x<sup>2</sup>+x+1 除：=(x<sup>10</sup>+x<sup>8</sup>+x<sup>5</sup>+x<sup>4</sup>+x<sup>2</sup>+x+1)x<sup>2</sup>+(x<sup>7</sup>+x<sup>6</sup>+x<sup>4</sup>+x<sup>3</sup>+x<sup>2</sup>) <br />
-则剩余多项式为：x<sup>7</sup>+x<sup>6</sup>+x<sup>4</sup>+x<sup>3</sup>+x<sup>2</sup> <br />
-系数为：00110 11100 <br />
-格式信息数据串为：00101 00110 11100 <br />
-用掩模图形进行XOR运算：10101 00000 10010 <br />
-结果为：10000 00110 01110 <br /></p>
-</blockquote>
-
-<p><strong>纠错译码</strong></p>
-
-<p>==Wait==</p>
-
-<h3 id="版本信息的填充">版本信息的填充</h3>
-
-<p>版本信息位共有18位，包括：6个数据位和12个用BCH（15,5）编码计算得到的纠错位。最高位为第一位。只有版本7~40的符号包含版本信息，没有任何版本信息的结果全为0。所以不必对版本信息进行掩模。</p>
-
-<p><img src="/img/qrcode/versioninfobitst.jpg" alt="avatar" /></p>
-
-<p><strong><center>Table 3 版本信息位流</center></strong></p>
-
-<p><img src="img/qrcode/versioninformation.jpg" alt="avatar" /></p>
-
-<p><strong><center>版本信息位置</center></strong></p>
-
-<p><strong>纠错位的计算</strong></p>
-
-<blockquote>
-  <p><strong>例：</strong> <br />
-设：QR码的版本为 version 7 <br />
-二进制串：0001111 <br />
-将系数升至8(=16-8)：x<sup>2</sup>+x+1 <br />
-被G(x)=x<sup>12</sup>+x<sup>11</sup>+x<sup>10</sup>+x<sup>9</sup>+x<sup>8</sup>+x<sup>5</sup>+x<sup>2</sup>+1 除：=(x<sup>12</sup>+x<sup>11</sup>+x<sup>10</sup>+x<sup>9</sup>+x<sup>8</sup>+x<sup>5</sup>+x<sup>2</sup>+1)x<sup>2</sup>+(x<sup>11</sup>+x<sup>10</sup>+x<sup>7</sup>+x<sup>4</sup>+x<sup>2</sup>) <br />
-纠错位为：剩余多项式的系数=110 010 010 100 <br />
-版本信息数据串为：000 111 110 010 010 100 <br />
-计算结果如 Table 3 中的 Version</p>
-</blockquote>
-
-<p><strong>纠错译码</strong></p>
-
-<p>==Wait==</p>
-
-<h3 id="数据码字和纠错码字的填充">数据码字和纠错码字的填充</h3>
-
-<p><img src="img/qrcode/chartpos.jpg" alt="avatar" /></p>
-
-<p><strong><center>V7-H符号的符号字符布置</center></strong></p>
-
-<p>在QR码的编码区域中，符号字符以2个模块宽的纵列从符号的右下角开始布置，并自右向左，且交替地从下向上或从上向下安排。</p>
-
-<p>符号字符以及字符中位的布置原则，如下所列：</p>
-
-<p>1、位序列在纵列中的位置：从右到左，向上或向下应与符号字符的布置方向一致。</p>
-
-<p>2、每个码字的最高位(位7)应放在第一个可用的模块位置，随后的位放在下一个模块的位置。如果方向向上，则最高位占用规则符号字符的右下角的模块。如果方向向下，则最高位占用规则符号字符的右上角的字符。见下图：</p>
-
-<p><img src="img/qrcode/chartarr1.jpg" alt="avatar" /></p>
-
-<p>3、如果符号字符的两个模块纵列同时遇到校正图形或者定位图形的水平边界，可以在图形的上面或下面继续布置。与编码区是连续的一样。</p>
-
-<p>4、如果遇到符号字符区域的上或下边界（即符号的边缘、格式信息、版本信息或分隔符），码字中剩余的位应改变方向放在左侧的纵列中。见下图：</p>
-
-<p><img src="img/qrcode/chartarr2.jpg" alt="avatar" /></p>
-
-<p>5、如果符号字符的右侧模块纵列遇到校正图形或者版本信息占用的区域，位的布置形成不规则排列的符号字符，沿着相邻校正图形或版本信息的单个模块纵列延伸。如果字符在可用于下一个字符的两列纵列之前结束，则下一个符号字符的首位放在单个纵列之中。见下图</p>
-
-<p><img src="img/qrcode/chartarr3.jpg" alt="avatar" /></p>
-
-<p><strong>另外一种方案：</strong></p>
-
-<p>将整个码字序列视为一个单独的位流，将其从最高位开始按从右向左，自下而上（或自上而下）的方向交替布置于两个模块宽的纵列中。并跳过功能图形占用的区域，在纵列的顶部或底部改变方向，每一位应放在第一个可用的位置。</p>
-
-<p><strong>备注：</strong></p>
-
-<p>当符号的数据容量不能恰好分为整数个八位符号字符时，要用相应的剩余位（3、4 或 7）填满符号的容量。</p>
-
-		
-	</div>
-	<div id="posts-out-tags"># <a href="/tag/qrcode.html" rel="tag">QRcode</a>, <a href="/tag/technology.html" rel="tag">technology</a>, <a href="/tag/encode.html" rel="tag">encode</a> </div> 
-</article>
-
-
 
 	  </main>
 		
@@ -1504,7 +1313,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/fill-in-encoding-region&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/opencv&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
