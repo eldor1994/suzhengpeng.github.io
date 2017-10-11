@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>2017年十一：乾陵 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="趁着十一假期，去了一趟乾县，拜谒了女皇武则天和唐高宗李治的合葬墓——乾陵，以及章怀太子（李贤）墓、懿德太子（李重润）墓和永泰公主墓。 ">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(37.916527,106.397128);
+	//山东省
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	//陕西省
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var qianxian = new qq.maps.LatLng(34.532015,108.260822);
+	//河南省
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var zhengzhou = new qq.maps.LatLng(34.745509,113.657212);
+	//上海市
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	//江苏省
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+	
+    var map = new qq.maps.Map(document.getElementById('container-map'),{
+        center: center,
+        zoom: 7
+    });
+	   //获取城市列表接口设置中心点
+    citylocation = new qq.maps.CityService({
+        complete : function(result){
+            map.setCenter(result.detail.latLng);
+        }
+    });
+    //调用searchLocalCity();方法    根据用户IP查询城市信息。
+    citylocation.searchLocalCity();
+	
+		//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br> 17 Jun 2017 <a href="/laoshan-jufeng">崂山巨峰游览小记</a> <br>28 Apr 2017 <a href="/tbm-and-signal-hill">青啤博物馆与信号山公园</a> <br>23 Apr 2017 <a href="/railway-station-to-54-square">红石绿海</a> <br>18 Mar 2017 <a href="/night-54-square">夜游五四广场</a> <br>                          </small>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     15 Apr 2017 <a href="/welcome-to-the-hell">Welcome to the hell</a> <br>                       </small>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>    05 Aug 2017 <a href="/the-site-of-weiyang-palace">汉长安城未央宫遗址</a> <br> 31 Mar 2017 <a href="/roaming-xian">西安漫行</a> <br>                        </small>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">河南省新安县</a></small>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">上海市</a></small>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省昆山市</a></small>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省丰县</a></small>');
+        info.setPosition(fengxian); 
+    });
+		//郑州 zhengzhou
+	    var marker = new qq.maps.Marker({
+        position: zhengzhou,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>                           03 Oct 2017 <a href="/zhengzhou">2017年十一：大象中原 郑州行</a> <br> </small>');
+        info.setPosition(zhengzhou); 
+    });
+	//乾县 Qianxian
+	    var marker = new qq.maps.Marker({
+        position: qianxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>                          30 Sep 2017 <a href="/qianling">2017年十一：乾陵</a> <br>  </small>');
+        info.setPosition(qianxian); 
+    });
+	
+	
+}
+
+</script>  
+
+<script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/qianling&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng @ Tsingtao<br><br>
+	 <div class="footer-power">
+Proudly hosted by Github and powered by Jekyll <br><br>
+</div>
+    </div>
+
+
+ <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div> 
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+	
+	30 Sep 2017
+	<h3>2017年十一：乾陵 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:40%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<h3 id="乾陵">乾陵</h3>
+
+<p><img src="/img/20171001qx/01/IMG_9139.JPG" alt="图1" /></p>
+
+<p><img src="/img/20171001qx/01/IMG_9145.JPG" alt="图2" /></p>
+
+<p>六十一番臣像</p>
+
+<p><img src="/img/20171001qx/01/IMG_9152.JPG" alt="图3" /></p>
+
+<p>无字碑</p>
+
+<p><img src="/img/20171001qx/01/IMG_9164.JPG" alt="图4" /></p>
+
+<p><img src="/img/20171001qx/01/IMG_9170.JPG" alt="图5" /></p>
+
+<p><img src="/img/20171001qx/01/IMG_9172.JPG" alt="图7" /></p>
+
+<p><img src="/img/20171001qx/01/IMG_9181.JPG" alt="图9" /></p>
+
+<h3 id="懿德太子墓">懿德太子墓</h3>
+
+<p>懿德太子李重润，是唐中宗李显的长子。高宗李治和女皇武则天的长孙。</p>
+
+<p>唐高宗永隆二年（682）封为皇太孙。684年中宗失位，李重润被废为庶人。武则天大足元年（7O1），为人谗构，与其妹永泰公主、主婿魏王武延基等窃议面首张易之兄弟“何得恣入宫中”，被武则天杀害，死时年仅19岁。</p>
+
+<p>李显复位后，于神龙元年（705）追封为“懿德太子”，神龙二年将其灵柩由洛阳迁到乾陵陪葬，特恩“号墓为陵”。</p>
+
+<p><img src="/img/20171001qx/02/IMG_9194.JPG" alt="图10" /></p>
+
+<p><img src="/img/20171001qx/02/IMG_9186.JPG" alt="图11" /></p>
+
+<p><img src="/img/20171001qx/02/IMG_9187.JPG" alt="图12" /></p>
+
+<p><img src="/img/20171001qx/02/IMG_9191.JPG" alt="图13" /></p>
+
+<p>墓中的壁画（复制品，真品在乾陵博物馆）</p>
+
+<h3 id="章怀太子墓">章怀太子墓</h3>
+
+<p>章怀太子李贤，是唐高宗李治和武则天的次子。章怀太子墓是李贤与太子妃房氏的合葬墓。</p>
+
+<p>李贤是高宗子女中比较有才华的一个，容止端重。甫数岁，读书一览辄不忘。上元二年，立为皇太子。</p>
+
+<p>文明元年（684）李贤被武则天逼令自杀，神龙二年（ 706 ）中宗复位后以雍王礼陪葬乾陵。景云二年（711）重开墓室与妃房氏合葬 ，并追赠为章怀太子。</p>
+
+<p><img src="/img/20171001qx/03/IMG_9117.JPG" alt="图14" /></p>
+
+<p>墓道口</p>
+
+<p><img src="/img/20171001qx/03/IMG_9118.JPG" alt="图15" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9134.JPG" alt="图16" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9119.JPG" alt="图17" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9120.JPG" alt="图18" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9121.JPG" alt="图19" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9131.JPG" alt="图20" /></p>
+
+<p><img src="/img/20171001qx/03/IMG_9132.JPG" alt="图21" /></p>
+
+<p>墓道中的壁画（复制品，真品在乾陵博物馆）</p>
+
+<h3 id="永泰公主墓">永泰公主墓</h3>
+
+<p>永泰公主是唐中宗李显第七女，母为韦皇后，唐高宗李治和武则天的孙女。初封永泰郡主。以郡主身份下嫁武承嗣之子武延基。死于唐大足元年（701年），时年仅17岁。后与她丈夫武延基合葬在一起，陪葬乾陵。</p>
+
+<p>《资治通鉴·则天顺圣皇后》中说”太后春秋高，政事多委张易之兄弟，邵王重润与其妹永泰郡主、主婿魏王武延基窃议其事，易之诉于太后，九月壬申，太后皆迫自杀。一天之后，郡主在洛阳难产而死。中宗复位后追赠为公主，以礼改葬，号墓为陵。</p>
+
+<p><img src="/img/20171001qx/04/IMG_9202.JPG" alt="图22" /></p>
+
+<p><img src="/img/20171001qx/04/IMG_9216.JPG" alt="图23" /></p>
+
+<p><img src="/img/20171001qx/04/IMG_9217.JPG" alt="图24" /></p>
+
+<p><img src="/img/20171001qx/04/IMG_9218.JPG" alt="图25" /></p>
+
+<h3 id="乾陵博物馆武则天时代展乾陵文物精品展">乾陵博物馆（武则天时代展、乾陵文物精品展）</h3>
+
+<h3 id="武则天时代展">武则天时代展</h3>
+
+<p><img src="/img/20171001qx/05/IMG_9198.JPG" alt="图25" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9199.JPG" alt="图26" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9200.JPG" alt="图27" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9201.JPG" alt="图28" /></p>
+
+<h4 id="乾陵文物精品展">乾陵文物精品展</h4>
+
+<p><img src="/img/20171001qx/05/IMG_9204.JPG" alt="图29" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9205.JPG" alt="图30" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9206.JPG" alt="图31" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9207.JPG" alt="图32" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9208.JPG" alt="图33" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9209.JPG" alt="图34" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9210.JPG" alt="图35" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9211.JPG" alt="图36" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9213.JPG" alt="图37" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9214.JPG" alt="图38" /></p>
+
+<p><img src="/img/20171001qx/05/IMG_9215.JPG" alt="图39" /></p>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/qian%27xian.html" rel="tag">Qian'xian</a>, <a href="/tag/photograph.html" rel="tag">photograph</a> </div> 
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/qianling&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>
