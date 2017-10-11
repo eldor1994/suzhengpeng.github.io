@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>深入学习数字图像处理~基于OpenCV的二维离散傅里叶变换-Su'S Blog </title>
+	<title>深入学习数字图像处理~基于OpenCV的二维离散傅里叶变换 - Su'S Blog - SuZhengpeng.COM </title>
   <meta name="description" content="有关数字图像离散傅里叶变换的学习笔记 ">
 
 	<!-- CSS & fonts -->
@@ -142,7 +142,9 @@ var init = function() {
 	
 }
 
-</script>    
+</script>  
+
+<script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
 		</head>
 
 
@@ -900,7 +902,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 					border-width: 16px; 
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
-<div class="bshare-custom"><div class="bsPromo bsPromo2"></div><a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 	</div>
 </div>
 
@@ -910,7 +912,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 <br>
 	<div class="content">
 
-		<h3 id="前述知识">前述知识：</h3>
+		<h3 id="0-前述知识">0 前述知识：</h3>
 
 <p>1) 傅里叶级数<br />
 2) 连续变量的傅里叶变换<br />
@@ -919,9 +921,35 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 5) 取样后的数据重建函数<br />
 6) 单变量的离散傅里叶变换 DFT</p>
 
-<h3 id="二维离散傅里叶变换">二维离散傅里叶变换</h3>
+<h3 id="1-二维离散傅里叶变换">1 二维离散傅里叶变换</h3>
 
 <p>二维DFT即将单变量的DFT扩展到两个变量。</p>
+
+<h4 id="11-二维冲激及其取样特性">1.1 二维冲激及其取样特性</h4>
+
+<p>对于离散变量x和y，二维离散冲激定义为：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta(x,y)=\begin{cases}1, & \text{x=y=0}\\0, & \text{other}\end{cases} %]]></script>
+
+<p>其取样特性为：</p>
+
+<script type="math/tex; mode=display">\sum_{x=-\infty}^{\infty} \sum_{y=-\infty}^{\infty} f(x,y) \delta(x,y) = f(0,0)</script>
+
+<p>如果冲激位于(x0,y0)处，则其取样特性为：</p>
+
+<script type="math/tex; mode=display">\sum_{x=-\infty}^{\infty} \sum_{y=-\infty}^{\infty} f(x,y) \delta(x-x_0,y-y_0) = f(x_0,y_0)</script>
+
+<h4 id="12-二维连续傅里叶变换对">1.2 二维连续傅里叶变换对</h4>
+
+<p>设f(t,z)为两个连续变量t和z的连续函数。其二维连续傅里叶变换对为：</p>
+
+<script type="math/tex; mode=display">F(\mu,\nu)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(t,z)e^{-j2π(\mu t + \nu z)}dtdz</script>
+
+<script type="math/tex; mode=display">f(t,z)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F(\mu,\nu)e^{j2π(\mu t + \nu z)}d\mu d\nu</script>
+
+<h4 id="13-二维取样和二维取样定理">1.3 二维取样和二维取样定理</h4>
+
 
 		
 	</div>

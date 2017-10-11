@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-10-10T11:03:20+08:00</updated>
+ <updated>2017-10-10T21:50:18+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -18,19 +18,7 @@
    <link href="http://localhost:4000/cvip-discrete-fourier-transform"/>
    <id>http://localhost:4000/cvip discrete fourier transform</id>
    <updated>2017-10-09T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;前述知识&quot;&gt;前述知识：&lt;/h3&gt;
-
-&lt;p&gt;1) 傅里叶级数&lt;br /&gt;
-2) 连续变量的傅里叶变换&lt;br /&gt;
-3) 卷积&lt;br /&gt;
-4) 取样 &amp;amp; 取样函数的傅里叶变换  &amp;amp; 取样定理&lt;br /&gt;
-5) 取样后的数据重建函数&lt;br /&gt;
-6) 单变量的离散傅里叶变换 DFT&lt;/p&gt;
-
-&lt;h3 id=&quot;二维离散傅里叶变换&quot;&gt;二维离散傅里叶变换&lt;/h3&gt;
-
-&lt;p&gt;二维DFT即将单变量的DFT扩展到两个变量。&lt;/p&gt;
-</content>
+   <content type="html">&lt;h3 id=&quot;0-前述知识&quot;&gt;0 前述知识：&lt;/h3&gt; &lt;p&gt;1) 傅里叶级数&lt;br /&gt; 2) 连续变量的傅里叶变换&lt;br /&gt; 3) 卷积&lt;br /&gt; 4) 取样 &amp;amp; 取样函数的傅里叶变换 &amp;amp; 取样定理&lt;br /&gt; 5) 取样后的数据重建函数&lt;br /&gt; 6) 单变量的离散傅里叶变换 DFT&lt;/p&gt; &lt;h3 id=&quot;1-二维离散傅里叶变换&quot;&gt;1 二维离散傅里叶变换&lt;/h3&gt; &lt;p&gt;二维DFT即将单变量的DFT扩展到两个变量。&lt;/p&gt; &lt;h4 id=&quot;11-二维冲激及其取样特性&quot;&gt;1.1 二维冲激及其取样特性&lt;/h4&gt; &lt;p&gt;对于离散变量x和y，二维离散冲激定义为：&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[ \delta(x,y)=\begin{cases}1, &amp; \text{x=y=0}\\0, &amp; \text{other}\end{cases} %]]&gt;&lt;/script&gt; &lt;p&gt;其取样特性为：&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{x=-\infty}^{\infty} \sum_{y=-\infty}^{\infty} f(x,y) \delta(x,y)...</content>
  </entry>
 
  
