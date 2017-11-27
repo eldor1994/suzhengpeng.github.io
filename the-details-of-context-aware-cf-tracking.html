@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>目标追踪~上下文感知相关滤波器（Context-Aware CF）的算法原理 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="Context-Aware Correlation Filter Tracking 由 Mueller, M.等人于2017年发表在CVPR上。是一种可以在大多数相关滤波追踪器上使用的框架，在保持原有计算性能不变的情况下，可以显著提升追踪器的追踪性能。 ">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(37.916527,106.397128);
+	//山东省
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	//陕西省
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var qianxian = new qq.maps.LatLng(34.532015,108.260822);
+	//河南省
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var zhengzhou = new qq.maps.LatLng(34.745509,113.657212);
+	//上海市
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	//江苏省
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+	
+    var map = new qq.maps.Map(document.getElementById('container-map'),{
+        center: center,
+        zoom: 7
+    });
+	   //获取城市列表接口设置中心点
+    citylocation = new qq.maps.CityService({
+        complete : function(result){
+            map.setCenter(result.detail.latLng);
+        }
+    });
+    //调用searchLocalCity();方法    根据用户IP查询城市信息。
+    citylocation.searchLocalCity();
+	
+		//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br> 17 Jun 2017 <a href="/laoshan-jufeng">崂山巨峰游览小记</a> <br>28 Apr 2017 <a href="/tbm-and-signal-hill">青啤博物馆与信号山公园</a> <br>23 Apr 2017 <a href="/railway-station-to-54-square">红石绿海</a> <br>18 Mar 2017 <a href="/night-54-square">夜游五四广场</a> <br>                           </small>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     15 Apr 2017 <a href="/welcome-to-the-hell">Welcome to the hell</a> <br>                        </small>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>    05 Aug 2017 <a href="/the-site-of-weiyang-palace">汉长安城未央宫遗址</a> <br> 31 Mar 2017 <a href="/roaming-xian">西安漫行</a> <br>                         </small>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">河南省新安县</a></small>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">上海市</a></small>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省昆山市</a></small>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省丰县</a></small>');
+        info.setPosition(fengxian); 
+    });
+		//郑州 zhengzhou
+	    var marker = new qq.maps.Marker({
+        position: zhengzhou,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>                           03 Oct 2017 <a href="/zhengzhou">2017年十一：大象中原 郑州行</a> <br>  </small>');
+        info.setPosition(zhengzhou); 
+    });
+	//乾县 Qianxian
+	    var marker = new qq.maps.Marker({
+        position: qianxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>                          30 Sep 2017 <a href="/qianling">2017年十一：乾陵</a> <br>   </small>');
+        info.setPosition(qianxian); 
+    });
+	
+	
+}
+
+</script>  
+
+<script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/the-details-of-context-aware-cf-tracking&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng @ Tsingtao<br><br>
+	 <div class="footer-power">
+Proudly hosted by Github and powered by Jekyll <br><br>
+</div>
+    </div>
+
+
+ <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div> 
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+	
+	14 Oct 2017
+	
+	<h3>目标追踪~上下文感知相关滤波器（Context-Aware CF）的算法原理 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:40%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+Context-Aware Correlation Filter Tracking 由 Mueller, M.等人于2017年发表在CVPR上。是一种可以在大多数相关滤波追踪器上使用的框架，在保持原有计算性能不变的情况下，可以显著提升追踪器的追踪性能。<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<h3 id="2--相关工作">2 . 相关工作</h3>
+
+<p><strong>CF追踪</strong></p>
+
+<p>自从Bolme等人的MOSSE工作以来[4]，相关滤波器（CF）已被研究作为视觉跟踪问题的鲁棒和有效的方法。MOSSE的主要改进包括内核和HOG功能的并入[10]，添加颜色名称特征[18]或颜色直方图[1]，与稀疏跟踪[30]，自适应量表[2,5]，缓解边界效应[6]，以及深层CNN特征的整合[21]。目前，基于CF的追踪器在当前的基准测试中处于顶级，如OTB-100[27]，UAV123 [23]和VOT2015 [17]，同时保持计算效率</p>
+
+<p><strong>CF的变化与提升</strong></p>
+
+<p>近期工作的重点在于扩展CF追踪器来处理固有的局限性。例如，Liu等人提出基于部分的跟踪，以减少对部分遮挡的敏感性，并更好地保留对象结构[20]，[22]的工作执行长期跟踪，通过相关时间上下文和训练在线随机蕨分类器进行重新检测来显示变化。Zhu等人提出了一种协同CF，结合了多尺度刻蚀CF来处理尺度变化与在线CUR滤波器来解决目标漂移[31]。这些方法通过组合外部分类器来协助CF或利用其高计算速度一次运行多个CF追踪器来注册改进。</p>
+
+<p><strong>CF框架</strong></p>
+
+<p>在论文[2]、[3]中已经论证了相关滤波的固有限制可以通过修改传统相关滤波模型来克服。例如：Bibi等人提出通过将目标响应（在相关滤波中使用的是岭回归）作为新公式的一部分，可以在保持计算性能不变的情况下显著的降低目标漂移[3]。这种方法服从一个显示解而且作为一种框架（framework）可以应用于多种CF追踪器。与这篇论文相同的是，本文中同样提出了一种可以在CF追踪器应用的框架，在更少的计算消耗下，可以使CF追踪器具有上下文感知同时提升了论文[3]中没有提升的追踪性能。</p>
+
+<p><strong>上下文追踪器</strong></p>
+
+<p>上下文在追踪方面的应用，Dinah等人[7]已经进行了探索。distractors和supportoers使用顺序随机森林（sequential randomized forest）、基于模板在线表现模型（online template based appearance model）和局部特征（local features）被检测和追踪。在最近的研究中，场景中的上下文信息已经使用多层次聚集（multi-level clustering）来检测相似目标和其他潜在的干扰物（distractors）[28]。然后通过在线学习一个全局动态约束（a global dynamic constraint is then learned online）从目标可能存在的区域中（the object of interest）区分这些干扰物。该方法在具有明显干扰的OTB-100测试子集中使追踪器的性能得到了显著了提升。然而，同样是这些追踪器，其表现并不能总是很好。总体来说，在现有测试集中，其表现只能达到平均水平。与之相反的是，我们的方法则更加一般（即：不需要在特定的场景中使用——注），而且可以在多种多样干扰物或有或无的上下文图像区域（contextual image region）中使用。我们的展示了上下文感知可以使整个OTB-100测试集的测试性能得到显著提升，而不仅仅局限于其部分子集之中。</p>
+
+<p><strong>贡献</strong></p>
+
+<p>从我们现在所掌握的知识来看，(i) 这是第一个可以在大多数CF追踪器中可以作为框架使用的上下文感知公式。它的显式解使得CF追踪器在显著提升性能的同时保持计算性能不变。(ii) 经过在多个数据集上的测试，显示了我们的公式的效率。所有的CF追踪器将受益于在保持计算效率不变的情况性能的提升。</p>
+
+<h3 id="3相关滤波cf追踪">3.相关滤波（CF）追踪</h3>
+
+<p>（略）</p>
+
+<h3 id="4上下文感知相关滤波追踪">4.上下文感知相关滤波追踪</h3>
+
+<p>追踪的背景会对追踪的性能产生很大的影响。例如：如果背景比较杂乱（clutter），那么上下文信息就对能否成功的进行追踪显得非常重要。因此，我们提出了基于CF追踪器，在滤波器的学习阶段增加了上下文信息的框架（Figure 2 传统CF追踪与我们所提出的上下文相关CF追踪 的比较）。</p>
+
+<p><img src="/img/cacf/figure2.png" alt=" 图片2" /></p>
+
+<p>在每一帧，我们在目标区域<script type="math/tex">a_0 \in \Bbb{R^n}$的附近根据筛选策略（见4.3节 Implementation Details 实现细节）筛选出k个上下文图像块</script>a_i \in \Bbb{R^n}$。他们分别对应的循环矩阵为<script type="math/tex">A_i \in \Bbb{R^{n×n}}$ 和</script>A_0 \in \Bbb{R^{n×n}}$。这些上下文图像块可以看作困难样本（hard negative samples），以可变干扰物（various distractor）和 多样背景（diverse background）的形式包含有全域上下文（global context）。直接的来说就是，我们希望学习得到一个滤波器，对目标图像块具有高地响应值，对上下文图像块具有接近于0的响应值（close to zero）（Figure 2）。我们通过在（CF追踪器的——注）标准公式增加$\bbox[yellow]{正则化的上下文图像块}$来支持这种算法（见公式7）。作为运算结果，与标准的公式相同，当上下文图像块受参数$\lambda_2<script type="math/tex">的约束回归于（regressed to）0时，目标图像块回归为</script>y$$。</p>
+
+<script type="math/tex; mode=display">min_{\omega} {||A_0 \omega-y||}_2^2 + {\lambda}_1 {||\omega||}_2^2 + {\lambda}_2 \sum_{i=1}^k ||A_i w||_2^2 \tag{7}</script>
+
+<p>注意，这里有另外一种可能的选择去合并（incorporate）上下文项（例如：hinge loss 铰链损失）。相比于回归至0，这会增强上下文图像块比目标图像块较低的响应。这或许是一个更好的假设（assumption）。然而，这会导致一个需要迭代解（iterative solution）约束凸优化问题，计算速度相当的慢。</p>
+
+<h4 id="1单通道特征">1、单通道特征</h4>
+
+<p><strong>在原始域中求解</strong> 在公式7中的原始目标函数<script type="math/tex">f_p</script>，通过将上下文相关图像块堆叠在目标图像块下面形成新的数据矩阵$$B \in {\Bbb R}^{(k+1)n×n}$被重写。将y与0相连得到新的回归目标$\overline y \in {\Bbb R}^{(k+1)n}$。</p>
+
+<script type="math/tex; mode=display">f_p (w,B)={||B w - {\overline y}||}_2^2 + {\lambda}_1 {||w||}_2^2 \tag{8}</script>
+
+<p>其中：</p>
+
+<p><script type="math/tex">B=\begin {bmatrix} 
+	{A_0}\\
+	{\sqrt{\lambda_2} A_1}\\
+	\vdots \\
+	{\sqrt{\lambda_2} A_k}\\
+	\end {bmatrix}</script>
+<script type="math/tex">\overline y =\begin{bmatrix}
+	y\\
+	0\\
+	\vdots \\
+	0\\
+	\end {bmatrix}</script></p>
+
+<p>因为<script type="math/tex">f_p</script>是一个凸函数，可以在其变化率为0时求出其最小值。</p>
+
+<script type="math/tex; mode=display">w={(B^T B + \lambda_1 I )}^{-1} B^T \overline{y}  \tag{9}</script>
+
+<p>与CF追踪器<a href="/the-details-of-convention-CF-tracking">【经典相关滤波的算法原理】</a>的公式1相似的是，我们使用其中公式2，可以在傅里叶域中得到如下的显式解：</p>
+
+<script type="math/tex; mode=display">\hat w = { {\hat a _0 ^ *⊙ \hat y} \over {\hat a _0 ^ * + \hat a _0  +\lambda_1 + \lambda_2 \sum_{i=1}^k \hat a _1^* ⊙ \hat a _i  } } \tag{10}</script>
+
+<p>检测公式：与公式4相同。</p>
+
+<p><strong>在双域中求解</strong></p>
+
+<p>注意，公式9中在原始域中的解与标准的岭回归的解相同[11]。因此，在双域中解为：</p>
+
+<script type="math/tex; mode=display">\alpha=(B B^T + \lambda_1 I)^{-1}  \overline y</script>
+
+<p>其中</p>
+
+<script type="math/tex; mode=display">\alpha \in \Bbb {R} ^{(k+1)n} \tag{11}</script>
+
+<p>使用循环矩阵的恒等式即可得到：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\hat \alpha = {\begin{bmatrix}
+diag(d_{00})&&\cdots&&diag(d_{0k})\\
+\vdots&&\ddots&&\vdots\\
+diag(d_{k0})&&\cdots&&diag(d_{kk})\\
+\end{bmatrix}}^{-1}
+{\begin{bmatrix}
+\hat y \\
+\vdots\\
+0\\
+\end{bmatrix}}
+\tag{12} %]]></script>
+
+<p>其中，向量$$d_{jl}$($j,l \in {1,\cdots ,k}$)，可以由下式得到：</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+d_{00}=\hat a_0 ⊙\hat a_0^* + \lambda_1\\
+d_{jj}=\lambda_2(\hat a_0 ⊙\hat a_0^*) + \lambda_1,j≠0\\
+d_{jl}=\sqrt{\lambda_2}(\hat a_0 ⊙\hat a_0^*),j≠l
+\end{cases}
+\tag{13}</script>
+
+<p>注意：内核（kernel）技术是可以被应用的，因为，图像块之间的所有的相互影响是作为bi-products而发生的（occur as bi-products）。因此如推导出的传统核相关滤波（kernelized CF）追踪器[10]，线性相关可以被替换为核相关（kernel correlation）</p>
+
+<p>因为所有的块（blocks）是呈对角线的（diagonal），所以，这个系统可以分解为n个维度为$\Bbb R ^{(k+1)×(k+1)}$小系统。这样显著降低了复杂度并且可以并行（parallelization）处理。与其去解一个维度为$\Bbb R ^{(k+1)n×(k+1)n}$的大型系统来求解$\hat \alpha<script type="math/tex">，不如去解一个分离的系统去求解$\hat \alpha</script>中每个元素$$p \in {1,\cdots ,n}$。如下所示：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\hat \alpha = {\begin{bmatrix}
+d_{00}(p)&&\cdots&&d_{0k}(p)\\
+\vdots&&\ddots&&\vdots\\
+d_{k0}(p)&&\cdots&&d_{kk}(p)\\
+\end{bmatrix}}^{-1}
+{\begin{bmatrix}
+\hat y \\
+\vdots\\
+0\\
+\end{bmatrix}}
+\tag{14} %]]></script>
+
+<p><strong>检测公式</strong>：注意，公式6在双域中的检测公式需要适应我们的公式：<script type="math/tex">r_d (\alpha,B,Z)=Z B^T \alpha</script>。这与标准公式相似，但是矩阵B中除了目标图像块中，另外还包含有上下文图像块 。所以，$\alpha \in \Bbb R ^{(k+1)n}$ 中包含了并列的双变量${\alpha_0,\cdots,\alpha_k}$。在使用公式2进行对角化之后，检测公式可以在傅里叶域中重新写成如下的格式：</p>
+
+<script type="math/tex; mode=display">\hat{r_d} = \hat{z} ⊙ \hat{a}_0^* ⊙ \hat \alpha _0  + \sqrt{\lambda_2} \sum_{i=1}^k \hat{z} ⊙ \hat{a}_i^* ⊙ \hat \alpha _i \tag{15}</script>
+
+<h4 id="2多通道特征">2、多通道特征</h4>
+
+<p><strong>在原始域中的解</strong>：因为相比于单通道特征多通道特征可以对目标提供更加丰富的表示。（如：灰度，亮度），所以对于多通道特征来得出公式7和所有的特征维度学习联合滤波器是很重要的。多通道原始对象函数$$f_p(\overline w ; \overline B)$可以写作与单通道特征（公式8）相似的方法，但是具有以下的不同：$\overline B \in \Bbb R ^{(k+1)n×nm}$包含有目标以及上下文图像块作为列、他们相应的特征作为行。用于不同特征维度的滤波器，则被堆入$\overline w \in \Bbb R^{nm}$。</p>
+
+<script type="math/tex; mode=display">f_p(\overline w )=||\overline B \overline w - \overline y||_2^2 + \lambda_1||\overline w||_2^2 \tag{16}</script>
+
+<p>使公式16最小，即可得到与单通道相似的情况：</p>
+
+<script type="math/tex; mode=display">\overline w =(\overline B ^T \overline B + \lambda_1 I)^{-1} \overline B ^T \overline y \tag{17}</script>
+
+<p>使用循环矩阵公式（the identity for circulant matrices）得出：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\hat{\overline w} = {\begin{bmatrix}
+\overline C_{11}&&\cdots&&\overline C_{1m}\\
+\vdots&&\ddots&&\vdots\\
+\overline C_{m1}&&\cdots&&\overline C_{mm}\\
+\end{bmatrix}}^{-1}
+{\begin{bmatrix}
+diag(\hat a _{01}^*⊙\hat y) \\
+\vdots\\
+diag(\hat a _{0m}^*⊙\hat y)\\
+\end{bmatrix}} %]]></script>
+
+<p>目标和上下文图像块的每一个特征维度<script type="math/tex">j,l \in {1,\cdots,m}$标记为</script>a_{0j}$和$$a_{ij}$。块$(\overline B^T \overline B + \lambda_1 I)^{-1}$定义如下：</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\overline C_{jj} = diag(\hat a_{0j}^* ⊙ \hat a _{0j} +\lambda_2 \sum_{i=1}^k \hat a_{ij}^* ⊙ \hat a _{ij}) + \lambda_1 I \\
+\overline C_{jl} = diag(\hat a_{0j}^* ⊙ \hat a _{0l} +\lambda_2 \sum_{i=1}^k \hat a_{ij}^* ⊙ \hat a _{il}) ,j≠l
+\end{cases}
+
+\tag{18}</script>
+
+<p>不幸的是，这个系统不能像单通道那样，有效地被倒置（inverted）。但是，因为所有的块都是对角化的，这个系统可以被分解（decomposed）为维度为$\Bbb R ^ {(m×m)}$的n个小系统。这样显著降低了复杂度，并且可以并行化。与公式14相似，一个分离的系统分开解滤波器$\hat{\overline w}$每一个元素$$p \in {1,\cdots,n}$。</p>
+
+<p><strong>检测公式</strong>：除了图像块Z和学得的滤波器w为m维，其他的地方与公式4中的标准公式几乎完全一样。</p>
+
+<p><strong>在双域中求解</strong>：与单通道特征相似，多通道原始域中求解（公式17）也有着与标准岭回归完全一样（exact same）的形式的解，在双域中推导出如下的解：</p>
+
+<script type="math/tex; mode=display">\overline \alpha ={(\overline B \overline B ^ T + \lambda_1 I )}^{-1} \overline y</script>
+
+<p>其中：</p>
+
+<script type="math/tex; mode=display">\overline \alpha \in \Bbb R ^{kn} \tag{19}</script>
+
+<p>其次，循环矩阵的恒等式（公式2），可以推出：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\hat {\overline \alpha }= {\begin{bmatrix}
+diag(\overline d_{00})&&\cdots&&diag(\overline d_{0k})\\
+\vdots&&\ddots&&\vdots\\
+diag(\overline d_{k0})&&\cdots&&diag(\overline d_{kk})\\
+\end{bmatrix}}^{-1}
+{\begin{bmatrix}
+\hat y \\
+\vdots\\
+0\\
+\end{bmatrix}}
+
+\tag{20} %]]></script>
+
+<p>其中，向量$\overline d_{jl} (j,l \in {1,\cdots,k})$通过下式得出：</p>
+
+<script type="math/tex; mode=display">\begin{cases}
+\overline d_ {00} = \sum _{i=1}^m (\hat a _{0i} ⊙ \hat a _{0i} ^ *)  + \lambda_1\\
+\overline d_ {ji} = \lambda_2 \sum _{i=1}^m (\hat a _{ji} ⊙ \hat a _{ji} ^ *)  + \lambda_1 , j≠0\\
+\overline d_ {jl} =\sqrt{\lambda_2} \sum _{i=1}^m (\hat a _{ji} ⊙ \hat a _{li} ^ *)  , j≠l\\
+\end{cases}
+
+\tag{21}</script>
+
+<p>请注意，线性系统与单通道特征下双域的解相同。例外就是，线性系统沿着特征维度的总和。这个解同样允许使用内核（kernels）而且线性系统可以用与单通道情况下相同的方法求解。</p>
+
+<p><strong>检测公式</strong>：与单通道特征不同的是，在<script type="math/tex">r_d (\alpha,\overline B,\overline Z) = \overline Z \overline B ^ T \overline \alpha</script> z 中 $\overline Z \in \Bbb R ^{nm×n}$和$\overline B \in \Bbb R ^{(k+1)n×nm}$ 是多行拥有多特征维度。经过对角化处理和项重排（rearrangement of terms）傅里叶域检测公式得到最终形式如下：</p>
+
+<script type="math/tex; mode=display">\hat{r_d} = \sum_{i=1}^m \hat{z} ⊙ \hat{a}_0^* ⊙ \hat \alpha _0  + \sqrt{\lambda_2} \sum_{j=1}^k \sum_{i=1}^m \hat{z} ⊙ \hat{a}_i^* ⊙ \hat \alpha _i \tag{22}</script>
+
+<h4 id="3实现细节">3、实现细节</h4>
+
+<p><strong>一般化 Generalization</strong></p>
+
+<p>我们推导出了单\双通道特征和原始\双域的不同组合的闭式解。因此，我们的框架适用范围很广，从而，对性能的影响是全盘性的。在原始域单通道特征的情况下，解仅仅包含元素操作（element-wise operation）而且其实现（implementation）是琐碎的（trivial）。然而，在其他情况下，一个线性系统需要高效地求解。对于双域中的单通道特征，我们需要颠倒（invert）n个大小为（k+1）×（k+1）的小系统，其每一个都可以重新写成外积（outer product）的形式而且可以使用Sherman-Morrison公式反向以高效地求解[9,16]。</p>
+
+<p>因为多通道问题的解有一个包含原始域和双域图像块的和，所以这不能被写成一个外积。与之相反（instead），不论是一个大的系统或者n个小的系统，都必须进行求解。在求解大系统时，可以使用共轭梯度下降（conjugate gradient descent，CGD）。对于小系统则可以直接求解。这个选择在原始域中由特征维度m决定，在双域中由有上下文图像块的数量k决定。求解n个小系统的复杂度往往是较低的，而且系统较密集的。如果m或k足够小，直接求解将更高效。</p>
+
+<p>但是，因为大系统（原始域：nm×nm 双域：（k+1）n×（k+1）n）是稀疏，如果m或k非常大，可以使用GCD。在原始域的多通道特征的情况下，m个特征是相互独立的（例如：在使用HOG特征的时候，滤波器的每一个特征维度可以使用公式9进行独立的计算）。关于目标图像块和k个上下文图像块相似假设在双域是中无法做出的。如果他们是相互独立的，这个问题降低到公式1中多通道特征的常规岭回归问题。</p>
+
+<p><strong>上下文选择策略 Context Selection Strategy</strong></p>
+
+<p>上下文的选择是追踪性能的基础。在这里有很多种策略可供选择。最基础和通用的方法是简单的在目标的附近筛选出上下文。实质上，这将使得滤波器能够更好的区分在不久的将来可能会成为背景的上下文。除此之外，拥有恒速模型（with a constant velocity model）的卡尔曼滤波可以被用来指导进行筛选。另外一种可以补充之前策略或直接使用的方法是本着难负挖掘的精神[15]，在每一帧中，上下文图像块在滤波器响应较高（is high）和空间上与最高值较远。在这种情况下，滤波器学会在于目标相似的图像块中拥有一个低的响应。同样，采样策略可以可以在上下文图像块被认为是每一帧上与目标不重叠的对象检测中的多目标追踪之中使用（例如：为每一个目标初始化一个单个目标的追踪器）</p>
+
+<h4 id="4与相关滤波追踪器相的比较">4、与相关滤波追踪器相的比较</h4>
+
+<p><strong>传统相关滤波追踪</strong></p>
+
+<p>[4,10,11]</p>
+
+<p>扩大这些CF追踪器范围的原始（naive）的方法是使用更大的搜索窗口。如果有的话，这只会在检测阶段有所帮助，因为训练阶段保持不变。然而，在实践中，如果训练有素的过滤器不够代表性，则较大的搜索窗口将引入更多可能的干扰物来增加（目标）漂移的机会。相比之下，我们的框架在训练阶段考虑了全局上下文。因此，学习得到的滤波器在当前上下文中具有更佳的分类特性，并且对由于快速运动、闭塞和干扰而导致的（目标）漂移更强的鲁棒性。此外，即使特征表示不是丰富的，追踪器仍然能够通过关注上下文信息来跟踪对象，即，过滤器响应指示目标不应该在何处。</p>
+
+<p><strong>目标自适应（Target-Adaptive）相关滤波追踪</strong></p>
+
+<p>目标自适应相关滤波跟踪[3]也是可以应用于相关滤波追踪器以提高其性能的框架。然而，这项工作的重点是仔细设计一个更好的<script type="math/tex">y</script>，以解决边界效应（address boundary effects）和处理快速运动（deal with fast motion）和闭塞情景（occlusion scenarios）。虽然我们的工作这些场景（situations）下提高了追踪性能，但是在许多其他情况下上下文也是有帮助的（例如，当出现剧烈的外观变化，背景杂波和照明变化发生时）。结果在段5.3（量化结果 Quantitative Results）显示，以更高的帧速率运行时，相比于使用自适应追踪器，使用我们的框架实现了更好的整体性能。理论上，这两个框架可以结合提高性能的潜力;但是，我们的目标是将运行时间保持在可接受的范围内 因此，将它们组合在本文的范围之外。</p>
+
+<h3 id="5实验">5.实验</h3>
+
+<p>为了验证我们的框架的有效性，我们将其与四个流行和多样的CF追踪器相结合。 然后，我们对它们的基准版本和[3]中的目标自适应框架进行基准测试。 为了评估，我们使用流行的目标追踪测试基准OTB-100 [27]。</p>
+
+<h4 id="1基准baseline追踪器">1、基准（baseline）追踪器</h4>
+
+<p>为了代表CF跟踪的领域，我们选择了各种最近发表的相关滤波追踪器作为基准。我们只选择遵循标准相关滤波公式（公式1）的追踪器，并且在功能和/或实现方面与其他选定的基准不太多的相似。表格1简介了这些相关滤波追踪器。我们将我们的框架应用在这些所选的基准上，分别称之为<script type="math/tex">MOSSE_{CA}、DCF_{CA}、SAMF_{CA} 和 STAPLE_{CA}$。此外，我们还包括了他们的目标适应部分（如果支持），称之为</script>MOSSE_{AT}、DCF_{AT} 和 SAMF_{AT}$。</p>
+
+<p>表格1：加上我们框架的基准相关滤波追踪器</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>追踪器</th>
+      <th>特征</th>
+      <th>尺度</th>
+      <th>发表时间及期刊</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MOSSE</td>
+      <td>grayscale pixel intensity</td>
+      <td>No</td>
+      <td>2010 CVPR</td>
+    </tr>
+    <tr>
+      <td>DCF</td>
+      <td>HOG</td>
+      <td>No</td>
+      <td>2015 TPAMI</td>
+    </tr>
+    <tr>
+      <td>SAMF</td>
+      <td>HOG、CN</td>
+      <td>Yes</td>
+      <td>2014 ECCV-W</td>
+    </tr>
+    <tr>
+      <td>STAPLE</td>
+      <td>HOG、Color Histogram</td>
+      <td>Yes</td>
+      <td>2016 CVPR</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="2实验开始">2、实验开始</h4>
+
+<p><strong>评估方法</strong></p>
+
+<p>根据OTB-50 / OTB-100 [26,27]中定义的两种测量指标——精度和成功度，对所有追踪器进行评估。精度是测量追踪器边界框（tracker bounding box）和真实边界框（ground truth bounding box）之间的中心误差。在精度图（precision plot）中，最大允许中心误差（像素距离）沿x轴变化，每个阈值的正确预测边界框的百分比绘制在y轴上。20个像素的通用阈值（common threshold）[26]用于排名追踪器。成功度是测量追踪器边界框和真实边界框的重叠（IoU）部分的指标。在成功度图（success plot）中，所需的重叠沿x轴变化，每个阈值的正确预测的边界框的百分比绘制在y轴上。追踪器按曲线下面积（the Area Under the Curve，AUC）排列[26]。我们在OTB-100上加上精度图作为参考，但重点在于成功度的结论和更详细的分析，因为它更能反映实际的跟踪性能。所有追踪器都使用MATLAB在同一工作站（Intel Xeon CPU E5-2697 2.6GHz，256GB RAM）上运行。</p>
+
+<p><strong>参数设定</strong></p>
+
+<p>所有基准追踪器和自适应目标追踪器都使用作者提供的标准参数运行。为了公平比较，我们运行具有相同参数的上下文感知追踪器。我们将附加正则化因子（the additional regularization factor）<script type="math/tex">λ_2</script>设置为{2，25，0.4，0.5}，并分别使用$$MOSSE_{CA}，DCF_{CA}，SAMF_{CA}和STAPLE_{CA}$的学习速率为{0.025,0.015,0.005,0.015}的标准更新规则。我们将上下文图像块的数量k设置为4，并在目标周围均匀采样。因为当k大于4的时候，实验结果虽然会有轻微的提升，但会影响运行。因为上下文的鲁棒性增加，我们还增加了所有上下文感知追踪器的内边距（padding）。</p>
+
+<h4 id="3量化结果">3、量化结果</h4>
+
+<p><img src="/img/cacf/figure3.png" alt=" 图片3" /></p>
+
+<p>图3a和3b显示了OTB-100上所有基准追踪器及其目标自适应和上下文感知部分的实验结果。所有上下文感知（CA）追踪器提高其基准。分别对最复杂的相关滤波器（CF）追踪器（STAPLE）和最基本的相关滤波追踪器（MOSSE），随着使用更复杂的功能，性能增益会降低，精度和成功度的绝对改进分别为{2.6％，2.1％}至{18.4％,13.6％}。此外，我们提出的框架不仅优于基准，而且还有相应的目标自适应（AT）追踪器（不适用于STAPLE）。请注意，与自适应目标框架相比，该性能增益以低得多的计算成本实现。上下文感知追踪器的运行速度大约是基准追踪器的一半，但是是他们对应目标自适应追踪器速度的2-6倍。</p>
+
+<p><strong>每个属性的评价</strong></p>
+
+<p><img src="/img/cacf/figure4.png" alt=" 图片4" /></p>
+
+<p>虽然我们的框架改善了大多数情况下的追踪性能，但某些类别比其他类别更受益。最为显著的变化是在高宽比变化剧烈（drastic aspect ratio change 图4a），背景杂波（background clutter 图4b），快速运动（fast motion 图4c）和遮挡（occlusion 图4d）的情况下。特别地，如果对象外观（object appearance）发生了显着变化（例如，高宽比变化，遮挡），或者背景与目标相似（例如背景杂波），则我们的框架十分有用。此外，我们的框架对于具有快速运动的视频也将显着改善。这主要是因为添加上下文区分（context discrimination）允许较大的搜索区域。同样值得注意的是，在大多数情况下，我们的方法优于目标自适应（AT）框架，该框架专门用于提高快速运动场景的性能。还有几个类别，我们的方法优于：运动模糊（motion blur），变形（deformation），照明变化（illumination variation），平面内/外旋转（in/out-of-plane rotation）等。请参考所有每个属性结果的补充材料。</p>
+
+<p><strong>与最先进的（state-of-the-art）追踪器进行比较</strong></p>
+
+<p>为了将跟踪性能纳入考虑，我们将最佳性能上下文感知相关滤波追踪器（<script type="math/tex">SAMF_{CA}和STAPLE_{CA}$）及其基准追踪器（SAMF [18]和STAPLE [1]）与最新的最先进的追踪器（ SOWP [15]，HCFT[21]和MEEM[29]），这些不一定是基于相关滤波的追踪器进行对比。此外，我们还包括不符合我们框架选择标准的常用的相关滤波追踪器，即与SAMF非常相似但通常表现不佳（underperform）的DSST[5]，采用长期/短期记忆策略的MUSTER[12]其源代码不可用于修改，和最近在跟踪基准上排名第一，但不符合标准公式的SRDCF[6]。最后，我们包括TLD[13]和经典的上下文追踪器CXT[7]作为参考。如图5a所示，我们的框架使</script>STAPLE_{CA}$成为最新的最先进的追踪器之中的性能最佳的追踪器。</p>
+
+<p><strong>可变帧率评估</strong></p>
+
+<p><img src="/img/cacf/figure5.png" alt=" 图片5" /></p>
+
+<p>为了演示我们框架的计算效率，我们根据每个追踪器的实际速度降低了OTB100数据集的采样率。图5b中的结果显示，大多数最先进的追踪器非常慢，结果当帧率根据实际跟踪速度进行调整时，其性能显着降低。相比之下，我们的上下文感知相关滤波追踪器的性能只会略微降低其作为表现最差的人的排名。将SAMF的目标自适应框架与我们的上下文感知框架进行比较，是其效率的另一个指标。当<script type="math/tex">SAMF_{AT}$降到其基准以下时，上下文感知部分</script>SAMF_{CA}$能够保持其边缘。我们认为，这种比较对于衡量追踪器在现实世界的在线跟踪方案中的表现方式很重要。因此，我们鼓励大家作出如此比较的标准评估标准。</p>
+
+<h4 id="4定性结果">4、定性结果</h4>
+
+<p><img src="/img/cacf/figure6.png" alt=" 图片6" /></p>
+
+<p>为了使我们的框架对跟踪性能的影响可视化，我们在图6中以OTB-100示例视频为例，展示了基准方法和上下文感知部分的比较。</p>
+
+<h4 id="5讨论">5、讨论</h4>
+
+<p>在少数情况下，我们的框架并没有什么提升，但是当目标是低分辨率时这种提升却会显现。在这种情况下，我们的框架仍然改善了基准追踪器，但是它倾向于优于适应性目标框架。通过并入更多的负面样本来了解上下文有帮助，但在这种情况下并不是最有效的方法。由于目标表示较弱（低分辨率），因此，在添加样本以学习最佳回归目标y[3]时，并入额外的正样本更为有用。</p>
+
+<p>根据单通道/多通道特征和原始/双域解的选择，线性系统的复杂性以及解决它的最佳方法可能会有所不同。因此，仔细选择矩阵求逆方法对于保持计算效率很重要（见第4.3节）。</p>
+
+<p>最后，我们的框架可以揭示潜在的跟踪失败可能发生的时间。通常，数据项<img src="/img/cacf/function1.png" alt=" 公式1" />的能量可以用作表示帧与帧之间目标变化的指标。在直觉上，从一帧到另一帧的这种能量的剧烈变化可能表明追踪器正在漂移；然而，这可能不是这种变化的唯一原因。例如：这种能量也可能由于照明而在几帧内的变化，变形，闭塞等而突然波动（fluctuate abruptly）。单纯（Alone）的数据项不是目标漂移的可靠方法。然而，在我们的公式（公式（7））中，上下文项<img src="/img/cacf/function2.png" alt=" 公式2" />的能量可以用于证实(corroborate)数据项的含义。在许多情况下，目标的外观变化不影响上下文（例如纵横比变化，变形，闭塞等）。因此，几帧内的两个项目（数据和上下文）的突然变化(an abrupt change)是追踪失败/漂移的更可靠指示。因此，可以想象，在追踪期间监视这些事件可以帮助追踪器从不可逆的故障中恢复。有关进一步讨论和结果，请参阅补充材料。</p>
+
+<h3 id="6-结论">6. 结论</h3>
+
+<p>我们提出了一种基于相关滤波器（CF）的追踪器的通用框架，其将上下文合并到具有低计算成本的滤波器训练阶段。广泛的实验表明，我们的框架提高了所有参与测试的相关滤波追踪器的跟踪性能，并且计算效率高。虽然它提高了大多数属性的性能，但我们可以确定最有利的特定场景：快速运动，剧烈的外观变化（例如高宽比变化或部分遮挡）以及背景杂乱。</p>
+
+<p><strong>致谢</strong></p>
+
+<p>这项工作得到阿布杜拉国王科技大学（KAUST）资助研究办公室VCC基金的资助。</p>
+
+<hr />
+<p><strong>经典相关滤波的计算公式</strong></p>
+
+<p>算法原理 <a href="/the-details-of-convention-CF-tracking">【经典相关滤波的算法原理】</a></p>
+
+<p>在该论文中引用到的公式如下：</p>
+
+<script type="math/tex; mode=display">min_{\omega} {||A_0 \omega-y||}_2^2 + {\lambda}_1 {||\omega||}_2^2\tag{1}</script>
+
+<script type="math/tex; mode=display">X=F diag(\hat x) F^H</script>
+
+<script type="math/tex; mode=display">X^T=F diag({\hat x} ^ *)F^H  \tag{2}</script>
+
+<script type="math/tex; mode=display">\hat w ={ {\hat a _0 ^ *⊙ \hat y} \over {\hat a _0 ^ * + \hat a _0  +\lambda_1} } \tag{3}</script>
+
+<script type="math/tex; mode=display">r_p (w,Z)=Z w \Rightarrow \hat{r_p} = \hat z ⊙ \hat w \tag{4}</script>
+
+<script type="math/tex; mode=display">\hat  \alpha={ {\hat y} \over {\hat a _0 ^ * + \hat a _0  +\lambda_1} } \tag{5}</script>
+
+<script type="math/tex; mode=display">r_d(\alpha,A_0,Z) = Z A_0^T \alpha \Rightarrow \hat{r_d} = \hat{z} ⊙ \hat{a}_0^* ⊙ \hat \alpha  \tag{6}</script>
+
+<hr />
+<p><strong>参考文献</strong></p>
+
+<p><img src="/img/cacf/reference.png" alt=" 图片6" /></p>
+
+<p>按照原文标号排序</p>
+
+<p>[2] Bibi, A., &amp; Ghanem, B. (2015). Multi-template Scale-Adaptive Kernelized Correlation Filters. IEEE International Conference on Computer Vision Workshop (pp.613-620). IEEE.</p>
+
+<p>[3] Bibi, A., Mueller, M., &amp; Ghanem, B. (2016). Target Response Adaptation for Correlation Filter Tracking. European Conference on Computer Vision (pp.419-433). Springer International Publishing.</p>
+
+<p>[7] Dinh, T. B., Vo, N., &amp; Medioni, G. (2011). Context tracker: Exploring supporters and distracters in unconstrained environments. Computer Vision and Pattern Recognition (Vol.32, pp.1177-1184). IEEE.</p>
+
+<p>[20] Henriques, J., o F, Caseiro, R., Martins, P., &amp; Batista, J. (2012). Exploiting the Circulant Structure of Tracking-by-Detection with Kernels. Computer Vision – ECCV 2012. Springer Berlin Heidelberg.</p>
+
+<p>[11] Henriques, J. F., Caseiro, R., Martins, P., &amp; Batista, J. (2015). High-speed tracking with kernelized correlation filters. IEEE Transactions on Pattern Analysis &amp; Machine Intelligence, 37(3), 583-596.</p>
+
+<p>[28] Xiao, J., Qiao, L., Stolkin, R., &amp; Leonardis, A. (2016). Distractor-Supported Single Target Tracking in Extremely Cluttered Scenes. European Conference on Computer Vision (pp.121-136). Springer International Publishing.</p>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/computervision.html" rel="tag">computerVision</a>, <a href="/tag/papers.html" rel="tag">papers</a>, <a href="/tag/tracker.html" rel="tag">tracker</a> </div> 
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/computerVision" title="计算机视觉相关期刊与会议资料">计算机视觉相关期刊与会议资料</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/the-details-of-context-aware-cf-tracking&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>

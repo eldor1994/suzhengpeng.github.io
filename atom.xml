@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-10-11T19:44:53+08:00</updated>
+ <updated>2017-11-27T12:47:30+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,11 +14,42 @@
  
 
  <entry>
-   <title>深入学习数字图像处理~基于OpenCV的二维离散傅里叶变换</title>
-   <link href="http://localhost:4000/cvip-discrete-fourier-transform"/>
-   <id>http://localhost:4000/cvip discrete fourier transform</id>
-   <updated>2017-10-09T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;0-前述知识&quot;&gt;0 前述知识：&lt;/h3&gt; &lt;p&gt;1) 傅里叶级数&lt;br /&gt; 2) 连续变量的傅里叶变换&lt;br /&gt; 3) 卷积&lt;br /&gt; 4) 取样 &amp;amp; 取样函数的傅里叶变换 &amp;amp; 取样定理&lt;br /&gt; 5) 取样后的数据重建函数&lt;br /&gt; 6) 单变量的离散傅里叶变换 DFT&lt;/p&gt; &lt;h3 id=&quot;1-二维离散傅里叶变换&quot;&gt;1 二维离散傅里叶变换&lt;/h3&gt; &lt;p&gt;二维DFT即将单变量的DFT扩展到两个变量。&lt;/p&gt; &lt;h4 id=&quot;11-二维冲激及其取样特性&quot;&gt;1.1 二维冲激及其取样特性&lt;/h4&gt; &lt;p&gt;对于离散变量x和y，二维离散冲激定义为：&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[ \delta(x,y)=\begin{cases}1, &amp; \text{x=y=0}\\0, &amp; \text{other}\end{cases} %]]&gt;&lt;/script&gt; &lt;p&gt;其取样特性为：&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{x=-\infty}^{\infty} \sum_{y=-\infty}^{\infty} f(x,y) \delta(x,y)...</content>
+   <title>YUV格式与RGB格式的转换</title>
+   <link href="http://localhost:4000/the-transform-of-yuv-to-rgb"/>
+   <id>http://localhost:4000/the transform of yuv to rgb</id>
+   <updated>2017-11-14T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;yuv格式分析&quot;&gt;YUV格式分析&lt;/h3&gt; &lt;h4 id=&quot;简介&quot;&gt;简介&lt;/h4&gt; &lt;p&gt;YUV是一种颜色编码方法，其原理是把亮度与色度分离，研究证明,人眼对亮度的敏感超过色度。利用这个原理，可以把色度信息减少一点，人眼也无法查觉这一点。&lt;/p&gt; &lt;p&gt;YUV三个字母中，其中”Y”表示明&lt;strong&gt;亮度&lt;/strong&gt;（Lumina nce或Luma），也就是灰阶值；而”U”和”V”表示的则是&lt;strong&gt;色度&lt;/strong&gt;（Chrominance或Chroma），作用是描述影像色彩及饱和度，用于指定像素的颜色,如果忽略C信号，那么剩下的Y（Luma）信号就跟之前的黑白电视信号相同。&lt;/p&gt; &lt;p&gt;在技术文档里，YUV经常有另外的名字, YCbCr ,其中Y与YUV 中的Y含义一致，Cb , Cr 同 样都指色彩,，只是在表示方法上不同而已，Cb Cr 就是本来理论上的“分量/色差”的标识。C代表分量(是component的缩写)Cr、Cb分别对应r(红)、b(蓝)分量信号，Y除了g(绿)分量信号，还叠加了亮度信号。&lt;/p&gt; &lt;p&gt;YUV的优点：&lt;/p&gt; &lt;p&gt;1,彩色YUV图像转黑白YUV图像转换非常简单，这一特性用在于电视信号上。&lt;/p&gt; &lt;p&gt;2,YUV是数据总尺寸小于RGB格式&lt;/p&gt; &lt;h4 id=&quot;分类&quot;&gt;分类&lt;/h4&gt; &lt;p&gt;YUV格式通常有两类。&lt;/p&gt; &lt;p&gt;1：打包（packed）格式： 将YUV分量存放在同一个数组中，通常是几个相邻的像素组成一个宏像素（macro-pixel）。&lt;/p&gt; &lt;p&gt;2：平面（planar）格式：使用三个数组分开存放YUV三个分量，就像是一个三维平面一样。&lt;/p&gt; &lt;h4 id=&quot;格式解析&quot;&gt;格式解析&lt;/h4&gt; &lt;p&gt;1、4:4:4&lt;/p&gt; &lt;p&gt;每一个Y对应一组UV分量。&lt;/p&gt; &lt;p&gt;2、4:2:2&lt;/p&gt; &lt;p&gt;每两个Y对应一组UV分量。&lt;/p&gt; &lt;p&gt;3、4:2:0&lt;/p&gt; &lt;p&gt;每四个Y对应一组UV分量。&lt;/p&gt; &lt;h3 id=&quot;rgb格式分析&quot;&gt;RGB格式分析&lt;/h3&gt; &lt;h3 id=&quot;yuv-rgb格式转换算法细节&quot;&gt;YUV-RGB格式转换算法细节&lt;/h3&gt; &lt;h4 id=&quot;yuv2rgb&quot;&gt;YUV2RGB&lt;/h4&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;R=Y+1.13983*(V-128)&lt;/script&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;G=Y-0.39465*(U-128)-0.58060*(V-128)&lt;/script&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;B=Y+2.03211*(U-128)&lt;/script&gt; &lt;h4...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>十年珍藏——西安博物院新入展文物精品展</title>
+   <link href="http://localhost:4000/tressure-collection-10-years"/>
+   <id>http://localhost:4000/tressure collection 10 years</id>
+   <updated>2017-11-14T00:00:00+08:00</updated>
+   <content type="html">
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>目标追踪~上下文感知相关滤波器（Context-Aware CF）的算法原理</title>
+   <link href="http://localhost:4000/the-details-of-context-aware-cf-tracking"/>
+   <id>http://localhost:4000/the details of context-aware cf tracking</id>
+   <updated>2017-10-14T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;2--相关工作&quot;&gt;2 . 相关工作&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;CF追踪&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;自从Bolme等人的MOSSE工作以来[4]，相关滤波器（CF）已被研究作为视觉跟踪问题的鲁棒和有效的方法。MOSSE的主要改进包括内核和HOG功能的并入[10]，添加颜色名称特征[18]或颜色直方图[1]，与稀疏跟踪[30]，自适应量表[2,5]，缓解边界效应[6]，以及深层CNN特征的整合[21]。目前，基于CF的追踪器在当前的基准测试中处于顶级，如OTB-100[27]，UAV123 [23]和VOT2015 [17]，同时保持计算效率&lt;/p&gt; &lt;p&gt;&lt;strong&gt;CF的变化与提升&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;近期工作的重点在于扩展CF追踪器来处理固有的局限性。例如，Liu等人提出基于部分的跟踪，以减少对部分遮挡的敏感性，并更好地保留对象结构[20]，[22]的工作执行长期跟踪，通过相关时间上下文和训练在线随机蕨分类器进行重新检测来显示变化。Zhu等人提出了一种协同CF，结合了多尺度刻蚀CF来处理尺度变化与在线CUR滤波器来解决目标漂移[31]。这些方法通过组合外部分类器来协助CF或利用其高计算速度一次运行多个CF追踪器来注册改进。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;CF框架&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;在论文[2]、[3]中已经论证了相关滤波的固有限制可以通过修改传统相关滤波模型来克服。例如：Bibi等人提出通过将目标响应（在相关滤波中使用的是岭回归）作为新公式的一部分，可以在保持计算性能不变的情况下显著的降低目标漂移[3]。这种方法服从一个显示解而且作为一种框架（framework）可以应用于多种CF追踪器。与这篇论文相同的是，本文中同样提出了一种可以在CF追踪器应用的框架，在更少的计算消耗下，可以使CF追踪器具有上下文感知同时提升了论文[3]中没有提升的追踪性能。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;上下文追踪器&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;上下文在追踪方面的应用，Dinah等人[7]已经进行了探索。distractors和supportoers使用顺序随机森林（sequential randomized forest）、基于模板在线表现模型（online template based appearance model）和局部特征（local features）被检测和追踪。在最近的研究中，场景中的上下文信息已经使用多层次聚集（multi-level clustering）来检测相似目标和其他潜在的干扰物（distractors）[28]。然后通过在线学习一个全局动态约束（a global dynamic constraint is then learned online）从目标可能存在的区域中（the object of interest）区分这些干扰物。该方法在具有明显干扰的OTB-100测试子集中使追踪器的性能得到了显著了提升。然而，同样是这些追踪器，其表现并不能总是很好。总体来说，在现有测试集中，其表现只能达到平均水平。与之相反的是，我们的方法则更加一般（即：不需要在特定的场景中使用——注），而且可以在多种多样干扰物或有或无的上下文图像区域（contextual image region）中使用。我们的展示了上下文感知可以使整个OTB-100测试集的测试性能得到显著提升，而不仅仅局限于其部分子集之中。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;贡献&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;从我们现在所掌握的知识来看，(i) 这是第一个可以在大多数CF追踪器中可以作为框架使用的上下文感知公式。它的显式解使得CF追踪器在显著提升性能的同时保持计算性能不变。(ii) 经过在多个数据集上的测试，显示了我们的公式的效率。所有的CF追踪器将受益于在保持计算效率不变的情况性能的提升。&lt;/p&gt; &lt;h3 id=&quot;3相关滤波cf追踪&quot;&gt;3.相关滤波（CF）追踪&lt;/h3&gt; &lt;p&gt;（略）&lt;/p&gt; &lt;h3 id=&quot;4上下文感知相关滤波追踪&quot;&gt;4.上下文感知相关滤波追踪&lt;/h3&gt; &lt;p&gt;追踪的背景会对追踪的性能产生很大的影响。例如：如果背景比较杂乱（clutter），那么上下文信息就对能否成功的进行追踪显得非常重要。因此，我们提出了基于CF追踪器，在滤波器的学习阶段增加了上下文信息的框架（Figure 2 传统CF追踪与我们所提出的上下文相关CF追踪 的比较）。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/cacf/figure2.png&quot; alt=&quot;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>目标追踪~相关滤波算法原理基础</title>
+   <link href="http://localhost:4000/the-details-of-convention-CF-tracking"/>
+   <id>http://localhost:4000/the details of convention CF tracking</id>
+   <updated>2017-10-14T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;CF追踪器使用分类学习作为其核心，其目标是学习一个分类相关滤波器使之能够在连续帧中检测到目标的位置（即：最大响应的位置）。CF追踪器获得成功的关键是它的采样方法（sampling method）。由于计算能力的限制，常用做法是在目标的周围随机拾取有限个数的负样本（negative sample），这个成熟的采样策略和负样本的个数对采样的效果具有非常显著的影响。由于CF追踪在目标周围的采样密度非常低，因而有着非常低的计算花费。这一切通过构造（modeling）在目标周围的一个搜索框中找到所有可能的解（translation）成为循环移位（circulant shifts）然后串联起来组成一个数据矩阵$A_0$来实现。这个拥有循环结构的矩阵在傅里叶域中对于岭回归问题有着非常高效地解。&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;min_{\omega} {||A_0 \omega-y||}_2^2 + {\lambda}_1 {||\omega||}_2^2\tag{1}&lt;/script&gt; &lt;p&gt;这里，我们将学得的相关滤波器标记为$w$。方阵$A_0$包含所有所有已经向量化的图像块$a_0$，回归目标$y$是2D高斯的向量化图像（vectorized image of a 2D Gaussian）。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;我们将向量$x$的第$j$个元素标记&lt;script type=&quot;math/tex&quot;&gt;x(j)&lt;/script&gt;，将其共轭标记为$x^*$以及其傅里叶变换$F^H x$标记为$\hat x$（这里F是DFT矩阵）。下面的恒等式则是快速求解式(1)的关键。&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;X=F diag(\hat x) F^H&lt;/script&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;X^T=F diag({\hat x} ^ *)F^H \tag{2}&lt;/script&gt; &lt;h4 id=&quot;在原始域primal-domain中求解&quot;&gt;在原始域（Primal Domain）中求解&lt;/h4&gt; &lt;p&gt;公式1是一个凸起（convex）的，并且有一个全域的最小值。计算它的变化率（gradient 指目标函数如温度、气压等的变化率，或 倾斜度、坡度等），使之为0，即可得到滤波器：$w=(A_0^T A_0 +\lambda_1 I )^-1 A_0^T y$ 显式（closed-form）解。由于$A_0$具有循环性，其可以使用公式2来进行对角化，同时可以在傅里叶域中使用下式方便的进行求逆运算。&lt;/p&gt;...</content>
  </entry>
 
  
@@ -136,36 +167,6 @@
 
 &lt;p&gt;原文地址：http://101.96.8.164/www.eecs.harvard.edu/~michaelm/postscripts/ReadPaper.pdf&lt;/p&gt;
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>机器学习有关的数学知识基础</title>
-   <link href="http://localhost:4000/math-knowledge-of-machine-learning"/>
-   <id>http://localhost:4000/math-knowledge-of-machine-learning</id>
-   <updated>2017-08-11T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;1、线性代数&lt;/p&gt; &lt;p&gt;Introduction to Linear Algebra, 4th edition ,GILBERT STRANG&lt;/p&gt; &lt;p&gt;麻省理工公开课：线性代数 –&amp;gt; http://open.163.com/special/opencourse/daishu.html&lt;/p&gt; &lt;p&gt;2、PRML、Pattern Recognition and Machine Learning 模式识别与机器学习&lt;/p&gt; &lt;p&gt;斯坦福大学公开课 ：机器学习课程 ( Andrew Ng ) –&amp;gt; http://open.163.com/special/opencourse/machinelearning.html&lt;/p&gt; &lt;p&gt;3、凸优化 Convex Optimization Stephen Boyd&lt;/p&gt; &lt;p&gt;讲义下载：https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf&lt;/p&gt; &lt;p&gt;EE364a: Convex Optimization I –&amp;gt; https://stanford.edu/class/ee364a/index.html&lt;/p&gt; &lt;p&gt;4、微积分&lt;/p&gt; &lt;p&gt;5、Multivariate Statistical Analysis多元统计分析&lt;/p&gt; &lt;p&gt;应用多元统计分析 高惠璇 编著, 北京大学出版社&lt;/p&gt; &lt;p&gt;Applied Multivariate Statistical Analysis...</content>
- </entry>
-
- 
-
- <entry>
-   <title>汉长安城未央宫遗址</title>
-   <link href="http://localhost:4000/the-site-of-weiyang-palace"/>
-   <id>http://localhost:4000/the-site-of-weiyang-palace</id>
-   <updated>2017-08-05T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8362.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8363.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8365.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8366.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;汉长安城遗址简介&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8374.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8375.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;未央宫在汉长安城中的位置&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8377.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8378.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8379.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;椒房殿遗址现状↓↓出土文物展览牌↑↑&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8380.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8384.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;↓↓天禄阁遗址简介&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8389.JPG&quot;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>基于视觉的目标检测与跟踪 概念梳理</title>
-   <link href="http://localhost:4000/Visual-based-target-detection-and-tracking"/>
-   <id>http://localhost:4000/Visual-based-target-detection-and-tracking</id>
-   <updated>2017-07-31T00:00:00+08:00</updated>
-   <content type="html">&lt;div class=&quot;highlighter-rouge&quot;&gt;运动目标的检测和跟踪主要用于获取运动目标的位置、 姿态、 轨迹等基本运动信息, 是理解服务对象或对目标进行控制的前提和基础 &lt;/div&gt; &lt;p&gt;&lt;img src=&quot;/img/201708/02.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;1-目标检测&quot;&gt;1 目标检测&lt;/h3&gt; &lt;p&gt;目标检测的目的是从不同复杂程度的背景中辨识出运动目标, 并分离背景（分离“我们不关心”的背景）, 从而完成跟踪、 识别等后续任务（获取“ 我们所关心” 的前景目标）。&lt;/p&gt; &lt;p&gt;按算法所处理的数据对象的不同, 将目标检测分为&lt;strong&gt;基于背景建模&lt;/strong&gt;与&lt;strong&gt;基于目标建模&lt;/strong&gt;的检测方法。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/201708/03.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt; &lt;h4 id=&quot;11-基于背景建模的目标检测方法&quot;&gt;1.1 基于背景建模的目标检测方法&lt;/h4&gt; &lt;p&gt;基于背景建模的方法将当前帧与背景参考模型进行比对, 再通过阈值法来判断各个像素是否属于运动前景, 最终对检测出的运动前景进行分割得到跟踪目标.&lt;/p&gt; &lt;h4 id=&quot;背景初始化-background-initialization&quot;&gt;背景初始化 Background initialization&lt;/h4&gt; &lt;p&gt;即：对背景模型的初始化工作。&lt;/p&gt; &lt;p&gt;最简单的初始化方法：得到一帧不包含任何运动目标的背景图像&lt;/p&gt; &lt;p&gt;通常的初始化模型：从一段较短且不包含前景目标的训练序列中获取。&lt;/p&gt; &lt;p&gt;实际的初始化模型：使用包含前景目标的一组序列去获取背景&lt;/p&gt; &lt;p&gt;实际场景中背景因受光照变化、 场景中目标的进入或退出等因素的影响而时刻发生变化, 准确的背景模型变得难以获取。所以构造&lt;strong&gt;鲁棒、自适应的背景模型&lt;/strong&gt;是&lt;strong&gt;基于背景建模的运动目标检测算法&lt;/strong&gt;的关键。&lt;/p&gt; &lt;h4 id=&quot;12-基于前景目标建模的目标检测方法&quot;&gt;1.2 基于前景目标建模的目标检测方法&lt;/h4&gt; &lt;p&gt;基于目标建模的目标检测方法通常分为离线训练与在线检测两个阶段。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;离线训练&lt;/strong&gt;阶段对训练样本中的&lt;strong&gt;前景目标&lt;/strong&gt;与&lt;strong&gt;背景&lt;/strong&gt;分别进行&lt;strong&gt;特征表达&lt;/strong&gt;, 建立起目标或背景&lt;strong&gt;表观模型&lt;/strong&gt;, 再进行&lt;strong&gt;分类器训练&lt;/strong&gt;得到&lt;strong&gt;分类器模型&lt;/strong&gt;。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;在线检测&lt;/strong&gt;阶段对测试样本在&lt;strong&gt;多个尺度&lt;/strong&gt;上进行&lt;strong&gt;滑动窗口&lt;/strong&gt;扫描后,...</content>
  </entry>
 
  

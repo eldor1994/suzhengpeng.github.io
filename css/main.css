@@ -152,7 +152,8 @@ blockquote {
 .content {
   word-wrap: break-word;
   word-break: break-all;
-  overflow: auto; }
+  overflow: auto;
+  text-indent: 1cm; }
 
 .content table, #post-page table {
   word-wrap: break-word;
