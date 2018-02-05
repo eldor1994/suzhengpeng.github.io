@@ -102,7 +102,7 @@ body {
 
 /*- Typography for medium and small screen, based on 16px font-size -*/
 p, ul, ol {
-  font-size: 1em;
+  font-size: 1.2 em;
   /* 16px */
   line-height: 1.5em;
   /* 24px/16px */
@@ -128,7 +128,7 @@ h2 {
 h3, h4, h5, h6 {
   font-size: 1.125em;
   /* 18px/16px */
-  line-height: 0.3334em;
+  line-height: 0.8334em;
   /* 24px/18px */
   padding: 0.66667em 0;
   /* 12px/18px * 2 (Use padding instead of margin to maintain proximity with paragraph) */ }
@@ -192,7 +192,7 @@ blockquote {
   p, ul, ol {
     font-size: 1em;
     /* 18px */
-    line-height: 0.3334em;
+    line-height: 0.9334em;
     /* 24px/18px */
     margin-bottom: 1.3334em;
     /* 24px/18px */ }
@@ -532,17 +532,17 @@ img[title="Monochrome"] {
 
 .footer-two {
   float: left;
-  width: 10%; }
+  width: 11%; }
 
 .footer-two-1 {
   border-left: 30px solid #F5F5F5;
   float: left;
-  width: 15%; }
+  width: 14%; }
 
 .footer-three {
   border-left: 30px solid #F5F5F5;
   float: left;
-  width: 25%; }
+  width: 20%; }
 
 .footer-ico {
   margin: 0 auto;
