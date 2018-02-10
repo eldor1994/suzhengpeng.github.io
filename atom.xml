@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-02-06T21:38:55+08:00</updated>
+ <updated>2018-02-10T20:48:49+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>逼近与拟合--范数逼近</title>
+   <link href="http://localhost:4000/norm-approximation"/>
+   <id>http://localhost:4000/norm-approximation</id>
+   <updated>2018-02-08T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;范数逼近&quot;&gt;范数逼近&lt;/h3&gt; &lt;h4 id=&quot;基本的范数逼近问题&quot;&gt;基本的范数逼近问题&lt;/h4&gt; &lt;p&gt;最简单的范数逼近问题的形式如下：&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} Ax-b \end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$A \in R\,^{m×n} \,b \in R\,^m \,x \in R\,^n$&lt;/p&gt; &lt;p&gt;向量：$r=Ax-b$&lt;/p&gt; &lt;p&gt;称为逼近问题的残差，其分量称为关于$x$的个体残差。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;逼近&lt;/strong&gt;：范数逼近的目标是用A的列向量的线性组合(即：$Ax=x_1 a_1 +\cdots+x_n a_n$)，尽可能准确地逼近或拟合向量b，其偏差由范数$\begin{Vmatrix} · \end{Vmatrix}$度量。对于逼近问题，也可以称为对$b$的回归问题。向量$a_1,\cdots,a_n$称为回归量，$x$称为回归问题的最优解。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;估计&lt;/strong&gt;：在给定测量值向量$y=Ax+v$的情况下，对待估计参数向量$x$的值进行合理的猜测。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;几何解释&lt;/strong&gt;：求解范数逼近问题等价于计算$b \in R\,^m\,$向$A=R(A) \subseteq R\,^m\,$的投影。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;加权范数逼近&lt;/strong&gt;：&lt;/p&gt; &lt;p&gt;加权范数逼近是对范数逼近问题的一个扩展。&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} W(Ax-b) \end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$ W \in R\,^{m×m}\,$ 称为权矩阵,通常为对角矩阵。用于区分残差向量$r$的不同分量的权重大小。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;通过使用不同的范数可以构造出不同的逼近问题&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;1)最小二乘逼近&lt;/strong&gt;：&lt;/p&gt; &lt;p&gt;最常见的范数逼近问题采用$L_2$范数,于是得到了最小二乘逼近问题,&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} Ax-b \end{Vmatrix}_2^2 = r_1^2+r_2^2+\cdots+r_m^2$&lt;/p&gt; &lt;p&gt;&lt;strong&gt;2)切比雪夫逼近或极小极大逼近&lt;/strong&gt;：&lt;/p&gt;...</content>
+ </entry>
 
  
 
@@ -187,23 +197,6 @@
 &lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7268.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;铁瓦殿遗址。铁瓦殿在清朝时毁于大火，目前仅剩石柱。&lt;/p&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>宿命</title>
-   <link href="http://localhost:4000/a-fate"/>
-   <id>http://localhost:4000/a-fate</id>
-   <updated>2017-05-14T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com//img/update/20170514232852.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;今天在无限的憋屈中看完了鲁能客战苏宁的比赛，结果鲁能惨遭绝杀送给了苏宁的本赛季的首胜。&lt;/p&gt;
-
-&lt;p&gt;输球了，很难受，很压抑。在上赛季的艰苦保级路上，鲁能在主场3:0击败苏宁之后才取得了联赛的首胜。而这赛季的联赛中，苏宁已经八轮不胜，而亚冠确高奏凯歌，像极了上赛季的鲁能。这场比赛就当是来还愿了吧，说是一种玄学，一种宿命也不为过。我们曾在南京的奥体中心绝杀当时的江苏舜天，夺得足协杯的冠军。如今被绝杀，送给了对手首胜，也是一种轮回吧。&lt;/p&gt;
-
-&lt;p&gt;静静的想一想，这场输球虽说裁判的因素很大，但是鲁能自己的问题也不少，防守端的问题，中场存在的问题尤为突出。希望下一场客战延边，能拿三分吧。也希望鲁能能进亚冠。&lt;/p&gt;
 </content>
  </entry>
 

@@ -13,6 +13,12 @@ html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, img {
   border: 0;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei"; }
 
+svg {
+  width: 50%;
+  min-width: 350px;
+  margin: 0;
+  /*text-indent: 0cm;*/ }
+
 /*- Base color -*/
 /*- Base settings -*/
 html {
@@ -191,11 +197,8 @@ blockquote {
 @media (min-width: 940px) {
   p, ul, ol {
     font-size: 1em;
-    /* 18px */
-    line-height: 0.9334em;
-    /* 24px/18px */
-    margin-bottom: 1.3334em;
-    /* 24px/18px */ }
+    line-height: 1.5em;
+    /* margin-bottom: 1.3334em; */ }
 
   h1 {
     font-size: 2.6667em;
@@ -426,9 +429,9 @@ blockquote {
   #post-page h4, #page h4 {
     font-size: 1.1em; }
   #post-page p, #page p {
-    font-size: 0.9em;
-    margin-bottom: 0 em;
-    line-height: 1em; }
+    /*font-size: 0.9em;*/
+    /*margin-bottom: 0 em;*/
+    /*line-height: 1em;*/ }
   @media (min-width: 940px) {
     #post-page, #page {
       margin-bottom: 1.3334em; } }
