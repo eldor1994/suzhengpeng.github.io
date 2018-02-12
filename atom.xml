@@ -4,12 +4,57 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-02-10T23:49:14+08:00</updated>
+ <updated>2018-02-13T03:15:16+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>算法复杂度度量与分析</title>
+   <link href="http://localhost:4000/xx"/>
+   <id>http://localhost:4000/xx</id>
+   <updated>2018-02-11T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;复杂度度量&quot;&gt;复杂度度量&lt;/h3&gt;
+
+&lt;h4 id=&quot;时间复杂度&quot;&gt;时间复杂度&lt;/h4&gt;
+
+&lt;p&gt;时间复杂度是衡量某一算法随着输入规模的增大，运行时间如何增长的度量。设输入规模为n，则算法的最长运行时间可以用函数$T(n)$来表示。&lt;/p&gt;
+
+&lt;h4 id=&quot;渐进复杂度&quot;&gt;渐进复杂度&lt;/h4&gt;
+
+&lt;p&gt;渐进分析~注重算法时间复杂度的总体变化趋势和增长速度的策略与方法。&lt;/p&gt;
+
+&lt;h4 id=&quot;空间复杂度&quot;&gt;空间复杂度&lt;/h4&gt;
+
+&lt;h3 id=&quot;复杂度分析&quot;&gt;复杂度分析&lt;/h3&gt;
+
+&lt;h4 id=&quot;常数o1&quot;&gt;常数O(1)&lt;/h4&gt;
+
+&lt;h4 id=&quot;对数ologn&quot;&gt;对数O(logn)&lt;/h4&gt;
+
+&lt;h4 id=&quot;线性on&quot;&gt;线性O(n)&lt;/h4&gt;
+
+&lt;h4 id=&quot;多项式opolynomialn&quot;&gt;多项式O(polynomial(n))&lt;/h4&gt;
+
+&lt;h4 id=&quot;指数o2n&quot;&gt;指数O($2^n$)&lt;/h4&gt;
+
+&lt;h4 id=&quot;复杂度层次&quot;&gt;复杂度层次&lt;/h4&gt;
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>逼近与拟合--正则化逼近</title>
+   <link href="http://localhost:4000/regularized-approximation"/>
+   <id>http://localhost:4000/regularized-approximation</id>
+   <updated>2018-02-11T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;正则化逼近&quot;&gt;正则化逼近&lt;/h3&gt; &lt;h4 id=&quot;双准则式&quot;&gt;双准则式&lt;/h4&gt; &lt;p&gt;正则化逼近的基本形式是：目标向量$x$最小的同时使残差$Ax-b$最小，即：&lt;/p&gt; &lt;p&gt;$minimize (\begin{Vmatrix} Ax-b\end{Vmatrix},\begin{Vmatrix} x\end{Vmatrix})$&lt;/p&gt; &lt;p&gt;对于这两个可能不同的范数，需要在这个目标之间找到最优权衡。&lt;/p&gt; &lt;h4 id=&quot;正则化&quot;&gt;正则化&lt;/h4&gt; &lt;p&gt;正则化是求解双准则问题的一个常用的标量化方法，以加权和的形式极小化目标函数。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}+\gamma\begin{Vmatrix} x\end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$\gamma&amp;gt;0$,随着其值的变化，代表了不同的最优权衡。&lt;/p&gt; &lt;p&gt;在估计领域的解释：对大的$\begin{Vmatrix} x\end{Vmatrix}$的惩罚可以解释为，存在$\begin{Vmatrix} x\end{Vmatrix}$先验知识是$\begin{Vmatrix} x\end{Vmatrix}$不是很大。&lt;/p&gt; &lt;p&gt;Tikhonov 正则化：&lt;/p&gt; &lt;p&gt;利用$L_2$范数的平方得到一个凸二次优化问题:&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}_2^2=x^T (A^T A + \delta I)x-2b^T Ax+b^T b$&lt;/p&gt; &lt;p&gt;光滑正则化：&lt;/p&gt; &lt;p&gt;将$\begin{Vmatrix} x\end{Vmatrix}$替换为$\begin{Vmatrix} Dx\end{Vmatrix}$，则这里矩阵D代表近似的微分或二阶微分算子，因此$\begin{Vmatrix} Dx\end{Vmatrix}$代表了x的变化的度量或光滑度。&lt;/p&gt; &lt;p&gt;$L_1$范数正则化：&lt;/p&gt; &lt;p&gt;$L_1$范数正则化主要用作求取稀疏解的启发式算法。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2+\delta\begin{Vmatrix} x\end{Vmatrix}_1$&lt;/p&gt; &lt;p&gt;残差用$L_2$范数度量，正则项用$L_1$范数度量。&lt;/p&gt; &lt;h4 id=&quot;重构光滑与去除噪声&quot;&gt;重构、光滑与去除噪声&lt;/h4&gt;...</content>
+ </entry>
 
  
 
@@ -158,45 +203,6 @@
 &lt;/ul&gt;
 
 &lt;p&gt;原文地址：http://101.96.8.164/www.eecs.harvard.edu/~michaelm/postscripts/ReadPaper.pdf&lt;/p&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>汉长安城未央宫遗址</title>
-   <link href="http://localhost:4000/the-site-of-weiyang-palace"/>
-   <id>http://localhost:4000/the-site-of-weiyang-palace</id>
-   <updated>2017-08-05T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8362.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8363.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8365.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8366.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;汉长安城遗址简介&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8374.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8375.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;未央宫在汉长安城中的位置&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8377.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8378.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8379.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;椒房殿遗址现状↓↓出土文物展览牌↑↑&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8380.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8384.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;↓↓天禄阁遗址简介&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20170805weiyanggong/IMG_8389.JPG&quot;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>崂山巨峰游览小记</title>
-   <link href="http://localhost:4000/laoshan-jufeng"/>
-   <id>http://localhost:4000/laoshan-jufeng</id>
-   <updated>2017-06-17T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7514.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;巨峰是崂山第一高峰，海拔1132.7米。今日小游一番，居高山以观海，映蓝天而清风扬。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7250.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在灵旗峰上拍的全景图&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7241.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7260.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;远处还是可以看到海的&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7267.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20170617laoshanjufeng/IMG_7268.JPG&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;铁瓦殿遗址。铁瓦殿在清朝时毁于大火，目前仅剩石柱。&lt;/p&gt;
 </content>
  </entry>
 

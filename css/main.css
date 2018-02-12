@@ -13,7 +13,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, img {
   border: 0;
   font-family: Helvetica,Arial,"Microsoft Jhenghei","Hiragino Sans GB","WenQuanYi Zen Hei","Microsoft Yahei",STHeiti,SimHei,"WenQuanYi Micro Hei"; }
 
-svg {
+center svg {
   width: 50%;
   min-width: 300px;
   margin: 0;
