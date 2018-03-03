@@ -4,12 +4,33 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-02-13T03:15:16+08:00</updated>
+ <updated>2018-03-03T15:36:14+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>2018年大唐芙蓉园新春灯会</title>
+   <link href="http://localhost:4000/xian-lantern-festival"/>
+   <id>http://localhost:4000/xian-lantern-festival</id>
+   <updated>2018-03-02T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1411.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1412.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1420.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1425.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1426.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1430.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;猜灯谜送的元宵和抱枕&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1446.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1414.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1415.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1417.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1427.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;西安年·中国年&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1431.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>逼近与拟合--重构、光滑去除噪声</title>
+   <link href="http://localhost:4000/regularized-approximation-2"/>
+   <id>http://localhost:4000/regularized-approximation-2</id>
+   <updated>2018-02-15T00:00:00+08:00</updated>
+   <content type="html">
+</content>
+ </entry>
 
  
 
@@ -53,7 +74,7 @@
    <link href="http://localhost:4000/regularized-approximation"/>
    <id>http://localhost:4000/regularized-approximation</id>
    <updated>2018-02-11T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;正则化逼近&quot;&gt;正则化逼近&lt;/h3&gt; &lt;h4 id=&quot;双准则式&quot;&gt;双准则式&lt;/h4&gt; &lt;p&gt;正则化逼近的基本形式是：目标向量$x$最小的同时使残差$Ax-b$最小，即：&lt;/p&gt; &lt;p&gt;$minimize (\begin{Vmatrix} Ax-b\end{Vmatrix},\begin{Vmatrix} x\end{Vmatrix})$&lt;/p&gt; &lt;p&gt;对于这两个可能不同的范数，需要在这个目标之间找到最优权衡。&lt;/p&gt; &lt;h4 id=&quot;正则化&quot;&gt;正则化&lt;/h4&gt; &lt;p&gt;正则化是求解双准则问题的一个常用的标量化方法，以加权和的形式极小化目标函数。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}+\gamma\begin{Vmatrix} x\end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$\gamma&amp;gt;0$,随着其值的变化，代表了不同的最优权衡。&lt;/p&gt; &lt;p&gt;在估计领域的解释：对大的$\begin{Vmatrix} x\end{Vmatrix}$的惩罚可以解释为，存在$\begin{Vmatrix} x\end{Vmatrix}$先验知识是$\begin{Vmatrix} x\end{Vmatrix}$不是很大。&lt;/p&gt; &lt;p&gt;Tikhonov 正则化：&lt;/p&gt; &lt;p&gt;利用$L_2$范数的平方得到一个凸二次优化问题:&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}_2^2=x^T (A^T A + \delta I)x-2b^T Ax+b^T b$&lt;/p&gt; &lt;p&gt;光滑正则化：&lt;/p&gt; &lt;p&gt;将$\begin{Vmatrix} x\end{Vmatrix}$替换为$\begin{Vmatrix} Dx\end{Vmatrix}$，则这里矩阵D代表近似的微分或二阶微分算子，因此$\begin{Vmatrix} Dx\end{Vmatrix}$代表了x的变化的度量或光滑度。&lt;/p&gt; &lt;p&gt;$L_1$范数正则化：&lt;/p&gt; &lt;p&gt;$L_1$范数正则化主要用作求取稀疏解的启发式算法。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2+\delta\begin{Vmatrix} x\end{Vmatrix}_1$&lt;/p&gt; &lt;p&gt;残差用$L_2$范数度量，正则项用$L_1$范数度量。&lt;/p&gt; &lt;h4 id=&quot;重构光滑与去除噪声&quot;&gt;重构、光滑与去除噪声&lt;/h4&gt;...</content>
+   <content type="html">&lt;h3 id=&quot;正则化逼近&quot;&gt;正则化逼近&lt;/h3&gt; &lt;h4 id=&quot;双准则式&quot;&gt;双准则式&lt;/h4&gt; &lt;p&gt;正则化逼近的基本形式是：目标向量$x$最小的同时使残差$Ax-b$最小，即：&lt;/p&gt; &lt;p&gt;$minimize (\begin{Vmatrix} Ax-b\end{Vmatrix},\begin{Vmatrix} x\end{Vmatrix})$&lt;/p&gt; &lt;p&gt;对于这两个可能不同的范数，需要在这个目标之间找到最优权衡，绘出$\begin{Vmatrix} Ax-b\end{Vmatrix}$关于$\begin{Vmatrix} x\end{Vmatrix}$的最优权衡曲线。&lt;/p&gt; &lt;h4 id=&quot;正则化&quot;&gt;正则化&lt;/h4&gt; &lt;p&gt;正则化是求解双准则问题的一个常用的标量化方法，以加权和的形式极小化目标函数。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}+\gamma\begin{Vmatrix} x\end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$\gamma&amp;gt;0$,随着其值的变化，代表了不同的最优权衡，遍历了整个最优权衡曲线。&lt;/p&gt; &lt;p&gt;正则化的另一个常用方法是极小化加权范数平方和。形式如下：&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}^2$&lt;/p&gt; &lt;p&gt;其中：$\delta&amp;gt;0$,其特点与$\gamma$相似。&lt;/p&gt; &lt;p&gt;在估计领域的解释：对大的$\begin{Vmatrix} x\end{Vmatrix}$的惩罚可以解释为，存在$\begin{Vmatrix} x\end{Vmatrix}$先验知识是$\begin{Vmatrix} x\end{Vmatrix}$不是很大。&lt;/p&gt; &lt;p&gt;1) Tikhonov 正则化：&lt;/p&gt; &lt;p&gt;利用$L_2$范数的平方得到一个凸二次优化问题:&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}_2^2=x^T (A^T A + \delta I)x-2b^T Ax+b^T b$&lt;/p&gt; &lt;p&gt;2) 光滑正则化：&lt;/p&gt; &lt;p&gt;将$\begin{Vmatrix} x\end{Vmatrix}$替换为$\begin{Vmatrix} Dx\end{Vmatrix}$，则这里矩阵D代表近似的微分或二阶微分算子，因此$\begin{Vmatrix}...</content>
  </entry>
 
  
@@ -127,83 +148,6 @@
    <id>http://localhost:4000/qianling</id>
    <updated>2017-09-30T00:00:00+08:00</updated>
    <content type="html">&lt;h3 id=&quot;乾陵&quot;&gt;乾陵&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9139.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9145.JPG&quot; alt=&quot;图2&quot; /&gt;&lt;/p&gt; &lt;p&gt;六十一番臣像&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9152.JPG&quot; alt=&quot;图3&quot; /&gt;&lt;/p&gt; &lt;p&gt;无字碑&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9164.JPG&quot; alt=&quot;图4&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9170.JPG&quot; alt=&quot;图5&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9172.JPG&quot; alt=&quot;图7&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/01/IMG_9181.JPG&quot; alt=&quot;图9&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;懿德太子墓&quot;&gt;懿德太子墓&lt;/h3&gt; &lt;p&gt;懿德太子李重润，是唐中宗李显的长子。高宗李治和女皇武则天的长孙。&lt;/p&gt; &lt;p&gt;唐高宗永隆二年（682）封为皇太孙。684年中宗失位，李重润被废为庶人。武则天大足元年（7O1），为人谗构，与其妹永泰公主、主婿魏王武延基等窃议面首张易之兄弟“何得恣入宫中”，被武则天杀害，死时年仅19岁。&lt;/p&gt; &lt;p&gt;李显复位后，于神龙元年（705）追封为“懿德太子”，神龙二年将其灵柩由洛阳迁到乾陵陪葬，特恩“号墓为陵”。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/02/IMG_9194.JPG&quot; alt=&quot;图10&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/02/IMG_9186.JPG&quot; alt=&quot;图11&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171001qx/02/IMG_9187.JPG&quot; alt=&quot;图12&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img...</content>
- </entry>
-
- 
-
- <entry>
-   <title>深入学习数字图像处理~灰度变换 Intensity Transformations</title>
-   <link href="http://localhost:4000/cvip-intensity-transformations"/>
-   <id>http://localhost:4000/cvip intensity transformations</id>
-   <updated>2017-09-26T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;空间域（定义）：图像像素所在的平面&lt;/p&gt; &lt;h2 id=&quot;灰度变换函数&quot;&gt;灰度变换函数&lt;/h2&gt; &lt;p&gt;r表示变换前的图像，s表示变换后的图像&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.3.png&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;线性变换反转和恒等变换&quot;&gt;线性变换（反转和恒等变换）&lt;/h3&gt; &lt;p&gt;一幅图像的灰度等级为[0,L-1]，图像的反转右边的公式给出：s=L-1-r&lt;/p&gt; &lt;p&gt;这类处理可以增强一幅图像的暗区域中的白色或灰色细节，特别是当黑色面积在尺寸上占主导地位时（如：X射线照片）。&lt;/p&gt; &lt;h3 id=&quot;对数变换对数和反对数变换&quot;&gt;对数变换（对数和反对数变换）&lt;/h3&gt; &lt;p&gt;对数变换的通用形式为：s=c log(1+r) (r≥0)&lt;/p&gt; &lt;p&gt;对数变换可以将输入图像中范围较窄的低灰度值映射为输出图像范围较宽的灰度值（灰度级的扩展）。反对数变换可以将输入图像中范围较宽的灰度值映射为输出图像范围较窄的低灰度值（灰度级的压缩）。&lt;/p&gt; &lt;h3 id=&quot;幂律伽马变换n次幂和n次根变换&quot;&gt;幂律（伽马）变换（n次幂和n次根变换）&lt;/h3&gt; &lt;p&gt;幂律变换的基本形式：s=c(r+ε)&lt;sup&gt;γ&lt;/sup&gt; (c和ε为常数，ε为偏移量)&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.6.png&quot; alt=&quot;图2&quot; /&gt;&lt;/p&gt; &lt;p&gt;如上图所示：在γ值较低（＜1）时，可以将灰度值较窄的输入值映射为灰度值较宽的输出值。在γ值较大（＞1）时，则可以取得相反的效果。&lt;/p&gt; &lt;p&gt;伽马校正：在幂律方程中的指数称为伽马，而伽马校正则用于校正这些幂律响应现象（由于设备的原因而产生，如图像的显示，为了对图像进行精确显示而必须进行校正）的处理称为伽马校正。&lt;/p&gt; &lt;h3 id=&quot;分段线性变换&quot;&gt;分段线性变换&lt;/h3&gt; &lt;p&gt;主要优点：分段线性函数的形式可以任意的复杂。&lt;/p&gt; &lt;p&gt;1）对比度拉伸&lt;/p&gt; &lt;p&gt;扩展图像灰度级动态范围处理&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.10-1.png&quot; alt=&quot;图3&quot; /&gt;&lt;/p&gt; &lt;p&gt;变换函数的形式如上图所示。上面的两个点的位置控制变换函数的形状。&lt;/p&gt; &lt;p&gt;2）灰度级分层&lt;/p&gt; &lt;p&gt;用于突出图像中特定灰度范围的亮度。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.11.png&quot; alt=&quot;图4&quot; /&gt;&lt;/p&gt; &lt;p&gt;① 将感兴趣的范围内的灰度值设置为一个值，其他的设置为另一个值。② 将感兴趣的灰度变量或变暗，其他的灰度值保持不变。&lt;/p&gt; &lt;p&gt;3）比特平面分层&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/imageprocessing/3.1.13.png&quot;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>如何阅读一篇科研论文</title>
-   <link href="http://localhost:4000/how-to-read-a-research-paper"/>
-   <id>http://localhost:4000/how-to-read-a-research-paper</id>
-   <updated>2017-08-26T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;在本学期中，我们将会讨论如何写一篇科研论文。然而，在这门课程开始之前，我们必须思考如何阅读一篇科研论文。这一讨论需要首先假设你有足够的理由去认真的阅读的科研论文–例如：我将一篇论文分配给你，就是一个很好的理由。如果你被要求去检查这篇论文或者这篇论文与你的研究方向相关，你可能就需要认真的去阅读这篇论文了。我们可能会在稍后讨论如何略读一篇论文，这样我们就可以决定一篇论文是否值得我们去仔细的阅读。&lt;/p&gt;
-
-&lt;p&gt;当你阅读一篇论文的时候，你的目标就是理解作者作出的科学贡献。然而这并不是一项简单的任务，往往需要阅读很多次，可能要花费很多时间。&lt;/p&gt;
-
-&lt;p&gt;下面是如何阅读一篇论文的指导纲领：&lt;/p&gt;
-
-&lt;h4 id=&quot;带有批判的阅读&quot;&gt;带有批判的阅读&lt;/h4&gt;
-
-&lt;p&gt;阅读科研论文必须是一个批判的过程。你不能认为作者永远是对的，与之相反的是你必须保持一个批判的精神。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;批判的阅读包括提出适当的问题&lt;/strong&gt;。如果作者试图去解决一个问题，那么他们是否正确解决了问题？或者是否有更简单的解决方案而作者没有考虑到。更甚，解决这个问题的问题的限制是什么？（包括作者没有考虑到的和其清楚承认的限制）&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;作者的假设是否正确？&lt;/strong&gt; 作者的逻辑是否清晰合适，以足够支撑起这个的假设，或者再起原理中有缺陷？、&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;作者的数据是否支撑起他的论据&lt;/strong&gt;。如果作者在文中给出了数据，那么他们的收集数据的是否正确以足够支持他们的论点。或者，他们是否使用了正确的方法去收集数据。又或者，他们是否使用了合理的方法去解释数据。以及。是否需要收集更多的数据。&lt;/p&gt;
-
-&lt;h4 id=&quot;带有创造的阅读&quot;&gt;带有创造的阅读&lt;/h4&gt;
-
-&lt;p&gt;带有批判的阅读可能比较容易，因为摧毁一个东西比建立一个东西要容易。有创造的阅读则相对困难，需要更加积极的思考。&lt;/p&gt;
-
-&lt;p&gt;在这篇论文中由哪些想法？这些想法有没有其他的应用或者扩展到作者没有想到的方面。是否可以进一步的推广？可能的提升是否能在实际上的得到重要的提升？如果你要从这篇论文开始研究，接下来你要做什么？&lt;/p&gt;
-
-&lt;h4 id=&quot;读论文的时候要做笔记&quot;&gt;读论文的时候要做笔记&lt;/h4&gt;
-
-&lt;p&gt;许多人在他打印的论文的空白处用自己的风格写满了笔记。如果你有任何疑问和怀疑，将他们写下来，你就不会忘记了。要注意标出作者的关键点，标出那些重要和出现疑问的数据。这对你第一次阅读论文提供了强有力的帮助，而且在数月之后再次阅读的时候提供很大的方便。&lt;/p&gt;
-
-&lt;h4 id=&quot;在完成阅读之后尝试用一两句话去总结全文&quot;&gt;在完成阅读之后尝试用一两句话去总结全文&lt;/h4&gt;
-
-&lt;p&gt;几乎所有优秀的科研论文都试图去解答一个清晰的问题。（有时这个问题是自然存在的，人们清晰的给出了答案；有时一个优秀的想法会回答一个有价值的问题）如果你可以清晰的概括一篇论文，这就说明你已经理解了作者所提出的问题和作者对问题所作出的回答。一旦你锁定了文章的中心思想，就可以返回到前面去探求文章所表达的更加具体的细节。如果你可以很轻松的用一两句话来概括文章的中心思想，那么返回尝试概括出文章中心思想的三到四个子观点。&lt;/p&gt;
-
-&lt;h4 id=&quot;尝试与其他人的工作进行比较&quot;&gt;尝试与其他人的工作进行比较&lt;/h4&gt;
-
-&lt;p&gt;总结一篇论文是判断这篇论文科学贡献的一种方法， 但是真正的发现科学的价值，你必须与相同领域的其他的人的工作进行比较。这篇论文是否新颖？亦或者是曾经出现过？（当然我们并不要求你的研究和知识领先于这个班级）&lt;/p&gt;
-
-&lt;p&gt;值得一提的是，科学贡献可以以各种形式存在。有一些论文提出了一些想法，而另一些则实现这些想法并且展示了他们是如何工作的。还有一些人将原有的想法在一个新的框架下整合到一起。知道该领域其他的工作可以帮助你去判断一篇论文究竟作出了什么贡献。&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-对于这门课程，我会经常要求你们写出一篇论文的短论。尽管这听起来很简单，但是我希望这项工作可以保持一段时间，尤其是在开始的时候。（请记住，我所希望的是用数小时去阅读论文）将之前所说的铭记于心，你阅读论文的过程就会变得简单。&lt;/p&gt;
-
-&lt;h4 id=&quot;你的一篇论文评论应该包括以下几点&quot;&gt;你的一篇论文评论应该包括以下几点：&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;一两句话对论文的总结&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;一段有深度和扩展的论文内容梗概。这包括，作出假设、提出疑问、数据分析和得出结论。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在阅读论文时发现的局限和扩展&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;你对论文的观点。包括你对论文的想法质量的判断以及其潜在的影响。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;原文地址：http://101.96.8.164/www.eecs.harvard.edu/~michaelm/postscripts/ReadPaper.pdf&lt;/p&gt;
-</content>
  </entry>
 
  
