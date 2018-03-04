@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>Opencv3 Mat 结构像素值存储细节 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="关于Opencv3 中使用Mat结构存储图像像素或数据的细节。 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -580,7 +580,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/tsingtao&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-mat-pixel-struct&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -856,35 +856,124 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 		  
 		<main>
 
-			<h2>Tag：Tsingtao</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<div style="width:170px;float:left">
-<a href="/laoshan-jufeng"><img src="/img/20170617laoshanjufeng/IMG_7514.JPG"  width=150 height=150/></a>
-<a href="/laoshan-jufeng">&nbsp;&nbsp;&nbsp;崂山巨峰游览小记</a><br> &nbsp;&nbsp;&nbsp;(17 Jun 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/tbm-and-signal-hill"><img src="http://suzhengpeng.com/img/20170428/IMG_5938.JPG"  width=150 height=150/></a>
-<a href="/tbm-and-signal-hill">&nbsp;&nbsp;&nbsp;青啤博物馆与信...</a><br> &nbsp;&nbsp;&nbsp;(28 Apr 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/railway-station-to-54-square"><img src="http://suzhengpeng.com/img/20170423/IMG_5543.jpg"  width=150 height=150/></a>
-<a href="/railway-station-to-54-square">&nbsp;&nbsp;&nbsp;红石绿海</a><br> &nbsp;&nbsp;&nbsp;(23 Apr 2017)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/night-54-square"><img src="http://suzhengpeng.com/img/update/IMG_4153.JPG"  width=150 height=150/></a>
-<a href="/night-54-square">&nbsp;&nbsp;&nbsp;夜游五四广场</a><br> &nbsp;&nbsp;&nbsp;(18 Mar 2017)<br><br>
+			<article id="post-page">
+	
+	02 Mar 2018
+	
+	<h3>Opencv3 Mat 结构像素值存储细节 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+关于Opencv3 中使用Mat结构存储图像像素或数据的细节。<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
 </div>
 
-</div>
+	
 
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/qian%27xian.html" class="set-1">Qian'xian</a> <a href="/tag/tsingtao.html" class="set-3">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-4">Xi'an</a> <a href="/tag/zheng%27zhou.html" class="set-1">Zheng'zhou</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/computervision.html" class="set-1">computerVision</a> <a href="/tag/convexoptimization.html" class="set-2">convexOptimization</a> <a href="/tag/datastrute.html" class="set-1">dataStrute</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/imageprocessing.html" class="set-1">imageProcessing</a> <a href="/tag/machinelearning.html" class="set-2">machineLearning</a> <a href="/tag/papers.html" class="set-1">papers</a> <a href="/tag/photograph.html" class="set-5">photograph</a> <a href="/tag/regularization.html" class="set-1">regularization</a> <a href="/tag/think.html" class="set-1">think</a></div> 
-</div></center>
+<!-- JiaThis Button END -->
 <br>
+	<div class="content">
+
+		<p>在Opencv3 中常使用Mat 结构保存图像或数据。</p>
+
+<h3 id="深度-depth">深度 Depth</h3>
+
+<p>Mat 结构的深度类型一般有以下6种</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>解释</th>
+      <th>变量类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CV_8U</td>
+      <td>单通道8位无符号整数</td>
+      <td>unsigned char</td>
+    </tr>
+    <tr>
+      <td>CV_8S</td>
+      <td>单通道8位有符号整数</td>
+      <td>char</td>
+    </tr>
+    <tr>
+      <td>CV_16S</td>
+      <td>单通道16位有符号整数</td>
+      <td>short int</td>
+    </tr>
+    <tr>
+      <td>CV_32S</td>
+      <td>单通道32位有符号整数</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>CV_32F</td>
+      <td>单通道32位单精度浮点数</td>
+      <td>float</td>
+    </tr>
+    <tr>
+      <td>CV_64F</td>
+      <td>单通道64位双精度浮点数</td>
+      <td>double</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="通道数-channels">通道数 Channels</h3>
+
+<p>在Opencv中mat 的通道数可以为1、2、3、4</p>
+
+<h4 id="单通道mat">单通道Mat</h4>
+
+<p>CV_8U 或 CV_32F：一般用来保存灰度图像</p>
+
+<h4 id="双通道mat">双通道Mat</h4>
+
+<p>CV_32FC2：一般用来保存图像的频谱数据，通道1用来存储实部数据，通道2用来存储虚部数据</p>
+
+<h4 id="三通道mat">三通道Mat</h4>
+
+<p>CV_8UC3 或 CV_32FC3：一般用来存储RGB图像，通道1用来存储B分量，通道2用来存储G分量，通道3用来存储R分量。对应分量的值为0~255或0~1。</p>
+
+<h3 id="四通道mat">四通道Mat</h3>
+
+<p>CV_8UC4 或 CV_32FC4：一般用来存储RGBA图像，相比于三通道的RGB图像，RGBA图像的第四个通道用来存储 Alpha 值，表示图像的透明值，范围为0~255或0~1，表示透明到不透明。</p>
+
+<h3 id="存储结构">存储结构</h3>
+
+<p>以CV_32FC3类型说明Mat类型的存储结构。CV_32FC3 为3通道32位单精度浮点类型Mat结构，每个像素点具有三个通道，每个通道的值的范围为0~1，且该像素点的不同通道的值交错排在一起。</p>
+
+<p><img src="/img/20180303/mat.jpg" alt="avatar" /></p>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a> </div> 
+</article>
+
+
 
 	  </main>
 		
@@ -1264,7 +1353,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/tsingtao&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-mat-pixel-struct&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
