@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-04-18T11:46:10+08:00</updated>
+ <updated>2018-09-02T23:29:58+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,22 +14,21 @@
  
 
  <entry>
-   <title>2维DFT算法和IDFT算法 编程实现</title>
-   <link href="http://localhost:4000/implement-of-dft-and-idft"/>
-   <id>http://localhost:4000/implement-of-dft-and-idft</id>
-   <updated>2018-03-12T00:00:00+08:00</updated>
-   <content type="html">
-</content>
+   <title>孪生网络（0）-- 基本概念</title>
+   <link href="http://localhost:4000/siames-network-00"/>
+   <id>http://localhost:4000/siames-network-00</id>
+   <updated>2018-09-02T00:00:00+08:00</updated>
+   <content type="html">&lt;h3 id=&quot;孪生网络的概念&quot;&gt;孪生网络的概念&lt;/h3&gt; &lt;p&gt;孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun 大神在1993年提出，其论文发表在1994年的NIPS上。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/01.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;共享权值的孪生神经网络&lt;/center&gt; &lt;h5 id=&quot;共享权值的意义&quot;&gt;共享权值的意义？&lt;/h5&gt; &lt;p&gt;两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。&lt;/p&gt; &lt;h5 id=&quot;伪孪生网络&quot;&gt;伪孪生网络&lt;/h5&gt; &lt;p&gt;伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/02.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;伪孪生网络&lt;/center&gt; &lt;p&gt;两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。&lt;/p&gt; &lt;h3 id=&quot;孪生网络的使用&quot;&gt;孪生网络的使用&lt;/h3&gt; &lt;p&gt;一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。&lt;/p&gt; &lt;h5 id=&quot;应用场景&quot;&gt;应用场景&lt;/h5&gt; &lt;p&gt;孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。&lt;/p&gt; &lt;h3 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h3&gt; &lt;p&gt;孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。&lt;/p&gt; &lt;p&gt;孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。&lt;/p&gt; &lt;hr /&gt; &lt;p&gt;参考资料：&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;&lt;strong&gt;Siamese network 孪生神经网络–一个简单神奇的结构&lt;/strong&gt;...</content>
  </entry>
 
  
 
  <entry>
-   <title>2018年大唐芙蓉园新春灯会</title>
-   <link href="http://localhost:4000/xian-lantern-festival"/>
-   <id>http://localhost:4000/xian-lantern-festival</id>
-   <updated>2018-03-02T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1411.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1412.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1420.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1425.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1426.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1430.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;猜灯谜送的元宵和抱枕&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1446.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1414.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1415.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1417.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1427.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;西安年·中国年&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180302/IMG_1431.JPG&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;...</content>
+   <title>Leetcode 91. Decode Ways</title>
+   <link href="http://localhost:4000/leetcode_91_decode_ways"/>
+   <id>http://localhost:4000/leetcode_91_decode_ways</id>
+   <updated>2018-05-31T00:00:00+08:00</updated>
+   <content type="html">&lt;h2 id=&quot;问题描述&quot;&gt;问题描述&lt;/h2&gt; &lt;p&gt;A message containing letters from A-Z is being encoded to numbers using the following mapping:&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;‘A’ -&amp;gt; 1&lt;br /&gt; ‘B’ -&amp;gt; 2&lt;br /&gt; …&lt;br /&gt; ‘Z’ -&amp;gt; 26&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;Given a non-empty string containing only digits, determine the total number of ways to decode it.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;...</content>
  </entry>
 
  
@@ -45,97 +44,13 @@
  
 
  <entry>
-   <title>使用形态学滤波对图像进行边缘及角点检测</title>
-   <link href="http://localhost:4000/edge-extraction-and-corner-detection"/>
-   <id>http://localhost:4000/edge-extraction-and-corner-detection</id>
-   <updated>2018-03-02T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20180303/building.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180303/result.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt; &lt;p&gt;实现：&lt;/p&gt; &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;morpho&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;morpho&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;threshold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cross&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV_8U&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>逼近与拟合--重构、光滑去除噪声</title>
-   <link href="http://localhost:4000/regularized-approximation-2"/>
-   <id>http://localhost:4000/regularized-approximation-2</id>
-   <updated>2018-02-15T00:00:00+08:00</updated>
-   <content type="html">
+   <title>Hello World</title>
+   <link href="http://localhost:4000/hello-world"/>
+   <id>http://localhost:4000/hello-world</id>
+   <updated>2017-04-20T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/update/20170422135316.jpg&quot; alt=&quot;avatar&quot; /&gt;
+经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。&lt;/p&gt;
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>算法复杂度度量与分析</title>
-   <link href="http://localhost:4000/xx"/>
-   <id>http://localhost:4000/xx</id>
-   <updated>2018-02-11T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;复杂度度量&quot;&gt;复杂度度量&lt;/h3&gt;
-
-&lt;h4 id=&quot;时间复杂度&quot;&gt;时间复杂度&lt;/h4&gt;
-
-&lt;p&gt;时间复杂度是衡量某一算法随着输入规模的增大，运行时间如何增长的度量。设输入规模为n，则算法的最长运行时间可以用函数$T(n)$来表示。&lt;/p&gt;
-
-&lt;h4 id=&quot;渐进复杂度&quot;&gt;渐进复杂度&lt;/h4&gt;
-
-&lt;p&gt;渐进分析~注重算法时间复杂度的总体变化趋势和增长速度的策略与方法。&lt;/p&gt;
-
-&lt;h4 id=&quot;空间复杂度&quot;&gt;空间复杂度&lt;/h4&gt;
-
-&lt;h3 id=&quot;复杂度分析&quot;&gt;复杂度分析&lt;/h3&gt;
-
-&lt;h4 id=&quot;常数o1&quot;&gt;常数O(1)&lt;/h4&gt;
-
-&lt;h4 id=&quot;对数ologn&quot;&gt;对数O(logn)&lt;/h4&gt;
-
-&lt;h4 id=&quot;线性on&quot;&gt;线性O(n)&lt;/h4&gt;
-
-&lt;h4 id=&quot;多项式opolynomialn&quot;&gt;多项式O(polynomial(n))&lt;/h4&gt;
-
-&lt;h4 id=&quot;指数o2n&quot;&gt;指数O($2^n$)&lt;/h4&gt;
-
-&lt;h4 id=&quot;复杂度层次&quot;&gt;复杂度层次&lt;/h4&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>逼近与拟合--正则化逼近</title>
-   <link href="http://localhost:4000/regularized-approximation"/>
-   <id>http://localhost:4000/regularized-approximation</id>
-   <updated>2018-02-11T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;正则化逼近&quot;&gt;正则化逼近&lt;/h3&gt; &lt;h4 id=&quot;双准则式&quot;&gt;双准则式&lt;/h4&gt; &lt;p&gt;正则化逼近的基本形式是：目标向量$x$最小的同时使残差$Ax-b$最小，即：&lt;/p&gt; &lt;p&gt;$minimize (\begin{Vmatrix} Ax-b\end{Vmatrix},\begin{Vmatrix} x\end{Vmatrix})$&lt;/p&gt; &lt;p&gt;对于这两个可能不同的范数，需要在这个目标之间找到最优权衡，绘出$\begin{Vmatrix} Ax-b\end{Vmatrix}$关于$\begin{Vmatrix} x\end{Vmatrix}$的最优权衡曲线。&lt;/p&gt; &lt;h4 id=&quot;正则化&quot;&gt;正则化&lt;/h4&gt; &lt;p&gt;正则化是求解双准则问题的一个常用的标量化方法，以加权和的形式极小化目标函数。&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}+\gamma\begin{Vmatrix} x\end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$\gamma&amp;gt;0$,随着其值的变化，代表了不同的最优权衡，遍历了整个最优权衡曲线。&lt;/p&gt; &lt;p&gt;正则化的另一个常用方法是极小化加权范数平方和。形式如下：&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}^2$&lt;/p&gt; &lt;p&gt;其中：$\delta&amp;gt;0$,其特点与$\gamma$相似。&lt;/p&gt; &lt;p&gt;在估计领域的解释：对大的$\begin{Vmatrix} x\end{Vmatrix}$的惩罚可以解释为，存在$\begin{Vmatrix} x\end{Vmatrix}$先验知识是$\begin{Vmatrix} x\end{Vmatrix}$不是很大。&lt;/p&gt; &lt;p&gt;1) Tikhonov 正则化：&lt;/p&gt; &lt;p&gt;利用$L_2$范数的平方得到一个凸二次优化问题:&lt;/p&gt; &lt;p&gt;$minimize \begin{Vmatrix} Ax-b\end{Vmatrix}_2^2+\delta\begin{Vmatrix} x\end{Vmatrix}_2^2=x^T (A^T A + \delta I)x-2b^T Ax+b^T b$&lt;/p&gt; &lt;p&gt;2) 光滑正则化：&lt;/p&gt; &lt;p&gt;将$\begin{Vmatrix} x\end{Vmatrix}$替换为$\begin{Vmatrix} Dx\end{Vmatrix}$，则这里矩阵D代表近似的微分或二阶微分算子，因此$\begin{Vmatrix}...</content>
- </entry>
-
- 
-
- <entry>
-   <title>逼近与拟合--范数逼近</title>
-   <link href="http://localhost:4000/norm-approximation"/>
-   <id>http://localhost:4000/norm-approximation</id>
-   <updated>2018-02-08T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;范数逼近&quot;&gt;范数逼近&lt;/h3&gt; &lt;h4 id=&quot;基本的范数逼近问题&quot;&gt;基本的范数逼近问题&lt;/h4&gt; &lt;p&gt;最简单的范数逼近问题的形式如下：&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} Ax-b \end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$A \in R\,^{m×n} \,b \in R\,^m \,x \in R\,^n$&lt;/p&gt; &lt;p&gt;向量：$r=Ax-b$&lt;/p&gt; &lt;p&gt;称为逼近问题的残差，其分量称为关于$x$的个体残差。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;逼近&lt;/strong&gt;：范数逼近的目标是用A的列向量的线性组合(即：$Ax=x_1 a_1 +\cdots+x_n a_n$)，尽可能准确地逼近或拟合向量b，其偏差由范数$\begin{Vmatrix} · \end{Vmatrix}$度量。对于逼近问题，也可以称为对$b$的回归问题。向量$a_1,\cdots,a_n$称为回归量，$x$称为回归问题的最优解。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;估计&lt;/strong&gt;：在给定测量值向量$y=Ax+v$的情况下，对待估计参数向量$x$的值进行合理的猜测。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;几何解释&lt;/strong&gt;：求解范数逼近问题等价于计算$b \in R\,^m\,$向$A=R(A) \subseteq R\,^m\,$的投影。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;加权范数逼近&lt;/strong&gt;：&lt;/p&gt; &lt;p&gt;加权范数逼近是对范数逼近问题的一个扩展。&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} W(Ax-b) \end{Vmatrix}$&lt;/p&gt; &lt;p&gt;其中：$ W \in R\,^{m×m}\,$ 称为权矩阵,通常为对角矩阵。用于区分残差向量$r$的不同分量的权重大小。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;通过使用不同的范数可以构造出不同的逼近问题&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;1)最小二乘逼近&lt;/strong&gt;：&lt;/p&gt; &lt;p&gt;最常见的范数逼近问题采用$L_2$范数,于是得到了最小二乘逼近问题,&lt;/p&gt; &lt;p&gt;$minimize\qquad\begin{Vmatrix} Ax-b \end{Vmatrix}_2^2 = r_1^2+r_2^2+\cdots+r_m^2$&lt;/p&gt; &lt;p&gt;&lt;strong&gt;2)切比雪夫逼近或极小极大逼近&lt;/strong&gt;：&lt;/p&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>杨虎城将军陵园</title>
-   <link href="http://localhost:4000/yang-hucheng-general-mausoleum"/>
-   <id>http://localhost:4000/yang-hucheng-general-mausoleum</id>
-   <updated>2017-12-10T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0722.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;杨虎城将军陵园&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0725.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;台阶&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0726.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;正气亭 前&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0729.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;正气亭 匾额&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0732.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;叶剑英元帅题词&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0733.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;叶剑英元帅题词 背面&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0734.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;杨虎城手书 勿忘国耻&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0749.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;杨虎城妻子 谢葆贞 烈士 简介&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171210/IMG_0735.JPG&quot; alt=&quot;图1&quot;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>长安丝路东西风——文物特展</title>
-   <link href="http://localhost:4000/changan-silk-road"/>
-   <id>http://localhost:4000/changan-silk-road</id>
-   <updated>2017-11-14T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0401.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;长安丝路东西风&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0404.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;前言&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0406.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;前奏&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0411.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;汉并天下瓦当 – 出土于西安汉长安城遗址 现藏于陕西历史博物馆&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0427.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;五星出东方利中国 织锦护臂 – 汉代 出土于新疆和田地区民丰县尼雅遗址 现藏于新疆博物馆&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0428.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;灞桥纸&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0468.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;鎏金铁芯铜龙 现藏于陕西历史博物馆&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20171128sr/IMG_0471.JPG&quot; alt=&quot;图1&quot; /&gt;&lt;/p&gt; &lt;p&gt;牧马图屏风画 出土于新疆吐鲁番阿斯塔那188号唐代墓葬...</content>
  </entry>
 
  

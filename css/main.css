@@ -153,7 +153,8 @@ blockquote {
   /* 24px/18px */ }
   blockquote p, blockquote ul, blockquote ol {
     padding: 1.5em 0;
-    /* 24px/18px */ }
+    /* 24px/18px */
+    text-indent: 0cm; }
 
 .content {
   word-wrap: break-word;

@@ -51,7 +51,13 @@
    src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<!-- Highlight -->
+
+<link rel="stylesheet" href="/styles/dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <script>
 var init = function() {
     var center = new qq.maps.LatLng(37.916527,106.397128);
@@ -95,7 +101,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br> 17 Jun 2017 <a href="/laoshan-jufeng">崂山巨峰游览小记</a> <br>28 Apr 2017 <a href="/tbm-and-signal-hill">青啤博物馆与信号山公园</a> <br>23 Apr 2017 <a href="/railway-station-to-54-square">红石绿海</a> <br>18 Mar 2017 <a href="/night-54-square">夜游五四广场</a> <br>                 </small>');
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>     </small>');
         info.setPosition(tsingtao); 
     });
 	//济南
@@ -106,7 +112,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     15 Apr 2017 <a href="/welcome-to-the-hell">Welcome to the hell</a> <br>              </small>');
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     </small>');
         info.setPosition(jinan); 
     });
 	//xian
@@ -117,7 +123,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>    02 Mar 2018 <a href="/xian-lantern-festival">2018年大唐芙蓉园新春灯会</a> <br> 10 Dec 2017 <a href="/yang-hucheng-general-mausoleum">杨虎城将军陵园</a> <br> 14 Nov 2017 <a href="/changan-silk-road">长安丝路东西风——文物特展</a> <br> 14 Nov 2017 <a href="/tressure-collection-10-years">十年珍藏——西安博物院新入展文物精品展</a> <br> 05 Aug 2017 <a href="/the-site-of-weiyang-palace">汉长安城未央宫遗址</a> <br> 31 Mar 2017 <a href="/roaming-xian">西安漫行</a> <br>               </small>');
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>     </small>');
         info.setPosition(xian); 
     });
 	//xin-an
@@ -172,7 +178,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>              03 Oct 2017 <a href="/zhengzhou">2017年十一：大象中原 郑州行</a> <br>     </small>');
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>     </small>');
         info.setPosition(zhengzhou); 
     });
 	//乾县 Qianxian
@@ -183,14 +189,14 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>             30 Sep 2017 <a href="/qianling">2017年十一：乾陵</a> <br>      </small>');
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>     </small>');
         info.setPosition(qianxian); 
     });
 	
 	
 }
 
-</script>  
+</script>   -->
 
 <script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
 		</head>
@@ -221,7 +227,7 @@ var init = function() {
 		Suzhengpeng @ Xidian University 
 		<br>
 			 <div class="footer-power">
-		Proudly hosted by Github and powered by Jekyll </div>
+		Proudly hosted by Github and powered by Jekyll <br> Since 2014</div>
 		<br>
 	
 	</div>
@@ -232,8 +238,7 @@ var init = function() {
 
 	    
 		
-
-	    
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
 		
 
 	    
@@ -241,103 +246,12 @@ var init = function() {
 
 	    
 		
-
-	    
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
 		
 
 	    
 		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
 		
 
 	    
@@ -394,72 +308,8 @@ var init = function() {
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			<a href="/pages/data/BookList" title="Booklist 2018">Booklist 2018</a>&nbsp;&nbsp;
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
-				
-				
-				
-				
-				
-				
-			<a href="/pages/data/computerVision" title="CV-Research">CV-Research</a>&nbsp;&nbsp;
-		
-				
-				
-			<a href="/pages/data/computerVisionBookList" title="Book List">Book List</a>&nbsp;&nbsp;
-		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				
@@ -500,72 +350,12 @@ var init = function() {
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
 		
 				
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				
@@ -603,79 +393,17 @@ var init = function() {
 		
 	    
 		
-	    
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;
 		
 	    
 		
 	    
 		
-	    
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;
 		
 	    
 		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;
-		
-	    
-		
-			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;
-		
-	    
-		
-	    
-		
-	    
-		
-			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
-		
-	    
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
 		
 	    
 		
@@ -737,72 +465,8 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 	  		
 				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-			<a href="/pages/data/BookList" title="Booklist 2018">Booklist 2018</a>&nbsp;&nbsp;
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
-	  		
-				
-	  		
-				
-	  		
-				
-			<a href="/pages/data/computerVision" title="CV-Research">CV-Research</a>&nbsp;&nbsp;
-		
-	  		
-				
-			<a href="/pages/data/computerVisionBookList" title="Book List">Book List</a>&nbsp;&nbsp;
-		
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
-	  		
-				
 	  		
 				
 	  		
@@ -861,23 +525,13 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 <div style="width:100%;overflow:hidden;white-space:nowrap;">
  
 <div style="width:170px;float:left">
-<a href="/implement-of-dft-and-idft"><img src="/img/20180302/IMG_1415.JPG"  width=150 height=150/></a>
-<a href="/implement-of-dft-and-idft">&nbsp;&nbsp;&nbsp;2维DFT算法...</a><br> &nbsp;&nbsp;&nbsp;(12 Mar 2018)<br><br>
-</div>
- 
-<div style="width:170px;float:left">
-<a href="/opencv-mat-pixel-struct"><img src="/img/20180302/IMG_1415.JPG"  width=150 height=150/></a>
+<a href="/opencv-mat-pixel-struct"><img src="/img/cover/IMG_1415.JPG"  width=150 height=150/></a>
 <a href="/opencv-mat-pixel-struct">&nbsp;&nbsp;&nbsp;Opencv3...</a><br> &nbsp;&nbsp;&nbsp;(02 Mar 2018)<br><br>
 </div>
- 
-<div style="width:170px;float:left">
-<a href="/edge-extraction-and-corner-detection"><img src="/img/20180302/IMG_1414.JPG"  width=150 height=150/></a>
-<a href="/edge-extraction-and-corner-detection">&nbsp;&nbsp;&nbsp;使用形态学滤波...</a><br> &nbsp;&nbsp;&nbsp;(02 Mar 2018)<br><br>
-</div>
 
 </div>
 
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/ji%27nan.html" class="set-1">Ji'nan</a> <a href="/tag/lnts.html" class="set-1">LNTS</a> <a href="/tag/opencv.html" class="set-2">OpenCV</a> <a href="/tag/qian%27xian.html" class="set-1">Qian'xian</a> <a href="/tag/tsingtao.html" class="set-3">Tsingtao</a> <a href="/tag/xi%27an.html" class="set-4">Xi'an</a> <a href="/tag/zheng%27zhou.html" class="set-1">Zheng'zhou</a> <a href="/tag/blog.html" class="set-1">blog</a> <a href="/tag/computervision.html" class="set-1">computerVision</a> <a href="/tag/convexoptimization.html" class="set-2">convexOptimization</a> <a href="/tag/datastrute.html" class="set-1">dataStrute</a> <a href="/tag/football.html" class="set-1">football</a> <a href="/tag/imageprocessing.html" class="set-1">imageProcessing</a> <a href="/tag/machinelearning.html" class="set-2">machineLearning</a> <a href="/tag/papers.html" class="set-1">papers</a> <a href="/tag/photograph.html" class="set-5">photograph</a> <a href="/tag/regularization.html" class="set-1">regularization</a> <a href="/tag/think.html" class="set-1">think</a></div> 
+<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-5">Blog</a> <a href="/tag/dynamicprogramming.html" class="set-5">DynamicProgramming</a> <a href="/tag/leetcode.html" class="set-5">Leetcode</a> <a href="/tag/opencv.html" class="set-5">OpenCV</a> <a href="/tag/siamesenetworks.html" class="set-5">SiameseNetworks</a></div> 
 </div></center>
 <br>
 
@@ -900,7 +554,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 		Suzhengpeng @ Xidian University 
 		<br>
 			 <div class="footer-power">
-		Proudly hosted by Github and powered by Jekyll </div>
+		Proudly hosted by Github and powered by Jekyll <br> Since 2014</div>
 		<br>
 	
 	</div>
@@ -911,8 +565,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 	    
 		
-
-	    
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
 		
 
 	    
@@ -920,103 +573,12 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 	    
 		
-
-	    
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
 		
 
 	    
 		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/about" title="About">About</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/contact" title="Contact">Contact</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-			<a href="/pages/page/copyright" title="Copyright">Copyright</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-			<a href="/pages/page/link" title="Links">Links</a>&nbsp;&nbsp;<br>
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
-		
-
-	    
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
 		
 
 	    
@@ -1073,72 +635,8 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			<a href="/pages/data/BookList" title="Booklist 2018">Booklist 2018</a>&nbsp;&nbsp;
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
-				
-				
-				
-				
-				
-				
-			<a href="/pages/data/computerVision" title="CV-Research">CV-Research</a>&nbsp;&nbsp;
-		
-				
-				
-			<a href="/pages/data/computerVisionBookList" title="Book List">Book List</a>&nbsp;&nbsp;
-		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				
@@ -1179,72 +677,12 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
 		
 				
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>孪生网络（0）-- 基本概念 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="孪生网络学习笔记 ">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$', '$'],['\\(', '\\)']],
+            displayMath: [['$$', '$$'],["\\[", "\\]"]],
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            processEscapes: true
+        },
+        TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
+            equationNumbers: { autoNumber: ["AMS"],
+			useLabelIds: true
+            },
+            Macros: {hfill: "{}"}
+        },
+        "HTML-CSS": {
+            linebreaks: {automatic: true},
+            availableFonts: ["TeX"],
+            scale: 110
+        },
+        SVG: {
+            linebreaks: {automatic: true}
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- Highlight -->
+
+<link rel="stylesheet" href="/styles/dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(37.916527,106.397128);
+	//山东省
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	//陕西省
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var qianxian = new qq.maps.LatLng(34.532015,108.260822);
+	//河南省
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var zhengzhou = new qq.maps.LatLng(34.745509,113.657212);
+	//上海市
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	//江苏省
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+	
+    var map = new qq.maps.Map(document.getElementById('container-map'),{
+        center: center,
+        zoom: 7
+    });
+	   //获取城市列表接口设置中心点
+    citylocation = new qq.maps.CityService({
+        complete : function(result){
+            map.setCenter(result.detail.latLng);
+        }
+    });
+    //调用searchLocalCity();方法    根据用户IP查询城市信息。
+    citylocation.searchLocalCity();
+	
+		//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>     </small>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>     </small>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>     </small>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">河南省新安县</a></small>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">上海市</a></small>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省昆山市</a></small>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省丰县</a></small>');
+        info.setPosition(fengxian); 
+    });
+		//郑州 zhengzhou
+	    var marker = new qq.maps.Marker({
+        position: zhengzhou,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>     </small>');
+        info.setPosition(zhengzhou); 
+    });
+	//乾县 Qianxian
+	    var marker = new qq.maps.Marker({
+        position: qianxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>     </small>');
+        info.setPosition(qianxian); 
+    });
+	
+	
+}
+
+</script>   -->
+
+<script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> Since 2014</div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng @ Tsingtao<br><br>
+	 <div class="footer-power">
+Proudly hosted by Github and powered by Jekyll <br><br>
+</div>
+    </div>
+
+
+ <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div> 
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+	
+	02 Sep 2018
+	
+	<h3>孪生网络（0）-- 基本概念 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+孪生网络学习笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<h3 id="孪生网络的概念">孪生网络的概念</h3>
+
+<p>孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun	大神在1993年提出，其论文发表在1994年的NIPS上。</p>
+
+<p><img src="/img/20180902/01.jpg" width="300" alt="孪生网络" /></p>
+<center>共享权值的孪生神经网络</center>
+
+<h5 id="共享权值的意义">共享权值的意义？</h5>
+
+<p>两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。</p>
+
+<h5 id="伪孪生网络">伪孪生网络</h5>
+
+<p>伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：</p>
+
+<p><img src="/img/20180902/02.jpg" width="300" alt="孪生网络" /></p>
+<center>伪孪生网络</center>
+
+<p>两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。</p>
+
+<h3 id="孪生网络的使用">孪生网络的使用</h3>
+
+<p>一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。</p>
+
+<h5 id="应用场景">应用场景</h5>
+
+<p>孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。</p>
+
+<h3 id="loss-function">Loss Function</h3>
+
+<p>孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。</p>
+
+<p>孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。</p>
+
+<hr />
+
+<p>参考资料：</p>
+<blockquote>
+  <ol>
+    <li><strong>Siamese network 孪生神经网络–一个简单神奇的结构</strong> : https://zhuanlan.zhihu.com/p/35040994</li>
+    <li>Chopra S, Hadsell R, LeCun Y. <strong>Learning a similarity metric discriminatively, with application to face verification</strong>[C]//Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on. IEEE, 2005, 1: 539-546.</li>
+    <li>Bromley J, Guyon I, LeCun Y, et al. <strong>Signature verification using a” siamese” time delay neural network</strong>[C]//Advances in neural information processing systems. 1994: 737-744.</li>
+    <li>Bertinetto L, Valmadre J, Henriques J F, et al. <strong>Fully-convolutional siamese networks for object tracking</strong>[C]//European conference on computer vision. Springer, Cham, 2016: 850-865.</li>
+  </ol>
+</blockquote>
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/siamesenetworks.html" rel="tag">SiameseNetworks</a> </div> 
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> Since 2014</div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>
