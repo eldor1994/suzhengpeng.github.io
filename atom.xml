@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-02T23:29:58+08:00</updated>
+ <updated>2018-09-05T22:17:13+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,11 +14,21 @@
  
 
  <entry>
+   <title>孪生网络（1）-- 网络结构</title>
+   <link href="http://localhost:4000/siames-network-01"/>
+   <id>http://localhost:4000/siames-network-01</id>
+   <updated>2018-09-03T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;Yann LeCun 在他2005年的论文Learning a Similarity Metric Discriminatively, with Application to Face Verificatio中提出使用孪生网络做人脸鉴定。&lt;/p&gt; &lt;h3 id=&quot;核心思想&quot;&gt;核心思想&lt;/h3&gt; &lt;p&gt;这种方法的核心思想在于：通过训练一个网络得到一个函数，这个函数可以将输入映射到目标空间，然后在目标空间中计算输入空间的”语义（semantic）”距离，如使用 $L_1$范数。整个网络的学习过程就是将同一个人的人脸图像的输出最小化，不同的人的人脸图像输出最大化。将原始图像映射进入目标空间的工具就是一个对几何畸变（geometric distortions）具有鲁棒性的卷积网络。更确切的说就是有一系列的函数$G_W(X)$使用W作为参数，我们的目标就是寻找合适的参数W，使得相似矩阵$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2) ||$ 在$X_1$和$X_2$属于同一分类（即：人脸图像属于同一个人）时计算得到的结果最大，反之则最小。根据孪生网络的特点，对于输入$X_1$和$X_2$其对应的G和W是相同的。&lt;/p&gt; &lt;h3 id=&quot;设计目标&quot;&gt;设计目标&lt;/h3&gt; &lt;p&gt;设计的可训练系统要在训练时能够同时最小化错误接受率（false accepts）和错误拒绝率（false reject）。同时可将原始图片（raw images）映射到低维空间，以此计算两个输入的相似度距离（即：相似度度量 similarity metric）。&lt;/p&gt; &lt;h3 id=&quot;孪生网络结构&quot;&gt;孪生网络结构&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/20180904/01.png&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;孪生网络结构&lt;/center&gt; &lt;h4 id=&quot;整体框架&quot;&gt;整体框架&lt;/h4&gt; &lt;p&gt;$X_1$和$X_2$分别为两个待学习的样本对，Y是样本对的标签（$X_1$ 与 $X_2$ 属于同一个人时 Y为0，反之为1）。$G_W(X_1)$和$G_W(X_2)$为输入的原始图像映射到的低维度空间。而$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2)...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>孪生网络（0）-- 基本概念</title>
    <link href="http://localhost:4000/siames-network-00"/>
    <id>http://localhost:4000/siames-network-00</id>
    <updated>2018-09-02T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;孪生网络的概念&quot;&gt;孪生网络的概念&lt;/h3&gt; &lt;p&gt;孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun 大神在1993年提出，其论文发表在1994年的NIPS上。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/01.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;共享权值的孪生神经网络&lt;/center&gt; &lt;h5 id=&quot;共享权值的意义&quot;&gt;共享权值的意义？&lt;/h5&gt; &lt;p&gt;两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。&lt;/p&gt; &lt;h5 id=&quot;伪孪生网络&quot;&gt;伪孪生网络&lt;/h5&gt; &lt;p&gt;伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/02.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;伪孪生网络&lt;/center&gt; &lt;p&gt;两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。&lt;/p&gt; &lt;h3 id=&quot;孪生网络的使用&quot;&gt;孪生网络的使用&lt;/h3&gt; &lt;p&gt;一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。&lt;/p&gt; &lt;h5 id=&quot;应用场景&quot;&gt;应用场景&lt;/h5&gt; &lt;p&gt;孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。&lt;/p&gt; &lt;h3 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h3&gt; &lt;p&gt;孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。&lt;/p&gt; &lt;p&gt;孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。&lt;/p&gt; &lt;hr /&gt; &lt;p&gt;参考资料：&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;&lt;strong&gt;Siamese network 孪生神经网络–一个简单神奇的结构&lt;/strong&gt;...</content>
+   <content type="html">&lt;h3 id=&quot;孪生网络的概念&quot;&gt;孪生网络的概念&lt;/h3&gt; &lt;p&gt;孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun 大神在1993年提出，其论文发表在1994年的NIPS上。孪生网络是用于度量学习的监督网络模型（Supervised models）。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/01.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;共享权值的孪生神经网络&lt;/center&gt; &lt;h5 id=&quot;共享权值的意义&quot;&gt;共享权值的意义？&lt;/h5&gt; &lt;p&gt;两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。&lt;/p&gt; &lt;h5 id=&quot;伪孪生网络&quot;&gt;伪孪生网络&lt;/h5&gt; &lt;p&gt;伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/02.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;伪孪生网络&lt;/center&gt; &lt;p&gt;两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。&lt;/p&gt; &lt;h3 id=&quot;孪生网络的使用&quot;&gt;孪生网络的使用&lt;/h3&gt; &lt;p&gt;一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。&lt;/p&gt; &lt;h5 id=&quot;应用场景&quot;&gt;应用场景&lt;/h5&gt; &lt;p&gt;孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。&lt;/p&gt; &lt;h3 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h3&gt; &lt;p&gt;孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。&lt;/p&gt; &lt;p&gt;孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。&lt;/p&gt; &lt;hr /&gt; &lt;p&gt;参考资料：&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;&lt;strong&gt;Siamese network...</content>
  </entry>
 
  
@@ -48,7 +58,7 @@
    <link href="http://localhost:4000/hello-world"/>
    <id>http://localhost:4000/hello-world</id>
    <updated>2017-04-20T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/update/20170422135316.jpg&quot; alt=&quot;avatar&quot; /&gt;
+   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/cover/20170422135316.jpg&quot; alt=&quot;avatar&quot; /&gt;
 经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。&lt;/p&gt;
 </content>
  </entry>

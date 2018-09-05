@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Hello World - Su'S Blog - SuZhengpeng.COM </title>
-  <meta name="description" content="△青岛火车站 ">
+	<title>孪生网络（1）-- 网络结构 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于孪生网络的目标跟踪算法研究笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -370,7 +370,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-world&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -522,9 +522,9 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 
 			<article id="post-page">
 	
-	20 Apr 2017
+	03 Sep 2018
 	
-	<h3>Hello World </h3>
+	<h3>孪生网络（1）-- 网络结构 </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -547,7 +547,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-△青岛火车站<br><br> 
+基于孪生网络的目标跟踪算法研究笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 	</div>
 </div>
@@ -558,12 +558,96 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 <br>
 	<div class="content">
 
-		<p><img src="http://suzhengpeng.com/img/cover/20170422135316.jpg" alt="avatar" />
-经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。</p>
+		<p>Yann LeCun 在他2005年的论文Learning a Similarity Metric Discriminatively, with Application to Face Verificatio中提出使用孪生网络做人脸鉴定。</p>
+
+<h3 id="核心思想">核心思想</h3>
+
+<p>这种方法的核心思想在于：通过训练一个网络得到一个函数，这个函数可以将输入映射到目标空间，然后在目标空间中计算输入空间的”语义（semantic）”距离，如使用 $L_1$范数。整个网络的学习过程就是将同一个人的人脸图像的输出最小化，不同的人的人脸图像输出最大化。将原始图像映射进入目标空间的工具就是一个对几何畸变（geometric distortions）具有鲁棒性的卷积网络。更确切的说就是有一系列的函数$G_W(X)$使用W作为参数，我们的目标就是寻找合适的参数W，使得相似矩阵$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2) ||$ 在$X_1$和$X_2$属于同一分类（即：人脸图像属于同一个人）时计算得到的结果最大，反之则最小。根据孪生网络的特点，对于输入$X_1$和$X_2$其对应的G和W是相同的。</p>
+
+<h3 id="设计目标">设计目标</h3>
+
+<p>设计的可训练系统要在训练时能够同时最小化错误接受率（false accepts）和错误拒绝率（false reject）。同时可将原始图片（raw images）映射到低维空间，以此计算两个输入的相似度距离（即：相似度度量 similarity metric）。</p>
+
+<h3 id="孪生网络结构">孪生网络结构</h3>
+
+<p><img src="/img/20180904/01.png" width="450" alt="孪生网络" /></p>
+<center>孪生网络结构</center>
+
+<h4 id="整体框架">整体框架</h4>
+
+<p>$X_1$和$X_2$分别为两个待学习的样本对，Y是样本对的标签（$X_1$ 与 $X_2$ 属于同一个人时 Y为0，反之为1）。$G_W(X_1)$和$G_W(X_2)$为输入的原始图像映射到的低维度空间。而$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2) ||$表示两者的相匹配的程度。而W作为共享参数则是网络需要学习的对象。</p>
+
+<p>假设存在 <strong>条件1</strong> ：$存在m&gt;0,使得E_W(X_1,X_2) + m &lt; E_W(X_1,X_2’)$，则可以称网络为理想方式（desirable manner），在这里的m称为系统的边缘（margin）。</p>
+
+<h4 id="对比损失函数">对比损失函数</h4>
+
+<p>假设网络的损失函数由输入决定，而所有的参数间接的由E决定，所以损失函数的形式如下：</p>
+
+<script type="math/tex; mode=display">\cal{L} \mathrm{(W) = \sum_{i=1}^P L(W,(Y,X_1,X_2)^i)}</script>
+
+<script type="math/tex; mode=display">L(W,(Y,X_1,X_2)^i) = (1-Y)L_G (E_W(X_1,X_2)^i) + YL_I(E_W(X_1,X_2))</script>
+
+<p>其中：$(Y,X_1,X_2)^i$表示第i个样本，包括图像对和标签。$L_G$表示正样本对（genuine pair）的部分，$L_I$表示负样本对（impostor pair）的部分。</p>
+
+<p>对于$L_G$和$L_I$的设计思路应当是对正样本对减少L（损失，Loss），对负样本对增加损失。一个简单的方法就是对$L_G$单调增加，对$L_I$单调减少。</p>
+
+<h4 id="卷积网络">卷积网络</h4>
+
+<p>为了将原始图像映射到低维度空间，系统中采用了两个相同且共享权值的卷积网络。卷及网络具有可训练、多层次、非线性等特点。通过一系列的方法可以实现像素级的处理并且可以学习低级特征和高级表示。卷积网络采用端到端的训练方法，对原始图像映射以得到输出。</p>
+
+<p><strong>主要优点</strong>:</p>
+
+<blockquote>
+  <ol>
+    <li>可以学习得到最优的位移不变局部特征检测器</li>
+    <li>可以构建对于输入图像几何失真的鲁棒表示</li>
+  </ol>
+</blockquote>
+
+<p><strong>输入</strong>：</p>
+
+<p>一个图像对和一个标签。</p>
+
+<p><strong>网络层次</strong>:</p>
+
+<blockquote>
+  <p>$C_x$:表示卷基层<br />
+$S_x$:表示下采样层<br />
+$F_x$:表示全连接层</p>
+</blockquote>
+
+<p>网络的基本架构为：$C_1 –&gt; S_2 –&gt; C_3 –&gt; S_4 –&gt; C_5 –&gt; F_6$ 这个网络结构和LeCun在1998年在《Gradient-Based Learning Applied
+to Document Recognition》中提出的网络LeNet-5大致相同。</p>
+
+<p><img src="/img/20180905/01.png" width="450" /></p>
+<center>网络的中间状态</center>
+
+<blockquote>
+  <p>$C_1$ 卷基层 特征映射层数15、大小50×40 卷积核大小7×7<br />
+$S_2$ 下采样层 特征映射层数15、大小25×20 视野大小2×2<br />
+$C_3$ 卷积层 特征映射层数45、大小20×15 卷积核大小6×6<br />
+$S_4$ 下采样层 特征映射层数45、大小5×5 视野大小4×3<br />
+$C_5$ 卷积层 特征映射层数250、大小1×1 卷积核大小5×5<br />
+$F_6$ 全卷机层 单元数 50</p>
+</blockquote>
+
+<hr />
+
+<p>参考资料：</p>
+<blockquote>
+  <ol>
+    <li><strong>Siamese network 孪生神经网络–一个简单神奇的结构</strong> : https://zhuanlan.zhihu.com/p/35040994</li>
+    <li>Chopra S, Hadsell R, LeCun Y. <strong>Learning a similarity metric discriminatively, with application to face verification</strong>[C]//Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on. IEEE, 2005, 1: 539-546.</li>
+    <li>Bromley J, Guyon I, LeCun Y, et al. <strong>Signature verification using a” siamese” time delay neural network</strong>[C]//Advances in neural information processing systems. 1994: 737-744.</li>
+    <li>Bertinetto L, Valmadre J, Henriques J F, et al. <strong>Fully-convolutional siamese networks for object tracking</strong>[C]//European conference on computer vision. Springer, Cham, 2016: 850-865.</li>
+    <li><strong>siamese(孪生) 网络</strong> ：https://blog.csdn.net/qq_15192373/article/details/78404761</li>
+    <li>LeCun Y, Bottou L, Bengio Y, et al. <strong>Gradient-based learning applied to document recognition</strong>[J]. Proceedings of the IEEE, 1998, 86(11): 2278-2324.</li>
+  </ol>
+</blockquote>
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/blog.html" rel="tag">Blog</a> </div> 
+	<div id="posts-out-tags"># <a href="/tag/siamesenetworks.html" rel="tag">SiameseNetworks</a> </div> 
 </article>
 
 
@@ -730,7 +814,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-world&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
