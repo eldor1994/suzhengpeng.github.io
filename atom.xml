@@ -4,12 +4,55 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-05T22:17:13+08:00</updated>
+ <updated>2018-09-06T23:38:07+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>孪生网络 番外随笔（0） -- 初识全连接层</title>
+   <link href="http://localhost:4000/fully-connected-layer"/>
+   <id>http://localhost:4000/fully-connected-layer</id>
+   <updated>2018-09-06T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt;
+
+&lt;h4 id=&quot;概述&quot;&gt;概述&lt;/h4&gt;
+
+&lt;p&gt;全连接层 Fully Connected Layer 一般位于整个卷积神经网络的最后，负责将卷积输出的二维特征图转化成一维的一个向量，由此实现了端到端的学习过程（即：输入一张图像或一段语音，输出一个向量或信息）。全连接层的每一个结点都与上一层的所有结点相连因而称之为全连接层。由于其全相连的特性，一般全连接层的参数也是最多的。&lt;/p&gt;
+
+&lt;h4 id=&quot;主要作用&quot;&gt;主要作用&lt;/h4&gt;
+
+&lt;p&gt;全连接层的主要作用就是将前层（卷积、池化等层）计算得到的特征空间映射样本标记空间。简单的说就是将特征表示整合成一个值，其优点在于减少特征位置对于分类结果的影响，提高了整个网络的鲁棒性。&lt;/p&gt;
+
+&lt;p&gt;在知乎上有这样一个回答说的很形象。&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;假设你是一只小蚂蚁，你的任务是找小面包。你的视野还比较窄，只能看到很小一片区域。当你找到一片小面包之后，你不知道你找到的是不是全部的小面包，所以你们全部的蚂蚁开了个会，把所有的小面包都拿出来分享了。全连接层就是这个蚂蚁大会~如果提前告诉你全世界就只有一块小面包，你找到之后也就掌握了全部的信息，这种情况下也就没必要引入fc层了&lt;br /&gt;
+&lt;strong&gt;作者：田star&lt;/strong&gt;  链接：https://www.zhihu.com/question/41037974/answer/150552142&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;实现方式&quot;&gt;实现方式&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20180906/01.jpg&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt;
+&lt;center&gt;全连接层的计算方式&lt;/center&gt;
+
+&lt;p&gt;如上图所示，一个网络在全连接层之前，生成了5@3×3的特征映射，我们需要只需要使用五个卷积核去和激活函数的输出进行卷积运算，在将五个输出的值相加即可得到一个全连接层的输出值。如果结果是N维的向量，则需要N×5个3×3的卷积核。再加上求和运算对应的权值，参数的数量是非常可观的，由此一般只在网络的之后使用全连接层。&lt;/p&gt;
+
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;strong&gt;CNN 入门讲解：什么是全连接层（Fully Connected Layer）?&lt;/strong&gt; https://zhuanlan.zhihu.com/p/33841176&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;全连接层的作用是什么？ - 魏秀参 的回答&lt;/strong&gt; https://www.zhihu.com/question/41037974&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;解释一下全连接层&lt;/strong&gt; https://blog.csdn.net/u011021773/article/details/78121359&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+</content>
+ </entry>
 
  
 

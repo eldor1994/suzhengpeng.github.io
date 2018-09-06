@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Page not found - Su'S Blog - SuZhengpeng.COM </title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>孪生网络 番外随笔（0） -- 初识全连接层 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于孪生网络的目标跟踪算法研究笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -377,7 +377,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/404&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/fully-connected-layer&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -531,8 +531,82 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 		  
 		<main>
 
-			<h1 id="page-not-found">Page not found</h1>
-<p>Sorry, we couldn’t find the requested URL. You can try again by going <a href="">back to the homepage</a>.</p>
+			<article id="post-page">
+	
+	06 Sep 2018
+	
+	<h3>孪生网络 番外随笔（0） -- 初识全连接层 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+基于孪生网络的目标跟踪算法研究笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<hr />
+
+<h4 id="概述">概述</h4>
+
+<p>全连接层 Fully Connected Layer 一般位于整个卷积神经网络的最后，负责将卷积输出的二维特征图转化成一维的一个向量，由此实现了端到端的学习过程（即：输入一张图像或一段语音，输出一个向量或信息）。全连接层的每一个结点都与上一层的所有结点相连因而称之为全连接层。由于其全相连的特性，一般全连接层的参数也是最多的。</p>
+
+<h4 id="主要作用">主要作用</h4>
+
+<p>全连接层的主要作用就是将前层（卷积、池化等层）计算得到的特征空间映射样本标记空间。简单的说就是将特征表示整合成一个值，其优点在于减少特征位置对于分类结果的影响，提高了整个网络的鲁棒性。</p>
+
+<p>在知乎上有这样一个回答说的很形象。</p>
+<blockquote>
+  <p>假设你是一只小蚂蚁，你的任务是找小面包。你的视野还比较窄，只能看到很小一片区域。当你找到一片小面包之后，你不知道你找到的是不是全部的小面包，所以你们全部的蚂蚁开了个会，把所有的小面包都拿出来分享了。全连接层就是这个蚂蚁大会~如果提前告诉你全世界就只有一块小面包，你找到之后也就掌握了全部的信息，这种情况下也就没必要引入fc层了<br />
+<strong>作者：田star</strong>  链接：https://www.zhihu.com/question/41037974/answer/150552142</p>
+</blockquote>
+
+<h4 id="实现方式">实现方式</h4>
+
+<p><img src="/img/20180906/01.jpg" width="450" alt="孪生网络" /></p>
+<center>全连接层的计算方式</center>
+
+<p>如上图所示，一个网络在全连接层之前，生成了5@3×3的特征映射，我们需要只需要使用五个卷积核去和激活函数的输出进行卷积运算，在将五个输出的值相加即可得到一个全连接层的输出值。如果结果是N维的向量，则需要N×5个3×3的卷积核。再加上求和运算对应的权值，参数的数量是非常可观的，由此一般只在网络的之后使用全连接层。</p>
+
+<p>参考资料：</p>
+<blockquote>
+  <ol>
+    <li><strong>CNN 入门讲解：什么是全连接层（Fully Connected Layer）?</strong> https://zhuanlan.zhihu.com/p/33841176</li>
+    <li><strong>全连接层的作用是什么？ - 魏秀参 的回答</strong> https://www.zhihu.com/question/41037974</li>
+    <li><strong>解释一下全连接层</strong> https://blog.csdn.net/u011021773/article/details/78121359</li>
+  </ol>
+</blockquote>
+
+<hr />
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/siamesenetworks.html" rel="tag">SiameseNetworks</a>, <a href="/tag/fullyconnectedlayer.html" rel="tag">FullyConnectedLayer</a> </div> 
+</article>
 
 
 
@@ -705,7 +779,7 @@ Proudly hosted by Github and powered by Jekyll <br><br>
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/404&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/fully-connected-layer&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
