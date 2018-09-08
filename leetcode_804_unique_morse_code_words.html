@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>孪生网络与目标跟踪（0）-- 孪生网络的基本概念 - Su'S Blog - SuZhengpeng.COM </title>
-  <meta name="description" content="基于孪生网络的目标跟踪算法研究笔记 ">
+	<title>Leetcode 804. Unique Morse Code Words - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="LeetCode 第804题的解题方法 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -384,7 +384,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_804_unique_morse_code_words&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -544,9 +544,9 @@ var init = function() {
 
 			<article id="post-page">
 	
-	02 Sep 2018
+	08 Sep 2018
 	
-	<h3>孪生网络与目标跟踪（0）-- 孪生网络的基本概念 </h3>
+	<h3>Leetcode 804. Unique Morse Code Words </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -569,7 +569,7 @@ var init = function() {
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-基于孪生网络的目标跟踪算法研究笔记<br><br> 
+LeetCode 第804题的解题方法<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 	</div>
 </div>
@@ -580,56 +580,83 @@ var init = function() {
 <br>
 	<div class="content">
 
-		<h3 id="孪生网络的概念">孪生网络的概念</h3>
+		<h2 id="问题描述">问题描述</h2>
 
-<p>孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun	大神在1993年提出，其论文发表在1994年的NIPS上。孪生网络是用于度量学习的监督网络模型（Supervised models）。</p>
+<p>International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes, as follows: “a” maps to “.-“, “b” maps to “-…”, “c” maps to “-.-.”, and so on.</p>
 
-<p><img src="/img/20180902/01.jpg" width="300" alt="孪生网络" /></p>
-<center>共享权值的孪生神经网络</center>
+<p>For convenience, the full table for the 26 letters of the English alphabet is given below:</p>
 
-<h5 id="共享权值的意义">共享权值的意义？</h5>
-
-<p>两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。</p>
-
-<h5 id="伪孪生网络">伪孪生网络</h5>
-
-<p>伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：</p>
-
-<p><img src="/img/20180902/02.jpg" width="300" alt="孪生网络" /></p>
-<center>伪孪生网络</center>
-
-<p>两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。</p>
-
-<h3 id="孪生网络的使用">孪生网络的使用</h3>
-
-<p>一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。</p>
-
-<h5 id="应用场景">应用场景</h5>
-
-<p>孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。</p>
-
-<h3 id="loss-function">Loss Function</h3>
-
-<p>孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。</p>
-
-<p>孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。</p>
-
-<hr />
-
-<p>参考资料：</p>
 <blockquote>
-  <ol>
-    <li><strong>Siamese network 孪生神经网络–一个简单神奇的结构</strong> : https://zhuanlan.zhihu.com/p/35040994</li>
-    <li>Chopra S, Hadsell R, LeCun Y. <strong>Learning a similarity metric discriminatively, with application to face verification</strong>[C]//Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on. IEEE, 2005, 1: 539-546.</li>
-    <li>Bromley J, Guyon I, LeCun Y, et al. <strong>Signature verification using a” siamese” time delay neural network</strong>[C]//Advances in neural information processing systems. 1994: 737-744.</li>
-    <li>Bertinetto L, Valmadre J, Henriques J F, et al. <strong>Fully-convolutional siamese networks for object tracking</strong>[C]//European conference on computer vision. Springer, Cham, 2016: 850-865.</li>
-    <li><strong>siamese(孪生) 网络</strong> ：https://blog.csdn.net/qq_15192373/article/details/78404761</li>
-  </ol>
+  <p>[”.-“,”-…”,”-.-.”,”-..”,”.”,”..-.”,”–.”,”….”,”..”,”.—”,”-.-“,”.-..”,”–”,”-.”,”—”,”.–.”,”–.-“,”.-.”,”…”,”-“,”..-“,”…-“,”.–”,”-..-“,”-.–”,”–..”]</p>
 </blockquote>
+
+<p>Now, given a list of words, each word can be written as a concatenation of the Morse code of each letter. For example, “cab” can be written as “-.-.-….-“, (which is the concatenation “-.-.” + “-…” + “.-“). We’ll call such a concatenation, the transformation of a word.</p>
+
+<p>Return the number of different transformations among all words we have.</p>
+
+<p><strong>Example:</strong></p>
+
+<blockquote>
+  <p><strong>Input:</strong> words = [“gin”, “zen”, “gig”, “msg”]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The transformation of each word is:<br />
+“gin” -&gt; “–…-.”<br />
+“zen” -&gt; “–…-.”<br />
+“gig” -&gt; “–…–.”<br />
+“msg” -&gt; “–…–.”</p>
+
+  <p>There are 2 different transformations, “–…-.” and “–…–.”.</p>
+</blockquote>
+
+<pre>
+<code class="cpp">
+class Solution {
+public:
+    int uniqueMorseRepresentations(vector&lt;string&gt;&amp; words) {
+	string dic[26] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", 
+	"....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", 
+	"--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", 
+	"--.."};
+	vector &lt;string&gt; sTemp;
+	
+	for (int i = 0; i &lt; words.size(); i++)
+	{
+		string s;
+
+		for (int j = 0; j &lt; words[i].size(); j++)
+		{
+			s = s + dic[(int)words[i][j] - 97];
+		}
+		bool pushFlag = 0;
+		for(int m = 0; m &lt; sTemp.size(); m++)
+		{
+			
+			if (s == sTemp[m]) {
+				/* code */
+				pushFlag = 1;
+				break;
+
+			}			
+		}
+		
+		if (pushFlag == 0) {
+			sTemp.push_back(s);
+		}
+		
+	}
+
+	return sTemp.size();
+    }
+};
+
+
+</code>
+</pre>
+
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/siamesenetworks.html" rel="tag">SiameseNetworks</a> </div> 
+	<div id="posts-out-tags"># <a href="/tag/leetcode.html" rel="tag">Leetcode</a>, <a href="/tag/string.html" rel="tag">String</a> </div> 
 </article>
 
 
@@ -810,7 +837,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_804_unique_morse_code_words&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
