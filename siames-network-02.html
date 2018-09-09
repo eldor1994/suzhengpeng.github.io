@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Hello World - Su'S Blog - SuZhengpeng.COM </title>
-  <meta name="description" content="△青岛火车站 ">
+	<title>孪生网络与目标跟踪（2）-- Siamese-FC算法概述 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于孪生网络的目标跟踪算法研究笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -391,7 +391,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-world&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -555,9 +555,9 @@ var init = function() {
 
 			<article id="post-page">
 	
-	20 Apr 2017
+	06 Sep 2018
 	
-	<h3>Hello World </h3>
+	<h3>孪生网络与目标跟踪（2）-- Siamese-FC算法概述 </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -580,7 +580,7 @@ var init = function() {
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-△青岛火车站<br><br> 
+基于孪生网络的目标跟踪算法研究笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 	</div>
 </div>
@@ -591,12 +591,190 @@ var init = function() {
 <br>
 	<div class="content">
 
-		<p><img src="http://suzhengpeng.com/img/cover/20170422135316.jpg" alt="avatar" />
-经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。</p>
+		<hr />
+
+<p>在《Fully-convolutional siamese networks for object tracking》这篇论文中，作者将孪生网络引入到目标跟踪领域 ，即：提出了Siamese-FC算法。在Siamese-FC出现之前，浅层方法（如：KCF 等）的缺点是不能够充分利用端到端学习（End-to-end Learning）的优点，而使用其他网络（非孪生网络）的缺点则是不能实现跟踪对实时性的要求。</p>
+
+<p>Siamese-FC要求首先离线训练一个深度卷积网络，然后以训练好的深度卷积网络作为函数，在跟踪时实时的计算出跟踪的结果。</p>
+
+<p>算法主页：<a href="http://www.robots.ox.ac.uk/~luca/siamese-fc.html">http://www.robots.ox.ac.uk/~luca/siamese-fc.html</a></p>
+
+<h3 id="深度相似性学习">深度相似性学习</h3>
+
+<p>相似性学习是解决跟踪问题的有效方法之一。Siamese-FC算法中提出，通过深度学习得到一个函数$f(z,x)$，将样本图像z和候选图像x在同样尺寸下进行比较，最终得到相似性评分。x与z相似度越高则评分越高，反之越低。为了在候选图像中寻找目标的位置，Siamese-FC要穷举所有可能的位置，并计算相似性评分。$f(z,x)$则通过带有位置标签的视频数据集训练得到。</p>
+
+<h3 id="完全卷积孪生框架">完全卷积孪生框架</h3>
+
+<p>基于深度卷积网络进行相似性学习采用的主要方法是孪生框架。在孪生网络中首先对输入x和z分别使用各自独立的变换ϕ，然后对变换结果使用函数$g$，即整个函数f可以表示为：$f(z,x)=g(ϕ(z), ϕ(x))$ 。</p>
+
+<p><img src="/img/20180908/01.png" width="450" alt="孪生网络" /></p>
+<center>完全卷积孪生框架</center>
+
+<p>在Siamese-FC算法中提出的卷积框架，对每一个候选图像x进行完全卷积。</p>
+
+<p><strong>完全卷积的定义：</strong></p>
+
+<blockquote>
+  <p>如果一个函数commutes with translation，则称该函数为为完全卷积。<br />
+这里引入$L_τ$标记为变换算子：$(L_τ x)[u] = x[u-τ]$，函数h如果：$h(L_kτ x) = L_τ h(x)$，则称函数h的映射步长为k的完全卷积。</p>
+</blockquote>
+
+<p><strong>完全卷积的优点：</strong></p>
+
+<p>使用完全卷积的优点在于，不需要候选图像和样本图像保持相同的大小，这样就可以将一副足够大的图像作为输入送入网络，以此可以在候选图像中划分子窗，并将子窗做变换，将变换结果一次性完成相似度的计算。</p>
+
+<p><strong>完全卷积的实现：</strong></p>
+
+<p>设ϕ为一个卷积嵌入函数（convolutional embedding function），然后将计算得到的特征映射使用一个互相关层联系到一起。即：</p>
+
+<script type="math/tex; mode=display">f(z,x) = ϕ(z)*ϕ(x) + b\mathbb{1}</script>
+
+<p>其中：$b1$表示$b∈\mathbb{R}$在该信号的每一个位置。</p>
+
+<p>网络的输出结果并不是一个单一的评分，而是一个在有限网格内的评分映射（score map）。注意：嵌入函数的输出结果是一个具有空间支持的特征映射而不是普通的向量。</p>
+
+<p>特征映射的相互关联则使用互相关，以及评估更大的搜索图像网络
+在数学上等价于使用内积对特征映射进行关联，以及独立评估每个子窗的网络变换。</p>
+
+<p>然而，互相关层提供了一个非常简单方法，得以在一个含有各种存在的卷积网络库的框架中，去高效地完成这些操作。虽然这在测试过程中显然是有用的，但这也可以在训练期间被使用。</p>
+
+<h3 id="卷积嵌入函数ϕ的架构">卷积嵌入函数ϕ的架构</h3>
+
+<p>Siamese-FC中ϕ的结构和Krizhevsky等人在《Imagenet classification with deep convolutional neural networks》中提出的网络结构相似。共包含有两个池化层五个卷积层。</p>
+
+<p><img src="/img/20180908/02.png" width="600" alt="Krizhevsky等人提出的网络结构" /></p>
+<center>Krizhevsky等人提出的网络结构</center>
+
+<p><strong>网络层次</strong>:</p>
+
+<blockquote>
+  <p>$C_x$:表示卷积层 <br />
+$P_x$:表示池化层</p>
+</blockquote>
+
+<p>网络的基本架构为：$C_1 –&gt; P_1 –&gt; C_2 –&gt; P_2 –&gt; C_3 –&gt; C_4 –&gt; C_5$</p>
+
+<p>同时在除了$C_5$层外的每一个卷积层后面有一个ReLU激活函数。在每一个线性层后插入一个batch normalization。</p>
+
+<p><strong>网络尺寸</strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>层级</th>
+      <th>核大小</th>
+      <th>输出/输入<br />通道数</th>
+      <th>步长</th>
+      <th>激活大小<br />（样本图像）</th>
+      <th>激活大小<br />（搜索图像）</th>
+      <th>激活大小<br />（通道）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>127×127</td>
+      <td>255×255</td>
+      <td>×3</td>
+    </tr>
+    <tr>
+      <td>$C_1$</td>
+      <td>11×11</td>
+      <td>96/3</td>
+      <td>2</td>
+      <td>59×59</td>
+      <td>123×123</td>
+      <td>×96</td>
+    </tr>
+    <tr>
+      <td>$P_1$</td>
+      <td>3×3</td>
+      <td> </td>
+      <td>2</td>
+      <td>29×29</td>
+      <td>61×61</td>
+      <td>×96</td>
+    </tr>
+    <tr>
+      <td>$C_2$</td>
+      <td>5×5</td>
+      <td>256/48</td>
+      <td>1</td>
+      <td>25×25</td>
+      <td>57×57</td>
+      <td>×256</td>
+    </tr>
+    <tr>
+      <td>$P_2$</td>
+      <td>3×3</td>
+      <td> </td>
+      <td>2</td>
+      <td>12×12</td>
+      <td>28×28</td>
+      <td>×256</td>
+    </tr>
+    <tr>
+      <td>$C_3$</td>
+      <td>3×3</td>
+      <td>384/256</td>
+      <td>1</td>
+      <td>10×10</td>
+      <td>26×26</td>
+      <td>×192</td>
+    </tr>
+    <tr>
+      <td>$C_4$</td>
+      <td>3×3</td>
+      <td>384/192</td>
+      <td>1</td>
+      <td>8×8</td>
+      <td>24×24</td>
+      <td>×192</td>
+    </tr>
+    <tr>
+      <td>$C_5$</td>
+      <td>3×3</td>
+      <td>384/192</td>
+      <td>1</td>
+      <td>6×6</td>
+      <td>22×22</td>
+      <td>×128</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="网络训练">网络训练</h3>
+
+<p>Siamese-FC的训练在训练集的选择上与孪生网络相同，即使用正样本图像对和负样本图像对对网络进行训练。而损失函数则选择logistic 损失函数：$\cal{l}(y,v) = log(1+exp(-yv))$,其中$v$是单个样本-候选样本图像对真实的评分值，而$y∈{+1,-1}$则是ground-truth标签。</p>
+
+<p>在最终生成的评分映射的损失值为：$L(y,v) = \frac {1}{|\cal{D}|}\sum_{u∈\cal{D}}\cal{l}(y[u],v[u])$,其中$y[u]∈{+1,-1},u∈\cal{D}$。</p>
+
+<p>根据计算得到的损失值，通过SGD计算并更新网络的参数θ。</p>
+
+<script type="math/tex; mode=display">\mathop{argmin} \limits_{θ} \mathop{\Bbb{E}} \limits_{(z,x,y)} L(y,f(z,x;θ))</script>
+
+<hr />
+
+<p>参考资料：</p>
+<blockquote>
+  <ol>
+    <li><strong>Siamese network 孪生神经网络–一个简单神奇的结构</strong> : https://zhuanlan.zhihu.com/p/35040994</li>
+    <li>Chopra S, Hadsell R, LeCun Y. <strong>Learning a similarity metric discriminatively, with application to face verification</strong>[C]//Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on. IEEE, 2005, 1: 539-546.</li>
+    <li>Bromley J, Guyon I, LeCun Y, et al. <strong>Signature verification using a” siamese” time delay neural network</strong>[C]//Advances in neural information processing systems. 1994: 737-744.</li>
+    <li>Bertinetto L, Valmadre J, Henriques J F, et al. <strong>Fully-convolutional siamese networks for object tracking</strong>[C]//European conference on computer vision. Springer, Cham, 2016: 850-865.</li>
+    <li><strong>siamese(孪生) 网络</strong> ：https://blog.csdn.net/qq_15192373/article/details/78404761</li>
+    <li>LeCun Y, Bottou L, Bengio Y, et al. <strong>Gradient-based learning applied to document recognition</strong>[J]. Proceedings of the IEEE, 1998, 86(11): 2278-2324.</li>
+    <li>Bertinetto L, Valmadre J, Henriques J F, et al. <strong>Fully-convolutional siamese networks for object tracking</strong>[C]//European conference on computer vision. Springer, Cham, 2016: 850-865.</li>
+    <li>Krizhevsky A, Sutskever I, Hinton G E. <strong>Imagenet classification with deep convolutional neural networks</strong>[C]//Advances in neural information processing systems. 2012: 1097-1105.</li>
+  </ol>
+</blockquote>
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/blog.html" rel="tag">Blog</a> </div> 
+	<div id="posts-out-tags"># <a href="/tag/siamesenetworks.html" rel="tag">SiameseNetworks</a>, <a href="/tag/visualtracking.html" rel="tag">VisualTracking</a> </div> 
 </article>
 
 
@@ -784,7 +962,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-world&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/siames-network-02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 

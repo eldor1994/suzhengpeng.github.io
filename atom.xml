@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-08T21:56:35+08:00</updated>
+ <updated>2018-09-09T23:48:33+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -19,6 +19,16 @@
    <id>http://localhost:4000/leetcode_804_unique_morse_code_words</id>
    <updated>2018-09-08T00:00:00+08:00</updated>
    <content type="html">&lt;h2 id=&quot;问题描述&quot;&gt;问题描述&lt;/h2&gt; &lt;p&gt;International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes, as follows: “a” maps to “.-“, “b” maps to “-…”, “c” maps to “-.-.”, and so on.&lt;/p&gt; &lt;p&gt;For convenience, the full table for the 26 letters of the English...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>孪生网络与目标跟踪（2）-- Siamese-FC算法概述</title>
+   <link href="http://localhost:4000/siames-network-02"/>
+   <id>http://localhost:4000/siames-network-02</id>
+   <updated>2018-09-06T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt; &lt;p&gt;在《Fully-convolutional siamese networks for object tracking》这篇论文中，作者将孪生网络引入到目标跟踪领域 ，即：提出了Siamese-FC算法。在Siamese-FC出现之前，浅层方法（如：KCF 等）的缺点是不能够充分利用端到端学习（End-to-end Learning）的优点，而使用其他网络（非孪生网络）的缺点则是不能实现跟踪对实时性的要求。&lt;/p&gt; &lt;p&gt;Siamese-FC要求首先离线训练一个深度卷积网络，然后以训练好的深度卷积网络作为函数，在跟踪时实时的计算出跟踪的结果。&lt;/p&gt; &lt;p&gt;算法主页：&lt;a href=&quot;http://www.robots.ox.ac.uk/~luca/siamese-fc.html&quot;&gt;http://www.robots.ox.ac.uk/~luca/siamese-fc.html&lt;/a&gt;&lt;/p&gt; &lt;h3 id=&quot;深度相似性学习&quot;&gt;深度相似性学习&lt;/h3&gt; &lt;p&gt;相似性学习是解决跟踪问题的有效方法之一。Siamese-FC算法中提出，通过深度学习得到一个函数$f(z,x)$，将样本图像z和候选图像x在同样尺寸下进行比较，最终得到相似性评分。x与z相似度越高则评分越高，反之越低。为了在候选图像中寻找目标的位置，Siamese-FC要穷举所有可能的位置，并计算相似性评分。$f(z,x)$则通过带有位置标签的视频数据集训练得到。&lt;/p&gt; &lt;h3 id=&quot;完全卷积孪生框架&quot;&gt;完全卷积孪生框架&lt;/h3&gt; &lt;p&gt;基于深度卷积网络进行相似性学习采用的主要方法是孪生框架。在孪生网络中首先对输入x和z分别使用各自独立的变换ϕ，然后对变换结果使用函数$g$，即整个函数f可以表示为：$f(z,x)=g(ϕ(z), ϕ(x))$ 。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180908/01.png&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;完全卷积孪生框架&lt;/center&gt; &lt;p&gt;在Siamese-FC算法中提出的卷积框架，对每一个候选图像x进行完全卷积。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;完全卷积的定义：&lt;/strong&gt;&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;如果一个函数commutes with translation，则称该函数为为完全卷积。&lt;br /&gt; 这里引入$L_τ$标记为变换算子：$(L_τ x)[u] = x[u-τ]$，函数h如果：$h(L_kτ x) = L_τ h(x)$，则称函数h的映射步长为k的完全卷积。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;&lt;strong&gt;完全卷积的优点：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;使用完全卷积的优点在于，不需要候选图像和样本图像保持相同的大小，这样就可以将一副足够大的图像作为输入送入网络，以此可以在候选图像中划分子窗，并将子窗做变换，将变换结果一次性完成相似度的计算。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;完全卷积的实现：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;设ϕ为一个卷积嵌入函数（convolutional embedding function），然后将计算得到的特征映射使用一个互相关层联系到一起。即：&lt;/p&gt;...</content>
  </entry>
 
  
