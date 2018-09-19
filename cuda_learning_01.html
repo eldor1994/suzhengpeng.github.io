@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>CUDA并行编程学习（1）-- 现代GPU的体系结构 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -101,7 +101,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>        </small>');
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>           </small>');
         info.setPosition(tsingtao); 
     });
 	//济南
@@ -112,7 +112,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>        </small>');
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>           </small>');
         info.setPosition(jinan); 
     });
 	//xian
@@ -123,7 +123,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>        </small>');
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>           </small>');
         info.setPosition(xian); 
     });
 	//xin-an
@@ -178,7 +178,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>        </small>');
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>           </small>');
         info.setPosition(zhengzhou); 
     });
 	//乾县 Qianxian
@@ -189,7 +189,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>        </small>');
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>           </small>');
         info.setPosition(qianxian); 
     });
 	
@@ -297,6 +297,15 @@ var init = function() {
 		
 
 	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		<br>
 
 	</div>
@@ -319,6 +328,12 @@ var init = function() {
 				
 			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -387,11 +402,17 @@ var init = function() {
 				
 				
 				
+				
+				
+				
+				
+				
+				
 		
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/visualtracking&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -425,6 +446,12 @@ var init = function() {
 	    
 		
 			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
 		
 	    
 		
@@ -516,6 +543,12 @@ var init = function() {
 				
 	  		
 				
+	  		
+				
+	  		
+				
+	  		
+				
 	  
 	 <br> 
 </small>
@@ -553,20 +586,60 @@ var init = function() {
 		  
 		<main>
 
-			<h2>Tag：VisualTracking</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<div style="width:170px;float:left">
-<a href="/siames-network-02"><img src="/img/cover/IMG_3417.JPG"  width=150 height=150/></a>
-<a href="/siames-network-02">&nbsp;&nbsp;&nbsp;孪生网络与目标...</a><br> &nbsp;&nbsp;&nbsp;(06 Sep 2018)<br><br>
+			<article id="post-page">
+	
+	19 Sep 2018
+	
+	<h3>CUDA并行编程学习（1）-- 现代GPU的体系结构 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+基于CUDA的并行编程学习笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
 </div>
 
-</div>
+	
 
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-1">Blog</a> <a href="/tag/dynamicprogramming.html" class="set-1">DynamicProgramming</a> <a href="/tag/fullyconnectedlayer.html" class="set-1">FullyConnectedLayer</a> <a href="/tag/leetcode.html" class="set-2">Leetcode</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/siamesenetworks.html" class="set-5">SiameseNetworks</a> <a href="/tag/string.html" class="set-1">String</a> <a href="/tag/visualtracking.html" class="set-1">VisualTracking</a></div> 
-</div></center>
+<!-- JiaThis Button END -->
 <br>
+	<div class="content">
+
+		<hr />
+
+<p><img src="/img/20180919/1.jpg" alt="avatar" /></p>
+
+<center>基于CUDA技术的GPU的体系结构</center>
+
+<p>上图是一个基于CUDA技术的典型GPU体系结构。这种体系结构由一个高度线程化的多核流处理器(Streaming Multiprocessor，SM)阵列组成。在上图中，两个多流处理器（Streaming Multiprocessor，SM）形成一个构建块，然而，在基于CUDA技术的GPU的每一代之间，每个构建块中SM的数量可能不同。此外，图中的每个SM又包含多个流处理器(Streaming Processor，SP)，它们之间共享控制逻辑和指令缓存。每个GPU都带有若干千兆字节(GB)的 <strong>图形双数据速率</strong> (Graphics Double Data Rate，GDDR) <strong>DRAM</strong>，在上图中称为 <strong>全局存储器</strong>(global memory)。GPU中的这些GDDR DRAM完全不同于CPU体系中安装在主板上的系统DRAM，它们主要是用于图形处理的帧缓冲区存储器。在图形应用程序中，它们用来保存视频图像和用于3D渲染的纹理信息；而对于计算，它们可以作为带宽芯片外存储器。尽管比典型系统存储器的延迟要长，大规模并行应用程序通常通过高带宽来弥补时延。</p>
+
+<hr />
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </div> 
+</article>
+
+
 
 	  </main>
 		
@@ -657,6 +730,15 @@ var init = function() {
 		
 
 	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		<br>
 
 	</div>
@@ -679,6 +761,12 @@ var init = function() {
 				
 			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -747,11 +835,17 @@ var init = function() {
 				
 				
 				
+				
+				
+				
+				
+				
+				
 		
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/visualtracking&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 

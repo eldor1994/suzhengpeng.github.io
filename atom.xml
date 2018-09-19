@@ -4,12 +4,62 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-09T23:48:33+08:00</updated>
+ <updated>2018-09-19T23:22:04+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>CUDA并行编程学习（1）-- 现代GPU的体系结构</title>
+   <link href="http://localhost:4000/cuda_learning_01"/>
+   <id>http://localhost:4000/cuda_learning_01</id>
+   <updated>2018-09-19T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/20180919/1.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;center&gt;基于CUDA技术的GPU的体系结构&lt;/center&gt;
+
+&lt;p&gt;上图是一个基于CUDA技术的典型GPU体系结构。这种体系结构由一个高度线程化的多核流处理器(Streaming Multiprocessor，SM)阵列组成。在上图中，两个多流处理器（Streaming Multiprocessor，SM）形成一个构建块，然而，在基于CUDA技术的GPU的每一代之间，每个构建块中SM的数量可能不同。此外，图中的每个SM又包含多个流处理器(Streaming Processor，SP)，它们之间共享控制逻辑和指令缓存。每个GPU都带有若干千兆字节(GB)的 &lt;strong&gt;图形双数据速率&lt;/strong&gt; (Graphics Double Data Rate，GDDR) &lt;strong&gt;DRAM&lt;/strong&gt;，在上图中称为 &lt;strong&gt;全局存储器&lt;/strong&gt;(global memory)。GPU中的这些GDDR DRAM完全不同于CPU体系中安装在主板上的系统DRAM，它们主要是用于图形处理的帧缓冲区存储器。在图形应用程序中，它们用来保存视频图像和用于3D渲染的纹理信息；而对于计算，它们可以作为带宽芯片外存储器。尽管比典型系统存储器的延迟要长，大规模并行应用程序通常通过高带宽来弥补时延。&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>CUDA并行编程学习（0）-- CUDA和GPU</title>
+   <link href="http://localhost:4000/cuda_learnning_00"/>
+   <id>http://localhost:4000/cuda_learnning_00</id>
+   <updated>2018-09-16T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt;
+
+&lt;p&gt;GPU能够进行并行计算的原因是因为其内部具有成百上千个计算单元，如果我们能够对程序进行拆分，将整个计算过程拆分成大量的独立子任务，这些大量的计算单元就为并行执行这些任务提供了可能性。&lt;/p&gt;
+
+&lt;p&gt;CUDA使用了单指令多线程（Single Instruction Multiple Threads、SIMT）的并行模式。CUDA GPU包含了大量的基础计算单元，这些单元被称为核，每个核都包含了一个逻辑计算单元（ALU）和一个浮点计算单元（FLU）。多个核集成在一起被称为 &lt;strong&gt;多流处理器&lt;/strong&gt;（Stream Multiprocessor、SM）。&lt;/p&gt;
+
+&lt;p&gt;我们将一个计算任务分解为多个子任务，每个子任务被称为线程，多个线程被组织为线程块。线程块被分解为大小与一个SM中核数量相同的 &lt;strong&gt;线程束&lt;/strong&gt;（warp）。每个线程束由一个特定的SM处理器执行。SM处理器的控制单元指挥其所有核同时在一个线程束的每个线程中执行同一个指令,这称为SIMT。&lt;/p&gt;
+
+&lt;p&gt;在GPU上，芯片的大多数空间被分配给了大量组织成SM处理器的运算大院和共享的控制单元。当一个线程束所需的数据不可获得时，SM处理器会转向执行另一个可获得数据的线程束。GPU关注的是整体的运算吞吐量而不是单个核心的执行速度。&lt;/p&gt;
+
+&lt;hr /&gt;
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>初识 Batch Normalization 算法</title>
+   <link href="http://localhost:4000/batch-normalization"/>
+   <id>http://localhost:4000/batch-normalization</id>
+   <updated>2018-09-11T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt; &lt;p&gt;Batch Normalization 算法于2015年在论文《Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift》中发表。主要的作用就是加速网络模型的训练速度。&lt;/p&gt; &lt;h3 id=&quot;bn算法batch-normalization其强大之处如下&quot;&gt;BN算法（Batch Normalization）其强大之处如下&lt;/h3&gt; &lt;p&gt;(1) &lt;strong&gt;你可以选择比较大的初始学习率，让你的训练速度飙涨。&lt;/strong&gt; 以前还需要慢慢调整学习率，甚至在网络训练到一半的时候，还需要想着学习率进一步调小的比例选择多少比较合适，现在我们可以采用初始很大的学习率，然后学习率的衰减速度也很大，因为这个算法收敛很快。当然这个算法即使你选择了较小的学习率，也比以前的收敛速度快，因为它具有快速训练收敛的特性；&lt;/p&gt; &lt;p&gt;(2) &lt;strong&gt;你再也不用去理会过拟合中drop out、L2正则项参数的选择问题。&lt;/strong&gt; 采用BN算法后，你可以移除这两项了参数，或者可以选择更小的L2正则约束参数了，因为BN具有提高网络泛化能力的特性；&lt;/p&gt; &lt;p&gt;(3) &lt;strong&gt;再也不需要使用使用局部响应归一化层了&lt;/strong&gt;（局部响应归一化是Alexnet网络用到的方法，搞视觉的估计比较熟悉），因为BN本身就是一个归一化网络层；&lt;/p&gt; &lt;p&gt;(4)&lt;strong&gt;可以把训练数据彻底打乱&lt;/strong&gt;（防止每批训练的时候，某一个样本都经常被挑选到，文献说这个可以提高1%的精度，这句话我也是百思不得其解啊）。&lt;/p&gt; &lt;h3 id=&quot;什么是internal-covariate-shift-&quot;&gt;什么是Internal Covariate Shift ？&lt;/h3&gt; &lt;p&gt;Covariate Shift 指的是训练集的数据分布和预测集的数据分布不一致，这样的情况下如果我们在训练集上训练出一个分类器，肯定在预测集上不会取得比较好的效果。这种训练集和预测集样本分布不一致的问题就叫做“covariate shift”现象。&lt;/p&gt; &lt;p&gt;假设x是属于特征空间的某一样本点，y是标签。假设q1(x)是测试集中一个样本点的概率密度，q0(x)是训练集中一个样本点的概率密度。最终我们估计一个条件概率密度$p(y|x，θ)$，它由x和一组参数θ=｛θ1，θ2……θm｝所决定。对于一组参数来说，对应loss(θ)函数评估性能的好坏&lt;/p&gt; &lt;p&gt;综上，当我们找出在q0(x)分布上最优的一组θ’时，能否保证q1(x)上测试时也最好呢？&lt;/p&gt; &lt;p&gt;传统机器学习假设训练集和测试集是独立同分布的，即q0(x)=q1(x)，所以可以推出最优θ’依然可以保证q1(x)最优。但现实当中这个假设往往不成立，伴随新数据产生，老数据会过时，当q0(x)不再等于q1(x)时，就被称作covariate shift。&lt;/p&gt; &lt;p&gt;而Internal Covariate Shit 是在网络层级间发生的Convariate Shift。&lt;/p&gt; &lt;h3 id=&quot;输入的归一化处理&quot;&gt;输入的归一化处理&lt;/h3&gt; &lt;p&gt;简单来说BN算法就是在网络的每一层输入的时候，又插入了一个归一化层，也就是先做一个归一化处理，然后再进入网络的下一层。&lt;/p&gt; &lt;hr...</content>
+ </entry>
 
  
 
@@ -112,18 +162,6 @@
    <id>http://localhost:4000/opencv-mat-pixel-struct</id>
    <updated>2018-03-02T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;在Opencv3 中常使用Mat 结构保存图像或数据。&lt;/p&gt; &lt;h3 id=&quot;深度-depth&quot;&gt;深度 Depth&lt;/h3&gt; &lt;p&gt;Mat 结构的深度类型一般有以下6种&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;类型&lt;/th&gt; &lt;th&gt;解释&lt;/th&gt; &lt;th&gt;变量类型&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;CV_8U&lt;/td&gt; &lt;td&gt;单通道8位无符号整数&lt;/td&gt; &lt;td&gt;unsigned char&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_8S&lt;/td&gt; &lt;td&gt;单通道8位有符号整数&lt;/td&gt; &lt;td&gt;char&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_16S&lt;/td&gt; &lt;td&gt;单通道16位有符号整数&lt;/td&gt; &lt;td&gt;short int&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_32S&lt;/td&gt; &lt;td&gt;单通道32位有符号整数&lt;/td&gt; &lt;td&gt;int&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_32F&lt;/td&gt; &lt;td&gt;单通道32位单精度浮点数&lt;/td&gt; &lt;td&gt;float&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_64F&lt;/td&gt; &lt;td&gt;单通道64位双精度浮点数&lt;/td&gt; &lt;td&gt;double&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>Hello World</title>
-   <link href="http://localhost:4000/hello-world"/>
-   <id>http://localhost:4000/hello-world</id>
-   <updated>2017-04-20T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;http://suzhengpeng.com/img/cover/20170422135316.jpg&quot; alt=&quot;avatar&quot; /&gt;
-经历了两天的奋战，终于在Github上用jekyll重建了自己的博客。欢迎光临我的博客。&lt;/p&gt;
-</content>
  </entry>
 
  
