@@ -4,12 +4,62 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-20T09:08:26+08:00</updated>
+ <updated>2018-09-21T10:07:27+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>C6678 PCIE（1）-- 配置地址转换</title>
+   <link href="http://localhost:4000/C6678-pcie-01"/>
+   <id>http://localhost:4000/C6678-pcie-01</id>
+   <updated>2018-09-21T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20180919/2.jpg&quot; width=&quot;700&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;1、&lt;strong&gt;Outbound Address Translation&lt;/strong&gt;（OAT）&lt;/p&gt;
+
+&lt;p&gt;存储器域访问PCI域，把设备内部地址映射到PCIE总线上。&lt;/p&gt;
+
+&lt;p&gt;2、&lt;strong&gt;Inbound  Address Translation&lt;/strong&gt;（IAT）&lt;/p&gt;
+
+&lt;p&gt;PCI域访问存储器域、把PCIE总线地址映射到设备内部上。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RC访问EP&lt;/strong&gt;: RC存储器域-&amp;gt;outbound-&amp;gt;RC PCI域-&amp;gt;EP PCI域-&amp;gt;inbound-&amp;gt;EP存储器域&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EP访问RC&lt;/strong&gt;：EP存储器域-&amp;gt;outbound-&amp;gt;EP PCI域-&amp;gt;RC PCI域-&amp;gt;inbound-&amp;gt;RC存储器域&lt;/p&gt;
+
+&lt;p&gt;Out即出去，发起访问的一侧，须要进行outbound，去访问对端&lt;/p&gt;
+
+&lt;p&gt;In即进来，被访问的一侧，须要进行inbound，使得对端能够访问&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EP访问RC演示样例（蓝色箭头）&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;（1）首先，EP须要配置outbound，RC须要inbound(一般RC端不用配)，这样就建立了EP端0x20000000到RC端0x50000000的映射&lt;/p&gt;
+
+&lt;p&gt;（2）在RC端改动0x50000000的内容，EP端能够看到对应的变化。从EP端读/写0x20000000和从RC端读/写0x50000000，结果是一样的&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RC访问EP演示样例（黑色箭头）&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;（1）首先，RC端须要配置outbound(一般内核中配好)，EP端须要inbound(0x5b000000 inbound到BAR2)，这样就建立了RC端0x20100000（BAR2）到EP端0x5b000000的映射。&lt;/p&gt;
+
+&lt;p&gt;（2）在EP端改动0x5b000000内存的内容，在RC端0x20100000能够看到对应的变化，从RC端读/写0x20100000和从EP端读/写0x5b000000，结果是一样的。&lt;/p&gt;
+
+</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>C6678 PCIE（0）-- PDK_c667x_2_0_9 测试例程</title>
+   <link href="http://localhost:4000/C6678-pcie-00"/>
+   <id>http://localhost:4000/C6678-pcie-00</id>
+   <updated>2018-09-20T00:00:00+08:00</updated>
+   <content type="html">&lt;p&gt;在DSP和FPGA的PCIe通信中，DSP常被做End Point 端使用。&lt;/p&gt; &lt;h3 id=&quot;使用命令行导入例程&quot;&gt;使用命令行导入例程&lt;/h3&gt; &lt;p&gt;C6678的Processor SDK，其中提供了相关例程的源代码、RTSC配置文件(.cfg)和一个CCS工程的创建脚本，但没有直接提供CCS工程。需要使用CCS命令行创建。&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;eclipsec -noSplash -data “F:/workspace_v7” -application com.ti.ccstudio.apps.projectCreate -ccs.name pcie_demo -ccs.outputType executable -ccs.device TMS320C66XX.TMS320C6678 -ccs.definePathVariable PDK_INSTALL_PATH C:/ti/pdk_c667x_2_0_9/packages @scope project -rtsc.target ti.targets.elf.C66 -rtsc.platform ti.platforms.evm6678 -rtsc.buildProfile release -ccs.args C:/ti/pdk_c667x_2_0_9/packages/ti/drv/pcie/example/sample/c6678/c66/bios/PCIE_evmc6678_wSoCLib_C66BiosExampleProject.txt&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;参考使用：https://e2echina.ti.com/question_answer/dsp_arm/c6000_multicore/f/53/t/10178&lt;/p&gt; &lt;h3 id=&quot;代码说明&quot;&gt;代码说明&lt;/h3&gt; &lt;h4 id=&quot;任务函数初始化&quot;&gt;任务函数初始化&lt;/h4&gt; &lt;p&gt;在main函数中定义任务函数，并启动BIOS。&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; Task_Params params; Task_Params_init (&amp;amp;params); params.stackSize = 36864;...</content>
+ </entry>
 
  
 
@@ -142,26 +192,6 @@
    <id>http://localhost:4000/siames-network-00</id>
    <updated>2018-09-02T00:00:00+08:00</updated>
    <content type="html">&lt;h3 id=&quot;孪生网络的概念&quot;&gt;孪生网络的概念&lt;/h3&gt; &lt;p&gt;孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun 大神在1993年提出，其论文发表在1994年的NIPS上。孪生网络是用于度量学习的监督网络模型（Supervised models）。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/01.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;共享权值的孪生神经网络&lt;/center&gt; &lt;h5 id=&quot;共享权值的意义&quot;&gt;共享权值的意义？&lt;/h5&gt; &lt;p&gt;两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。&lt;/p&gt; &lt;h5 id=&quot;伪孪生网络&quot;&gt;伪孪生网络&lt;/h5&gt; &lt;p&gt;伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/02.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;伪孪生网络&lt;/center&gt; &lt;p&gt;两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。&lt;/p&gt; &lt;h3 id=&quot;孪生网络的使用&quot;&gt;孪生网络的使用&lt;/h3&gt; &lt;p&gt;一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。&lt;/p&gt; &lt;h5 id=&quot;应用场景&quot;&gt;应用场景&lt;/h5&gt; &lt;p&gt;孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。&lt;/p&gt; &lt;h3 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h3&gt; &lt;p&gt;孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。&lt;/p&gt; &lt;p&gt;孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。&lt;/p&gt; &lt;hr /&gt; &lt;p&gt;参考资料：&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;&lt;strong&gt;Siamese network...</content>
- </entry>
-
- 
-
- <entry>
-   <title>Leetcode 91. Decode Ways</title>
-   <link href="http://localhost:4000/leetcode_91_decode_ways"/>
-   <id>http://localhost:4000/leetcode_91_decode_ways</id>
-   <updated>2018-09-02T00:00:00+08:00</updated>
-   <content type="html">&lt;h2 id=&quot;问题描述&quot;&gt;问题描述&lt;/h2&gt; &lt;p&gt;A message containing letters from A-Z is being encoded to numbers using the following mapping:&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;‘A’ -&amp;gt; 1&lt;br /&gt; ‘B’ -&amp;gt; 2&lt;br /&gt; …&lt;br /&gt; ‘Z’ -&amp;gt; 26&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;Given a non-empty string containing only digits, determine the total number of ways to decode it.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt;&lt;/p&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>Opencv3 Mat 结构像素值存储细节</title>
-   <link href="http://localhost:4000/opencv-mat-pixel-struct"/>
-   <id>http://localhost:4000/opencv-mat-pixel-struct</id>
-   <updated>2018-03-02T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;在Opencv3 中常使用Mat 结构保存图像或数据。&lt;/p&gt; &lt;h3 id=&quot;深度-depth&quot;&gt;深度 Depth&lt;/h3&gt; &lt;p&gt;Mat 结构的深度类型一般有以下6种&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;类型&lt;/th&gt; &lt;th&gt;解释&lt;/th&gt; &lt;th&gt;变量类型&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;CV_8U&lt;/td&gt; &lt;td&gt;单通道8位无符号整数&lt;/td&gt; &lt;td&gt;unsigned char&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_8S&lt;/td&gt; &lt;td&gt;单通道8位有符号整数&lt;/td&gt; &lt;td&gt;char&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_16S&lt;/td&gt; &lt;td&gt;单通道16位有符号整数&lt;/td&gt; &lt;td&gt;short int&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_32S&lt;/td&gt; &lt;td&gt;单通道32位有符号整数&lt;/td&gt; &lt;td&gt;int&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_32F&lt;/td&gt; &lt;td&gt;单通道32位单精度浮点数&lt;/td&gt; &lt;td&gt;float&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;CV_64F&lt;/td&gt; &lt;td&gt;单通道64位双精度浮点数&lt;/td&gt; &lt;td&gt;double&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt;...</content>
  </entry>
 
  

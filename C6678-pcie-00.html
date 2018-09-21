@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>C6678 PCIE（0）-- PDK_c667x_2_0_9 测试例程 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="C6678 PCIE 开发调试记录 ">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$', '$'],['\\(', '\\)']],
+            displayMath: [['$$', '$$'],["\\[", "\\]"]],
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            processEscapes: true
+        },
+        TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
+            equationNumbers: { autoNumber: ["AMS"],
+			useLabelIds: true
+            },
+            Macros: {hfill: "{}"}
+        },
+        "HTML-CSS": {
+            linebreaks: {automatic: true},
+            availableFonts: ["TeX"],
+            scale: 110
+        },
+        SVG: {
+            linebreaks: {automatic: true}
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- Highlight -->
+
+<link rel="stylesheet" href="/styles/dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-6731920064609305",
+    enable_page_level_ads: true
+  });
+</script>
+
+<!-- <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
+<script>
+var init = function() {
+    var center = new qq.maps.LatLng(37.916527,106.397128);
+	//山东省
+	var tsingtao = new qq.maps.LatLng(36.065162,120.312567);
+	var jinan = new qq.maps.LatLng(36.670966,116.990919);
+	//陕西省
+	var xian = new qq.maps.LatLng(34.276936,108.962660);
+	var qianxian = new qq.maps.LatLng(34.532015,108.260822);
+	//河南省
+	var xinan = new qq.maps.LatLng(34.718308,112.154574);
+	var zhengzhou = new qq.maps.LatLng(34.745509,113.657212);
+	//上海市
+	var shanghai = new qq.maps.LatLng(31.250085,121.455917);
+	//江苏省
+	var kunshan = new qq.maps.LatLng(31.366225,120.957520);
+	var fengxian = new qq.maps.LatLng(34.701436,116.649528);
+	
+    var map = new qq.maps.Map(document.getElementById('container-map'),{
+        center: center,
+        zoom: 7
+    });
+	   //获取城市列表接口设置中心点
+    citylocation = new qq.maps.CityService({
+        complete : function(result){
+            map.setCenter(result.detail.latLng);
+        }
+    });
+    //调用searchLocalCity();方法    根据用户IP查询城市信息。
+    citylocation.searchLocalCity();
+	
+		//添加到提示窗
+	var info = new qq.maps.InfoWindow({
+        map: map
+    });
+    //青岛
+    var marker = new qq.maps.Marker({
+        position: tsingtao,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>             </small>');
+        info.setPosition(tsingtao); 
+    });
+	//济南
+	    var marker = new qq.maps.Marker({
+        position: jinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>             </small>');
+        info.setPosition(jinan); 
+    });
+	//xian
+	    var marker = new qq.maps.Marker({
+        position: xian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>             </small>');
+        info.setPosition(xian); 
+    });
+	//xin-an
+	    var marker = new qq.maps.Marker({
+        position: xinan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">河南省新安县</a></small>');
+        info.setPosition(xinan); 
+    });
+	//shanghai
+	    var marker = new qq.maps.Marker({
+        position: shanghai,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">上海市</a></small>');
+        info.setPosition(shanghai); 
+    });
+	//kunshan
+	    var marker = new qq.maps.Marker({
+        position: kunshan,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省昆山市</a></small>');
+        info.setPosition(kunshan); 
+    });
+	//fengxian
+	    var marker = new qq.maps.Marker({
+        position: fengxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+        info.setContent('<small>📍 <a href="#">江苏省丰县</a></small>');
+        info.setPosition(fengxian); 
+    });
+		//郑州 zhengzhou
+	    var marker = new qq.maps.Marker({
+        position: zhengzhou,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>             </small>');
+        info.setPosition(zhengzhou); 
+    });
+	//乾县 Qianxian
+	    var marker = new qq.maps.Marker({
+        position: qianxian,
+        map: map
+    });
+    //获取标记
+    qq.maps.event.addListener(marker, 'click', function() {
+        info.open(); 
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>             </small>');
+        info.setPosition(qianxian); 
+    });
+	
+	
+}
+
+</script>   -->
+
+<script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/C6678-pcie-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng @ Xidian University<br><br>
+	 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM  <br><br>
+</div>
+    </div>
+
+
+ <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div> 
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+	
+	20 Sep 2018
+	
+	<h3>C6678 PCIE（0）-- PDK_c667x_2_0_9 测试例程 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+C6678 PCIE 开发调试记录<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+	
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+
+		<p>在DSP和FPGA的PCIe通信中，DSP常被做End Point 端使用。</p>
+
+<h3 id="使用命令行导入例程">使用命令行导入例程</h3>
+
+<p>C6678的Processor SDK，其中提供了相关例程的源代码、RTSC配置文件(.cfg)和一个CCS工程的创建脚本，但没有直接提供CCS工程。需要使用CCS命令行创建。</p>
+
+<blockquote>
+  <p>eclipsec -noSplash -data “F:/workspace_v7” -application com.ti.ccstudio.apps.projectCreate -ccs.name pcie_demo  -ccs.outputType executable  -ccs.device TMS320C66XX.TMS320C6678 -ccs.definePathVariable PDK_INSTALL_PATH C:/ti/pdk_c667x_2_0_9/packages @scope project -rtsc.target ti.targets.elf.C66 -rtsc.platform ti.platforms.evm6678 -rtsc.buildProfile release -ccs.args C:/ti/pdk_c667x_2_0_9/packages/ti/drv/pcie/example/sample/c6678/c66/bios/PCIE_evmc6678_wSoCLib_C66BiosExampleProject.txt</p>
+</blockquote>
+
+<p>参考使用：https://e2echina.ti.com/question_answer/dsp_arm/c6000_multicore/f/53/t/10178</p>
+
+<h3 id="代码说明">代码说明</h3>
+
+<h4 id="任务函数初始化">任务函数初始化</h4>
+
+<p>在main函数中定义任务函数，并启动BIOS。</p>
+
+<pre>
+<code class="cpp">
+ Task_Params params;  
+ Task_Params_init (&amp;params);  
+ params.stackSize = 36864; //32768;  
+ Task_create((Task_FuncPtr) pcie, &amp;params, NULL);  
+ BIOS_start();
+</code>
+</pre>
+
+<h4 id="模式定义">模式定义</h4>
+
+<p>将模式定义为EP模式</p>
+
+<pre>
+<code class="cpp">
+ pcieMode_e PcieModeGbl = pcie_EP_MODE;
+</code>
+</pre>
+
+<h4 id="任务函数内容">任务函数内容</h4>
+
+<p><strong>EDMA初始化</strong></p>
+
+<pre>
+<code class="cpp">
+ EDMA3_DRV_Handle hEdma = NULL;  
+ hEdma = edmaInit(hEdma);  
+ if (hEdma==NULL) PCIE_logPrintf("ERROR: EDMA handle not initialized!\n");
+</code>
+</pre>
+
+<p><strong>获取PCIE LLD版本</strong></p>
+
+<pre>
+<code class="cpp">
+ PCIE_logPrintf ("Version #: 0x%08x; string %s\n\n", (unsigned)Pcie_getVersion(), Pcie_getVersionStr());
+</code>
+</pre>
+
+<p><strong>PCIE初始化</strong></p>
+
+<pre>
+<code class="cpp">
+ /* Pass device config to LLD */  
+ if ((retVal = Pcie_init (&amp;pcieInitCfg)) != pcie_RET_OK)  
+ {  
+  PCIE_logPrintf ("LLD device configuration failed\n");  
+  exit(1);  
+ }
+</code>
+</pre>
+
+<p><strong>初始化缓存</strong></p>
+
+<pre>
+<code class="cpp">
+  /* Initialize application buffers */
+  pcieInitAppBuf();
+  </code>
+</pre>
+
+<p><strong>启动PCIe模块</strong></p>
+
+<pre>
+<code class="cpp">
+  if ((retVal = pciePowerCfg()) != pcie_RET_OK) {
+    PCIE_logPrintf ("PCIe Power Up failed (%d)\n", (int)retVal);
+    exit(1);
+  }
+  </code>
+</pre>
+
+<p><strong>创建/启动一个PCIe实例</strong></p>
+
+<p>使用Pcie_open()函数创建一个句柄handle。创建的过程中，PCIe设备并没有发生变化。对于同一个设备可以拥有多个句柄。</p>
+
+<pre>
+<code class="cpp">
+Pcie_Handle handle = NULL;
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  if ((retVal = Pcie_open(0, &amp;handle)) != pcie_RET_OK)
+  {
+    PCIE_logPrintf ("Open failed (%d)\n", (int)retVal);
+    exit(1);
+  }
+  </code>
+</pre>
+
+<p><strong>配置 SERDES</strong></p>
+
+<pre>
+<code class="cpp">
+  /* Configure SERDES*/
+  if ((retVal = pcieSerdesCfg()) != pcie_RET_OK) {
+    PCIE_logPrintf ("PCIe Serdes config failed (%d)\n", (int)retVal);
+    exit(1);
+  }
+</code>
+</pre>
+
+<p><strong>设置PCIe模式</strong></p>
+
+<pre>
+<code class="cpp">
+pcieMode_e PcieModeGbl = pcie_EP_MODE; 
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  /* Set the PCIe mode*/
+  if ((retVal = Pcie_setInterfaceMode(handle, PcieModeGbl)) != pcie_RET_OK) {
+    PCIE_logPrintf ("Set PCIe Mode failed (%d)\n", (int)retVal);
+    exit(1);
+  }
+</code>
+</pre>
+
+<p><strong>配置EP模式的PCIe</strong></p>
+
+<pre>
+<code class="cpp">
+    /* Configure application registers for End Point*/
+    if ((retVal = pcieCfgEP(handle)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Failed to configure PCIe in EP mode (%d)\n", (int)retVal);
+      exit(1);
+    }
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+/*****************************************************************************
+ * Function: Configure PCIe in End Point Mode
+ ****************************************************************************/
+
+pcieRet_e pcieCfgEP(Pcie_Handle handle)
+{
+    pcieRet_e retVal;
+
+    pcieObSizeReg_t        obSize;  //Specification of the Outbound Size Register
+    pcieGen2Reg_t          gen2;
+    pcieType0Bar32bitIdx_t type0Bar32bitIdx;
+    pcieStatusCmdReg_t     statusCmd;
+    pcieDevStatCtrlReg_t   devStatCtrl;
+    pcieAccrReg_t          accr;
+                  
+    pcieRegisters_t        setRegs;
+    pcieRegisters_t        getRegs;
+
+    memset (&amp;obSize,           0, sizeof(obSize));
+    memset (&amp;gen2,             0, sizeof(gen2));
+    memset (&amp;type0Bar32bitIdx, 0, sizeof(type0Bar32bitIdx));
+    memset (&amp;statusCmd,        0, sizeof(statusCmd));
+    memset (&amp;devStatCtrl,      0, sizeof(devStatCtrl));
+    memset (&amp;accr,             0, sizeof(accr));
+
+    /*Disable link training*/
+    if ((retVal = pcieLtssmCtrl(handle, FALSE)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Failed to disable Link Training!\n");
+      return retVal;
+    }
+
+    /* Configure the size of the translation regions */   
+    memset (&amp;setRegs, 0, sizeof(setRegs));
+    memset (&amp;getRegs, 0, sizeof(getRegs));
+
+  #ifdef PCIE_REV0_HW
+    /* Only required for rev 0 */
+    obSize.size = pcie_OB_SIZE_8MB; //将 PCIe Outbound translation regions 设置为8MB
+    setRegs.obSize = &obSize;
+    
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      // pcie_LOCATION_LOCAL        &lt; Access the local PCIe peripheral
+      // pcie_LOCATION_REMOTE     &lt; Access the remote PCIe peripheral 
+      PCIE_logPrintf ("SET OB_SIZE register failed!\n");
+      return retVal;
+    }
+  #endif
+      /* Set gen2/link cap */
+    if ((retVal = pcieSetGen2(handle)) != pcie_RET_OK)
+    {
+      PCIE_logPrintf ("pcieSetGen2 failed!\n");
+      return retVal;
+    }
+  
+    /* 配置 BAR 掩码 Configure BAR Masks */   
+    /* First need to enable writing on BAR mask registers */
+    if ((retVal = pcieCfgDbi (handle, 1)) != pcie_RET_OK)
+    {
+      return retVal;
+    }
+
+    /* 配置掩码 Configure Masks*/
+    memset (&amp;getRegs, 0, sizeof(getRegs));
+    memset (&amp;setRegs, 0, sizeof(setRegs));
+    type0Bar32bitIdx.reg.reg32 = PCIE_BAR_MASK; //  PCIE_BAR_MASK --&gt; 0x0FFFFFFF
+    setRegs.type0BarMask32bitIdx = &type0Bar32bitIdx;
+
+    /* BAR 0 */
+    type0Bar32bitIdx.idx = 0; /* 配置 BAR 0  configure BAR 0*/
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET BAR MASK register failed!\n");
+      return retVal;
+    }
+  
+    /* BAR 1 */
+    type0Bar32bitIdx.idx = 1; /* 配置 BAR 1 configure BAR 1*/
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET BAR MASK register failed!\n");
+      return retVal;
+    }
+  
+    /* Disable DBI writes */
+    if ((retVal = pcieCfgDbi (handle, 0)) != pcie_RET_OK)
+    {
+      return retVal;
+    }
+  
+    /* Enable memory access and mastership of the bus */
+    memset (&amp;setRegs, 0, sizeof(setRegs));
+    memset (&amp;getRegs, 0, sizeof(getRegs));
+
+    getRegs.statusCmd = &statusCmd;
+    if ((retVal = Pcie_readRegs (handle, pcie_LOCATION_LOCAL, &amp;getRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Read Status Comand register failed!\n");
+      return retVal;
+    }
+
+    //enables device to respond to memory access
+    statusCmd.memSp  = 1;  
+    //enables mastership of the bus
+    statusCmd.busMs  = 1; 
+    //device responds to detected parity errors
+    statusCmd.resp   = 1;      
+    //[rw] serr enenables
+    //generation of the appropriate PCI Express error messages to the Root Complex.
+    statusCmd.serrEn = 1;
+
+    setRegs.statusCmd = &statusCmd;   
+  
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET Status Command register failed!\n");
+      return retVal;
+    }
+
+    /* Enable Error Reporting */
+    memset (&amp;setRegs, 0, sizeof(setRegs));
+    memset (&amp;getRegs, 0, sizeof(getRegs));
+
+    getRegs.devStatCtrl = &devStatCtrl;
+    if ((retVal = Pcie_readRegs (handle, pcie_LOCATION_LOCAL, &amp;getRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Regad Device Status Control register failed!\n");
+      return retVal;
+    }
+
+    //Enable Unsupported Request Reporting
+    devStatCtrl.reqRp = 1;
+    //Fatal Error Reporting Enable
+    devStatCtrl.fatalErRp = 1;
+    //Non-fatal Error Reporting Enable
+    devStatCtrl.nFatalErRp = 1;
+    //Correctable Error Reporting Enable
+    devStatCtrl.corErRp = 1;
+
+    setRegs.devStatCtrl = &devStatCtrl;   
+    
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET Device Status Control register failed!\n");
+      return retVal;
+    }
+ 
+  #ifdef PCIE_REV0_HW
+    /* Enable ECRC */
+    memset (&amp;setRegs, 0, sizeof(setRegs));
+    
+    //ECRC Check Enable
+    accr.chkEn=1;
+    //ECRC Check Capable
+    accr.chkCap=1;
+    //ECRC Generation Enable
+    accr.genEn=1;
+    //ECRC Generation Capability
+    accr.genCap=1;
+
+    setRegs.accr = &accr;
+
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET ACCR register failed!\n");
+      return retVal;
+    }
+  #endif
+
+    return pcie_RET_OK;
+}
+
+</code>
+</pre>
+
+<h4 id="配置地址转换">配置地址转换</h4>
+
+<p><img src="/img/20180919/2.jpg" width="700" alt="孪生网络" /></p>
+
+<p>1、<strong>Outbound Address Translation</strong>（OAT）</p>
+
+<p>存储器域访问PCI域，把设备内部地址映射到PCIE总线上。</p>
+
+<p>2、<strong>Inbound  Address Translation</strong>（IAT）</p>
+
+<p>PCI域访问存储器域、把PCIE总线地址映射到设备内部上。</p>
+
+<p><strong>RC访问EP</strong>: RC存储器域-&gt;outbound-&gt;RC PCI域-&gt;EP PCI域-&gt;inbound-&gt;EP存储器域</p>
+
+<p><strong>EP访问RC</strong>：EP存储器域-&gt;outbound-&gt;EP PCI域-&gt;RC PCI域-&gt;inbound-&gt;RC存储器域</p>
+
+<p>Out即出去，发起访问的一侧，须要进行outbound，去访问对端</p>
+
+<p>In即进来，被访问的一侧，须要进行inbound，使得对端能够访问</p>
+
+<p><strong>EP访问RC演示样例（蓝色箭头）</strong>：</p>
+
+<p>（1）首先，EP须要配置outbound，RC须要inbound(一般RC端不用配)，这样就建立了EP端0x20000000到RC端0x50000000的映射</p>
+
+<p>（2）在RC端改动0x50000000的内容，EP端能够看到对应的变化。从EP端读/写0x20000000和从RC端读/写0x50000000，结果是一样的</p>
+
+<p><strong>RC访问EP演示样例（黑色箭头）</strong>：</p>
+
+<p>（1）首先，RC端须要配置outbound(一般内核中配好)，EP端须要inbound(0x5b000000 inbound到BAR2)，这样就建立了RC端0x20100000（BAR2）到EP端0x5b000000的映射。</p>
+
+<p>（2）在EP端改动0x5b000000内存的内容，在RC端0x20100000能够看到对应的变化，从RC端读/写0x20100000和从EP端读/写0x5b000000，结果是一样的。</p>
+
+<pre>
+<code class="cpp">
+pcieIbTransCfg_t ibCfg;       
+// Specification of pcieBarCfg --&gt; Pcie_cfgBar is used to configure a 32bits BAR Register
+pcieBarCfg_t     barCfg;       
+// Specification of pcieIbTransCfg --&gt; Configure and enable Inbound Address Translation for rev 0
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  /* 配置地址转换 Configure Address Translation */
+  
+  barCfg.location = pcie_LOCATION_LOCAL; // Local or remote peripheral --&gt;  local PCIe peripheral
+  barCfg.mode     = pcie_EP_MODE;              // PCIe mode --&gt; setting the PCIe Mode to End Point
+  barCfg.base     = PCIE_IB_LO_ADDR_EP;      // Base Address (32bits) --&gt; Inbound  Base Address for PCIe EP --&gt; 0x70000000
+  barCfg.prefetch = pcie_BAR_NON_PREF;     // Prefetch --&gt; Non Prefetchable Region
+  barCfg.type     = pcie_BAR_TYPE32;             // Type --&gt; 32 bits BAR
+  barCfg.memSpace = pcie_BAR_MEM_MEM; // Memory Space --&gt; Memory BAR 
+  barCfg.idx      = PCIE_BAR_IDX_EP;               // BAR Index PCie 1
+  
+  if ((retVal = Pcie_cfgBar(handle, &amp;barCfg)) != pcie_RET_OK) 
+  {
+    PCIE_logPrintf ("Failed to configure BAR!\n");
+    exit(1);
+  }
+
+  ibCfg.ibBar         = PCIE_BAR_IDX_EP;                       // Inbound Translation BAR match --&gt; 1
+  ibCfg.ibStartAddrLo = PCIE_IB_LO_ADDR_EP;           // Low Inbound Start address (32bits) --&gt; 0x70000000
+  ibCfg.ibStartAddrHi = PCIE_IB_HI_ADDR_EP;            // High Inbound Start address (32bits) --&gt; 0
+  ibCfg.ibOffsetAddr  = (uint32_t)pcieConvert_CoreLocal2GlobalAddr ((uint32_t)dstBuf.buf);
+                                                                              // Inbound Translation Address Offset(32bits)
+  ibCfg.region        = PCIE_IB_REGION_EP;                  // Identifies the translation region (0-3) --&gt; 0
+
+  if ((retVal = pcieIbTransCfg(handle, &amp;ibCfg)) != pcie_RET_OK) 
+  {
+    PCIE_logPrintf ("Failed to configure Inbound Translation (%d)!\n", (int)retVal);
+    exit(1);
+  }
+  else
+  {
+    PCIE_logPrintf ("Successfully configured Inbound Translation!\n");
+  }
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  /*****************************************************************************
+  * Function: Configure and enable Inbound Address Translation for rev 0
+  ****************************************************************************/
+  pcieRet_e pcieIbTransCfg(Pcie_Handle handle, pcieIbTransCfg_t *ibCfg)
+  {
+    pcieRet_e retVal;
+
+    pcieRegisters_t      setRegs;
+    pcieRegisters_t      getRegs;
+
+    pcieCmdStatusReg_t   cmdStatus;
+
+    memset (&amp;setRegs,   0, sizeof(setRegs));
+    memset (&amp;getRegs,   0, sizeof(getRegs));
+    memset (&amp;cmdStatus, 0, sizeof(cmdStatus));
+
+    /* Set outbound offset registers */
+    if ((retVal = Pcie_cfgIbTrans(handle, ibCfg)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Failed to configure Inbound Translation registers!\n");
+      return retVal;
+    }
+
+    /*enable Inbound address translation*/
+    memset (&amp;setRegs,    0, sizeof(setRegs));
+    memset (&amp;getRegs,    0, sizeof(getRegs));
+
+    getRegs.cmdStatus = &cmdStatus;
+    if ((retVal = Pcie_readRegs (handle, pcie_LOCATION_LOCAL, &amp;getRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("Read CMD STATUS register failed!\n");
+      return retVal;
+    }
+    cmdStatus.ibXltEn = 1;
+    setRegs.cmdStatus = &cmdStatus;   
+    
+    if ((retVal = Pcie_writeRegs (handle, pcie_LOCATION_LOCAL, &amp;setRegs)) != pcie_RET_OK) 
+    {
+      PCIE_logPrintf ("SET CMD STATUS register failed!\n");
+      return retVal;
+    }
+
+    return pcie_RET_OK;
+  }
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  if ((retVal = pcieObTransCfg (handle, PCIE_OB_LO_ADDR_EP, PCIE_OB_HI_ADDR_EP, PCIE_OB_REGION_EP)) != pcie_RET_OK) 
+  {
+    PCIE_logPrintf ("Failed to configure Outbound Address Translation(%d)!\n", (int)retVal);
+    exit(1);
+  }
+  else
+  {
+    PCIE_logPrintf ("Successfully configured Outbound Translation!\n");
+  }
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+  PCIE_logPrintf ("Starting link training...\n");
+
+  /*Enable link training*/
+  if ((retVal = pcieLtssmCtrl(handle, TRUE)) != pcie_RET_OK) 
+  {
+    PCIE_logPrintf ("Failed to Enable Link Training! (%d)\n", (int)retVal);
+    exit(1);
+  }
+
+  /* Wait for link to be up */
+  pcieWaitLinkUp(handle);
+
+  PCIE_logPrintf ("Link is up.\n");
+  if ((retVal = pcieCheckLinkParams(handle)) != pcie_RET_OK)
+  {
+    PCIE_logPrintf ("Link width/speed verification FAILed: %d\n", retVal);
+    /* This exit() can be removed if this example is being used as
+     * template with non TI card that supports slower or narrower connections
+     */
+    exit(1);
+  }
+
+  if ((retVal = Pcie_getMemSpaceRange (handle, &amp;pcieBase, NULL)) != pcie_RET_OK) {
+    PCIE_logPrintf ("getMemSpaceRange failed (%d)\n", (int)retVal);
+    exit(1);
+  }
+  </code>
+</pre>
+
+<pre>
+<code class="cpp">
+dstBuf_t        *pciedstBufBase;
+pciedstBufBase = (dstBuf_t *)pcieBase; 
+</code>
+</pre>
+
+<h4 id="ep端读写数据">EP端读写数据</h4>
+
+<pre>
+<code class="cpp">
+/* Size of application buffers */
+#define PCIE_BUFSIZE_APP 40 
+
+/* Does not need to be aligned (even for cache) since it is only accessed locally */
+uint32_t srcBuf[PCIE_BUFSIZE_APP];
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+
+    /**********************************************************************/
+    /* Wait for a single message from the RC then echo it back            */
+    /**********************************************************************/
+
+    /* EP waits for the data received from RC */
+    /* EP 端等待从 RC 端接收数据 */
+
+    do {
+      cache_invalidate ((void *)dstBuf.buf, PCIE_EXAMPLE_DSTBUF_BYTES);
+    } while(dstBuf.buf[PCIE_BUFSIZE_APP] != PCIE_EXAMPLE_BUF_FULL);
+
+    PCIE_logPrintf ("End Point received data.\n");
+
+  </code>
+</pre>
+
+<pre>
+<code class="cpp">
+    /* Loopback to RC what was written in the DST buffer.
+       Write from EP to RC */
+    for (i=0; i&lt;PCIE_BUFSIZE_APP; i++)
+    {
+      pciedstBufBase-&gt;buf[i] = dstBuf.buf[i];
+    }
+    
+    /* Mark that the buffer is full, so RC can process it */
+    pciedstBufBase-&gt;buf[PCIE_BUFSIZE_APP] = PCIE_EXAMPLE_BUF_FULL;
+
+    /* Note on cache coherence: Write back is not necessary because pcieBase is in
+       peripheral address space instead of physical memory*/
+
+    PCIE_logPrintf ("End Point sent data to Root Complex, completing the loopback.\n");
+
+        PCIE_logPrintf ("End of Test.\n");
+
+#ifdef PCIE_EXAMPLE_DMA_EP
+    if (PcieExampleEdmaEP(pciedstBufBase, 0xbabeface, 100000,
+                          (EDMA3_DRV_Handle)hEdma)) 
+    {
+      PCIE_logPrintf ("Failed to pass token \n");
+      exit(1);
+    }
+    PCIE_logPrintf ("End Point sent data to Root Complex, DMA completing the loopback.\n");
+    PCIE_logPrintf ("End of DMA Test.\n");
+#endif
+
+#ifdef PCIE_EXAMPLE_DMA_EP
+    if (PcieExampleEdmaEP(pciedstBufBase, 0xbabeface, 100000,
+                          (EDMA3_DRV_Handle)hEdma)) 
+    {
+      PCIE_logPrintf ("Failed to pass token \n");
+      exit(1);
+    }
+    PCIE_logPrintf ("End Point sent data to Root Complex, DMA completing the loopback.\n");
+    PCIE_logPrintf ("End of DMA Test.\n");
+#endif
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+#ifdef EDMA
+  edmaDeinit(hEdma);
+#endif
+  PCIE_logPrintf ("Test passed.\n");
+  BIOS_exit(0);
+  </code>
+</pre>
+
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/c6678.html" rel="tag">C6678</a>, <a href="/tag/pcie.html" rel="tag">PCIe</a> <a href="/tags.html" class="set-1">>></a></div> 
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng @ Xidian University 
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>Friends Links</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/C6678-pcie-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div><br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>

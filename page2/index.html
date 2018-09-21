@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>初识 Batch Normalization 算法 - Su'S Blog - SuZhengpeng.COM </title>
-  <meta name="description" content="基于孪生网络的目标跟踪算法研究笔记 ">
+	<title>Suzhengpeng'S Blog</title>
+  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -448,7 +448,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/batch-normalization&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/page2/&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -638,89 +638,104 @@ var init = function() {
 		  
 		<main>
 
-			<article id="post-page">
-	
-	11 Sep 2018
-	
-	<h3>初识 Batch Normalization 算法 </h3>
-	<!-- JiaThis Button BEGIN -->
-	
-<div style="padding: 10px; background:#fff;">
+			<!-- Posts -->
 
-	<div style="position: relative; 
-				border: 2px solid #E9F01D; 
-				padding: 10px; 
-				padding-bottom:20px;
-				width:60%;
-				min-width:300px;
-				background:#E9F01D;
-				color:#404040;
-				border-radius:4px;
-				" >
-		<span style="position: absolute; 
-					left: 30px; top: -32px; 
-					width: 0; height: 0; 
-					font-size: 0; 
-					border-width: 16px; 
-					border-style: dashed dashed solid dashed; 
-					border-color: transparent transparent #E9F01D transparent;" ></span>
-<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-基于孪生网络的目标跟踪算法研究笔记<br><br> 
-分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<ul id="posts">
+
+
+
+
+
+		<!-- 	测试	 -->
+		<div class="gtco-section border-bottom">
+		<div class="gtco-container">
+			<div class="row">
+      
+     
+				<div class="col-lg-4 col-md-4 col-sm-6">
+            
+					<a href="/hello-world" class="fh5co-project-item image-popup">
+						<figure>
+              <div class="overlay"><i class="ti-plus"></i></div>
+              <img src="/img/cover/20170422135316.jpg" alt="Image" class="img-responsive">
+              
+            </figure>
+            
+						<div class="fh5co-text">
+                <small>△  山东·青岛·青岛火车站 </small>
+							<h2>Hello World </h2>
+              </p> △青岛火车站</p>
+						</div>
+					</a>
+				</div>
+
+
+			</div>
+		</div>
 	</div>
-</div>
 
+<!-- /*
+
+
+	  
+	  
+	  <br><br><br>
+	  
+<!-- 分页链接 -->
+<div class="gtco-container">
+<div class="pagination-x">
+  <div>
+    
+   <span class="curr-page"> <a href="/">&lt;&lt;</a></span>
+    
+    
+      
+        <a href="/">&lt;</a>
+      
+    
 	
+<!-- 分页链接 -->
 
-<!-- JiaThis Button END -->
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+    
+
+    
+    
+    
+    
+      
+        <a href="/">1</a>
+      
+    
+      
+        <span class="curr-page">2</span>
+      
+    
+
+
+    
+      <span class="curr-page-x">&gt;</span>
+    
+    
+    <span class="curr-page">&gt;&gt;</span>
+    
+  </div>
+</div></div>
 <br>
-	<div class="content">
+</ul>
 
-		<hr />
-<p>Batch Normalization 算法于2015年在论文《Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift》中发表。主要的作用就是加速网络模型的训练速度。</p>
 
-<h3 id="bn算法batch-normalization其强大之处如下">BN算法（Batch Normalization）其强大之处如下</h3>
+   
 
-<p>(1) <strong>你可以选择比较大的初始学习率，让你的训练速度飙涨。</strong> 以前还需要慢慢调整学习率，甚至在网络训练到一半的时候，还需要想着学习率进一步调小的比例选择多少比较合适，现在我们可以采用初始很大的学习率，然后学习率的衰减速度也很大，因为这个算法收敛很快。当然这个算法即使你选择了较小的学习率，也比以前的收敛速度快，因为它具有快速训练收敛的特性；</p>
-
-<p>(2) <strong>你再也不用去理会过拟合中drop out、L2正则项参数的选择问题。</strong> 采用BN算法后，你可以移除这两项了参数，或者可以选择更小的L2正则约束参数了，因为BN具有提高网络泛化能力的特性；</p>
-
-<p>(3) <strong>再也不需要使用使用局部响应归一化层了</strong>（局部响应归一化是Alexnet网络用到的方法，搞视觉的估计比较熟悉），因为BN本身就是一个归一化网络层；</p>
-
-<p>(4)<strong>可以把训练数据彻底打乱</strong>（防止每批训练的时候，某一个样本都经常被挑选到，文献说这个可以提高1%的精度，这句话我也是百思不得其解啊）。</p>
-
-<h3 id="什么是internal-covariate-shift-">什么是Internal Covariate Shift ？</h3>
-
-<p>Covariate Shift 指的是训练集的数据分布和预测集的数据分布不一致，这样的情况下如果我们在训练集上训练出一个分类器，肯定在预测集上不会取得比较好的效果。这种训练集和预测集样本分布不一致的问题就叫做“covariate shift”现象。</p>
-
-<p>假设x是属于特征空间的某一样本点，y是标签。假设q1(x)是测试集中一个样本点的概率密度，q0(x)是训练集中一个样本点的概率密度。最终我们估计一个条件概率密度$p(y|x，θ)$，它由x和一组参数θ=｛θ1，θ2……θm｝所决定。对于一组参数来说，对应loss(θ)函数评估性能的好坏</p>
-
-<p>综上，当我们找出在q0(x)分布上最优的一组θ’时，能否保证q1(x)上测试时也最好呢？</p>
-
-<p>传统机器学习假设训练集和测试集是独立同分布的，即q0(x)=q1(x)，所以可以推出最优θ’依然可以保证q1(x)最优。但现实当中这个假设往往不成立，伴随新数据产生，老数据会过时，当q0(x)不再等于q1(x)时，就被称作covariate shift。</p>
-
-<p>而Internal Covariate Shit 是在网络层级间发生的Convariate Shift。</p>
-
-<h3 id="输入的归一化处理">输入的归一化处理</h3>
-
-<p>简单来说BN算法就是在网络的每一层输入的时候，又插入了一个归一化层，也就是先做一个归一化处理，然后再进入网络的下一层。</p>
-
-<hr />
-
-<p>参考资料：</p>
-<blockquote>
-  <ol>
-    <li><strong>深度学习（二十九）Batch Normalization 学习笔记</strong> : https://blog.csdn.net/hjimce/article/details/50866313</li>
-    <li><strong>深度学习中 Batch Normalization为什么效果好？ - Jiang的回答 - 知乎</strong> : https://www.zhihu.com/question/38102762/answer/164790133</li>
-    <li><strong>机器学习】covariate shift现象的解释</strong> : https://blog.csdn.net/mao_xiao_feng/article/details/54317852</li>
-    <li><strong>covariate shift现象以及解决方法</strong> : https://blog.csdn.net/guoyuhaoaaa/article/details/80236500</li>
-  </ol>
-</blockquote>
-
-		
-	</div>
-	<div id="posts-out-tags"># <a href="/tag/%E5%AD%AA%E7%94%9F%E7%BD%91%E7%BB%9C.html" rel="tag">孪生网络</a>, <a href="/tag/%E6%89%B9%E6%A0%87%E5%87%86%E5%8C%96.html" rel="tag">批标准化</a> <a href="/tags.html" class="set-1">>></a></div> 
-</article>
 
 
 
@@ -728,6 +743,26 @@ var init = function() {
 		
 		  <!-- Pagination links -->
       
+        <div class="pagination">
+          
+            <a href="/" class="page-item">&laquo;</a>
+          
+        
+          
+            
+              <a href="/" class="page-item">1</a>
+            
+          
+            
+              <span class="page-item">2</span>
+            
+          
+        
+          
+            <span class="page-item">&raquo;</span>
+          
+        </div>
+        
 
 	  </div>
 	    
@@ -956,7 +991,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/batch-normalization&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/page2/&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
