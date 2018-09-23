@@ -4,12 +4,54 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-21T10:07:27+08:00</updated>
+ <updated>2018-09-23T21:38:47+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>目标跟踪（1）-- 基于深度学习的目标跟踪</title>
+   <link href="http://localhost:4000/visual_tracking_01"/>
+   <id>http://localhost:4000/visual_tracking_01</id>
+   <updated>2018-09-23T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt; &lt;h3 id=&quot;使用神经网络进行特征提取&quot;&gt;使用神经网络进行特征提取&lt;/h3&gt; &lt;p&gt;卷积神经网络（CNN） 具有极高的目标特征提取与表达能力，因此将CNN应用于目标跟踪的特征提取阶段，对提高目标跟踪的精度和鲁棒性具有重要的意义。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180923/01.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt; &lt;center&gt;卷积神经网络的基本结构图&lt;/center&gt; &lt;p&gt;卷积层作特征提取层对目标的特征在不同层次具有不同的描述能力, 卷积层越高, 图像特征分辨率越低，获得的特征也就越抽象, 相反语义信息越丰富, 利用不同卷积层目标特征的不同表达, 针对目标状态有机地结合不同卷积层信息, 对不同卷积层进行区别权重处理, 利用不同目标的描述能力, 对目标跟踪的鲁棒性与精确性有很大的提升。&lt;/p&gt; &lt;p&gt;池化层是特征映射层, 通过对每个特征映射图的局部区域进行加权求和, 增加偏置后通过一个非线性函数在池化层得到新的特征图。池化的作用是: (1) 对特征图进行降维, 避免过拟合; (2) 可以一定程度上缓解目标的形变所引起的问题。&lt;/p&gt; &lt;p&gt;全连接层用于连接所有的特征, 将输出值送给分类器 (如Softmax分类器) , 起到一个分类的作用。&lt;/p&gt; &lt;h3 id=&quot;使用神经网络模拟整个相关滤波过程&quot;&gt;使用神经网络模拟整个相关滤波过程&lt;/h3&gt; &lt;p&gt;相关滤波算法的核心思想是将目标模板与搜索区域内滑动窗口取得的图像块进行相关性匹配, 响应最大位置处对应的图像块为目标图像块。相比传统特征, 深度神经网络提取的图像卷积特征具有良好的抗干扰能力, 在大规模图像分类比赛中取得巨大的成功。&lt;/p&gt; &lt;p&gt;使用神经网络模拟相关滤波的整个过程.在相关滤波中, 需要保存模板信息并提取搜索区域特征, 因此基于相关滤波思想的网络一般都采用孪生网络 (Siamese Network) 结构, 其中一条支路保存目标模板信息, 另一条支路用于搜索区域特征提取, 最后将两部分特征进行相关操作, 得到响应图像 (Response...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>目标跟踪（0）-- 视觉目标跟踪技术难点</title>
+   <link href="http://localhost:4000/visual_tracking_00"/>
+   <id>http://localhost:4000/visual_tracking_00</id>
+   <updated>2018-09-21T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt;
+
+&lt;p&gt;由于目标跟踪过程中目标与环境信息的变化导致目标特征的不断变化, 以及目标跟踪对跟踪速度与精度的要求, 导致目标跟踪存在如下几个主要难点:&lt;/p&gt;
+
+&lt;p&gt;1) 目标外观变化。由于物体活动、非刚体形变 (如人跳跃、行走等) 导致的目标外形发生变化, 或拍摄角度变化导致的目标外观变化等。&lt;/p&gt;
+
+&lt;p&gt;2) 尺度变化。由于拍摄距离等因素导致目标在影像中所占区域大小发生变化。&lt;/p&gt;
+
+&lt;p&gt;3) 环境变化。由于拍摄环境 (如光照、天气等) 变化导致的目标影像成像特点等的变化。&lt;/p&gt;
+
+&lt;p&gt;4) 目标快速运动。由于目标的快速移动导致在影像中的坐标位置发生突变, 影响目标搜索的速度和精度。&lt;/p&gt;
+
+&lt;p&gt;5) 目标遮挡、出视野。由于拍摄中目标被其他物体遮挡导致的特征部分或全部损失以及由于拍摄时目标跳出视野重新跟踪导致的跟踪失败问题。&lt;/p&gt;
+
+&lt;p&gt;6) 成像影响。由于红外摄像仪分辨率较低, 目标分辨率低, 边缘与目标特征不明显, 有时目标与环境差异较小以及任务设备等对焦问题等都会导致目标跟踪时特征的提取困难。&lt;/p&gt;
+
+&lt;p&gt;上述因素对目标跟踪中的目标特征提取以及目标搜索策略具有重大影响, 在实际跟踪过程中, 较为准确地及时处理这些因素所造成的影响才能保证目标跟踪的精确性与鲁棒性。&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+
+&lt;p&gt;[1]葛宝义,左宪章,胡永江.视觉目标跟踪方法研究综述[J].中国图象图形学报,2018,23(08):1091-1107.&lt;/p&gt;
+</content>
+ </entry>
 
  
 
@@ -172,26 +214,6 @@
 
 &lt;hr /&gt;
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>孪生网络与目标跟踪（1）-- 孪生网络的基本结构</title>
-   <link href="http://localhost:4000/siames-network-01"/>
-   <id>http://localhost:4000/siames-network-01</id>
-   <updated>2018-09-03T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;Yann LeCun 在他2005年的论文Learning a Similarity Metric Discriminatively, with Application to Face Verificatio中提出使用孪生网络做人脸鉴定。&lt;/p&gt; &lt;h3 id=&quot;核心思想&quot;&gt;核心思想&lt;/h3&gt; &lt;p&gt;这种方法的核心思想在于：通过训练一个网络得到一个函数，这个函数可以将输入映射到目标空间，然后在目标空间中计算输入空间的”语义（semantic）”距离，如使用 $L_1$范数。整个网络的学习过程就是将同一个人的人脸图像的输出最小化，不同的人的人脸图像输出最大化。将原始图像映射进入目标空间的工具就是一个对几何畸变（geometric distortions）具有鲁棒性的卷积网络。更确切的说就是有一系列的函数$G_W(X)$使用W作为参数，我们的目标就是寻找合适的参数W，使得相似矩阵$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2) ||$ 在$X_1$和$X_2$属于同一分类（即：人脸图像属于同一个人）时计算得到的结果最大，反之则最小。根据孪生网络的特点，对于输入$X_1$和$X_2$其对应的G和W是相同的。&lt;/p&gt; &lt;h3 id=&quot;设计目标&quot;&gt;设计目标&lt;/h3&gt; &lt;p&gt;设计的可训练系统要在训练时能够同时最小化错误接受率（false accepts）和错误拒绝率（false reject）。同时可将原始图片（raw images）映射到低维空间，以此计算两个输入的相似度距离（即：相似度度量 similarity metric）。&lt;/p&gt; &lt;h3 id=&quot;孪生网络结构&quot;&gt;孪生网络结构&lt;/h3&gt; &lt;p&gt;&lt;img src=&quot;/img/20180904/01.png&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;孪生网络结构&lt;/center&gt; &lt;h4 id=&quot;整体框架&quot;&gt;整体框架&lt;/h4&gt; &lt;p&gt;$X_1$和$X_2$分别为两个待学习的样本对，Y是样本对的标签（$X_1$ 与 $X_2$ 属于同一个人时 Y为0，反之为1）。$G_W(X_1)$和$G_W(X_2)$为输入的原始图像映射到的低维度空间。而$E_W(X_1,X_2) = ||G_W(X_1) - G_W(X_2)...</content>
- </entry>
-
- 
-
- <entry>
-   <title>孪生网络与目标跟踪（0）-- 孪生网络的基本概念</title>
-   <link href="http://localhost:4000/siames-network-00"/>
-   <id>http://localhost:4000/siames-network-00</id>
-   <updated>2018-09-02T00:00:00+08:00</updated>
-   <content type="html">&lt;h3 id=&quot;孪生网络的概念&quot;&gt;孪生网络的概念&lt;/h3&gt; &lt;p&gt;孪生网络即 Siamese Networks ,Siamese 意为“孪生的、连体的”，孪生网络的“孪生”在于两个各自独立的神经网络，具有共同的权值。这种神经网络由Yann Lecun 大神在1993年提出，其论文发表在1994年的NIPS上。孪生网络是用于度量学习的监督网络模型（Supervised models）。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/01.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;共享权值的孪生神经网络&lt;/center&gt; &lt;h5 id=&quot;共享权值的意义&quot;&gt;共享权值的意义？&lt;/h5&gt; &lt;p&gt;两个神经网络共享权值即意味着两个网络的权值完全相同，这意为这在通过代码实现的时候只需要实现一个即可，而不需要再去实现另一个。&lt;/p&gt; &lt;h5 id=&quot;伪孪生网络&quot;&gt;伪孪生网络&lt;/h5&gt; &lt;p&gt;伪孪生网络即：pseudo-siamese network，存在两个神经独立的神经网络，相比于孪生神经网络他们之间并不共享权值。如下图所示：&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180902/02.jpg&quot; width=&quot;300&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;伪孪生网络&lt;/center&gt; &lt;p&gt;两边可以是不同的神经网络（如一个是lstm，一个是cnn），也可以是相同类型的神经网络。&lt;/p&gt; &lt;h3 id=&quot;孪生网络的使用&quot;&gt;孪生网络的使用&lt;/h3&gt; &lt;p&gt;一个孪生网络有两个输入，简单来说，孪生网络的直接用途就是衡量这两个输入的差异程度（或者说相似程度）。将两个输入分别Feed 进入两个神经网络，将两个输入映射到新的空间，将输入在新的空间中表示，通过Loss Function来计算两个输入的差异程度（或相似程度）。&lt;/p&gt; &lt;h5 id=&quot;应用场景&quot;&gt;应用场景&lt;/h5&gt; &lt;p&gt;孪生网络适用的场景主要为判断两个输入的相似程度。如：比较两个句子的语义相似程度比较、手写字体的笔迹鉴定、以及目标跟踪领域中的目标（前景）和背景区分。&lt;/p&gt; &lt;h3 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h3&gt; &lt;p&gt;孪生网络的训练目标就是使相似的输入距离尽可能的小，使不同的输入尽可能的大。&lt;/p&gt; &lt;p&gt;孪生网络的两个网络将输入分别转换成向量值，通过计算向量的距离得到输入的差异程度。&lt;/p&gt; &lt;hr /&gt; &lt;p&gt;参考资料：&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;&lt;strong&gt;Siamese network...</content>
  </entry>
 
  
