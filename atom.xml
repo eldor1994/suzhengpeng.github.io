@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-23T21:38:47+08:00</updated>
+ <updated>2018-09-24T23:47:33+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>目标跟踪（2）-- 常用的算法测试数据集</title>
+   <link href="http://localhost:4000/visual_tracking_02"/>
+   <id>http://localhost:4000/visual_tracking_02</id>
+   <updated>2018-09-24T00:00:00+08:00</updated>
+   <content type="html">&lt;hr /&gt; &lt;h3 id=&quot;otb50-和-otb100&quot;&gt;OTB50 和 OTB100&lt;/h3&gt; &lt;p&gt;下载地址：http://cvlab.hanyang.ac.kr/tracker_benchmark/index.html&lt;/p&gt; &lt;p&gt;OTB50拥有50个测试序列，由韩国汉阳大学计算机视觉实验室于2013年发布，因此也被称为OTB2013，而OTB100于2015年发布，亦被称为OTB2015，是对OTB50的扩充，在OTB50的基础上补充了50个新的测试序列。&lt;/p&gt; &lt;h3 id=&quot;vot-数据集&quot;&gt;VOT 数据集&lt;/h3&gt; &lt;p&gt;下载地址：http://www.votchallenge.net/index.html&lt;/p&gt; &lt;p&gt;VOT测试集由VOT目标跟踪挑战赛主办方发布，用以测试相关算法的性能，且每年都会进行更新。&lt;/p&gt; &lt;h3 id=&quot;数据集分类&quot;&gt;数据集分类&lt;/h3&gt; &lt;p&gt;在OTB数据集中，其以手工标定的方式对测试序列进行了分类。&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;分类&lt;/th&gt; &lt;th&gt;说明&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;IV&lt;/td&gt; &lt;td&gt;Illumination Variation - 光线变化 目标所在区域的光线发生显著变化&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;SV&lt;/td&gt; &lt;td&gt;Scale Variation - 尺度变化 第一帧和当前帧的边界框的比率超出范围ts，ts&amp;gt; 1（ts = 2）&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;OCC&lt;/td&gt; &lt;td&gt;Occlusion - 遮挡 目标被部分遮挡或完全遮挡&lt;/td&gt; &lt;/tr&gt;...</content>
+ </entry>
 
  
 
@@ -171,49 +181,6 @@
    <id>http://localhost:4000/siames-network-02</id>
    <updated>2018-09-06T00:00:00+08:00</updated>
    <content type="html">&lt;hr /&gt; &lt;p&gt;在《Fully-convolutional siamese networks for object tracking》这篇论文中，作者将孪生网络引入到目标跟踪领域 ，即：提出了Siamese-FC算法。在Siamese-FC出现之前，浅层方法（如：KCF 等）的缺点是不能够充分利用端到端学习（End-to-end Learning）的优点，而使用其他网络（非孪生网络）的缺点则是不能实现跟踪对实时性的要求。&lt;/p&gt; &lt;p&gt;Siamese-FC要求首先离线训练一个深度卷积网络，然后以训练好的深度卷积网络作为函数，在跟踪时实时的计算出跟踪的结果。&lt;/p&gt; &lt;p&gt;算法主页：&lt;a href=&quot;http://www.robots.ox.ac.uk/~luca/siamese-fc.html&quot;&gt;http://www.robots.ox.ac.uk/~luca/siamese-fc.html&lt;/a&gt;&lt;/p&gt; &lt;h3 id=&quot;深度相似性学习&quot;&gt;深度相似性学习&lt;/h3&gt; &lt;p&gt;相似性学习是解决跟踪问题的有效方法之一。Siamese-FC算法中提出，通过深度学习得到一个函数$f(z,x)$，将样本图像z和候选图像x在同样尺寸下进行比较，最终得到相似性评分。x与z相似度越高则评分越高，反之越低。为了在候选图像中寻找目标的位置，Siamese-FC要穷举所有可能的位置，并计算相似性评分。$f(z,x)$则通过带有位置标签的视频数据集训练得到。&lt;/p&gt; &lt;h3 id=&quot;完全卷积孪生框架&quot;&gt;完全卷积孪生框架&lt;/h3&gt; &lt;p&gt;基于深度卷积网络进行相似性学习采用的主要方法是孪生框架。在孪生网络中首先对输入x和z分别使用各自独立的变换ϕ，然后对变换结果使用函数$g$，即整个函数f可以表示为：$f(z,x)=g(ϕ(z), ϕ(x))$ 。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180908/01.png&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt; &lt;center&gt;完全卷积孪生框架&lt;/center&gt; &lt;p&gt;在Siamese-FC算法中提出的卷积框架，对每一个候选图像x进行完全卷积。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;完全卷积的定义：&lt;/strong&gt;&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;如果一个函数commutes with translation，则称该函数为为完全卷积。&lt;br /&gt; 这里引入$L_τ$标记为变换算子：$(L_τ x)[u] = x[u-τ]$，函数h如果：$h(L_kτ x) = L_τ h(x)$，则称函数h的映射步长为k的完全卷积。&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;&lt;strong&gt;完全卷积的优点：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;使用完全卷积的优点在于，不需要候选图像和样本图像保持相同的大小，这样就可以将一副足够大的图像作为输入送入网络，以此可以在候选图像中划分子窗，并将子窗做变换，将变换结果一次性完成相似度的计算。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;完全卷积的实现：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;设ϕ为一个卷积嵌入函数（convolutional embedding function），然后将计算得到的特征映射使用一个互相关层联系到一起。即：&lt;/p&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>初识全连接层</title>
-   <link href="http://localhost:4000/fully-connected-layer"/>
-   <id>http://localhost:4000/fully-connected-layer</id>
-   <updated>2018-09-06T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt;
-
-&lt;h4 id=&quot;概述&quot;&gt;概述&lt;/h4&gt;
-
-&lt;p&gt;全连接层 Fully Connected Layer 一般位于整个卷积神经网络的最后，负责将卷积输出的二维特征图转化成一维的一个向量，由此实现了端到端的学习过程（即：输入一张图像或一段语音，输出一个向量或信息）。全连接层的每一个结点都与上一层的所有结点相连因而称之为全连接层。由于其全相连的特性，一般全连接层的参数也是最多的。&lt;/p&gt;
-
-&lt;h4 id=&quot;主要作用&quot;&gt;主要作用&lt;/h4&gt;
-
-&lt;p&gt;全连接层的主要作用就是将前层（卷积、池化等层）计算得到的特征空间映射样本标记空间。简单的说就是将特征表示整合成一个值，其优点在于减少特征位置对于分类结果的影响，提高了整个网络的鲁棒性。&lt;/p&gt;
-
-&lt;p&gt;在知乎上有这样一个回答说的很形象。&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;假设你是一只小蚂蚁，你的任务是找小面包。你的视野还比较窄，只能看到很小一片区域。当你找到一片小面包之后，你不知道你找到的是不是全部的小面包，所以你们全部的蚂蚁开了个会，把所有的小面包都拿出来分享了。全连接层就是这个蚂蚁大会~如果提前告诉你全世界就只有一块小面包，你找到之后也就掌握了全部的信息，这种情况下也就没必要引入fc层了&lt;br /&gt;
-&lt;strong&gt;作者：田star&lt;/strong&gt;  链接：https://www.zhihu.com/question/41037974/answer/150552142&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;实现方式&quot;&gt;实现方式&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20180906/01.jpg&quot; width=&quot;450&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt;
-&lt;center&gt;全连接层的计算方式&lt;/center&gt;
-
-&lt;p&gt;如上图所示，一个网络在全连接层之前，生成了5@3×3的特征映射，我们需要只需要使用五个卷积核去和激活函数的输出进行卷积运算，在将五个输出的值相加即可得到一个全连接层的输出值。如果结果是N维的向量，则需要N×5个3×3的卷积核。再加上求和运算对应的权值，参数的数量是非常可观的，由此一般只在网络的之后使用全连接层。&lt;/p&gt;
-
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;&lt;strong&gt;CNN 入门讲解：什么是全连接层（Fully Connected Layer）?&lt;/strong&gt; https://zhuanlan.zhihu.com/p/33841176&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;全连接层的作用是什么？ - 魏秀参 的回答&lt;/strong&gt; https://www.zhihu.com/question/41037974&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;解释一下全连接层&lt;/strong&gt; https://blog.csdn.net/u011021773/article/details/78121359&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-</content>
  </entry>
 
  
