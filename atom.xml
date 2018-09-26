@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-26T17:27:21+08:00</updated>
+ <updated>2018-09-26T23:54:26+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,11 +14,21 @@
  
 
  <entry>
+   <title>CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间</title>
+   <link href="http://localhost:4000/cuda_learning_03"/>
+   <id>http://localhost:4000/cuda_learning_03</id>
+   <updated>2018-09-26T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#二维内核的启动方法&quot; id=&quot;markdown-toc-二维内核的启动方法&quot;&gt;二维内核的启动方法&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#指定二维线程块的大小&quot; id=&quot;markdown-toc-指定二维线程块的大小&quot;&gt;指定二维线程块的大小&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#计算xy方向上的线程块数&quot; id=&quot;markdown-toc-计算xy方向上的线程块数&quot;&gt;计算x，y方向上的线程块数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#启动内核&quot; id=&quot;markdown-toc-启动内核&quot;&gt;启动内核&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#二维内核函数&quot; id=&quot;markdown-toc-二维内核函数&quot;&gt;二维内核函数&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#典型的二维内核函数&quot; id=&quot;markdown-toc-典型的二维内核函数&quot;&gt;典型的二维内核函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#计算图像数据的二维内核函数&quot; id=&quot;markdown-toc-计算图像数据的二维内核函数&quot;&gt;计算图像数据的二维内核函数&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;二维内核的启动方法&quot;&gt;二维内核的启动方法&lt;/h3&gt; &lt;p&gt;设一幅图像有w列，h行。在x方向使用TX个线程，在Y方向使用TY个线程&lt;/p&gt; &lt;h4 id=&quot;指定二维线程块的大小&quot;&gt;指定二维线程块的大小&lt;/h4&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; dim3 blockSize(TX , TY); &lt;/code&gt; &lt;/pre&gt; &lt;h4 id=&quot;计算xy方向上的线程块数&quot;&gt;计算x，y方向上的线程块数&lt;/h4&gt; &lt;pre&gt; &lt;code...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值</title>
    <link href="http://localhost:4000/cuda_learning_02"/>
    <id>http://localhost:4000/cuda_learning_02</id>
    <updated>2018-09-26T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda&lt;/strong&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &amp;lt;stdio.h&amp;gt; #define N 64 #define TPB 32 &lt;/code&gt; &lt;/pre&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; int main() { const float ref = 0.5f; float *d_out = 0; cudaMalloc(&amp;amp;d_out, N*sizeof(float)); distanceKernel&amp;lt;&amp;lt;&amp;lt;N/TPB, TPB&amp;gt;&amp;gt;&amp;gt;(d_out, ref, N); cudaFree(d_out); // Free the memory return 0; } &lt;/code&gt; &lt;/pre&gt; &lt;p&gt;&lt;strong&gt;Main函数&lt;/strong&gt;&lt;/p&gt;...</content>
+   <content type="html">&lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda&lt;/strong&gt;&lt;br /&gt; 基于《CUDA高性能并行计算》中的例程&lt;/p&gt; &lt;/blockquote&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &amp;lt;stdio.h&amp;gt; #define N 64 #define TPB 32 &lt;/code&gt; &lt;/pre&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; int main() { const float ref = 0.5f; float *d_out = 0; cudaMalloc(&amp;amp;d_out, N*sizeof(float)); distanceKernel&amp;lt;&amp;lt;&amp;lt;N/TPB, TPB&amp;gt;&amp;gt;&amp;gt;(d_out, ref, N); cudaFree(d_out); // Free the memory return 0; } &lt;/code&gt;...</content>
  </entry>
 
  
@@ -171,16 +181,6 @@
 
 &lt;hr /&gt;
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>初识 Batch Normalization 算法</title>
-   <link href="http://localhost:4000/batch-normalization"/>
-   <id>http://localhost:4000/batch-normalization</id>
-   <updated>2018-09-11T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt; &lt;p&gt;Batch Normalization 算法于2015年在论文《Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift》中发表。主要的作用就是加速网络模型的训练速度。&lt;/p&gt; &lt;h3 id=&quot;bn算法batch-normalization其强大之处如下&quot;&gt;BN算法（Batch Normalization）其强大之处如下&lt;/h3&gt; &lt;p&gt;(1) &lt;strong&gt;你可以选择比较大的初始学习率，让你的训练速度飙涨。&lt;/strong&gt; 以前还需要慢慢调整学习率，甚至在网络训练到一半的时候，还需要想着学习率进一步调小的比例选择多少比较合适，现在我们可以采用初始很大的学习率，然后学习率的衰减速度也很大，因为这个算法收敛很快。当然这个算法即使你选择了较小的学习率，也比以前的收敛速度快，因为它具有快速训练收敛的特性；&lt;/p&gt; &lt;p&gt;(2) &lt;strong&gt;你再也不用去理会过拟合中drop out、L2正则项参数的选择问题。&lt;/strong&gt; 采用BN算法后，你可以移除这两项了参数，或者可以选择更小的L2正则约束参数了，因为BN具有提高网络泛化能力的特性；&lt;/p&gt; &lt;p&gt;(3) &lt;strong&gt;再也不需要使用使用局部响应归一化层了&lt;/strong&gt;（局部响应归一化是Alexnet网络用到的方法，搞视觉的估计比较熟悉），因为BN本身就是一个归一化网络层；&lt;/p&gt; &lt;p&gt;(4)&lt;strong&gt;可以把训练数据彻底打乱&lt;/strong&gt;（防止每批训练的时候，某一个样本都经常被挑选到，文献说这个可以提高1%的精度，这句话我也是百思不得其解啊）。&lt;/p&gt; &lt;h3 id=&quot;什么是internal-covariate-shift-&quot;&gt;什么是Internal Covariate Shift ？&lt;/h3&gt; &lt;p&gt;Covariate Shift 指的是训练集的数据分布和预测集的数据分布不一致，这样的情况下如果我们在训练集上训练出一个分类器，肯定在预测集上不会取得比较好的效果。这种训练集和预测集样本分布不一致的问题就叫做“covariate shift”现象。&lt;/p&gt; &lt;p&gt;假设x是属于特征空间的某一样本点，y是标签。假设q1(x)是测试集中一个样本点的概率密度，q0(x)是训练集中一个样本点的概率密度。最终我们估计一个条件概率密度$p(y|x，θ)$，它由x和一组参数θ=｛θ1，θ2……θm｝所决定。对于一组参数来说，对应loss(θ)函数评估性能的好坏&lt;/p&gt; &lt;p&gt;综上，当我们找出在q0(x)分布上最优的一组θ’时，能否保证q1(x)上测试时也最好呢？&lt;/p&gt; &lt;p&gt;传统机器学习假设训练集和测试集是独立同分布的，即q0(x)=q1(x)，所以可以推出最优θ’依然可以保证q1(x)最优。但现实当中这个假设往往不成立，伴随新数据产生，老数据会过时，当q0(x)不再等于q1(x)时，就被称作covariate shift。&lt;/p&gt; &lt;p&gt;而Internal Covariate Shit 是在网络层级间发生的Convariate Shift。&lt;/p&gt; &lt;h3 id=&quot;输入的归一化处理&quot;&gt;输入的归一化处理&lt;/h3&gt; &lt;p&gt;简单来说BN算法就是在网络的每一层输入的时候，又插入了一个归一化层，也就是先做一个归一化处理，然后再进入网络的下一层。&lt;/p&gt; &lt;hr...</content>
  </entry>
 
  

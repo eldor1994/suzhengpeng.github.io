@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -455,7 +455,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -649,23 +649,140 @@ var init = function() {
 		  
 		<main>
 
-			<h2>标签：Blog</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<!-- <div style="width:170px;float:left"> -->
-<!-- <a href="/hello-world"><img src="/img/cover/20170422135316.jpg"  width=150 height=150/></a> -->
+			<article id="post-page">
+	
+	26 Sep 2018
+	
+	<h3>CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
 
-<a href="/hello-world">&nbsp;&nbsp;&nbsp;Hello World</a> &nbsp;&nbsp;&nbsp;(20 Apr 2017)<br><br>
-<!-- </div><br> -->
-
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+基于CUDA的并行编程学习笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
 </div>
 
-<hr><br>
-
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-1">Blog</a> <a href="/tag/c6678.html" class="set-1">C6678</a> <a href="/tag/cuda.html" class="set-3">CUDA</a> <a href="/tag/leetcode.html" class="set-1">Leetcode</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/pcie.html" class="set-1">PCIe</a> <a href="/tag/mean-shift.html" class="set-1">mean-shift</a> <a href="/tag/%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82.html" class="set-1">全连接层</a> <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" class="set-1">动态规划</a> <a href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86.html" class="set-1">字符串处理</a> <a href="/tag/%E5%AD%AA%E7%94%9F%E7%BD%91%E7%BB%9C.html" class="set-5">孪生网络</a> <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" class="set-3">并行计算</a> <a href="/tag/%E6%89%B9%E6%A0%87%E5%87%86%E5%8C%96.html" class="set-1">批标准化</a> <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" class="set-5">目标跟踪</a></div> 
-</div></center>
+<!-- JiaThis Button END -->
 <br>
+	<div class="content">
+			
+		<ul id="markdown-toc">
+  <li><a href="#二维内核的启动方法" id="markdown-toc-二维内核的启动方法">二维内核的启动方法</a>    <ul>
+      <li><a href="#指定二维线程块的大小" id="markdown-toc-指定二维线程块的大小">指定二维线程块的大小</a></li>
+      <li><a href="#计算xy方向上的线程块数" id="markdown-toc-计算xy方向上的线程块数">计算x，y方向上的线程块数</a></li>
+      <li><a href="#启动内核" id="markdown-toc-启动内核">启动内核</a></li>
+    </ul>
+  </li>
+  <li><a href="#二维内核函数" id="markdown-toc-二维内核函数">二维内核函数</a>    <ul>
+      <li><a href="#典型的二维内核函数" id="markdown-toc-典型的二维内核函数">典型的二维内核函数</a></li>
+      <li><a href="#计算图像数据的二维内核函数" id="markdown-toc-计算图像数据的二维内核函数">计算图像数据的二维内核函数</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="二维内核的启动方法">二维内核的启动方法</h3>
+
+<p>设一幅图像有w列，h行。在x方向使用TX个线程，在Y方向使用TY个线程</p>
+
+<h4 id="指定二维线程块的大小">指定二维线程块的大小</h4>
+
+<pre>
+<code class="cpp">
+dim3 blockSize(TX , TY);
+</code>
+</pre>
+
+<h4 id="计算xy方向上的线程块数">计算x，y方向上的线程块数</h4>
+
+<pre>
+<code class="cpp">
+int bx = (w + blockSize.x - 1)/blockSize.x;
+int by = (h + blockSize.y - 1)/blockSize.y;
+</code>
+</pre>
+
+<h4 id="启动内核">启动内核</h4>
+
+<pre>
+<code class="cpp">
+kernelName&lt;&lt;&lt;gridSize,blockSize&gt;&gt;&gt;(args)
+</code>
+</pre>
+
+<h3 id="二维内核函数">二维内核函数</h3>
+<h4 id="典型的二维内核函数">典型的二维内核函数</h4>
+
+<pre>
+<code class="cpp">
+__global__
+void kernel2D(float *d_out, int w, int h, ....)
+{
+  const int c = blcokIdx.x * blockDim.x + threadIdx.x;
+  const int r = blcokIdx.y * blockDim.y + threadIdx.y;
+  const int i = r*w + c;
+
+  if((c &gt;= w)||(r &gt;= h))
+    return;
+
+  d_out[i] = Some Code;
+}
+</code>
+</pre>
+
+<h4 id="计算图像数据的二维内核函数">计算图像数据的二维内核函数</h4>
+
+<p>对于图像数据一般使用uchar4类型存储。uchar4类型存储了四个无符号字符的向量，每个向量占用一个字节的存储空间。实际上，可以用uchar4存储图像数据的四个通道。x,y,z,w 四个成员分别对用图像数据的RGB通道和Alpha通道每个通道值的范围为0~255。</p>
+
+<pre>
+<code class="cpp">
+__global__
+void kernel2D(uchar4 *d_out, int w, int h, ....)
+{
+  const int c = blcokIdx.x * blockDim.x + threadIdx.x;
+  const int r = blcokIdx.y * blockDim.y + threadIdx.y;
+  const int i = r*w + c;
+
+  if((c &gt;= w)||(r &gt;= h))
+    return;
+
+  d_out[i].x = Red;
+  d_out[i].y = Green;
+  d_out[i].z = Blue;
+  d_out[i].w = Alpha;
+}
+</code>
+</pre>
+
+<hr />
+
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> <a href="/tags.html" class="set-1">>></a></div> 
+</article>
+
+
 
 	  </main>
 		
@@ -906,7 +1023,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 

@@ -687,7 +687,8 @@ var init = function() {
 			
 		<hr />
 <blockquote>
-  <p><strong>代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda</strong></p>
+  <p><strong>代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda</strong><br />
+基于《CUDA高性能并行计算》中的例程</p>
 </blockquote>
 
 <pre>
@@ -700,7 +701,6 @@ var init = function() {
 
 <pre>
 <code class="cpp">
-
   int main()
   {
     const float ref = 0.5f;
@@ -719,7 +719,9 @@ var init = function() {
 
 <p>2、使用cudaMalloc 在设备端申请长度为N = 64 的float型数组 d_out</p>
 
-<p>3、使用 <strong>核函数</strong> distanceKernel 计算距离</p>
+<p>3、使用 <strong>核函数</strong> distanceKernel 计算距离。</p>
+
+<p>distanceKernel&lt;&lt;&lt;N/TPB, TPB&gt;&gt;&gt;(d_out, ref, N); 调用核函数，使用N/TPB个线程块，其中每个线程块包含TPB个线程。</p>
 
 <p>4、使用cudaFree 释放设备端中的float型数组 d_out</p>
 
