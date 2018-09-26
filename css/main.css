@@ -1367,6 +1367,9 @@ img[title="Monochrome"] {
 .fh5co-project-item:hover h2, .fh5co-project-item:hover span, .fh5co-project-item:focus h2, .fh5co-project-item:focus span {
   text-decoration: none !important; }
 
+#markdown-toc li {
+  list-style: upper-roman inside; }
+
 /*# sourceMappingURL=style.css.map */
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)

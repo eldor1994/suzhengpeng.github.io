@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值 - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -455,7 +455,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -649,23 +649,134 @@ var init = function() {
 		  
 		<main>
 
-			<h2>标签：Blog</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<!-- <div style="width:170px;float:left"> -->
-<!-- <a href="/hello-world"><img src="/img/cover/20170422135316.jpg"  width=150 height=150/></a> -->
+			<article id="post-page">
+	
+	26 Sep 2018
+	
+	<h3>CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值 </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
 
-<a href="/hello-world">&nbsp;&nbsp;&nbsp;Hello World</a> &nbsp;&nbsp;&nbsp;(20 Apr 2017)<br><br>
-<!-- </div><br> -->
-
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+基于CUDA的并行编程学习笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
 </div>
 
-<hr><br>
-
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-1">Blog</a> <a href="/tag/c6678.html" class="set-1">C6678</a> <a href="/tag/cuda.html" class="set-2">CUDA</a> <a href="/tag/leetcode.html" class="set-1">Leetcode</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/pcie.html" class="set-1">PCIe</a> <a href="/tag/mean-shift.html" class="set-1">mean-shift</a> <a href="/tag/%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82.html" class="set-1">全连接层</a> <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" class="set-1">动态规划</a> <a href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86.html" class="set-1">字符串处理</a> <a href="/tag/%E5%AD%AA%E7%94%9F%E7%BD%91%E7%BB%9C.html" class="set-5">孪生网络</a> <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" class="set-2">并行计算</a> <a href="/tag/%E6%89%B9%E6%A0%87%E5%87%86%E5%8C%96.html" class="set-1">批标准化</a> <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" class="set-5">目标跟踪</a></div> 
-</div></center>
+<!-- JiaThis Button END -->
 <br>
+	<div class="content">
+			
+		<hr />
+<blockquote>
+  <p><strong>代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda</strong></p>
+</blockquote>
+
+<pre>
+<code class="cpp">
+  #include &lt;stdio.h&gt;
+  #define N 64
+  #define TPB 32
+</code>
+</pre>
+
+<pre>
+<code class="cpp">
+
+  int main()
+  {
+    const float ref = 0.5f;
+    float *d_out = 0;
+    cudaMalloc(&amp;d_out, N*sizeof(float));
+    distanceKernel&lt;&lt;&lt;N/TPB, TPB&gt;&gt;&gt;(d_out, ref, N);
+    cudaFree(d_out); // Free the memory
+    return 0;
+  }
+</code>
+</pre>
+
+<p><strong>Main函数</strong></p>
+
+<p>1、声明float 型指针 d_out</p>
+
+<p>2、使用cudaMalloc 在设备端申请长度为N = 64 的float型数组 d_out</p>
+
+<p>3、使用 <strong>核函数</strong> distanceKernel 计算距离</p>
+
+<p>4、使用cudaFree 释放设备端中的float型数组 d_out</p>
+
+<pre>
+<code class="cpp">
+  __device__ float scale(int i, int n)
+  {
+    return ((float)i)/(n - 1);
+  }
+  </code>
+</pre>
+
+<p>1、标识符__device__，为设备端调用并设备端的执行的函数</p>
+
+<pre>
+<code class="cpp">
+
+  __device__ float distance(float x1, float x2)
+  {
+    return sqrt((x2 - x1)*(x2 - x1));
+  }
+  </code>
+</pre>
+<pre>
+<code class="cpp">
+
+  __global__ void distanceKernel(float *d_out, float ref, int len)
+  {
+    const int i = blockIdx.x*blockDim.x + threadIdx.x;
+    const float x = scale(i, len);
+    d_out[i] = distance(x, ref);
+    printf("i = %2d: dist from %f to %f is %f.\n", i, ref, x, d_out[i]);
+  }
+  </code>
+</pre>
+
+<p><strong>核函数 distanceKernel</strong></p>
+
+<p>1、标识符__global__，为核函数的标识符</p>
+
+<p>2、使用核函数的内建线程索引和维度索引变量计算索引i</p>
+
+<blockquote>
+  <p>const int i = blockIdx.x*blockDim.x + threadIdx.x;</p>
+</blockquote>
+
+<p>其中：blockIdx （uint3向量类型）为这个线程块在网格中的索引；blockDim（dim3向量类型）为每个线程块中的线程数目；threadIdx（uint3向量类型）为这个线程在线程块中的索引</p>
+
+<hr />
+
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> <a href="/tags.html" class="set-1">>></a></div> 
+</article>
+
+
 
 	  </main>
 		
@@ -906,7 +1017,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 

@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<meta name="generator" content="Jekyll">
 
-	<title>Suzhengpeng'S Blog</title>
-  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+	<title>目标跟踪（3）-- Mean-shift 与目标跟踪[1] - Su'S Blog - SuZhengpeng.COM </title>
+  <meta name="description" content="视觉目标跟踪方法研究综述 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -455,7 +455,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -649,23 +649,98 @@ var init = function() {
 		  
 		<main>
 
-			<h2>标签：Blog</h2>
-<br>
-<div style="width:100%;overflow:hidden;white-space:nowrap;">
- 
-<!-- <div style="width:170px;float:left"> -->
-<!-- <a href="/hello-world"><img src="/img/cover/20170422135316.jpg"  width=150 height=150/></a> -->
+			<article id="post-page">
+	
+	24 Sep 2018
+	
+	<h3>目标跟踪（3）-- Mean-shift 与目标跟踪[1] </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
 
-<a href="/hello-world">&nbsp;&nbsp;&nbsp;Hello World</a> &nbsp;&nbsp;&nbsp;(20 Apr 2017)<br><br>
-<!-- </div><br> -->
-
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+视觉目标跟踪方法研究综述<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
 </div>
 
-<hr><br>
-
-<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-1">Blog</a> <a href="/tag/c6678.html" class="set-1">C6678</a> <a href="/tag/cuda.html" class="set-2">CUDA</a> <a href="/tag/leetcode.html" class="set-1">Leetcode</a> <a href="/tag/opencv.html" class="set-1">OpenCV</a> <a href="/tag/pcie.html" class="set-1">PCIe</a> <a href="/tag/mean-shift.html" class="set-1">mean-shift</a> <a href="/tag/%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82.html" class="set-1">全连接层</a> <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" class="set-1">动态规划</a> <a href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86.html" class="set-1">字符串处理</a> <a href="/tag/%E5%AD%AA%E7%94%9F%E7%BD%91%E7%BB%9C.html" class="set-5">孪生网络</a> <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" class="set-2">并行计算</a> <a href="/tag/%E6%89%B9%E6%A0%87%E5%87%86%E5%8C%96.html" class="set-1">批标准化</a> <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" class="set-5">目标跟踪</a></div> 
-</div></center>
+<!-- JiaThis Button END -->
 <br>
+	<div class="content">
+			
+		<hr />
+
+<h3 id="mean-shift-算法理解">Mean Shift 算法理解</h3>
+
+<p>基本概念：沿着密度上升方向寻找聚簇点</p>
+
+<p><img src="/img/20180923/02.png" width="500" /></p>
+
+<p>设在d维空间$R_d$中，划定一个有N个样本点、半径为k的高维球区域$S_k$，初始随机确定一个中心点center，N个样本点记为集合M，认为这些点属于聚簇C。计算以中心点为起点落在球内的样本点（$x_i$）为终点的向量 。计算整个圆形空间内所有向量的和，得到一个偏移向量。将中心点center沿着shift的方向移动到偏移向量的终点，移动距离即偏移向量的模。重复移动，又得到一个新的偏移向量。如此重复下去，直到偏移向量的大小满足设定的阈值要求，以此保证收敛到概率密度最大得地方。也就是最稠密的地方。
+<img src="/img/20180923/03.jpg" width="400" /></p>
+<center>计算偏移向量</center>
+<p><img src="/img/20180923/04.jpg" width="400" /></p>
+<center>移动中心点</center>
+<p><img src="/img/20180923/05.jpg" width="400" /></p>
+<center>得到最终结果：收敛到概率密度最大得地方</center>
+
+<!-- ### 经典Mean-shift框架
+### ASMS目标跟踪算法
+
+Github 主页：https://github.com/vojirt/asms
+
+ASMS是VOT2015官方推荐的实时算法，平均帧率125FPS。在经典mean-shift框架下加入了尺度估计，经典颜色直方图特征，加入了两个先验(尺度不剧变+可能偏最大)作为正则项，和反向尺度一致性检查。
+
+#### 经典MS算法存在的问题
+
+1.在跟踪过程中位置错误时可以在MS迭代中进行自我纠正，而尺度错误则不会。  
+
+<img src="/img/20180923/03.PNG" width="400"  /> 
+<center>Illustration of the scale ambiguity problem 尺度歧义问题说明</center>
+
+2.自相似对象（self-similar objects ）的尺度模糊（the scale
+ambiguity）通常导致低估尺度和跟踪失败。如上图所示，（a）目标和候选目标在固定中心不同尺度下的图像，（b）候选目标和目标的相似度作为由Bhattacharyya系数测量的尺度参数的函数
+
+#### 具有正则化尺度估计的MS算法（MSs）
+
+为了解决上面提出的问题，作者提出了正则化尺度估计的$MS_s$算法。
+
+#### 具有尺度和后向一致性检查的MS算法（ASMS） -->
+
+<hr />
+
+<p>参考资料：</p>
+
+<p><strong>均值漂移（Meanshift）算法</strong> https://blog.csdn.net/qwerasdf_1_2/article/details/54577336</p>
+
+<p><strong>通俗理解Meanshift均值漂移算法</strong> https://www.codetd.com/article/1880561</p>
+
+<p><strong>计算机视觉中，目前有哪些经典的目标跟踪算法？ - YaqiLYU的回答 - 知乎</strong> https://www.zhihu.com/question/26493945/answer/156025576</p>
+
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" rel="tag">目标跟踪</a>, <a href="/tag/mean-shift.html" rel="tag">mean-shift</a> <a href="/tags.html" class="set-1">>></a></div> 
+</article>
+
+
 
 	  </main>
 		
@@ -906,7 +981,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/blog&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
