@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-27T14:21:20+08:00</updated>
+ <updated>2018-09-27T23:14:11+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>CUDA并行编程学习（4）-- 内存共享 Share Memory</title>
+   <link href="http://localhost:4000/cuda_learning_04"/>
+   <id>http://localhost:4000/cuda_learning_04</id>
+   <updated>2018-09-27T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#例程matrix-multiplication&quot; id=&quot;markdown-toc-例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#不使用共享内存&quot; id=&quot;markdown-toc-不使用共享内存&quot;&gt;不使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明&quot; id=&quot;markdown-toc-算法说明&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用共享内存&quot; id=&quot;markdown-toc-使用共享内存&quot;&gt;使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明-1&quot; id=&quot;markdown-toc-算法说明-1&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单-1&quot; id=&quot;markdown-toc-代码清单-1&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;p&gt;一般情况下，共享内存比全局内存的访问速度更快。任何可以使用共享内存的地方，都应该将全局内存替换为共享内存。&lt;/p&gt; &lt;h3 id=&quot;例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/h3&gt; &lt;h4 id=&quot;不使用共享内存&quot;&gt;不使用共享内存&lt;/h4&gt; &lt;h5 id=&quot;算法说明&quot;&gt;算法说明&lt;/h5&gt; &lt;p&gt;&lt;img src=&quot;/img/20180927/01.PNG&quot; width=&quot;500&quot; /&gt;&lt;/p&gt; &lt;p&gt;如上图所示，每个线程读取矩阵A的一行和矩阵B的一列，计算相应的结果C。因此A从全局内存中读取width次B，B 从全局内存中读取Aheight次。&lt;/p&gt;...</content>
+ </entry>
 
  
 
@@ -157,27 +167,6 @@
 &lt;center&gt;基于CUDA技术的GPU的体系结构&lt;/center&gt;
 
 &lt;p&gt;上图是一个基于CUDA技术的典型GPU体系结构。这种体系结构由一个高度线程化的多核流处理器(Streaming Multiprocessor，SM)阵列组成。在上图中，两个多流处理器（Streaming Multiprocessor，SM）形成一个构建块，然而，在基于CUDA技术的GPU的每一代之间，每个构建块中SM的数量可能不同。此外，图中的每个SM又包含多个流处理器(Streaming Processor，SP)，它们之间共享控制逻辑和指令缓存。每个GPU都带有若干千兆字节(GB)的 &lt;strong&gt;图形双数据速率&lt;/strong&gt; (Graphics Double Data Rate，GDDR) &lt;strong&gt;DRAM&lt;/strong&gt;，在上图中称为 &lt;strong&gt;全局存储器&lt;/strong&gt;(global memory)。GPU中的这些GDDR DRAM完全不同于CPU体系中安装在主板上的系统DRAM，它们主要是用于图形处理的帧缓冲区存储器。在图形应用程序中，它们用来保存视频图像和用于3D渲染的纹理信息；而对于计算，它们可以作为带宽芯片外存储器。尽管比典型系统存储器的延迟要长，大规模并行应用程序通常通过高带宽来弥补时延。&lt;/p&gt;
-
-&lt;hr /&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>CUDA并行编程学习（0）-- CUDA和GPU</title>
-   <link href="http://localhost:4000/cuda_learnning_00"/>
-   <id>http://localhost:4000/cuda_learnning_00</id>
-   <updated>2018-09-16T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt;
-
-&lt;p&gt;GPU能够进行并行计算的原因是因为其内部具有成百上千个计算单元，如果我们能够对程序进行拆分，将整个计算过程拆分成大量的独立子任务，这些大量的计算单元就为并行执行这些任务提供了可能性。&lt;/p&gt;
-
-&lt;p&gt;CUDA使用了单指令多线程（Single Instruction Multiple Threads、SIMT）的并行模式。CUDA GPU包含了大量的基础计算单元，这些单元被称为核，每个核都包含了一个逻辑计算单元（ALU）和一个浮点计算单元（FLU）。多个核集成在一起被称为 &lt;strong&gt;多流处理器&lt;/strong&gt;（Stream Multiprocessor、SM）。&lt;/p&gt;
-
-&lt;p&gt;我们将一个计算任务分解为多个子任务，每个子任务被称为线程，多个线程被组织为线程块。线程块被分解为大小与一个SM中核数量相同的 &lt;strong&gt;线程束&lt;/strong&gt;（warp）。每个线程束由一个特定的SM处理器执行。SM处理器的控制单元指挥其所有核同时在一个线程束的每个线程中执行同一个指令,这称为SIMT。&lt;/p&gt;
-
-&lt;p&gt;在GPU上，芯片的大多数空间被分配给了大量组织成SM处理器的运算大院和共享的控制单元。当一个线程束所需的数据不可获得时，SM处理器会转向执行另一个可获得数据的线程束。GPU关注的是整体的运算吞吐量而不是单个核心的执行速度。&lt;/p&gt;
 
 &lt;hr /&gt;
 </content>
