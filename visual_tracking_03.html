@@ -212,7 +212,7 @@ var init = function() {
 <script type="text/javascript"<src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
 
 <script type="text/javascript" src="js/jquery-1.8.3.min_2.js"></script>
-
+<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' type='text/css'>
 <style type="text/css">
 	.shang_con{width:100px;margin:20px auto;}
 	.shang_hide_box{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
@@ -770,7 +770,7 @@ ambiguity）通常导致低估尺度和跟踪失败。如上图所示，（a）�
 			<p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
 			<div class="shang_hide_box"></div>
 			<div class="shang_box">
-				
+					<br>
 				<div class="shang_tit">
 					<p>感谢您的支持，我会继续努力的!</p>
 				</div>
@@ -787,12 +787,15 @@ ambiguity）通常导致低估尺度和跟踪失败。如上图所示，（a）�
 						<span class="pay_logo"><img src="img/ds/wechat.jpg" alt="微信" /></span>
 					</div>
 				</div>
+				<br>
 				<div class="shang_info">
-					<p>您已选择使用<span id="shang_pay_choice">支付宝</span>打赏<br>
-					打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+					<p>长按识别二维码或打开<span id="shang_pay_txt">支付宝</span>扫一扫 完成打赏<br>
+					或 使用<a href="HTTPS://QR.ALIPAY.COM/FKX08963JL6LVJZYLYGZ13" ><支付宝链接></a>打赏
+				</p>
+
 				</div>
 				<br>
-				<br>
+		
 				<center><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">关闭</a></center>
 			</div>
 			</div>
@@ -804,7 +807,6 @@ ambiguity）通常导致低估尺度和跟踪失败。如上图所示，（a）�
 					var dataid=$(this).attr('data-id');
 					$(".shang_payimg img").attr("src","img/ds/"+dataid+"img.jpg");
 					$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
-					$("#shang_pay_choice").text(dataid=="alipay"?"支付宝":"微信");
 				});
 			});
 			function dashangToggle(){
