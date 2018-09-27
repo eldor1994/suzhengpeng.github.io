@@ -227,12 +227,12 @@ var init = function() {
 	.shang_payimg{width:140px;margin:0 auto;border-radius:3px;height:140px;}
 	.shang_payimg img{display:block;text-align:center;width:140px;height:140px; }
 	.pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
-	.radiobox{width: 16px;height: 16px;background: url('img/ds/radio2.jpg');display: block;float: left;margin-top: 5px;margin-right: 14px;}
+	.radiobox{width: 16px;height: 16px;background: url('img/ds/radio2.jpg');display: block;float: left;margin-right: 14px; margin-left: 50px;margin-bottom: 10px;}
 	.checked .radiobox{background:url('img/ds/radio1.jpg');}
 	.shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:280px;}
 	.shang_payselect .pay_item{display:inline-block;margin-right:10px;}
 	.shang_info{clear:both;}
-	.shang_info p,.shang_info a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+	.shang_info p,.shang_info a{color:#C3C3C3;text-align:center;text-decoration:none;line-height:2em;}
 </style>
 		</head>
 
@@ -758,20 +758,22 @@ var init = function() {
 				<div class="shang_payimg">
 					<img src="img/ds/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
 				</div>
-					<div class="pay_explain">扫码打赏，你说多少就多少</div>
 				<div class="shang_payselect">
 					<div class="pay_item checked" data-id="alipay">
-						<!-- <span class="radiobox"></span> -->
+						<span class="radiobox"></span>
 						<span class="pay_logo"><img src="img/ds/alipay.jpg" alt="支付宝" /></span>
 					</div>
 					<div class="pay_item" data-id="weipay">
-						<!-- <span class="radiobox"></span> -->
+						<span class="radiobox"></span>
 						<span class="pay_logo"><img src="img/ds/wechat.jpg" alt="微信" /></span>
 					</div>
 				</div>
 				<div class="shang_info">
-					<p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+					<p>您已选择使用<span id="shang_pay_choice">支付宝</span>打赏<br>
+					打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
 				</div>
+				<br>
+				<br>
 				<center><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">关闭</a></center>
 			</div>
 			</div>
@@ -783,6 +785,7 @@ var init = function() {
 					var dataid=$(this).attr('data-id');
 					$(".shang_payimg img").attr("src","img/ds/"+dataid+"img.jpg");
 					$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+					$("#shang_pay_choice").text(dataid=="alipay"?"支付宝":"微信");
 				});
 			});
 			function dashangToggle(){
