@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-27T23:14:11+08:00</updated>
+ <updated>2018-09-29T18:20:36+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -14,11 +14,21 @@
  
 
  <entry>
+   <title>从源码开始，在Ubuntu上安装OpenCV</title>
+   <link href="http://localhost:4000/compile-opencv-on-ubuntu"/>
+   <id>http://localhost:4000/compile-opencv-on-ubuntu</id>
+   <updated>2018-09-29T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#所需工具&quot; id=&quot;markdown-toc-所需工具&quot;&gt;所需工具&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#从源码开始安装&quot; id=&quot;markdown-toc-从源码开始安装&quot;&gt;从源码开始安装&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#使用cmake-生成-makefile&quot; id=&quot;markdown-toc-使用cmake-生成-makefile&quot;&gt;使用CMake 生成 makefile&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用make-编译并安装&quot; id=&quot;markdown-toc-使用make-编译并安装&quot;&gt;使用Make 编译并安装&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写demo测试安装结果&quot; id=&quot;markdown-toc-编写demo测试安装结果&quot;&gt;编写Demo测试安装结果&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写cmakeliststxt&quot; id=&quot;markdown-toc-编写cmakeliststxt&quot;&gt;编写CMakeLists.txt&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用cmakemake完成编译&quot; id=&quot;markdown-toc-使用cmakemake完成编译&quot;&gt;使用CMake+Make完成编译&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;所需工具&quot;&gt;所需工具&lt;/h3&gt; &lt;p&gt;Ubuntu 系统：系统版本 Ubuntu 16.04.4 LTS&lt;/p&gt; &lt;p&gt;Cmake： cmake version 3.5.1&lt;/p&gt; &lt;p&gt;Make：...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>CUDA并行编程学习（4）-- 内存共享 Share Memory</title>
    <link href="http://localhost:4000/cuda_learning_04"/>
    <id>http://localhost:4000/cuda_learning_04</id>
    <updated>2018-09-27T00:00:00+08:00</updated>
-   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#例程matrix-multiplication&quot; id=&quot;markdown-toc-例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#不使用共享内存&quot; id=&quot;markdown-toc-不使用共享内存&quot;&gt;不使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明&quot; id=&quot;markdown-toc-算法说明&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用共享内存&quot; id=&quot;markdown-toc-使用共享内存&quot;&gt;使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明-1&quot; id=&quot;markdown-toc-算法说明-1&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单-1&quot; id=&quot;markdown-toc-代码清单-1&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;p&gt;一般情况下，共享内存比全局内存的访问速度更快。任何可以使用共享内存的地方，都应该将全局内存替换为共享内存。&lt;/p&gt; &lt;h3 id=&quot;例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/h3&gt; &lt;h4 id=&quot;不使用共享内存&quot;&gt;不使用共享内存&lt;/h4&gt; &lt;h5 id=&quot;算法说明&quot;&gt;算法说明&lt;/h5&gt; &lt;p&gt;&lt;img src=&quot;/img/20180927/01.PNG&quot; width=&quot;500&quot; /&gt;&lt;/p&gt; &lt;p&gt;如上图所示，每个线程读取矩阵A的一行和矩阵B的一列，计算相应的结果C。因此A从全局内存中读取width次B，B 从全局内存中读取Aheight次。&lt;/p&gt;...</content>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#共享内存的优点&quot; id=&quot;markdown-toc-共享内存的优点&quot;&gt;共享内存的优点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#创建共享内存&quot; id=&quot;markdown-toc-创建共享内存&quot;&gt;创建共享内存&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#例程matrix-multiplication&quot; id=&quot;markdown-toc-例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#不使用共享内存&quot; id=&quot;markdown-toc-不使用共享内存&quot;&gt;不使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明&quot; id=&quot;markdown-toc-算法说明&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用共享内存&quot; id=&quot;markdown-toc-使用共享内存&quot;&gt;使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明-1&quot; id=&quot;markdown-toc-算法说明-1&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单-1&quot; id=&quot;markdown-toc-代码清单-1&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码下载&quot; id=&quot;markdown-toc-代码下载&quot;&gt;代码下载&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h4 id=&quot;共享内存的优点&quot;&gt;共享内存的优点&lt;/h4&gt; &lt;p&gt;使用共享内存的优点在于，一般情况下，共享内存比全局内存的访问速度更快。任何可以使用共享内存的地方，都应该将全局内存替换为共享内存。&lt;/p&gt; &lt;h4 id=&quot;创建共享内存&quot;&gt;创建共享内存&lt;/h4&gt;...</content>
  </entry>
 
  
@@ -151,25 +161,6 @@
    <id>http://localhost:4000/C6678-pcie-00</id>
    <updated>2018-09-20T00:00:00+08:00</updated>
    <content type="html">&lt;p&gt;在DSP和FPGA的PCIe通信中，DSP常被做End Point 端使用。&lt;/p&gt; &lt;h3 id=&quot;使用命令行导入例程&quot;&gt;使用命令行导入例程&lt;/h3&gt; &lt;p&gt;C6678的Processor SDK，其中提供了相关例程的源代码、RTSC配置文件(.cfg)和一个CCS工程的创建脚本，但没有直接提供CCS工程。需要使用CCS命令行创建。&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;eclipsec -noSplash -data “F:/workspace_v7” -application com.ti.ccstudio.apps.projectCreate -ccs.name pcie_demo -ccs.outputType executable -ccs.device TMS320C66XX.TMS320C6678 -ccs.definePathVariable PDK_INSTALL_PATH C:/ti/pdk_c667x_2_0_9/packages @scope project -rtsc.target ti.targets.elf.C66 -rtsc.platform ti.platforms.evm6678 -rtsc.buildProfile release -ccs.args C:/ti/pdk_c667x_2_0_9/packages/ti/drv/pcie/example/sample/c6678/c66/bios/PCIE_evmc6678_wSoCLib_C66BiosExampleProject.txt&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;参考使用：https://e2echina.ti.com/question_answer/dsp_arm/c6000_multicore/f/53/t/10178&lt;/p&gt; &lt;h3 id=&quot;代码说明&quot;&gt;代码说明&lt;/h3&gt; &lt;h4 id=&quot;任务函数初始化&quot;&gt;任务函数初始化&lt;/h4&gt; &lt;p&gt;在main函数中定义任务函数，并启动BIOS。&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; Task_Params params; Task_Params_init (&amp;amp;params); params.stackSize = 36864;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>CUDA并行编程学习（1）-- 现代GPU的体系结构</title>
-   <link href="http://localhost:4000/cuda_learning_01"/>
-   <id>http://localhost:4000/cuda_learning_01</id>
-   <updated>2018-09-19T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/20180919/1.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;center&gt;基于CUDA技术的GPU的体系结构&lt;/center&gt;
-
-&lt;p&gt;上图是一个基于CUDA技术的典型GPU体系结构。这种体系结构由一个高度线程化的多核流处理器(Streaming Multiprocessor，SM)阵列组成。在上图中，两个多流处理器（Streaming Multiprocessor，SM）形成一个构建块，然而，在基于CUDA技术的GPU的每一代之间，每个构建块中SM的数量可能不同。此外，图中的每个SM又包含多个流处理器(Streaming Processor，SP)，它们之间共享控制逻辑和指令缓存。每个GPU都带有若干千兆字节(GB)的 &lt;strong&gt;图形双数据速率&lt;/strong&gt; (Graphics Double Data Rate，GDDR) &lt;strong&gt;DRAM&lt;/strong&gt;，在上图中称为 &lt;strong&gt;全局存储器&lt;/strong&gt;(global memory)。GPU中的这些GDDR DRAM完全不同于CPU体系中安装在主板上的系统DRAM，它们主要是用于图形处理的帧缓冲区存储器。在图形应用程序中，它们用来保存视频图像和用于3D渲染的纹理信息；而对于计算，它们可以作为带宽芯片外存储器。尽管比典型系统存储器的延迟要长，大规模并行应用程序通常通过高带宽来弥补时延。&lt;/p&gt;
-
-&lt;hr /&gt;
-</content>
  </entry>
 
  

@@ -9,9 +9,9 @@
 
 	<title>
         
-            CUDA并行编程学习（4）-- 内存共享 Share Memory - Su'S Blog - SuZhengpeng.COM 
+            从源码开始，在Ubuntu上安装OpenCV - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
+  <meta name="description" content="在Ubuntu上编译源码，并安装配置OpenCV ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -482,7 +482,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_04&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/compile-opencv-on-ubuntu&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
@@ -678,9 +678,9 @@ var init = function() {
 
 			<article id="post-page">
 	
-	27 Sep 2018
+	29 Sep 2018
 	
-	<h3>CUDA并行编程学习（4）-- 内存共享 Share Memory </h3>
+	<h3>从源码开始，在Ubuntu上安装OpenCV </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -703,7 +703,7 @@ var init = function() {
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-基于CUDA的并行编程学习笔记<br><br> 
+在Ubuntu上编译源码，并安装配置OpenCV<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到Facebook" class="bshare-facebook"></a><a title="分享到Twitter" class="bshare-twitter"></a><a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span><br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
 	</div>
 </div>
@@ -713,341 +713,246 @@ var init = function() {
 	<div class="content">
 			
 		<ul id="markdown-toc">
-  <li><a href="#共享内存的优点" id="markdown-toc-共享内存的优点">共享内存的优点</a></li>
-  <li><a href="#创建共享内存" id="markdown-toc-创建共享内存">创建共享内存</a></li>
-  <li><a href="#例程matrix-multiplication" id="markdown-toc-例程matrix-multiplication">例程：Matrix Multiplication</a>    <ul>
-      <li><a href="#不使用共享内存" id="markdown-toc-不使用共享内存">不使用共享内存</a>        <ul>
-          <li><a href="#算法说明" id="markdown-toc-算法说明">算法说明</a></li>
-          <li><a href="#代码清单" id="markdown-toc-代码清单">代码清单</a></li>
-        </ul>
-      </li>
-      <li><a href="#使用共享内存" id="markdown-toc-使用共享内存">使用共享内存</a>        <ul>
-          <li><a href="#算法说明-1" id="markdown-toc-算法说明-1">算法说明</a></li>
-          <li><a href="#代码清单-1" id="markdown-toc-代码清单-1">代码清单</a></li>
-          <li><a href="#代码下载" id="markdown-toc-代码下载">代码下载</a></li>
-        </ul>
-      </li>
+  <li><a href="#所需工具" id="markdown-toc-所需工具">所需工具</a></li>
+  <li><a href="#从源码开始安装" id="markdown-toc-从源码开始安装">从源码开始安装</a>    <ul>
+      <li><a href="#使用cmake-生成-makefile" id="markdown-toc-使用cmake-生成-makefile">使用CMake 生成 makefile</a></li>
+      <li><a href="#使用make-编译并安装" id="markdown-toc-使用make-编译并安装">使用Make 编译并安装</a></li>
+    </ul>
+  </li>
+  <li><a href="#编写demo测试安装结果" id="markdown-toc-编写demo测试安装结果">编写Demo测试安装结果</a>    <ul>
+      <li><a href="#代码清单" id="markdown-toc-代码清单">代码清单</a></li>
+      <li><a href="#编写cmakeliststxt" id="markdown-toc-编写cmakeliststxt">编写CMakeLists.txt</a></li>
+      <li><a href="#使用cmakemake完成编译" id="markdown-toc-使用cmakemake完成编译">使用CMake+Make完成编译</a></li>
     </ul>
   </li>
 </ul>
 
 <hr />
-<h4 id="共享内存的优点">共享内存的优点</h4>
 
-<p>使用共享内存的优点在于，一般情况下，共享内存比全局内存的访问速度更快。任何可以使用共享内存的地方，都应该将全局内存替换为共享内存。</p>
+<h3 id="所需工具">所需工具</h3>
 
-<h4 id="创建共享内存">创建共享内存</h4>
+<p>Ubuntu 系统：系统版本 Ubuntu 16.04.4 LTS</p>
 
-<p>1、创建一个固定大小的共享数组</p>
-<pre>
-<code class="cpp">
-__shared__ float s_in[34];
-</code>
-</pre>
+<p>Cmake： cmake version 3.5.1</p>
 
-<p>2、动态申请数组</p>
+<p>Make： GNU Make 4.1</p>
 
-<p>动态申请数组不需要对核函数进行修改，但是需要在申请数组前加上关键字 extern</p>
+<p>OpenCV 源码：版本 2.4.13.6 下载地址：https://www.opencv.org/releases.html 或 https://github.com/opencv/opencv/archive/2.4.13.6.zip （其他版本的OpenCV类似）</p>
 
-<pre>
-<code class="cpp">
-extern __shared__ float s_in[];
-</code>
-</pre>
+<h3 id="从源码开始安装">从源码开始安装</h3>
+<h4 id="使用cmake-生成-makefile">使用CMake 生成 makefile</h4>
 
-<h3 id="例程matrix-multiplication">例程：Matrix Multiplication</h3>
-<h4 id="不使用共享内存">不使用共享内存</h4>
-<h5 id="算法说明">算法说明</h5>
+<p>1、解压下载到的压缩包</p>
 
-<p>矩阵A与矩阵B相乘得到矩阵C</p>
+<p>2、在源码的根目录下新建文件夹“build”</p>
 
-<p><img src="/img/20180927/01.PNG" width="500" /></p>
+<p>3、进入到新建的”build”文件下</p>
 
-<p>如上图所示，每个线程读取矩阵A的一行和矩阵B的一列，计算相应的结果C。因此A从全局内存中读取width次B，B 从全局内存中读取Aheight次。</p>
+<blockquote>
+  <p>cd build<br />
+cmake ../</p>
+</blockquote>
 
-<h5 id="代码清单">代码清单</h5>
+<p><img src="/img/20180929/2018-09-29 16-31-18.png" width="700" /></p>
+<center>设置cmake选项</center>
 
-<pre>
-<code class="cpp">
-// Matrices are stored in row-major order: 
-// M(row, col) = *(M.elements + row * M.width + col) 
-typedef struct {    
-      int width;    
-      int height;    
-      float* elements; 
-    } Matrix; 
+<p>这里有两个需要注意的选项：</p>
 
-// Thread block size 
-#define BLOCK_SIZE 16 
+<p>CMAKE_INSTALL_PREFIX             /usr/local</p>
 
-// Forward declaration of the matrix multiplication kernel 
-__global__ void MatMulKernel(const Matrix, const Matrix, Matrix); 
+<p>WITH_CUDA                               OFF</p>
 
-// Matrix multiplication - Host code 
-// Matrix dimensions are assumed to be multiples of BLOCK_SIZE 
-void MatMul(const Matrix A, const Matrix B, Matrix C) {    
-  // Load A and B to device memory    
-  Matrix d_A;    
-  d_A.width = A.width; 
-  d_A.height = A.height;    
-  size_t size = A.width * A.height * sizeof(float);    
-  cudaMalloc(&amp;d_A.elements, size);    
-  cudaMemcpy(d_A.elements, A.elements, size,               
-  cudaMemcpyHostToDevice);    
-  Matrix d_B;    
-  d_B.width = B.width; 
-  d_B.height = B.height;    
-  size = B.width * B.height * sizeof(float);    
-  cudaMalloc(&amp;d_B.elements, size);    
-  cudaMemcpy(d_B.elements, B.elements, size, cudaMemcpyHostToDevice);    
-  // Allocate C in device memory    
-  Matrix d_C;    
-  d_C.width = C.width; 
-  d_C.height = C.height;    
-  size = C.width * C.height * sizeof(float);    
-  cudaMalloc(&amp;d_C.elements, size);    
-  // Invoke kernel    
-  dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);    
-  dim3 dimGrid(B.width / dimBlock.x, A.height / dimBlock.y);    
-  MatMulKernel&lt;&lt;&lt;dimGrid, dimBlock&gt;&gt;&gt;(d_A, d_B, d_C);    
+<p>第一个选项是选择最后的安装位置，第二个选项是选择是否需要安装cuda版本</p>
 
-  // Read C from device memory    
-  cudaMemcpy(C.elements, Cd.elements, size, cudaMemcpyDeviceToHost);    
-  
-  // Free device memory    
-  cudaFree(d_A.elements);    
-  cudaFree(d_B.elements);    
-  cudaFree(d_C.elements); 
-  } 
-  
-  // Matrix multiplication kernel called by MatMul()
-   __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C) {    
-     // Each thread computes one element of C   
-     // by accumulating results into Cvalue   
-     float Cvalue = 0;    
-     int row = blockIdx.y * blockDim.y + threadIdx.y;    
-     int col = blockIdx.x * blockDim.x + threadIdx.x;    
-     for (int e = 0; e &lt; A.width; ++e)        
-        Cvalue += A.elements[row * A.width + e] * B.elements[e * B.width + col];    
-      C.elements[row * C.width + col] = Cvalue;
-   }
-</code>
-</pre>
+<p>完成设置后，按c保存设置，再按q退出设置界面，然后进入下一步</p>
 
-<h4 id="使用共享内存">使用共享内存</h4>
-<h5 id="算法说明-1">算法说明</h5>
+<h4 id="使用make-编译并安装">使用Make 编译并安装</h4>
 
-<p><img src="/img/20180927/02.PNG" width="500" /></p>
+<p>在使用cmake生成Makefile完成之后，开始使用make进行编译和安装。这一切同样是在之前生成的build文件夹之下完成的。</p>
 
-<p>在使用共享内存的情况的情况下，每个线程块负责计算矩阵C的子矩阵$C_{sub}$，而线程块中的线程负责计算子矩阵$C_{sub}$中的元素。$C_{sub}$的计算方法如上图所示。$C_{sub}$可以看做是矩阵A和B的两个矩形子矩阵相乘。</p>
+<p>1、进入到build文件夹下</p>
 
-<p>为了方便计算和充分利用设备资源，要将两个矩阵尽可能的划分为维度为 block _size 的方阵。</p>
+<blockquote>
+  <p>make install</p>
+</blockquote>
 
-<p>在具体的代码实现中，为了计算，首先从全局内存中采用 <strong>一个线程加载一个元素</strong> 的方式，将每个方阵加载到共享内存中。</p>
+<p>输入命令，等待完成编译和安装，这一过程需要一段较长的时间，视电脑的配置而定。</p>
 
-<p>整个过程中，A从全局内存中读取 (B,width/block_size) 次，而B从全局矩阵中读取 (A.height/block_size) 次。</p>
+<h3 id="编写demo测试安装结果">编写Demo测试安装结果</h3>
+<h4 id="代码清单">代码清单</h4>
 
-<h5 id="代码清单-1">代码清单</h5>
-
-<p>这一部分代码定义了矩阵的数据结构，其中包括矩阵长和宽，以及矩阵的步长。</p>
+<p>在完成了编译和安装之后，需要编写一个简单的demo测试一下安装是否成功。具体的代码如下所列。其实现的功能就是读取一张图片并显示出来。</p>
 
 <pre>
 <code class="cpp">
+#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
 
-// Matrices are stored in row-major order: 
-// M(row, col) = *(M.elements + row * M.stride + col) 
-typedef struct {    
-    int width;   
-    int height;    
-    int stride;     
-    float* elements;
-    } Matrix; 
-
-</code>
-</pre>
-
-<p>函数GetElement，实现了从矩阵的指定位置提取元素值。</p>
-
-<pre>
-<code class="cpp">
-// Get a matrix element 
-__device__ float GetElement(const Matrix A, int row, int col) 
-{   
-   return A.elements[row * A.stride + col]; 
+using namespace std;
+using namespace cv; 
+int main()
+{	
+    Mat srcImage = imread("./lena.jpg");	
+    imshow("srcIMage",srcImage); 	
+    waitKey(0); 	
+    return 0;
+    
 }
 </code>
 </pre>
 
-<p>函数SetElement，实现了给矩阵的指定位置赋值。</p>
+<h4 id="编写cmakeliststxt">编写CMakeLists.txt</h4>
+
+<p>编写完成代码，还需要手动编写CMakeLists.txt文件，以方便使用CMake生成makefile，并使用make完成最终的编译。</p>
 
 <pre>
 <code class="cpp">
 
-// Set a matrix element 
-__device__ void SetElement(Matrix A, int row, int col, float value) 
-{    
-  A.elements[row * A.stride + col] = value;
-}
+set(OpenCV_DIR "/usr/local/opencv/share/OpenCV")
+
+# project name
+PROJECT(opencv_lena)
+
+# requirement of cmake version
+cmake_minimum_required(VERSION 3.5)
+
+# set the directory of executable files
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${opencv_lena_SOURCE_DIR}/bin)
+
+# find required opencv
+find_package(OpenCV REQUIRED)
+
+# directory of opencv headers 包含Opencv的头文件
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# name of executable file and path of source file
+add_executable(opencv_lena main.cpp)
+
+# directory of opencv library 设置包含的头文件的路径
+link_directories(${OpenCV_LIBRARY_DIRS})
+
+# opencv libraries 设置库文件的路径
+target_link_libraries(opencv_lena ${OpenCV_LIBS})
 
 </code>
 </pre>
 
-<p>函数GetSubMatrix，实现了提取矩阵的指定大小的子矩阵</p>
+<p>在CMakelists.txt中：</p>
 
-<pre>
-<code class="cpp">
+<p>1、多版本OpenCV切换</p>
 
-// Get the BLOCK_SIZExBLOCK_SIZE sub-matrix Asub of A that is 
-// located col sub-matrices to the right and row sub-matrices down 
-// from the upper-left corner of A 
-__device__ Matrix GetSubMatrix(Matrix A, int row, int col) 
-{    
-  Matrix Asub;    Asub.width    = BLOCK_SIZE;    
-  Asub.height   = BLOCK_SIZE;    
-  Asub.stride   = A.stride;    
-  Asub.elements = &amp;A.elements[A.stride * BLOCK_SIZE * row  + BLOCK_SIZE * col];   
-   return Asub;
- } 
-</code>
-</pre>
+<blockquote>
+  <p>set(OpenCV_DIR “/usr/local/opencv/share/OpenCV”)</p>
+</blockquote>
 
-<p>宏定义BLOCK_SIZE的大小</p>
+<p>如果安装了多个版本的OpenCV，则需要上述语句，告诉CMake 所需的OpenCV版本的安装路径在哪里。</p>
 
-<pre>
-<code class="cpp">
- // Thread block size 
- #define BLOCK_SIZE 16 
-</code>
-</pre>
+<p>2、设置项目名称</p>
 
-<p>声明函数</p>
+<blockquote>
+  <p># project name<br />
+PROJECT(opencv_lena)</p>
+</blockquote>
 
-<pre>
-<code class="cpp">
-// Forward declaration of the matrix multiplication kernel 
-__global__ void MatMulKernel(const Matrix, const Matrix, Matrix); 
-</code>
-</pre>
+<p>3、设置CMake所需的最低版本</p>
 
-<p>实现矩阵相乘</p>
+<blockquote>
+  <p># requirement of cmake version<br />
+cmake_minimum_required(VERSION 3.5)</p>
+</blockquote>
 
-<pre>
-<code class="cpp">
-// Matrix multiplication - Host code 
-// Matrix dimensions are assumed to be multiples of BLOCK_SIZE 
-void MatMul(const Matrix A, const Matrix B, Matrix C) 
-{    
-  // Load A and B to device memory    
-  Matrix d_A;    
-  d_A.width = d_A.stride = A.width;
-  d_A.height = A.height;    
-  size_t size = A.width * A.height * sizeof(float);   
-  cudaMalloc(&amp;d_A.elements, size);   
-  cudaMemcpy(d_A.elements, A.elements, size, cudaMemcpyHostToDevice);    
-  
-  Matrix d_B;    
-  d_B.width = d_B.stride = B.width; 
-  d_B.height = B.height;   
-  size = B.width * B.height * sizeof(float);
-  cudaMalloc(&amp;d_B.elements, size);    
-  cudaMemcpy(d_B.elements, B.elements, size, cudaMemcpyHostToDevice);    
+<p>4、设置最终生成的二进制文件的位置</p>
 
-// Allocate C in device memory   
-  Matrix d_C;    
-  d_C.width = d_C.stride = C.width; 
-  d_C.height = C.height;    
-  size = C.width * C.height * sizeof(float);   
-  cudaMalloc(&amp;d_C.elements, size);    
-  
-  // Invoke kernel    
-  dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);    
-  dim3 dimGrid(B.width / dimBlock.x, A.height / dimBlock.y);    
-  MatMulKernel&lt;&lt;&lt;dimGrid, dimBlock&gt;&gt;&gt;(d_A, d_B, d_C);    
+<blockquote>
+  <p># set the directory of executable files
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${opencv_lena_SOURCE_DIR}/bin)</p>
+</blockquote>
 
-  // Read C from device memory    
-  cudaMemcpy(C.elements, d_C.elements, size, cudaMemcpyDeviceToHost);  
+<p>5、搜寻OpenCV所需的可执行文件</p>
 
-  // Free device memory    
-  cudaFree(d_A.elements);    
-  cudaFree(d_B.elements);    
-  cudaFree(d_C.elements); } 
-</code>
-</pre>
+<blockquote>
+  <p># find required opencv
+find_package(OpenCV REQUIRED)</p>
+</blockquote>
 
-<p>该例程的核函数</p>
+<p>6、添加包含OpenCV的头文件</p>
 
-<pre>
-<code class="cpp">
-// Matrix multiplication kernel called by MatMul() 
-__global__ void MatMulKernel(Matrix A, Matrix B, Matrix C) 
-{   
-  // Block row and column    
-  int blockRow = blockIdx.y;    
-  int blockCol = blockIdx.x;    
-  
-  // Each thread block computes one sub-matrix Csub of C    
-  Matrix Csub = GetSubMatrix(C, blockRow, blockCol);   
+<blockquote>
+  <p># directory of opencv headers 包含Opencv的头文件
+include_directories(${OpenCV_INCLUDE_DIRS})</p>
+</blockquote>
 
-  // Each thread computes one element of Csub    
-  // by accumulating results into Cvalue    
-  float Cvalue = 0;    
+<p>7、向工程中添加代码文件</p>
 
-  // Thread row and column within Csub    
-  int row = threadIdx.y;    
-  int col = threadIdx.x;   
-   // Loop over all the sub-matrices of A and B that are    
-   // required to compute Csub    
-   // Multiply each pair of sub-matrices together   
-    // and accumulate the results    
-    for (int m = 0; m &lt; (A.width / BLOCK_SIZE); ++m) {       
-       // Get sub-matrix Asub of A        
-       Matrix Asub = GetSubMatrix(A, blockRow, m);      
+<blockquote>
+  <p># name of executable file and path of source file
+add_executable(opencv_lena main.cpp)</p>
+</blockquote>
 
-        // Get sub-matrix Bsub of B        
-        Matrix Bsub = GetSubMatrix(B, m, blockCol);       
+<p>8、连接包含头文件的路径</p>
 
-         // Shared memory used to store Asub and Bsub respectively        
-         __shared__ float As[BLOCK_SIZE][BLOCK_SIZE];        
-         __shared__ float Bs[BLOCK_SIZE][BLOCK_SIZE];        
+<blockquote>
+  <p># directory of opencv library 设置包含的头文件的路径
+link_directories(${OpenCV_LIBRARY_DIRS})</p>
+</blockquote>
 
-         // Load Asub and Bsub from device memory to shared memory      
-         // Each thread loads one element of each sub-matrix        
-        As[row][col] = GetElement(Asub, row, col);       
-        Bs[row][col] = GetElement(Bsub, row, col);        
-        
-        // Synchronize to make sure the sub-matrices are loaded       
-         // before starting the computation        
-         __syncthreads();
+<p>9、连接所需的库文件</p>
 
-        // Multiply Asub and Bsub together        
-        for (int e = 0; e &lt; BLOCK_SIZE; ++e)            
-            Cvalue += As[row][e] * Bs[e][col];        
-            
-            // Synchronize to make sure that the preceding        
-            // computation is done before loading two new       
-            // sub-matrices of A and B in the next iteration       
-          __syncthreads();    
-      }    
-      // Write Csub to device memory    
-      // Each thread writes one element    
-      
-      SetElement(Csub, row, col, Cvalue); 
-  }
-</code>
-</pre>
+<blockquote>
+  <p># opencv libraries 设置库文件的路径
+target_link_libraries(opencv_lena ${OpenCV_LIBS})</p>
+</blockquote>
 
-<h5 id="代码下载">代码下载</h5>
+<h4 id="使用cmakemake完成编译">使用CMake+Make完成编译</h4>
 
-<p>完整工程代码下载：<a href="./code/Share_Memory.zip">下载地址</a></p>
+<p>完成了CMakeLists.txt文件的编写，下面使用CMake和Make完成demo工程最后的编译工作。</p>
 
-<p>环境配置：Ubuntu CUDA 9.0</p>
+<p>1、使用CMake生成Makefile</p>
+
+<p>在工程文件夹下面新建build文件，然后进入。</p>
+
+<p>输入：</p>
+
+<blockquote>
+  <p>cmake ..</p>
+</blockquote>
+
+<p>等待完成</p>
+
+<blockquote>
+  <p>– Configuring done<br />
+– Generating done<br />
+– Build files have been written to: /home/video201/imszp/opencv_example/test/build</p>
+</blockquote>
+
+<p>2、使用Make进行编译</p>
+
+<p>进入build文件夹，输入命令：</p>
+
+<blockquote>
+  <p>make</p>
+</blockquote>
+
+<p>等待完成编译</p>
+
+<blockquote>
+  <p>Scanning dependencies of target opencv_lena<br />
+[ 50%] Building CXX object CMakeFiles/opencv_lena.dir/main.cpp.o<br />
+[100%] Linking CXX executable ../bin/opencv_lena<br />
+[100%] Built target opencv_lena</p>
+</blockquote>
+
+<p>完成编译之后，在即可在CMakeLists.txt中设定的文件夹下面看到生成的二进制可执行文件。运行，即可看到结果如下：</p>
+
+<p><img src="/img/20180929/2018-09-29 17-55-23.png" width="500" /></p>
+<center>Demo运行结果</center>
 
 <hr />
 
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 	<div class="shang_con">
 			<p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
@@ -1341,7 +1246,7 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C)
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_04&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/compile-opencv-on-ubuntu&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div><br>
 
 
