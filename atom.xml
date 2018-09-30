@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-29T18:20:36+08:00</updated>
+ <updated>2018-09-30T15:51:16+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>OpenCV 4.0 Alpha 带来的新变化</title>
+   <link href="http://localhost:4000/hello-opencv-4"/>
+   <id>http://localhost:4000/hello-opencv-4</id>
+   <updated>2018-09-30T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;新特性&quot;&gt;新特性&lt;/h3&gt; &lt;p&gt;最近OpenCV发布了全新的OpenCV4.0 alpha版 （下载地址 ~ https://github.com/opencv/opencv/archive/4.0.0-alpha.zip ）&lt;/p&gt; &lt;p&gt;根据其在官网上的说明，4.0是在3.4之上发布的全新版本，对3.4进行了优化，并修复了其中存在的若干BUG。&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;ONNX parser has been added to OpenCV DNN module. It supports various classification networks, such as AlexNet, Inception v2, Resnet, VGG etc. The tiny YOLO v2 object detection network is also partially...</content>
+ </entry>
 
  
 
@@ -151,16 +161,6 @@
 &lt;p&gt;（2）在EP端改动0x5b000000内存的内容，在RC端0x20100000能够看到对应的变化，从RC端读/写0x20100000和从EP端读/写0x5b000000，结果是一样的。&lt;/p&gt;
 
 </content>
- </entry>
-
- 
-
- <entry>
-   <title>C6678 PCIE（0）-- PDK_c667x_2_0_9 测试例程</title>
-   <link href="http://localhost:4000/C6678-pcie-00"/>
-   <id>http://localhost:4000/C6678-pcie-00</id>
-   <updated>2018-09-20T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;在DSP和FPGA的PCIe通信中，DSP常被做End Point 端使用。&lt;/p&gt; &lt;h3 id=&quot;使用命令行导入例程&quot;&gt;使用命令行导入例程&lt;/h3&gt; &lt;p&gt;C6678的Processor SDK，其中提供了相关例程的源代码、RTSC配置文件(.cfg)和一个CCS工程的创建脚本，但没有直接提供CCS工程。需要使用CCS命令行创建。&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;eclipsec -noSplash -data “F:/workspace_v7” -application com.ti.ccstudio.apps.projectCreate -ccs.name pcie_demo -ccs.outputType executable -ccs.device TMS320C66XX.TMS320C6678 -ccs.definePathVariable PDK_INSTALL_PATH C:/ti/pdk_c667x_2_0_9/packages @scope project -rtsc.target ti.targets.elf.C66 -rtsc.platform ti.platforms.evm6678 -rtsc.buildProfile release -ccs.args C:/ti/pdk_c667x_2_0_9/packages/ti/drv/pcie/example/sample/c6678/c66/bios/PCIE_evmc6678_wSoCLib_C66BiosExampleProject.txt&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;参考使用：https://e2echina.ti.com/question_answer/dsp_arm/c6000_multicore/f/53/t/10178&lt;/p&gt; &lt;h3 id=&quot;代码说明&quot;&gt;代码说明&lt;/h3&gt; &lt;h4 id=&quot;任务函数初始化&quot;&gt;任务函数初始化&lt;/h4&gt; &lt;p&gt;在main函数中定义任务函数，并启动BIOS。&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; Task_Params params; Task_Params_init (&amp;amp;params); params.stackSize = 36864;...</content>
  </entry>
 
  
