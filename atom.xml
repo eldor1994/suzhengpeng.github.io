@@ -4,12 +4,41 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-09-30T15:51:16+08:00</updated>
+ <updated>2018-10-10T09:16:31+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>编译GPU版本的OpenCV</title>
+   <link href="http://localhost:4000/compile-opencv-with-cuda-on-ubuntu"/>
+   <id>http://localhost:4000/compile-opencv-with-cuda-on-ubuntu</id>
+   <updated>2018-10-09T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;p&gt;编译GPU版本的OpenCV与CPU版本的OpenCV并没有太大的区别，只有几个需要在细节上注意的地方。除此之外，可以参考： &lt;a href=&quot;./compile-opencv-on-ubuntu&quot; target=&quot;_blank&quot;&gt;《从源码开始，在Ubuntu上安装OpenCV》&lt;/a&gt; 这篇文章讲述的方法进行。&lt;/p&gt; &lt;p&gt;在安装之前，要确认已经在电脑中正确安装了 CUDA 开发包和 NVCC 编译器。&lt;/p&gt; &lt;h3 id=&quot;配置cmake&quot;&gt;配置CMAKE&lt;/h3&gt; &lt;p&gt;WITH_CUDA ON&lt;/p&gt; &lt;p&gt;WITH_CUBLAS ON&lt;/p&gt; &lt;p&gt;WITH_CUFFT ON&lt;/p&gt; &lt;p&gt;WITH_NVCUVIDs ON&lt;/p&gt; &lt;p&gt;CUDA_FAST_MATH ON&lt;/p&gt; &lt;p&gt;其他的选项默认即可。&lt;/p&gt; &lt;h3 id=&quot;可能会出现的bug&quot;&gt;可能会出现的BUG&lt;/h3&gt; &lt;p&gt;在使用CUDA 9.0的时候，编译OpenCV可能会如下的错误，而且无论是 OpenCV 2.x 还是 OpenCV 3.x 都有出现的可能，但是解决方法略有差别。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;错误信息&lt;/strong&gt; ：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;CMake Error: The following variables are used...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>『穿越河西 慢游敦煌』 第一日 - 兰州</title>
+   <link href="http://localhost:4000/2018_1001_1"/>
+   <id>http://localhost:4000/2018_1001_1</id>
+   <updated>2018-10-08T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引
+{:toc}  --&gt;
+
+&lt;!-- ---- --&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/201810/IMG_5620.JPG&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://weibo.com/ttarticle/p/show?id=2309404293363368122056&quot; target=&quot;_blank&quot;&gt;&lt;center&gt;进入微博头条文章查看&lt;/center&gt;&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
 
  
 
@@ -89,78 +118,6 @@
    <id>http://localhost:4000/visual_tracking_01</id>
    <updated>2018-09-23T00:00:00+08:00</updated>
    <content type="html">&lt;hr /&gt; &lt;h3 id=&quot;使用神经网络进行特征提取&quot;&gt;使用神经网络进行特征提取&lt;/h3&gt; &lt;p&gt;卷积神经网络（CNN） 具有极高的目标特征提取与表达能力，因此将CNN应用于目标跟踪的特征提取阶段，对提高目标跟踪的精度和鲁棒性具有重要的意义。&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180923/01.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt; &lt;center&gt;卷积神经网络的基本结构图&lt;/center&gt; &lt;p&gt;卷积层作特征提取层对目标的特征在不同层次具有不同的描述能力, 卷积层越高, 图像特征分辨率越低，获得的特征也就越抽象, 相反语义信息越丰富, 利用不同卷积层目标特征的不同表达, 针对目标状态有机地结合不同卷积层信息, 对不同卷积层进行区别权重处理, 利用不同目标的描述能力, 对目标跟踪的鲁棒性与精确性有很大的提升。&lt;/p&gt; &lt;p&gt;池化层是特征映射层, 通过对每个特征映射图的局部区域进行加权求和, 增加偏置后通过一个非线性函数在池化层得到新的特征图。池化的作用是: (1) 对特征图进行降维, 避免过拟合; (2) 可以一定程度上缓解目标的形变所引起的问题。&lt;/p&gt; &lt;p&gt;全连接层用于连接所有的特征, 将输出值送给分类器 (如Softmax分类器) , 起到一个分类的作用。&lt;/p&gt; &lt;h3 id=&quot;使用神经网络模拟整个相关滤波过程&quot;&gt;使用神经网络模拟整个相关滤波过程&lt;/h3&gt; &lt;p&gt;相关滤波算法的核心思想是将目标模板与搜索区域内滑动窗口取得的图像块进行相关性匹配, 响应最大位置处对应的图像块为目标图像块。相比传统特征, 深度神经网络提取的图像卷积特征具有良好的抗干扰能力, 在大规模图像分类比赛中取得巨大的成功。&lt;/p&gt; &lt;p&gt;使用神经网络模拟相关滤波的整个过程.在相关滤波中, 需要保存模板信息并提取搜索区域特征, 因此基于相关滤波思想的网络一般都采用孪生网络 (Siamese Network) 结构, 其中一条支路保存目标模板信息, 另一条支路用于搜索区域特征提取, 最后将两部分特征进行相关操作, 得到响应图像 (Response...</content>
- </entry>
-
- 
-
- <entry>
-   <title>目标跟踪（0）-- 视觉目标跟踪技术难点</title>
-   <link href="http://localhost:4000/visual_tracking_00"/>
-   <id>http://localhost:4000/visual_tracking_00</id>
-   <updated>2018-09-21T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt;
-
-&lt;p&gt;由于目标跟踪过程中目标与环境信息的变化导致目标特征的不断变化, 以及目标跟踪对跟踪速度与精度的要求, 导致目标跟踪存在如下几个主要难点:&lt;/p&gt;
-
-&lt;p&gt;1) 目标外观变化。由于物体活动、非刚体形变 (如人跳跃、行走等) 导致的目标外形发生变化, 或拍摄角度变化导致的目标外观变化等。&lt;/p&gt;
-
-&lt;p&gt;2) 尺度变化。由于拍摄距离等因素导致目标在影像中所占区域大小发生变化。&lt;/p&gt;
-
-&lt;p&gt;3) 环境变化。由于拍摄环境 (如光照、天气等) 变化导致的目标影像成像特点等的变化。&lt;/p&gt;
-
-&lt;p&gt;4) 目标快速运动。由于目标的快速移动导致在影像中的坐标位置发生突变, 影响目标搜索的速度和精度。&lt;/p&gt;
-
-&lt;p&gt;5) 目标遮挡、出视野。由于拍摄中目标被其他物体遮挡导致的特征部分或全部损失以及由于拍摄时目标跳出视野重新跟踪导致的跟踪失败问题。&lt;/p&gt;
-
-&lt;p&gt;6) 成像影响。由于红外摄像仪分辨率较低, 目标分辨率低, 边缘与目标特征不明显, 有时目标与环境差异较小以及任务设备等对焦问题等都会导致目标跟踪时特征的提取困难。&lt;/p&gt;
-
-&lt;p&gt;上述因素对目标跟踪中的目标特征提取以及目标搜索策略具有重大影响, 在实际跟踪过程中, 较为准确地及时处理这些因素所造成的影响才能保证目标跟踪的精确性与鲁棒性。&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-
-&lt;p&gt;[1]葛宝义,左宪章,胡永江.视觉目标跟踪方法研究综述[J].中国图象图形学报,2018,23(08):1091-1107.&lt;/p&gt;
-</content>
- </entry>
-
- 
-
- <entry>
-   <title>C6678 PCIE（1）-- 配置地址转换</title>
-   <link href="http://localhost:4000/C6678-pcie-01"/>
-   <id>http://localhost:4000/C6678-pcie-01</id>
-   <updated>2018-09-21T00:00:00+08:00</updated>
-   <content type="html">&lt;p&gt;&lt;img src=&quot;/img/20180919/2.jpg&quot; width=&quot;700&quot; alt=&quot;孪生网络&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;1、&lt;strong&gt;Outbound Address Translation&lt;/strong&gt;（OAT）&lt;/p&gt;
-
-&lt;p&gt;存储器域访问PCI域，把设备内部地址映射到PCIE总线上。&lt;/p&gt;
-
-&lt;p&gt;2、&lt;strong&gt;Inbound  Address Translation&lt;/strong&gt;（IAT）&lt;/p&gt;
-
-&lt;p&gt;PCI域访问存储器域、把PCIE总线地址映射到设备内部上。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;RC访问EP&lt;/strong&gt;: RC存储器域-&amp;gt;outbound-&amp;gt;RC PCI域-&amp;gt;EP PCI域-&amp;gt;inbound-&amp;gt;EP存储器域&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;EP访问RC&lt;/strong&gt;：EP存储器域-&amp;gt;outbound-&amp;gt;EP PCI域-&amp;gt;RC PCI域-&amp;gt;inbound-&amp;gt;RC存储器域&lt;/p&gt;
-
-&lt;p&gt;Out即出去，发起访问的一侧，须要进行outbound，去访问对端&lt;/p&gt;
-
-&lt;p&gt;In即进来，被访问的一侧，须要进行inbound，使得对端能够访问&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;EP访问RC演示样例（蓝色箭头）&lt;/strong&gt;：&lt;/p&gt;
-
-&lt;p&gt;（1）首先，EP须要配置outbound，RC须要inbound(一般RC端不用配)，这样就建立了EP端0x20000000到RC端0x50000000的映射&lt;/p&gt;
-
-&lt;p&gt;（2）在RC端改动0x50000000的内容，EP端能够看到对应的变化。从EP端读/写0x20000000和从RC端读/写0x50000000，结果是一样的&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;RC访问EP演示样例（黑色箭头）&lt;/strong&gt;：&lt;/p&gt;
-
-&lt;p&gt;（1）首先，RC端须要配置outbound(一般内核中配好)，EP端须要inbound(0x5b000000 inbound到BAR2)，这样就建立了RC端0x20100000（BAR2）到EP端0x5b000000的映射。&lt;/p&gt;
-
-&lt;p&gt;（2）在EP端改动0x5b000000内存的内容，在RC端0x20100000能够看到对应的变化，从RC端读/写0x20100000和从EP端读/写0x5b000000，结果是一样的。&lt;/p&gt;
-
-</content>
  </entry>
 
  

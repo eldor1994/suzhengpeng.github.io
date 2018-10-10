@@ -112,7 +112,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>               </small>');
+        info.setContent('<small>📍 <a href="/tag/tsingtao.html">山东省青岛市</a><br>                   </small>');
         info.setPosition(tsingtao); 
     });
 	//济南
@@ -123,7 +123,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>               </small>');
+        info.setContent('<small>📍 <a href="/tag/ji%27nan.html">山东省济南市</a><br>                   </small>');
         info.setPosition(jinan); 
     });
 	//xian
@@ -134,7 +134,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>               </small>');
+        info.setContent('<small>📍 <a href="/tag/xi%27an.html">陕西省西安市</a><br>                   </small>');
         info.setPosition(xian); 
     });
 	//xin-an
@@ -189,7 +189,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>               </small>');
+                info.setContent('<small>📍 <a href="/tag/zheng%27zhou.html">河南省郑州市</a><br>                   </small>');
         info.setPosition(zhengzhou); 
     });
 	//乾县 Qianxian
@@ -200,7 +200,7 @@ var init = function() {
     //获取标记
     qq.maps.event.addListener(marker, 'click', function() {
         info.open(); 
-                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>               </small>');
+                info.setContent('<small>📍 <a href="/tag/qian%27xian.html">陕西省乾县</a><br>                   </small>');
         info.setPosition(qianxian); 
     });
 	
@@ -259,7 +259,7 @@ var init = function() {
 	
 		<div class="footer-ico"></div>
 		<br>
-		Suzhengpeng @ Xidian University 
+		Suzhengpeng.COM
 		<br>
 			 <div class="footer-power">
 		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
@@ -287,6 +287,18 @@ var init = function() {
 	    
 		
 			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		
 
 	    
@@ -421,6 +433,14 @@ var init = function() {
 				
 				
 				
+				
+				
+				
+				
+				
+				
+				
+				
 		
 	</div>
 	<div class="footer-two-1">
@@ -453,6 +473,14 @@ var init = function() {
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				
@@ -571,6 +599,14 @@ var init = function() {
 	    
 		
 	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
 		<br>
 
 	 <br>Suzhengpeng @ Xidian University<br><br>
@@ -610,6 +646,14 @@ var init = function() {
 				
 			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
 		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
 	  		
 				
 	  		
@@ -757,11 +801,11 @@ var init = function() {
 
 <p>2、在源码的根目录下新建文件夹“build”</p>
 
-<p>3、进入到新建的”build”文件下</p>
+<p>3、进入到新建的”build”文件下，生成CMAKE配置环境，并进行配置</p>
 
 <blockquote>
   <p>cd build<br />
-cmake ../</p>
+ccmake .</p>
 </blockquote>
 
 <p>首先是按照要求生成config，待其自动完成后，对cmake选项进行配置。</p>
@@ -778,6 +822,12 @@ cmake ../</p>
 <p>第一个选项是选择最后的安装位置，第二个选项是选择是否需要安装cuda版本</p>
 
 <p>完成设置后，按c保存设置，再按q退出设置界面，然后进入下一步</p>
+
+<p>4、生成Makefile，并查看CMAKE的配置情况</p>
+
+<blockquote>
+  <p>cmake .</p>
+</blockquote>
 
 <h4 id="使用make-编译并安装">使用Make 编译并安装</h4>
 
@@ -1036,7 +1086,7 @@ target_link_libraries(opencv_lena ${OpenCV_LIBS})</p>
 	
 		<div class="footer-ico"></div>
 		<br>
-		Suzhengpeng @ Xidian University 
+		Suzhengpeng.COM
 		<br>
 			 <div class="footer-power">
 		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
@@ -1064,6 +1114,18 @@ target_link_libraries(opencv_lena ${OpenCV_LIBS})</p>
 	    
 		
 			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
 		
 
 	    
@@ -1198,6 +1260,14 @@ target_link_libraries(opencv_lena ${OpenCV_LIBS})</p>
 				
 				
 				
+				
+				
+				
+				
+				
+				
+				
+				
 		
 	</div>
 	<div class="footer-two-1">
@@ -1230,6 +1300,14 @@ target_link_libraries(opencv_lena ${OpenCV_LIBS})</p>
 				
 			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
 		
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				
