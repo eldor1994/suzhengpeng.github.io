@@ -674,6 +674,17 @@ img[title="Monochrome"] {
   -ms-border-radius: 4px;
   border-radius: 4px; }
 
+#posts-relat-source {
+  color: #F8F1F0;
+  font-size: 70%;
+  font-weight: 300;
+  background-color: #0b098d;
+  border: 2px solid #0b098d;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }
+
 #posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
   color: #F8F1F0;
   font-size: 90%;
