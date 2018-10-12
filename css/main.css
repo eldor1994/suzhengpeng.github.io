@@ -664,6 +664,7 @@ img[title="Monochrome"] {
     font-size: 110%; }
 
 #posts-relat-data a:link, #posts-relat-data a:visited, #posts-relat-data a:active {
+  white-space: nowrap;
   color: #F8F1F0;
   font-size: 90%;
   font-weight: 300;
@@ -677,6 +678,7 @@ img[title="Monochrome"] {
   color: #E9F01D; }
 
 #posts-relat-source a:link, #posts-relat-source a:visited, #posts-relat-source a:active {
+  white-space: nowrap;
   color: #F8F1F0;
   font-size: 90%;
   font-weight: 300;
@@ -690,6 +692,7 @@ img[title="Monochrome"] {
   color: #E9F01D; }
 
 #posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
+  white-space: nowrap;
   color: #F8F1F0;
   font-size: 90%;
   font-weight: 300;
