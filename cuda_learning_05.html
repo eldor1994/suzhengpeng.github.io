@@ -9,9 +9,9 @@
 
 	<title>
         
-            目标跟踪（0）-- 视觉目标跟踪技术难点 - Su'S Blog - SuZhengpeng.COM 
+            CUDA并行编程学习（5）-- 异步并行 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="视觉目标跟踪方法研究综述 ">
+  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -525,7 +525,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 			<small>扫码分享</small><br>
 
@@ -745,14 +745,14 @@ var init = function() {
 		<main>
 
 			<article id="post-page">
-		<!-- Sep 21, 2018 -->
+		<!-- Oct 13, 2018 -->
 		
 		<!--  -->
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 21, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;目标跟踪（0）-- 视觉目标跟踪技术难点   </h3>
+	<h3>&nbsp;&nbsp;CUDA并行编程学习（5）-- 异步并行   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -775,7 +775,7 @@ var init = function() {
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-视觉目标跟踪方法研究综述<br><br> 
+基于CUDA的并行编程学习笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -795,32 +795,129 @@ var init = function() {
 <br>
 	<div class="content">
 			
-		<hr />
-
-<p>由于目标跟踪过程中目标与环境信息的变化导致目标特征的不断变化, 以及目标跟踪对跟踪速度与精度的要求, 导致目标跟踪存在如下几个主要难点:</p>
-
-<p>1) 目标外观变化。由于物体活动、非刚体形变 (如人跳跃、行走等) 导致的目标外形发生变化, 或拍摄角度变化导致的目标外观变化等。</p>
-
-<p>2) 尺度变化。由于拍摄距离等因素导致目标在影像中所占区域大小发生变化。</p>
-
-<p>3) 环境变化。由于拍摄环境 (如光照、天气等) 变化导致的目标影像成像特点等的变化。</p>
-
-<p>4) 目标快速运动。由于目标的快速移动导致在影像中的坐标位置发生突变, 影响目标搜索的速度和精度。</p>
-
-<p>5) 目标遮挡、出视野。由于拍摄中目标被其他物体遮挡导致的特征部分或全部损失以及由于拍摄时目标跳出视野重新跟踪导致的跟踪失败问题。</p>
-
-<p>6) 成像影响。由于红外摄像仪分辨率较低, 目标分辨率低, 边缘与目标特征不明显, 有时目标与环境差异较小以及任务设备等对焦问题等都会导致目标跟踪时特征的提取困难。</p>
-
-<p>上述因素对目标跟踪中的目标特征提取以及目标搜索策略具有重大影响, 在实际跟踪过程中, 较为准确地及时处理这些因素所造成的影响才能保证目标跟踪的精确性与鲁棒性。</p>
+		<!-- * 索引
+{:toc}  -->
 
 <hr />
-<p>参考资料：</p>
 
-<p>[1]葛宝义,左宪章,胡永江.视觉目标跟踪方法研究综述[J].中国图象图形学报,2018,23(08):1091-1107.</p>
+<h3 id="什么是异步并行">什么是异步并行</h3>
+
+<p>默认情况下，主机（CPU）在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候主机并不会执行任何任务。如果执行异步并行计算，主机在调用GPU函数后会立即返回，而被调用的GPU函数将在后台执行。此时，尽管主机需要的数据还没从GPU返回，但是主机可以进行其它的计算或者调用另一个函数。</p>
+
+<h3 id="异步并行的意义">异步并行的意义</h3>
+
+<p>1、使GPU与主机同时工作，更好地压榨GPU的性能。</p>
+
+<p>2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了主机的性能。</p>
+
+<h3 id="例程">例程</h3>
+
+<pre>
+<code class="cpp">
+
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+#include "stdio.h"
+#include "memory.h"
+#include "time.h"
+#include "helper_timer.h"
+
+// 定义核函数
+__global__ void increment_kernel(int *g_data, int inc_value)
+{
+    int idx = blockIdx.x*blockDim.x + threadIdx.x;
+    g_data[idx] = g_data[idx] + inc_value;
+}
+
+int correct_output(int *data, const int n, const int x)
+{
+    for (int i = 0; i &lt; n; i++)
+        if (data[i] != x)
+            return 0;
+}
+int main(int argc, char *argv[])
+{
+    // CUDA device properties
+    // CUDA 设备属性
+    cudaDeviceProp deviceProps;
+    cudaGetDeviceProperties(&amp;deviceProps, 0);
+    printf("CUDA device [%s]\n", deviceProps.name);
+    int n = 16 * 1024 * 1024;
+    int nbytes = n*sizeof(int);
+    int value = 26;
+    int *a = 0;
+    // Allocates page-locked memory on the host.
+    // 在主机上申请 page-locked 内存
+    cudaMallocHost((void**)&amp;a, nbytes);
+    // 为内存赋值为0
+    memset(a, 0, nbytes);
+    int *d_a = 0;
+    cudaMalloc((void**)&amp;d_a, nbytes);
+    cudaMemset(d_a, 255, nbytes);
+    // 计算线程数
+    dim3 threads = dim3(512, 1);
+    // 计算块数
+    dim3 blocks = dim3(n / threads.x, 1);
+
+    cudaEvent_t startGPU, stopGPU;
+    cudaEventCreate(&amp;startGPU);
+    cudaEventCreate(&amp;stopGPU);
+
+    StopWatchInterface *timer = NULL;
+    sdkCreateTimer(&amp;timer);
+    sdkResetTimer(&amp;timer);
+
+    cudaThreadSynchronize();
+
+    float gpu_time = 0.0f;
+
+
+    sdkStartTimer(&amp;timer);
+    cudaEventRecord(startGPU, 0);
+    cudaMemcpyAsync(d_a, a, nbytes, cudaMemcpyHostToDevice, 0);
+    // 启动核函数
+    increment_kernel &lt;&lt; &lt;blocks, threads, 0, 0 &gt;&gt; &gt;(d_a, value);
+    cudaMemcpyAsync(a, d_a, nbytes, cudaMemcpyDeviceToHost, 0);
+    cudaEventRecord(stopGPU, 0);
+    sdkStopTimer(&amp;timer);
+
+    unsigned long int counter = 0;
+
+    while (cudaEventQuery(stopGPU) == cudaErrorNotReady)
+    {
+        counter++;
+    }
+
+    cudaEventElapsedTime(&amp;gpu_time, startGPU, stopGPU);
+    printf("time spent executing by the GPU:%.2f\n", gpu_time);
+    printf("time spent by CPU in CUDA calls:%.8f\n", sdkGetTimerValue(&amp;timer));
+    printf("GPU execute %d iteration while waiting forGPU to finish\n", counter);
+
+    printf("-------------------------------------------------------------------------\n");
+    if (correct_output(a, n, value))
+        printf("TEST PASSED\n");
+    else // 返回 0
+        printf("Test FAILED\n");
+
+    cudaEventDestroy(startGPU);
+    cudaEventDestroy(stopGPU);
+
+    // 释放内存
+    cudaFreeHost(a);
+    cudaFree(d_a);
+    getchar();
+    cudaThreadExit();
+    return 0;
+}
+</code>
+</pre>
+
+<hr />
+
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" rel="tag">目标跟踪</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -892,9 +989,128 @@ border-radius:4px;
 					
 						
 					
+						
+					
+						
+					
 				
 			
 				
+					
+						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/opencv-gpu-module-2">OpenCV GPU 模块学习 （2）GPU的流操作</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/opencv-gpu-module-1">OpenCV GPU 模块学习 （1）读取GPU设备信息</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
 					
 						
 					
@@ -904,9 +1120,17 @@ border-radius:4px;
 					
 						
 					
+						
+					
+						
+					
 				
 			
 				
+					
+						
+					
+						
 					
 						
 					
@@ -921,9 +1145,7 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
+						
 					
 						
 					
@@ -933,26 +1155,7 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
 						
-					
-				
-			
-				
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -967,15 +1170,7 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
 						
-					
-				
-			
-				
 					
 						
 					
@@ -989,19 +1184,83 @@ border-radius:4px;
 				
 					
 						
+							
+							
+	
+						<small><a href="/cuda_learning_04">CUDA并行编程学习（4）-- 内存共享 Share Memory</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 27, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
 					
-				
-			
-				
+						
 					
 						
 					
 				
 			
 				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/cuda_learning_03">CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
 					
 						
 					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/cuda_learning_02">CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
 				
 			
 	
@@ -1013,31 +1272,7 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
 						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
 					
 						
 					
@@ -1047,37 +1282,7 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
 						
-					
-				
-			
-				
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1087,6 +1292,8 @@ border-radius:4px;
 			
 		
 	
+		
+		<!-- </ul> -->
 		
 
 		<br>
@@ -1395,7 +1602,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 			<small>扫码分享</small><br>
 

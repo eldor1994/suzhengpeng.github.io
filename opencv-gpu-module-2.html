@@ -9,9 +9,9 @@
 
 	<title>
         
-            目标跟踪（0）-- 视觉目标跟踪技术难点 - Su'S Blog - SuZhengpeng.COM 
+            OpenCV GPU 模块学习 （2）GPU的流操作 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="视觉目标跟踪方法研究综述 ">
+  <meta name="description" content="使用OpenCV  gpu::Stream 类进行流操作 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -525,7 +525,7 @@ var init = function() {
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-2&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 			<small>扫码分享</small><br>
 
@@ -745,14 +745,14 @@ var init = function() {
 		<main>
 
 			<article id="post-page">
-		<!-- Sep 21, 2018 -->
+		<!-- Oct 14, 2018 -->
 		
 		<!--  -->
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 21, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;目标跟踪（0）-- 视觉目标跟踪技术难点   </h3>
+	<h3>&nbsp;&nbsp;OpenCV GPU 模块学习 （2）GPU的流操作   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -775,7 +775,7 @@ var init = function() {
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-视觉目标跟踪方法研究综述<br><br> 
+使用OpenCV  gpu::Stream 类进行流操作<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -795,32 +795,139 @@ var init = function() {
 <br>
 	<div class="content">
 			
-		<hr />
-
-<p>由于目标跟踪过程中目标与环境信息的变化导致目标特征的不断变化, 以及目标跟踪对跟踪速度与精度的要求, 导致目标跟踪存在如下几个主要难点:</p>
-
-<p>1) 目标外观变化。由于物体活动、非刚体形变 (如人跳跃、行走等) 导致的目标外形发生变化, 或拍摄角度变化导致的目标外观变化等。</p>
-
-<p>2) 尺度变化。由于拍摄距离等因素导致目标在影像中所占区域大小发生变化。</p>
-
-<p>3) 环境变化。由于拍摄环境 (如光照、天气等) 变化导致的目标影像成像特点等的变化。</p>
-
-<p>4) 目标快速运动。由于目标的快速移动导致在影像中的坐标位置发生突变, 影响目标搜索的速度和精度。</p>
-
-<p>5) 目标遮挡、出视野。由于拍摄中目标被其他物体遮挡导致的特征部分或全部损失以及由于拍摄时目标跳出视野重新跟踪导致的跟踪失败问题。</p>
-
-<p>6) 成像影响。由于红外摄像仪分辨率较低, 目标分辨率低, 边缘与目标特征不明显, 有时目标与环境差异较小以及任务设备等对焦问题等都会导致目标跟踪时特征的提取困难。</p>
-
-<p>上述因素对目标跟踪中的目标特征提取以及目标搜索策略具有重大影响, 在实际跟踪过程中, 较为准确地及时处理这些因素所造成的影响才能保证目标跟踪的精确性与鲁棒性。</p>
+		<!-- * 索引
+{:toc}  -->
 
 <hr />
-<p>参考资料：</p>
 
-<p>[1]葛宝义,左宪章,胡永江.视觉目标跟踪方法研究综述[J].中国图象图形学报,2018,23(08):1091-1107.</p>
+<blockquote>
+  <p><strong>软件信息</strong>：<br />
+OpenCV Version : 2.4.13.6<br />
+CUDA Version : 8.0</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>OpenCV gpu::Stream 手册</strong><br />
+https://docs.opencv.org/2.4.13.6/modules/gpu/doc/data_structures.html#gpu::Stream</p>
+</blockquote>
+
+<p>OpenCV 通过 gpu::Stream 类封装了一个异步调用队列，以此实现主机（CPU）和设备（GPU）或同一设备上不同任务的异步并行。</p>
+
+<p><strong>编程思想：</strong></p>
+
+<p>最初要新建一个Stream队列，使用（gpu::strean::enqueueUpload()）将需要操作的数据放入队列中，然后在队列中进行所需要的操作，直到队列中的数据计算完成，使用（gpu::strean::enqueueDownload()）将数据返回。整个队列的所有操作都是在设备（GPU）上独立运行，和主机（CPU）异步并行，而一个设备可以同时进行多个队列，队列之间也是相互独立的。即：主机不要等待设备完成全部计算即可进行下一步计算。这样就提高了计算的速度和效率。</p>
+
+<p>关于主机和设备异步并行的概念和意义详见：<a href="/cuda_learning_05" target="_blank">《CUDA并行编程学习（5）– 异步并行》</a></p>
+
+<p><strong>类的内容：</strong></p>
+
+<pre>
+<code class="cpp">
+class CV_EXPORTS Stream
+{
+public:
+    Stream();
+    ~Stream();
+
+    Stream(const Stream&amp;);
+    Stream&amp; operator=(const Stream&amp;);
+
+    bool queryIfComplete();
+    void waitForCompletion();
+
+    void enqueueDownload(const GpuMat&amp; src, CudaMem&amp; dst);
+    void enqueueDownload(const GpuMat&amp; src, Mat&amp; dst);
+
+    void enqueueUpload(const CudaMem&amp; src, GpuMat&amp; dst);
+    void enqueueUpload(const Mat&amp; src, GpuMat&amp; dst);
+
+    void enqueueCopy(const GpuMat&amp; src, GpuMat&amp; dst);
+
+    void enqueueMemSet(const GpuMat&amp; src, Scalar val);
+    void enqueueMemSet(const GpuMat&amp; src, Scalar val, const GpuMat&amp; mask);
+
+    void enqueueConvert(const GpuMat&amp; src, GpuMat&amp; dst, int type,
+                        double a = 1, double b = 0);
+
+    typedef void (*StreamCallback)(Stream&amp; stream, int status, void* userData);
+    void enqueueHostCallback(StreamCallback callback, void* userData);
+};
+</code>
+</pre>
+
+<p><strong>例程 1 ：</strong></p>
+
+<p>通过该例程，简单展示了opencv gpu::Stream 类及其方法的使用。</p>
+
+<pre>
+<code class="cpp">
+
+#include "iostream"
+#include "opencv2/opencv.hpp"
+#include "opencv2/gpu/gpu.hpp"
+
+
+int main(int argc, char *argv[])
+{
+    // 读取图片为 8bit单通道 Mat
+    cv::Mat rawImage = cv::imread("/home/video201/imszp/opencv_example/gpu_test/bin/lena.jpg", CV_8UC1);
+    cv::imshow("rawResult", rawImage);
+
+    // 申请Page-locked内存 allocate page-locked memory
+    cv::gpu::CudaMem host_src_pl(rawImage.cols, rawImage.rows, CV_8UC1, cv::gpu::CudaMem::ALLOC_PAGE_LOCKED);
+    cv::gpu::CudaMem host_dst_pl;
+
+    // 填满申请到的PL内存 Do something to fill host_src_pl
+    memcpy(host_src_pl.datastart, rawImage.datastart, host_src_pl.cols * host_src_pl.rows);
+
+    // 创建GpuMat
+    cv::gpu::GpuMat gpu_src,gpu_dst;
+
+    // 创建Stream
+    cv::gpu::Stream stream;
+    
+    // 从主机（CPU）向设备（GPU）复制数据
+    stream.enqueueUpload(host_src_pl, gpu_src);
+
+    // 在设备中对数据进行处理
+    cv::gpu::threshold(gpu_src, gpu_dst, 128.0, 255.0, CV_THRESH_BINARY);
+
+    // 从设备向主机复制数据
+    stream.enqueueDownload(gpu_dst, host_dst_pl);
+
+    // 在主机中与设备并行的进行其他的处理
+    cv::Mat binImage;
+    cv::threshold(rawImage, binImage, 128.0, 255.0, CV_THRESH_BINARY);
+
+    // 等待设备完成计算任务
+    stream.waitForCompletion();
+
+    // 现在可以使用设备中计算得到的数据
+    cv::Mat host_dst = host_dst_pl;
+
+    cv::imshow("gpuResult", host_dst);
+    cv::imshow("cpuResult", binImage);
+    cv::waitKey();
+
+    return 0;
+}
+
+</code>
+</pre>
+
+<hr />
+
+<p><strong>参考资料：</strong></p>
+
+<p>1、<strong>opencv中GPU的流操作</strong> https://blog.csdn.net/eyes366/article/details/48438397</p>
+
+<p>2、<strong>how to use gpu::Stream in OpenCV?</strong> https://stackoverflow.com/questions/17842827/how-to-use-gpustream-in-opencv</p>
+
+<hr />
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" rel="tag">目标跟踪</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -892,9 +999,110 @@ border-radius:4px;
 					
 						
 					
+						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/cuda_learning_05">CUDA并行编程学习（5）-- 异步并行</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
 				
 			
 				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/opencv-gpu-module-1">OpenCV GPU 模块学习 （1）读取GPU设备信息</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
 					
 						
 					
@@ -904,9 +1112,81 @@ border-radius:4px;
 					
 						
 					
+						
+					
+						
+					
+						
+					
 				
 			
 				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/hello-opencv-4">OpenCV 4.0 Alpha 带来的新变化</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/opencv4.x.html" rel="tag">OpenCV4.x</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 30, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/compile-opencv-on-ubuntu">从源码开始，在Ubuntu上安装OpenCV</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 29, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
 					
 						
 					
@@ -921,18 +1201,26 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
+						
+							
+							
+	
+						<small><a href="/cuda_learning_04">CUDA并行编程学习（4）-- 内存共享 Share Memory</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 27, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
 					
 						
 					
 				
 			
-				
-					
-						
-					
 				
 			
 	
@@ -944,18 +1232,26 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
+						
+							
+							
+	
+						<small><a href="/cuda_learning_03">CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
 					
 						
 					
 				
 			
-				
-					
-						
-					
 				
 			
 	
@@ -967,18 +1263,26 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
+						
+							
+							
+	
+						<small><a href="/cuda_learning_02">CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
 					
 						
 					
 				
 			
-				
-					
-						
-					
 				
 			
 	
@@ -990,9 +1294,9 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
+						
+					
+						
 					
 						
 					
@@ -1002,82 +1306,9 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
 						
 					
-				
-			
-				
-					
 						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-				
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-				
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1087,6 +1318,8 @@ border-radius:4px;
 			
 		
 	
+		
+		<!-- </ul> -->
 		
 
 		<br>
@@ -1395,7 +1628,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/visual_tracking_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-2&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 			<small>扫码分享</small><br>
 

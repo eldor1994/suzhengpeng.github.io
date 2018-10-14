@@ -4,12 +4,32 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-10-12T19:27:26+08:00</updated>
+ <updated>2018-10-14T22:51:56+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>OpenCV GPU 模块学习 （2）GPU的流操作</title>
+   <link href="http://localhost:4000/opencv-gpu-module-2"/>
+   <id>http://localhost:4000/opencv-gpu-module-2</id>
+   <updated>2018-10-14T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;软件信息&lt;/strong&gt;：&lt;br /&gt; OpenCV Version : 2.4.13.6&lt;br /&gt; CUDA Version : 8.0&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;OpenCV gpu::Stream 手册&lt;/strong&gt;&lt;br /&gt; https://docs.opencv.org/2.4.13.6/modules/gpu/doc/data_structures.html#gpu::Stream&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;OpenCV 通过 gpu::Stream 类封装了一个异步调用队列，以此实现主机（CPU）和设备（GPU）或同一设备上不同任务的异步并行。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;编程思想：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;最初要新建一个Stream队列，使用（gpu::strean::enqueueUpload()）将需要操作的数据放入队列中，然后在队列中进行所需要的操作，直到队列中的数据计算完成，使用（gpu::strean::enqueueDownload()）将数据返回。整个队列的所有操作都是在设备（GPU）上独立运行，和主机（CPU）异步并行，而一个设备可以同时进行多个队列，队列之间也是相互独立的。即：主机不要等待设备完成全部计算即可进行下一步计算。这样就提高了计算的速度和效率。&lt;/p&gt; &lt;p&gt;关于主机和设备异步并行的概念和意义详见：&lt;a href=&quot;/cuda_learning_05&quot; target=&quot;_blank&quot;&gt;《CUDA并行编程学习（5）– 异步并行》&lt;/a&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;类的内容：&lt;/strong&gt;&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; class CV_EXPORTS Stream { public: Stream(); ~Stream(); Stream(const Stream&amp;amp;);...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>CUDA并行编程学习（5）-- 异步并行</title>
+   <link href="http://localhost:4000/cuda_learning_05"/>
+   <id>http://localhost:4000/cuda_learning_05</id>
+   <updated>2018-10-13T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;什么是异步并行&quot;&gt;什么是异步并行&lt;/h3&gt; &lt;p&gt;默认情况下，主机（CPU）在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候主机并不会执行任何任务。如果执行异步并行计算，主机在调用GPU函数后会立即返回，而被调用的GPU函数将在后台执行。此时，尽管主机需要的数据还没从GPU返回，但是主机可以进行其它的计算或者调用另一个函数。&lt;/p&gt; &lt;h3 id=&quot;异步并行的意义&quot;&gt;异步并行的意义&lt;/h3&gt; &lt;p&gt;1、使GPU与主机同时工作，更好地压榨GPU的性能。&lt;/p&gt; &lt;p&gt;2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了主机的性能。&lt;/p&gt; &lt;h3 id=&quot;例程&quot;&gt;例程&lt;/h3&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &quot;cuda_runtime.h&quot; #include &quot;device_launch_parameters.h&quot; #include &quot;stdio.h&quot; #include &quot;memory.h&quot; #include &quot;time.h&quot; #include &quot;helper_timer.h&quot; // 定义核函数 __global__ void increment_kernel(int *g_data, int inc_value) { int idx = blockIdx.x*blockDim.x + threadIdx.x; g_data[idx] = g_data[idx] +...</content>
+ </entry>
 
  
 
@@ -98,26 +118,6 @@
    <id>http://localhost:4000/cuda_learning_02</id>
    <updated>2018-09-26T00:00:00+08:00</updated>
    <content type="html">&lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;代码下载：https://github.com/myurtoglu/cudaforengineers/tree/master/dist_v1_cuda&lt;/strong&gt;&lt;br /&gt; 基于《CUDA高性能并行计算》中的例程&lt;/p&gt; &lt;/blockquote&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &amp;lt;stdio.h&amp;gt; #define N 64 #define TPB 32 &lt;/code&gt; &lt;/pre&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; int main() { const float ref = 0.5f; float *d_out = 0; cudaMalloc(&amp;amp;d_out, N*sizeof(float)); distanceKernel&amp;lt;&amp;lt;&amp;lt;N/TPB, TPB&amp;gt;&amp;gt;&amp;gt;(d_out, ref, N); cudaFree(d_out); // Free the memory return 0; } &lt;/code&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>目标跟踪（3）-- Mean-shift 与目标跟踪[1]</title>
-   <link href="http://localhost:4000/visual_tracking_03"/>
-   <id>http://localhost:4000/visual_tracking_03</id>
-   <updated>2018-09-24T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt; &lt;h3 id=&quot;mean-shift-算法理解&quot;&gt;Mean Shift 算法理解&lt;/h3&gt; &lt;p&gt;基本概念：沿着密度上升方向寻找聚簇点&lt;/p&gt; &lt;p&gt;&lt;img src=&quot;/img/20180923/02.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt; &lt;p&gt;设在d维空间$R_d$中，划定一个有N个样本点、半径为k的高维球区域$S_k$，初始随机确定一个中心点center，N个样本点记为集合M，认为这些点属于聚簇C。计算以中心点为起点落在球内的样本点（$x_i$）为终点的向量 。计算整个圆形空间内所有向量的和，得到一个偏移向量。将中心点center沿着shift的方向移动到偏移向量的终点，移动距离即偏移向量的模。重复移动，又得到一个新的偏移向量。如此重复下去，直到偏移向量的大小满足设定的阈值要求，以此保证收敛到概率密度最大得地方。也就是最稠密的地方。 &lt;img src=&quot;/img/20180923/03.jpg&quot; width=&quot;400&quot; /&gt;&lt;/p&gt; &lt;center&gt;计算偏移向量&lt;/center&gt; &lt;p&gt;&lt;img src=&quot;/img/20180923/04.jpg&quot; width=&quot;400&quot; /&gt;&lt;/p&gt; &lt;center&gt;移动中心点&lt;/center&gt; &lt;p&gt;&lt;img src=&quot;/img/20180923/05.jpg&quot; width=&quot;400&quot; /&gt;&lt;/p&gt; &lt;center&gt;得到最终结果：收敛到概率密度最大得地方&lt;/center&gt; &lt;!-- ### 经典Mean-shift框架 ### ASMS目标跟踪算法 Github 主页：https://github.com/vojirt/asms ASMS是VOT2015官方推荐的实时算法，平均帧率125FPS。在经典mean-shift框架下加入了尺度估计，经典颜色直方图特征，加入了两个先验(尺度不剧变+可能偏最大)作为正则项，和反向尺度一致性检查。 #### 经典MS算法存在的问题 1.在跟踪过程中位置错误时可以在MS迭代中进行自我纠正，而尺度错误则不会。 &lt;img src=&quot;/img/20180923/03.PNG&quot; width=&quot;400&quot; /&gt; &lt;center&gt;Illustration of the scale ambiguity problem 尺度歧义问题说明&lt;/center&gt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>目标跟踪（2）-- 常用的算法测试数据集</title>
-   <link href="http://localhost:4000/visual_tracking_02"/>
-   <id>http://localhost:4000/visual_tracking_02</id>
-   <updated>2018-09-24T00:00:00+08:00</updated>
-   <content type="html">&lt;hr /&gt; &lt;h3 id=&quot;otb50-和-otb100&quot;&gt;OTB50 和 OTB100&lt;/h3&gt; &lt;p&gt;下载地址：http://cvlab.hanyang.ac.kr/tracker_benchmark/index.html&lt;/p&gt; &lt;p&gt;OTB50拥有50个测试序列，由韩国汉阳大学计算机视觉实验室于2013年发布，因此也被称为OTB2013，而OTB100于2015年发布，亦被称为OTB2015，是对OTB50的扩充，在OTB50的基础上补充了50个新的测试序列。&lt;/p&gt; &lt;h3 id=&quot;vot-数据集&quot;&gt;VOT 数据集&lt;/h3&gt; &lt;p&gt;下载地址：http://www.votchallenge.net/index.html&lt;/p&gt; &lt;p&gt;VOT测试集由VOT目标跟踪挑战赛主办方发布，用以测试相关算法的性能，且每年都会进行更新。&lt;/p&gt; &lt;h3 id=&quot;otb和vot的区别&quot;&gt;OTB和VOT的区别&lt;/h3&gt; &lt;blockquote&gt; &lt;p&gt;OTB包括25%的灰度序列，但VOT都是彩色序列，这也是造成很多颜色特征算法性能差异的原因；两个库的评价指标不一样，具体请参考论文；VOT库的序列分辨率普遍较高，这一点后面分析会提到。对于一个tracker，如果论文在两个库(最好是OTB100和VOT2016)上都结果上佳，那肯定是非常优秀的(两个库调参你能调好，我服，认了~~)，如果只跑了一个，个人更偏向于VOT2016，因为序列都是精细标注，且评价指标更好(人家毕竟是竞赛，评价指标发过TPAMI的)，差别最大的地方，OTB有随机帧开始，或矩形框加随机干扰初始化去跑，作者说这样更加符合检测算法给的框框；而VOT是第一帧初始化去跑，每次跟踪失败(预测框和标注框不重叠)时，5帧之后重新初始化，VOT以short-term为主，且认为跟踪检测应该在一起不分离，detecter会多次初始化tracker。&lt;/p&gt; &lt;p&gt;OTB在2013年公开了，对于2013以后的算法是透明的，论文都会去调参，尤其是那些只跑OTB的论文，如果关键参数直接给出还精确到小数点后两位，建议您先实测(人心不古啊~被坑的多了)。VOT竞赛的数据库是每年更新，还动不动就重新标注，动不动就改变评价指标，对当年算法是难度比较大，所以结果相对更可靠。（相信很多人和我一样，看每篇论文都会觉得这个工作太好太重要了，如果没有这篇论文，必定地球爆炸，宇宙重启~~所以就像大家都通过历年ILSVRC竞赛结果为主线了解深度学习的发展一样，第三方的结果更具说服力，所以我也以竞赛排名+是否公开源码+实测性能为标准，优选几个算法分析）&lt;/p&gt; &lt;p&gt;引用自：https://www.zhihu.com/question/26493945/answer/156025576&lt;/p&gt; &lt;/blockquote&gt; &lt;h3 id=&quot;数据集分类&quot;&gt;数据集分类&lt;/h3&gt; &lt;p&gt;在OTB数据集中，其以手工标定的方式对测试序列进行了分类。&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;分类&lt;/th&gt; &lt;th&gt;说明&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;IV&lt;/td&gt; &lt;td&gt;Illumination Variation - 光线变化 目标所在区域的光线发生显著变化&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;SV&lt;/td&gt; &lt;td&gt;Scale Variation - 尺度变化 第一帧和当前帧的边界框的比率超出范围ts，ts&amp;gt; 1（ts = 2）&lt;/td&gt; &lt;/tr&gt;...</content>
  </entry>
 
  
