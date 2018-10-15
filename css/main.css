@@ -691,19 +691,22 @@ img[title="Monochrome"] {
 #posts-relat-source a:hover {
   color: #E9F01D; }
 
-#posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
-  white-space: nowrap;
-  color: #F8F1F0;
-  font-size: 90%;
-  font-weight: 300;
-  background-color: #000;
-  border: 2px solid #000;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px; }
-#posts-out-tags a:hover {
-  color: #E9F01D; }
+#posts-out-tags {
+  width: 60%;
+  min-width: 200px; }
+  #posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
+    white-space: nowrap;
+    color: #F8F1F0;
+    font-size: 90%;
+    font-weight: 300;
+    background-color: #000;
+    border: 2px solid #000;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px; }
+  #posts-out-tags a:hover {
+    color: #E9F01D; }
 
 .f-logo {
   margin: 0 auto;
@@ -1363,7 +1366,8 @@ img[title="Monochrome"] {
 
 .fh5co-project-item .fh5co-text {
   padding: 0px 10px 10px 20px;
-  text-align: center; }
+  text-align: center;
+  height: 120px; }
 
 .fh5co-project-item .fh5co-text h2, .fh5co-project-item .fh5co-text span {
   text-decoration: none !important; }
