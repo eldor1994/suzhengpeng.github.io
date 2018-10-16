@@ -9,9 +9,9 @@
 
 	<title>
         
-            Leetcode 804. Unique Morse Code Words - Su'S Blog - SuZhengpeng.COM 
+            CUDA并行编程学习（6）-- 流 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="LeetCode 第804题的解题方法 ">
+  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -376,7 +376,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_804_unique_morse_code_words&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_06&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -597,15 +597,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Sep 08, 2018 -->
+		<!-- Oct 16, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 08, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;Leetcode 804. Unique Morse Code Words   </h3>
+	<h3>&nbsp;&nbsp;CUDA并行编程学习（6）-- 流   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -628,7 +628,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-LeetCode 第804题的解题方法<br><br> 
+基于CUDA的并行编程学习笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -648,83 +648,82 @@ LeetCode 第804题的解题方法<br><br>
 <br>
 	<div class="content">
 			
-		<h2 id="问题描述">问题描述</h2>
+		<ul id="markdown-toc">
+  <li><a href="#关于流" id="markdown-toc-关于流">关于流</a></li>
+  <li><a href="#流并行" id="markdown-toc-流并行">流并行</a>    <ul>
+      <li><a href="#页锁内存的概念" id="markdown-toc-页锁内存的概念">页锁内存的概念</a></li>
+      <li><a href="#流的运行机制" id="markdown-toc-流的运行机制">流的运行机制</a></li>
+      <li><a href="#多个流的调度" id="markdown-toc-多个流的调度">多个流的调度</a></li>
+    </ul>
+  </li>
+</ul>
 
-<p>International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes, as follows: “a” maps to “.-“, “b” maps to “-…”, “c” maps to “-.-.”, and so on.</p>
+<hr />
 
-<p>For convenience, the full table for the 26 letters of the English alphabet is given below:</p>
+<h3 id="关于流">关于流</h3>
 
-<blockquote>
-  <p>[”.-“,”-…”,”-.-.”,”-..”,”.”,”..-.”,”–.”,”….”,”..”,”.—”,”-.-“,”.-..”,”–”,”-.”,”—”,”.–.”,”–.-“,”.-.”,”…”,”-“,”..-“,”…-“,”.–”,”-..-“,”-.–”,”–..”]</p>
-</blockquote>
+<p>在GPU上，流是执行异步并行的主要载体。在GPU上，每个流都可以看作是一个独立的任务，每个流中的代码操作顺序执行。</p>
 
-<p>Now, given a list of words, each word can be written as a concatenation of the Morse code of each letter. For example, “cab” can be written as “-.-.-….-“, (which is the concatenation “-.-.” + “-…” + “.-“). We’ll call such a concatenation, the transformation of a word.</p>
+<p>关于CPU和GPU的异步并行详见：<a href="/cuda_learning_05" target="_blank">《CUDA并行编程学习（5）– 异步并行》</a></p>
 
-<p>Return the number of different transformations among all words we have.</p>
+<h3 id="流并行">流并行</h3>
 
-<p><strong>Example:</strong></p>
+<p>流并行是指我们可以创建多个流来执行多个任务， 但每个流都是一个需要按照顺序执行的操作队列。</p>
 
-<blockquote>
-  <p><strong>Input:</strong> words = [“gin”, “zen”, “gig”, “msg”]<br />
-<strong>Output:</strong> 2<br />
-<strong>Explanation:</strong> The transformation of each word is:<br />
-“gin” -&gt; “–…-.”<br />
-“zen” -&gt; “–…-.”<br />
-“gig” -&gt; “–…–.”<br />
-“msg” -&gt; “–…–.”</p>
+<h4 id="页锁内存的概念">页锁内存的概念</h4>
 
-  <p>There are 2 different transformations, “–…-.” and “–…–.”.</p>
-</blockquote>
+<p><strong>使用页锁内存的意义</strong></p>
 
-<pre>
-<code class="cpp">
-class Solution {
-public:
-    int uniqueMorseRepresentations(vector&lt;string&gt;&amp; words) {
-	string dic[26] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", 
-	"....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", 
-	"--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", 
-	"--.."};
-	vector &lt;string&gt; sTemp;
-	
-	for (int i = 0; i &lt; words.size(); i++)
-	{
-		string s;
+<p>想要实现流并行，需要主机使用一块固定的内存，一般称之为页锁内存（Page Locked Memory），而一般情况下经过分配得到的内存为可分页内存（Pagable Memory）。而可分页内存面临着重定位的问题，因此使用可分页内存进行复制时，复制可能执行两次操作：从可分页内存复制到一块“临时”页锁定内存，然后从页锁定内存复制到GPU。</p>
 
-		for (int j = 0; j &lt; words[i].size(); j++)
-		{
-			s = s + dic[(int)words[i][j] - 97];
-		}
-		bool pushFlag = 0;
-		for(int m = 0; m &lt; sTemp.size(); m++)
-		{
-			
-			if (s == sTemp[m]) {
-				/* code */
-				pushFlag = 1;
-				break;
+<p><strong>页锁内存的性质</strong></p>
 
-			}			
-		}
-		
-		if (pushFlag == 0) {
-			sTemp.push_back(s);
-		}
-		
-	}
+<p>页锁内存 （Page Locked Memory）又称为固定内存（Pinned Memory）或者不可分页内存。 操作系统将不会对这块内存分页并交换到磁盘上，从而确保了该内存始终驻留在物理内存中，因为这块内存将不会被破坏或者重新定位。 由于gpu知道内存的物理地址，因此可以通过“直接内存访问（Direct Memory Access，DMA）” 直接在GPU和主机之间复制数据。</p>
 
-	return sTemp.size();
-    }
-};
+<p><strong>页锁内存的缺点</strong></p>
 
+<p>虽然在页锁定内存上执行复制操作效率比较高，但消耗物理内存更多。因此，通常对cudaMemcpy()调用的源内存或者目标内存才使用，而且使用完毕立即释放</p>
 
-</code>
-</pre>
+<h4 id="流的运行机制">流的运行机制</h4>
 
+<p>流是有序的操作序列，既包含内存复制操作，也包含核函数调用。</p>
+
+<p>流的内存复制操作对应于硬件中的内存复制引擎，而函数调用则对应于硬件系统中的核函数执行引擎。而这两个引擎是彼此相互独立进行的，即我们可以在执行核函数的同时进行数据复制。所以流在复制内存时只需要向发送一个内存复制请求，即可返回到CPU中去执行其他的任务。我们不知道复制操作是否启动了，更无法保证他结束了，可以保证的是，复制操作肯定会当下一个放入流中的操作之前执行。</p>
+
+<h4 id="多个流的调度">多个流的调度</h4>
+
+<p>由流的运行机制可知，流的内存复制和核函数执行是相互独立，在进行内存复制的过程中，也可以执行核函数。因此在使用多个流的时候，合理的调度是提高运行效率的关键。</p>
+
+<p>设流0和流1。</p>
+
+<p><img src="/img/201810/03.png" width="600px" /></p>
+<center>流0和流1</center>
+
+<p><img src="/img/201810/01.png" width="600px" /></p>
+<center>按照默认方式的执行时间线</center>
+
+<p>如上图所示，复制A 和 复制B 表示从主机向GPU复制数据，复制C表示从GPU向主机复制计算结果。由时间线可知，当流1的操作：复制A和复制B想要向GPU复制数据时，必须等待流0的操作：复制C执行完成，而这一操作又需要等待核函数执行完成之后才可进行。这样主机的进程就被阻塞，被迫浪费的许多运行时间。据此，可以进行如下的改进。</p>
+
+<p><img src="/img/201810/02.png" width="600px" /></p>
+<center>“改进后的”时间线</center>
+
+<p>经过改进，得到了上面的时间线，在流0和流1的操作：复制A和复制B完成之后再调用核函数。这样，流1的复制A和复制B就不需要等待，节省了大量的时间，提高了运行效率。</p>
+
+<hr />
+
+<p><strong>参考资料：</strong></p>
+
+<p>1、<strong>CUDA入门（六） 异步并行执行解析：</strong> https://blog.csdn.net/qq_25819827/article/details/52541813</p>
+
+<p>2、<strong>GPU 高性能编程 CUDA : 流</strong> https://blog.csdn.net/xxiaozr/article/details/80368467</p>
+
+<p>3、<strong>GPU编程自学10 —— 流并行</strong> https://blog.csdn.net/shuzfan/article/details/77505997</p>
+
+<hr />
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/leetcode.html" rel="tag">Leetcode</a>, <a href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86.html" rel="tag">字符串处理</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -798,6 +797,160 @@ border-radius:4px;
 					
 						
 					
+						
+					
+				
+			
+				
+					
+						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/opencv-gpu-module-2">OpenCV GPU 模块学习 （2）GPU的流操作</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/cuda_learning_05">CUDA并行编程学习（5）-- 异步并行</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/opencv-gpu-module-1">OpenCV GPU 模块学习 （1）读取GPU设备信息</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
 				
 			
 				
@@ -806,9 +959,13 @@ border-radius:4px;
 					
 						
 					
+						
+					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -827,12 +984,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -840,12 +991,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -864,20 +1009,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -890,25 +1021,25 @@ border-radius:4px;
 				
 					
 						
+							
+							
+	
+						<small><a href="/cuda_learning_04">CUDA并行编程学习（4）-- 内存共享 Share Memory</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 27, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
 					
 						
 					
 				
 			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
 				
 			
 	
@@ -919,25 +1050,25 @@ border-radius:4px;
 				
 					
 						
+							
+							
+	
+						<small><a href="/cuda_learning_03">CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
 					
 						
 					
 				
 			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
 				
 			
 	
@@ -948,41 +1079,18 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
+							
+							
 	
-			
-		
-			
-			
-				
-					
+						<small><a href="/cuda_learning_02">CUDA并行编程学习（2）-- 使用CUDA计算一个数组的距离值</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 						
-					
+						<br>
 						
-					
-				
-			
-				
+						
 					
 						
 					
@@ -990,65 +1098,14 @@ border-radius:4px;
 					
 				
 			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
 				
 			
 	
 			
 		
 	
+		
+		<!-- </ul> -->
 		
 
 		<br>
@@ -1357,7 +1414,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_804_unique_morse_code_words&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_06&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>

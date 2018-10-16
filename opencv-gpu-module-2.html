@@ -378,7 +378,8 @@
 			<div class="footer-qrcode">
 			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-2&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
-			<small>扫码分享</small><br>
+
+			<br>
 
 
 	</div>
@@ -669,9 +670,9 @@ https://docs.opencv.org/2.4.13.6/modules/gpu/doc/data_structures.html#gpu::Strea
 
 <p><strong>编程思想：</strong></p>
 
-<p>新建一个Stream队列，使用（gpu::Strean::enqueueUpload()）将需要操作的数据放入队列中，然后在队列中进行所需要的操作，可以通过gpu::Stream::queryIfComplete() 和 gpu::Stream::waitForCompletion()判断和检测操作是否完成。等待队列中的操作完成，使用（gpu::strean::enqueueDownload()）将数据返回。相较于默认的数据传输方法，使用Stream队列实现了数据的异步调用，不需要等待数据全部上传完成后再对数据进行操作，只需要在确定所需的数据，即可在上传数据的同时对数据进行操作。</p>
+<p>新建一个Stream队列，使用 gpu::Strean::enqueueUpload() 将需要操作的数据放入队列中，然后在队列中进行所需要的操作，可以通过gpu::Stream::queryIfComplete() 和 gpu::Stream::waitForCompletion() 判断和检测操作是否完成。等待队列中的操作完成，使用 gpu::strean::enqueueDownload() 将数据返回。相较于默认的数据传输方法，使用Stream队列实现了数据的异步调用，不需要等待数据全部上传完成后再对数据进行操作，只需要在确定所需的数据，即可在上传数据的同时对数据进行操作，达到GPU计算的同时进行GPU与CPU之间的数据交换，从而达到提升效率的目。</p>
 
-<p>关于主机和设备异步并行的概念和意义详见：<a href="/cuda_learning_05" target="_blank">《CUDA并行编程学习（5）– 异步并行》</a></p>
+<p>关于CPU和GPU异步并行的概念和意义详见：<a href="/cuda_learning_05" target="_blank">《CUDA并行编程学习（5）– 异步并行》</a></p>
 
 <p><strong>类的内容：</strong></p>
 
@@ -856,6 +857,39 @@ border-radius:4px;
 						
 							
 								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/cuda_learning_06">CUDA并行编程学习（6）-- 流</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
 							
 							
 	
@@ -1137,35 +1171,6 @@ border-radius:4px;
 					
 				
 			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-						
-					
 				
 			
 	
@@ -1484,7 +1489,8 @@ border-radius:4px;
 			<div class="footer-qrcode">
 			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-2&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
-			<small>扫码分享</small><br>
+
+			<br>
 
 
 	</div>

@@ -378,7 +378,8 @@
 			<div class="footer-qrcode">
 			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
-			<small>扫码分享</small><br>
+
+			<br>
 
 
 	</div>
@@ -654,13 +655,17 @@
 
 <h3 id="什么是异步并行">什么是异步并行</h3>
 
-<p>默认情况下，主机（CPU）在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候主机并不会执行任何任务。如果执行异步并行计算，主机在调用GPU函数后会立即返回，而被调用的GPU函数将在后台执行。此时，尽管主机需要的数据还没从GPU返回，但是主机可以进行其它的计算或者调用另一个函数。</p>
+<p>异步并行，即：控制GPU在没有完成任务请求之前返回CPU。</p>
 
 <h3 id="异步并行的意义">异步并行的意义</h3>
 
-<p>1、使GPU与主机同时工作，更好地压榨GPU的性能。</p>
+<p>默认情况下，CPU在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候CPU并不会执行任何任务。</p>
 
-<p>2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了主机的性能。</p>
+<p>而在执行异步并行时，处于同一数据流内的计算与数据传输是依次进行的，但一个流内的计算可以和另一个流的数据传输可以同时进行。</p>
+
+<p>1、通过异步执行就能够使GPU中的执行单元与存储器单元同时工作，更好地压榨GPU的性能。</p>
+
+<p>2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了CPU的性能。</p>
 
 <h3 id="例程">例程</h3>
 
@@ -766,6 +771,11 @@ int main(int argc, char *argv[])
 
 <hr />
 
+<p><strong>参考资料：</strong></p>
+
+<p>1、<strong>CUDA入门（六） 异步并行执行解析：</strong> https://blog.csdn.net/qq_25819827/article/details/52541813</p>
+
+<hr />
 
 		
 	</div>
@@ -840,6 +850,39 @@ border-radius:4px;
 				
 					
 						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/cuda_learning_06">CUDA并行编程学习（6）-- 流</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
 					
 						
 					
@@ -850,8 +893,6 @@ border-radius:4px;
 				
 					
 						
-							
-								<h5 class="page-heading">相关文章:</h5>	
 							
 							
 	
@@ -1113,31 +1154,6 @@ border-radius:4px;
 					
 				
 			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
 				
 			
 	
@@ -1456,7 +1472,8 @@ border-radius:4px;
 			<div class="footer-qrcode">
 			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
-			<small>扫码分享</small><br>
+
+			<br>
 
 
 	</div>
