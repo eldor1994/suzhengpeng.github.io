@@ -693,7 +693,7 @@ img[title="Monochrome"] {
 
 #posts-out-tags {
   width: 60%;
-  min-width: 200px; }
+  min-width: 300px; }
   #posts-out-tags a:link, #posts-out-tags a:visited, #posts-out-tags a:active {
     white-space: nowrap;
     color: #F8F1F0;
