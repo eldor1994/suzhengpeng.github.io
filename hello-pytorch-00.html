@@ -9,9 +9,9 @@
 
 	<title>
         
-            CUDA并行编程学习（5）-- 异步并行 - Su'S Blog - SuZhengpeng.COM 
+            Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
+  <meta name="description" content="使用 Pytorch 搭建 LeNet 网络，实现对CIFAR-10 数据集的分类 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -411,7 +411,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -652,15 +652,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Oct 13, 2018 -->
+		<!-- Oct 19, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 19, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;CUDA并行编程学习（5）-- 异步并行   </h3>
+	<h3>&nbsp;&nbsp;Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -683,7 +683,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-基于CUDA的并行编程学习笔记<br><br> 
+使用 Pytorch 搭建 LeNet 网络，实现对CIFAR-10 数据集的分类<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -703,138 +703,363 @@
 <br>
 	<div class="content">
 			
-		<!-- * 索引
-{:toc}  -->
+		<ul id="markdown-toc">
+  <li><a href="#经典网络模型lenet" id="markdown-toc-经典网络模型lenet">经典网络模型：LeNet</a>    <ul>
+      <li><a href="#网络结构" id="markdown-toc-网络结构">网络结构</a></li>
+      <li><a href="#理解网络" id="markdown-toc-理解网络">理解网络</a></li>
+    </ul>
+  </li>
+  <li><a href="#cifar-10训练集" id="markdown-toc-cifar-10训练集">CIFAR-10训练集</a></li>
+  <li><a href="#搭建网络" id="markdown-toc-搭建网络">搭建网络</a>    <ul>
+      <li><a href="#代码示例" id="markdown-toc-代码示例">代码示例</a>        <ul>
+          <li><a href="#导入所需的包" id="markdown-toc-导入所需的包">导入所需的包</a></li>
+          <li><a href="#定义对数据的预处理" id="markdown-toc-定义对数据的预处理">定义对数据的预处理</a></li>
+          <li><a href="#定义训练集" id="markdown-toc-定义训练集">定义训练集</a></li>
+          <li><a href="#定义测试集" id="markdown-toc-定义测试集">定义测试集</a></li>
+          <li><a href="#定义网络" id="markdown-toc-定义网络">定义网络</a></li>
+          <li><a href="#定义损失函数和优化器" id="markdown-toc-定义损失函数和优化器">定义损失函数和优化器</a></li>
+          <li><a href="#训练网络" id="markdown-toc-训练网络">训练网络</a></li>
+          <li><a href="#测试效果" id="markdown-toc-测试效果">测试效果</a></li>
+          <li><a href="#在测试集中测试准确率" id="markdown-toc-在测试集中测试准确率">在测试集中测试准确率</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
 
 <hr />
 
-<h3 id="什么是异步并行">什么是异步并行</h3>
+<h3 id="经典网络模型lenet">经典网络模型：LeNet</h3>
 
-<p>异步并行，即：控制GPU在没有完成任务请求之前返回CPU。</p>
+<p>LeNet 这一经典网络模型由LeCun 于1988年提出，发表在论文《Gradient-Based Learning Applied to Document Recognition》中。最初是用来进行手写字体识别，现已经被扩展到多个应用场景中。这里使用LeNet网络，实现对CIFAR-10数据集的分类识别。</p>
 
-<h3 id="异步并行的意义">异步并行的意义</h3>
+<h4 id="网络结构">网络结构</h4>
 
-<p>默认情况下，CPU在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候CPU并不会执行任何任务。</p>
+<p><img src="./img/20180905/02.png" /></p>
+<center>LeCun在论文中提出网络结构</center>
 
-<p>而在执行异步并行时，处于同一数据流内的计算与数据传输是依次进行的，但一个流内的计算可以和另一个流的数据传输可以同时进行。</p>
+<p>在这个网络中，使用了三个卷积层，一个全连接层和两个下采样层。</p>
 
-<p>1、通过异步执行就能够使GPU中的执行单元与存储器单元同时工作，更好地压榨GPU的性能。</p>
+<p><strong>输入：</strong></p>
 
-<p>2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了CPU的性能。</p>
+<p>网络的输入是一个32×32的单通道图片。</p>
 
-<h3 id="例程">例程</h3>
+<p><strong>卷积层：</strong></p>
 
+<p>网络中使用了两个卷积层，C1、C3和C5。</p>
+
+<p>在C1中，卷积核的大小为5，输出通道数设置为6，因此这一层得到的计算结果为6个28×28的特征映射（feature map）。连接数为(5×5+1)×6×28×28 = 122304，参数数量为(5×5+1)×6=156。</p>
+
+<p>在C3中，卷积核的大小为5，输出通道数设置为16，因此这一层得到的计算结果为16个10×10的特征映射。连接数为(5x5x3+1)x6+(5x5x4+1)x9+(5x5x6+1)x10x10=151600。参数数量为(5x5x3+1)x6+(5x5x4+1)x9+(5x5x6+1)=1516。</p>
+
+<p>在C5中，卷积核的大小为5，输出通道数设置为120，因此这一层得到的计算结果为120个1×1的特征映射。参数数量为120x(5x5x16+1)=48120。</p>
+
+<p><strong>全连接层：</strong></p>
+
+<p>网络中使用了一个全连接层F6，其输入大小为120，输出为84。共有(120+1)×84个连接，其中+1为偏置。</p>
+
+<p><strong>下采样（池化）层：</strong></p>
+
+<p>网络中使用了两个下采样层，分别为S2和S4，这里是通过最大池化实现下采样，池化大小为2×2。对于S2，连接数为6x14x14x(2x2+1)=5880，参数数量为6x(1+1)=12。对于S4，连接数为5x5x16x(2x2+1)=2000，参数数量为16x2=32。</p>
+
+<p>池化的过程：首先对输入的图像进行分块，根据池化大小则每个块的大小为2×2，然后将每个块中的最大的值作为下采样的新像素。</p>
+
+<p><strong>输出层：</strong></p>
+
+<p>网络中的输出层共有10个节点，分别代表数字0到9。如果第i个节点的值为0，则表示网络识别的结果是数字i。</p>
+
+<h4 id="理解网络">理解网络</h4>
+
+<p>如果将整个视为一个函数，其输入是一个大小为32×32的图像，输出为一个具有10个元素的向量。</p>
+
+<h3 id="cifar-10训练集">CIFAR-10训练集</h3>
+
+<p>CIFAR-10 是一个常用的彩色图片数据集，拥有十个类别，分别为’plane’,’car’,’bird’,’cat’,’deer’,’dog’,’frog’,’horse’,’ship’,’truck’。数据集中每个图片的大小都是3×32×32，其中的图片数为6000个，在这6000个图片中，有5000个是训练集，1000个测试集。</p>
+
+<p>下载地址：https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz</p>
+
+<h3 id="搭建网络">搭建网络</h3>
+
+<p>在原始的LeNet中，输入数据是单通道32×32的图像，而CIFAR-10数据集中的样本是三通道32×32。因此需要对LeNet进行简单的修改。C1的输入改为3×32×32即可得到所需的网络。</p>
+
+<h4 id="代码示例">代码示例</h4>
+
+<h5 id="导入所需的包">导入所需的包</h5>
 <pre>
-<code class="cpp">
+<code class="python">
+import torch as t
+from torch import optim
 
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
-#include "stdio.h"
-#include "memory.h"
-#include "time.h"
-#include "helper_timer.h"
+# 导入torchvision 包
+import torchvision as tv
+import torchvision.transforms as transforms
+from torchvision.transforms import ToPILImage
 
-// 定义核函数
-__global__ void increment_kernel(int *g_data, int inc_value)
-{
-    int idx = blockIdx.x*blockDim.x + threadIdx.x;
-    g_data[idx] = g_data[idx] + inc_value;
-}
+# 导入torch.nn 包
+import torch.nn as nn
 
-int correct_output(int *data, const int n, const int x)
-{
-    for (int i = 0; i &lt; n; i++)
-        if (data[i] != x)
-            return 0;
-}
-int main(int argc, char *argv[])
-{
-    // CUDA device properties
-    // CUDA 设备属性
-    cudaDeviceProp deviceProps;
-    cudaGetDeviceProperties(&amp;deviceProps, 0);
-    printf("CUDA device [%s]\n", deviceProps.name);
-    int n = 16 * 1024 * 1024;
-    int nbytes = n*sizeof(int);
-    int value = 26;
-    int *a = 0;
-    // Allocates page-locked memory on the host.
-    // 在主机上申请 page-locked 内存
-    cudaMallocHost((void**)&amp;a, nbytes);
-    // 为内存赋值为0
-    memset(a, 0, nbytes);
-    int *d_a = 0;
-    cudaMalloc((void**)&amp;d_a, nbytes);
-    cudaMemset(d_a, 255, nbytes);
-    // 计算线程数
-    dim3 threads = dim3(512, 1);
-    // 计算块数
-    dim3 blocks = dim3(n / threads.x, 1);
-
-    cudaEvent_t startGPU, stopGPU;
-    cudaEventCreate(&amp;startGPU);
-    cudaEventCreate(&amp;stopGPU);
-
-    StopWatchInterface *timer = NULL;
-    sdkCreateTimer(&amp;timer);
-    sdkResetTimer(&amp;timer);
-
-    cudaThreadSynchronize();
-
-    float gpu_time = 0.0f;
-
-
-    sdkStartTimer(&amp;timer);
-    cudaEventRecord(startGPU, 0);
-    cudaMemcpyAsync(d_a, a, nbytes, cudaMemcpyHostToDevice, 0);
-    // 启动核函数
-    increment_kernel &lt;&lt; &lt;blocks, threads, 0, 0 &gt;&gt; &gt;(d_a, value);
-    cudaMemcpyAsync(a, d_a, nbytes, cudaMemcpyDeviceToHost, 0);
-    cudaEventRecord(stopGPU, 0);
-    sdkStopTimer(&amp;timer);
-
-    unsigned long int counter = 0;
-
-    while (cudaEventQuery(stopGPU) == cudaErrorNotReady)
-    {
-        counter++;
-    }
-
-    cudaEventElapsedTime(&amp;gpu_time, startGPU, stopGPU);
-    printf("time spent executing by the GPU:%.2f\n", gpu_time);
-    printf("time spent by CPU in CUDA calls:%.8f\n", sdkGetTimerValue(&amp;timer));
-    printf("GPU execute %d iteration while waiting forGPU to finish\n", counter);
-
-    printf("-------------------------------------------------------------------------\n");
-    if (correct_output(a, n, value))
-        printf("TEST PASSED\n");
-    else // 返回 0
-        printf("Test FAILED\n");
-
-    cudaEventDestroy(startGPU);
-    cudaEventDestroy(stopGPU);
-
-    // 释放内存
-    cudaFreeHost(a);
-    cudaFree(d_a);
-    getchar();
-    cudaThreadExit();
-    return 0;
-}
+# 导入import torch.nn.functional  包
+import torch.nn.functional as F
 </code>
 </pre>
 
-<hr />
+<p><strong>torch.optim</strong></p>
 
-<p><strong>参考资料：</strong></p>
+<p>torch.optim 包中封装了多种常用的优化算法</p>
 
-<p>1、<strong>CUDA入门（六） 异步并行执行解析：</strong> https://blog.csdn.net/qq_25819827/article/details/52541813</p>
+<p>参见：https://pytorch.org/docs/stable/optim.html</p>
+
+<p><strong>torchvision</strong></p>
+
+<p>torchvision 包中封装了各种计算机视觉领域常用的数据集、模型结构和图像变换</p>
+
+<p>参见：https://pytorch.org/docs/stable/torchvision/index.html</p>
+
+<p><strong>torchvision.transforms</strong></p>
+
+<p>torchvision.transforms 包中封装了多种图像变换算法，使用 <strong>torchvision.transforms.Compose</strong> 可以将多种变换组合使用。</p>
+
+<p>参见：https://pytorch.org/docs/stable/torchvision/transforms.html</p>
+
+<p><strong>torch.nn</strong></p>
+
+<p>torch.nn 包中封装了多种神经网络的结构</p>
+
+<p>参见：https://pytorch.org/docs/stable/nn.html</p>
+
+<p><strong>torch.nn.functional</strong></p>
+
+<p>torch.nn.functional 包中封装了网络层结构</p>
+
+<p>参见：https://pytorch.org/docs/stable/nn.html#torch-nn-functional</p>
+
+<h5 id="定义对数据的预处理">定义对数据的预处理</h5>
+<pre>
+<code class="python">
+transform = transforms.Compose([
+        transforms.ToTensor(),                          # 转为 Tensor
+        transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5)),# 归一化
+])
+</code>
+</pre>
+
+<p><strong>class torchvision.transforms.ToTensor()</strong></p>
+
+<p>将PIL Image 或 numpy.ndarray 转换 tensor、</p>
+
+<p>参见：https://pytorch.org/docs/stable/torchvision/transforms.html#torchvision.transforms.ToTensor</p>
+
+<p><strong>class torchvision.transforms.Normalize(mean, std)</strong></p>
+
+<p>用于对数据的所有通道逐一进行归一化处理。</p>
+
+<p>参见：https://pytorch.org/docs/stable/torchvision/transforms.html#torchvision.transforms.Normalize</p>
+
+<h5 id="定义训练集">定义训练集</h5>
+
+<pre>
+<code class="python">
+
+trainset = tv.datasets.CIFAR10(root='/cifar10/',
+                                   train = True,
+                                   download = False,
+                                   # 建议提前将数据集下载好，放入根目录下
+                                   # 否则这里应设置为True
+                                   transform = transform
+                                  )
+
+trainLoader = t.utils.data.DataLoader(
+                                    trainset,
+                                    batch_size=4,
+                                    shuffle=True,
+                                    num_workers=2
+    )
+</code>
+</pre>
+
+<p><strong>class torchvision.datasets.CIFAR10(root, train, transform, target_transform download)</strong></p>
+
+<p>使用CIFAR-10数据集。</p>
+
+<p>参见：https://pytorch.org/docs/stable/torchvision/datasets.html#torchvision.datasets.CIFAR10</p>
+
+<p><strong>class torch.utils.data.DataLoader(dataset, batch_size, shuffle, sampler, batch_sampler, num_workers, collate_fn, pin_memory, drop_last, timeout, worker_init_fn)</strong></p>
+
+<p>设置训练集的数据加载器。</p>
+
+<p>1、设置为训练集</p>
+
+<p>2、设置每个batch有4个样本数据</p>
+
+<p>3、设置对每个epoch将数据集打乱</p>
+
+<p>3、设置使用2个子进程用来加载数据</p>
+
+<p>参见 ：https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader</p>
+
+<h5 id="定义测试集">定义测试集</h5>
+
+<pre>
+<code class="python">
+testset = tv.datasets.CIFAR10(root='/cifar10/',
+                                   train = False,
+                                   download = False,# 同上
+                                   transform = transform
+                                  )
+
+testLoader = t.utils.data.DataLoader(
+                                    testset,
+                                    batch_size=4,
+                                    shuffle=False,
+                                    num_workers=2
+    )
+</code>
+</pre>
+
+<p><strong>同上一部分相同</strong></p>
+
+<h5 id="定义网络">定义网络</h5>
+
+<pre>
+<code class="python">
+class Net(nn.Module):
+    # 定义网络结构
+    def __init__(self):
+        super(Net,self).__init__()
+        self.conv1 = nn.Conv2d(3,6,5)    # 卷积层C1
+        self.conv2 = nn.Conv2d(6,16,5)   # 卷积层C3
+        self.fc1 = nn.Linear(16*5*5,120) # 全连接层S2
+        self.fc2 = nn.Linear(120,84)     # 全连接层S4
+        self.fc3 = nn.Linear(84,10)      # 全连接层OUTPUT   
+    
+    # 定义前向传播函数   
+    def forward(self,x):
+        x = F.max_pool2d(F.relu(self.conv1(x)),(2,2))
+        x = F.max_pool2d(F.relu(self.conv2(x)),2)
+        x = x.view(x.size()[0],-1)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        
+        return x
+</code>
+</pre>
+
+<pre>
+<code class="python">
+net = Net()
+</code>
+</pre>
+
+<h5 id="定义损失函数和优化器">定义损失函数和优化器</h5>
+
+<pre>
+<code class="python">
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(
+                    net.parameters(),
+                    lr = 0.001,
+                    momentum=0.9)
+</code>
+</pre>
+
+<p><strong>class torch.nn.CrossEntropyLoss(weight, size_average, ignore_index, reduce, reduction)</strong></p>
+
+<p>将损失函数设置为Cross-Entropy 函数</p>
+
+<p>参见：https://pytorch.org/docs/stable/nn.html#torch.nn.CrossEntropyLoss</p>
+
+<p><strong>class torch.optim.SGD(params, lr, momentum=0, dampening=0, weight_decay=0, nesterov)</strong></p>
+
+<p>使用螺旋梯度下降。</p>
+
+<p>参见：https://pytorch.org/docs/stable/optim.html#torch.optim.SGD</p>
+
+<h5 id="训练网络">训练网络</h5>
+
+<pre>
+<code class="python">
+for epoch in range(70): # 设置训练的迭代次数
+    running_loss = 0.0
+    for i,data in enumerate(trainLoader,0):
+        # 输入数据
+        inputs,labels = data
+        # 梯度清零
+        optimizer.zero_grad()
+        # forward + backward
+        outputs = net(inputs)
+        # 计算损失值
+        loss = criterion(outputs,labels)
+        loss.backward()
+        # 更新参数
+        optimizer.step()
+        # 打印log信息
+        running_loss += loss.data[0]
+        if i%2000 == 1999:
+            print('[%d,%5d] loss:%.3f' %(epoch+1,i+1,running_loss/2000))
+            running_loss = 0.0
+            
+print('Finished Training')
+</code>
+</pre>
+
+<h5 id="测试效果">测试效果</h5>
+
+<pre>
+<code class="python">
+# 计算图片在每个类别上的分数
+dataiter = iter(testLoader)
+images, labels = dataiter.next() # 一个batch返回4张图片
+outputs = net(images)
+# 得分最高的那个类
+_, predicted = t.max(outputs.data, 1)
+
+print('预测结果: ', ' '.join('%5s' % classes[predicted[j]] for j in range(4)))
+</code>
+</pre>
+
+<h5 id="在测试集中测试准确率">在测试集中测试准确率</h5>
+
+<pre>
+<code class="python">
+correct = 0 # 预测正确的图片数
+total = 0 # 总共的图片数
+
+
+# 由于测试的时候不需要求导，可以暂时关闭autograd，提高速度，节约内存
+with t.no_grad():
+
+    # 在测试集中迭代数据
+    for data in testLoader:
+        # 读取数据的数据内容和标签
+        images, labels = data
+        # 得到网络的输出
+        outputs = net(images)
+        # 得到预测值
+        _, predicted = t.max(outputs, 1)
+        # 累积计算数据集的大小
+        total += labels.size(0)
+        # 累积计算预测正确的数据集的大小
+        correct += (predicted == labels).sum()
+
+print('10000张测试集中的准确率为: %d %%' % (100 * correct / total))
+</code>
+</pre>
+
+<!-- ----
+
+__参考资料：__
+
+1、__opencv中GPU的流操作__ https://blog.csdn.net/eyes366/article/details/48438397
+
+2、__how to use gpu::Stream in OpenCV?__ https://stackoverflow.com/questions/17842827/how-to-use-gpustream-in-opencv
+ -->
 
 <hr />
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/lenet.html" rel="tag">LeNet</a>, <a href="/tag/cifar-10.html" rel="tag">CIFAR-10</a>, <a href="/tag/cnn.html" rel="tag">CNN</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -910,12 +1135,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 						
@@ -930,12 +1149,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 						
@@ -947,189 +1160,6 @@ border-radius:4px;
 						
 					
 						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-							
-								<h5 class="page-heading">相关文章:</h5>	
-							
-							
-	
-						<small><a href="/cuda_learning_06">CUDA并行编程学习（6）-- 流</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
-						
-					
-						
-					
-				
-			
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-							
-							
-	
-						<small><a href="/opencv-gpu-module-2">OpenCV GPU 模块学习 （2）GPU的流操作</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
-						
-					
-						
-					
-				
-			
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-							
-							
-	
-						<small><a href="/opencv-gpu-module-1">OpenCV GPU 模块学习 （1）读取GPU设备信息</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
-						
-					
-						
-					
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-							
-							
-	
-						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
-						
-					
-						
-					
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1152,9 +1182,92 @@ border-radius:4px;
 					
 						
 					
+						
+					
+						
+					
 				
 			
 				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
 					
 						
 					
@@ -1177,6 +1290,38 @@ border-radius:4px;
 					
 						
 					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
@@ -1187,17 +1332,9 @@ border-radius:4px;
 				
 					
 						
-							
-							
-	
-						<small><a href="/cuda_learning_04">CUDA并行编程学习（4）-- 内存共享 Share Memory</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Sep 27, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+					
 						
-						<br>
-						
+					
 						
 					
 						
@@ -1206,6 +1343,79 @@ border-radius:4px;
 					
 				
 			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
@@ -1216,17 +1426,9 @@ border-radius:4px;
 				
 					
 						
-							
-							
-	
-						<small><a href="/cuda_learning_03">CUDA并行编程学习（3）-- 将CUDA并行模型扩展到二维空间</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Sep 26, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+					
 						
-						<br>
-						
+					
 						
 					
 						
@@ -1236,13 +1438,108 @@ border-radius:4px;
 				
 			
 				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
 			
 	
 			
 		
 	
-		
-		<!-- </ul> -->
 		
 
 		<br>
@@ -1586,7 +1883,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learning_05&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
