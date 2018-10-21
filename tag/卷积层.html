@@ -9,9 +9,11 @@
 
 	<title>
         
-            Leetcode 91. Decode Ways - Su'S Blog - SuZhengpeng.COM 
+            
+                卷积层 - Su'S Blog - SuZhengpeng.COM 
+            
         </title>
-  <meta name="description" content="LeetCode 第91题的解题方法 ">
+  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -418,7 +420,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_91_decode_ways&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -662,512 +664,29 @@
 		  
 		<main>
 
-			<article id="post-page">
-		<!-- Sep 02, 2018 -->
-		
-		<!--  -->
-		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 02, 2018</a></small> 
-		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
-	<br>
-	<!-- <br> -->
-	<h3>&nbsp;&nbsp;Leetcode 91. Decode Ways   </h3>
-	<!-- JiaThis Button BEGIN -->
-	
-<div style="padding: 10px; background:#fff;">
-
-	<div style="position: relative; 
-				border: 2px solid #E9F01D; 
-				padding: 10px; 
-				padding-bottom:20px;
-				width:60%;
-				min-width:300px;
-				background:#E9F01D;
-				color:#404040;
-				border-radius:4px;
-				" >
-		<span style="position: absolute; 
-					left: 30px; top: -32px; 
-					width: 0; height: 0; 
-					font-size: 0; 
-					border-width: 16px; 
-					border-style: dashed dashed solid dashed; 
-					border-color: transparent transparent #E9F01D transparent;" ></span>
-<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-LeetCode 第91题的解题方法<br><br> 
-分享到：<a title="分享到微信" class="bshare-weixin"></a>
-<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
-<a title="分享到Facebook" class="bshare-facebook"></a>
-<a title="分享到Twitter" class="bshare-twitter"></a>
-<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
-<a title="分享到豆瓣" class="bshare-douban"></a>
-<a title="分享到人人网" class="bshare-renren"></a>
-<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
-<span class="BSHARE_COUNT bshare-share-count">0</span>
-<br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div>
-<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
-<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
-	</div>
-</div>
-
-<!-- JiaThis Button END -->
+			<h2>标签：卷积层</h2>
 <br>
-	<div class="content">
-			
-		<h2 id="问题描述">问题描述</h2>
+<div style="width:100%;overflow:hidden;white-space:nowrap;">
+ 
+<!-- <div style="width:170px;float:left"> -->
+<!-- <a href="/hello-pytorch-01"><img src="/img/cover/IMG_5770.JPG"  width=150 height=150/></a> -->
 
-<p>A message containing letters from A-Z is being encoded to numbers using the following mapping:</p>
+<a href="/hello-pytorch-01">&nbsp;&nbsp;&nbsp;Hello Pytorch 壹 -- 卷积层原理及实现</a> 
+<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" rel="tag">卷积层</a> </small> 
+ <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
+    
+ <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 
-<blockquote>
-  <p>‘A’ -&gt; 1<br />
-‘B’ -&gt; 2<br />
-…<br />
-‘Z’ -&gt; 26</p>
-</blockquote>
+<br><br>
+<!-- </div><br> -->
 
-<p>Given a non-empty string containing only digits, determine the total number of ways to decode it.</p>
-
-<p><strong>Example 1:</strong></p>
-
-<blockquote>
-  <p>Input: “12”<br />
-Output: 2<br />
-Explanation: It could be decoded as “AB” (1 2) or “L” (12).</p>
-</blockquote>
-
-<p><strong>Example 2:</strong></p>
-
-<blockquote>
-  <p>Input: “226”<br />
-Output: 3<br />
-Explanation: It could be decoded as “BZ” (2 26), “VF” (22 6), or “BBF” (2 2 6).</p>
-</blockquote>
-
-<pre>
-<code class="cpp">
-class Solution {
-public:
-    int numDecodings(string s) {
-	if (s.empty() || '0' == s.front()) {
-            return 0;
-        }
-	vector &lt;int&gt; comb(1, 1);
-	for (int i = 0; i &lt; s.size(); i++)
-	{
-		if (num % 10 == 0 ||num == 0)
-		{
-			if (num == 0 || num &gt; 20)
-			{
-				return 0;
-			}
-			else
-			{
-				comb.push_back(comb[i - 1]);
-			}
-		}
-		else
-		{
-			if (num &gt;= 10 &amp;&amp; num &lt;= 26 &amp;&amp; num % 10 != 0&amp;&amp;s[i] != '0')
-			{
-				comb.push_back(comb[i - 1] + comb[i]);
-			}
-			else
-			{
-				comb.push_back(comb[i]);
-			}
-		}
-	} 
-	return comb.back();
-	}};
-</code>
-</pre>
-
-
-		
-	</div>
-	<div id="posts-out-tags"># <a href="/tag/leetcode.html" rel="tag">Leetcode</a>, <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" rel="tag">动态规划</a> <a href="/tags.html" class="set-1">>></a></div> 
-
-
-
-	<div class="shang_con">
-			<p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
-			<div class="shang_hide_box"></div>
-			<div class="shang_box">
-					<br>
-				<div class="shang_tit">
-					<p>感谢您的支持，我会继续努力的!</p>
-				</div>
-				<div class="shang_payimg">
-					<img src="img/ds/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
-				</div>
-				<div class="shang_payselect">
-					<div class="pay_item checked" data-id="alipay">
-						<span class="radiobox"></span>
-						<span class="pay_logo"><img src="img/ds/alipay.jpg" alt="支付宝" /></span>
-					</div>
-					<div class="pay_item" data-id="weipay">
-						<span class="radiobox"></span>
-						<span class="pay_logo"><img src="img/ds/wechat.jpg" alt="微信" /></span>
-					</div>
-				</div>
-				<br>
-				<div class="shang_info">
-					<p>长按识别二维码或打开<span id="shang_pay_txt">支付宝</span>扫一扫 完成打赏<br>
-					或 使用<a href="HTTPS://QR.ALIPAY.COM/FKX08963JL6LVJZYLYGZ13" ><支付宝链接></a>打赏
-				</p>
-
-				</div>
-				<br>
-		
-				<center><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">关闭</a></center>
-			</div>
-			</div>
-			
-			<script type="text/javascript">
-			$(function(){
-				$(".pay_item").click(function(){
-					$(this).addClass('checked').siblings('.pay_item').removeClass('checked');
-					var dataid=$(this).attr('data-id');
-					$(".shang_payimg img").attr("src","img/ds/"+dataid+"img.jpg");
-					$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
-				});
-			});
-			function dashangToggle(){
-				$(".shang_hide_box").fadeToggle();
-				$(".shang_box").fadeToggle();
-			}
-			</script>
-
-<div style="position: relative; 
-/* border: 2px solid #E9F01D;  */
-padding: 10px; 
-padding-bottom:20px;
-/* width:80%;
-min-width:300px; */
-/* background:#E9F01D; */
-color:#404040;
-border-radius:4px;
-" >
-<div class="bsPromo bsPromo2"></div>
-		
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-	
-		
-
-		<br>
-		
-
-		<div class="bshare-custom">
-			<!-- <div class="bsPromo bsPromo2"></div> -->
-分享到：<a title="分享到微信" class="bshare-weixin"></a>
-<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
-<a title="分享到Facebook" class="bshare-facebook"></a>
-<a title="分享到Twitter" class="bshare-twitter"></a>
-<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
-<a title="分享到豆瓣" class="bshare-douban"></a>
-<a title="分享到人人网" class="bshare-renren"></a>
-<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
-<span class="BSHARE_COUNT bshare-share-count">0</span>
 </div>
-<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
-<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
-	
 
-	</div>
+<hr><br>
 
-</article>
-
-
+<center> <div id="tag-cloud"><div id="posts-out-tags"><a href="/tag/blog.html" class="set-1">Blog</a> <a href="/tag/c6678.html" class="set-1">C6678</a> <a href="/tag/cifar-10.html" class="set-1">CIFAR-10</a> <a href="/tag/cnn.html" class="set-1">CNN</a> <a href="/tag/cuda.html" class="set-5">CUDA</a> <a href="/tag/gpu.html" class="set-2">GPU</a> <a href="/tag/lenet.html" class="set-1">LeNet</a> <a href="/tag/leetcode.html" class="set-1">Leetcode</a> <a href="/tag/opencv.html" class="set-3">OpenCV</a> <a href="/tag/opencv4.x.html" class="set-1">OpenCV4.x</a> <a href="/tag/pcie.html" class="set-1">PCIe</a> <a href="/tag/pytorch.html" class="set-1">Pytorch</a> <a href="/tag/mean-shift.html" class="set-1">mean-shift</a> <a href="/tag/%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82.html" class="set-1">全连接层</a> <a href="/tag/%E5%85%B0%E5%B7%9E.html" class="set-1">兰州</a> <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" class="set-1">动态规划</a> <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" class="set-1">卷积层</a> <a href="/tag/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86.html" class="set-1">字符串处理</a> <a href="/tag/%E5%AD%AA%E7%94%9F%E7%BD%91%E7%BB%9C.html" class="set-3">孪生网络</a> <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" class="set-4">并行计算</a> <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" class="set-2">异步并行</a> <a href="/tag/%E6%89%B9%E6%A0%87%E5%87%86%E5%8C%96.html" class="set-1">批标准化</a> <a href="/tag/%E6%95%A6%E7%85%8C.html" class="set-1">敦煌</a> <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" class="set-1">深度学习</a> <a href="/tag/%E6%B8%B8%E8%AE%B0.html" class="set-1">游记</a> <a href="/tag/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA.html" class="set-4">目标跟踪</a></div> 
+</div></center>
+<br>
 
 	  </main>
 		
@@ -1492,7 +1011,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_91_decode_ways&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>

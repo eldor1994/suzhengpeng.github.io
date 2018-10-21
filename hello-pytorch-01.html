@@ -9,9 +9,9 @@
 
 	<title>
         
-            Leetcode 91. Decode Ways - Su'S Blog - SuZhengpeng.COM 
+            Hello Pytorch 壹 -- 卷积层原理及实现 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="LeetCode 第91题的解题方法 ">
+  <meta name="description" content="Pytorch 框架的卷积层模块代码阅读笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -418,7 +418,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_91_decode_ways&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -663,15 +663,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Sep 02, 2018 -->
+		<!-- Oct 20, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 02, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;Leetcode 91. Decode Ways   </h3>
+	<h3>&nbsp;&nbsp;Hello Pytorch 壹 -- 卷积层原理及实现   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -694,7 +694,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-LeetCode 第91题的解题方法<br><br> 
+Pytorch 框架的卷积层模块代码阅读笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -714,78 +714,284 @@ LeetCode 第91题的解题方法<br><br>
 <br>
 	<div class="content">
 			
-		<h2 id="问题描述">问题描述</h2>
+		<ul id="markdown-toc">
+  <li><a href="#卷积与互相关计算" id="markdown-toc-卷积与互相关计算">卷积与互相关计算</a></li>
+  <li><a href="#卷积" id="markdown-toc-卷积">卷积</a>    <ul>
+      <li><a href="#动画演示" id="markdown-toc-动画演示">动画演示</a></li>
+      <li><a href="#二维卷积-torchnnconv2d" id="markdown-toc-二维卷积-torchnnconv2d">二维卷积 torch.nn.Conv2d</a></li>
+      <li><a href="#一维卷积-torchnnconv1d" id="markdown-toc-一维卷积-torchnnconv1d">一维卷积 torch.nn.Conv1d</a></li>
+      <li><a href="#三维卷积-torchnnconv3d" id="markdown-toc-三维卷积-torchnnconv3d">三维卷积 torch.nn.Conv3d</a></li>
+    </ul>
+  </li>
+  <li><a href="#反卷积转置卷积" id="markdown-toc-反卷积转置卷积">反卷积（转置卷积）</a>    <ul>
+      <li><a href="#动画演示-1" id="markdown-toc-动画演示-1">动画演示</a></li>
+      <li><a href="#二维反卷积-torchnnconvtranspose2d" id="markdown-toc-二维反卷积-torchnnconvtranspose2d">二维反卷积 torch.nn.ConvTranspose2d</a></li>
+      <li><a href="#一维反卷积-torchnnconvtranspose1d" id="markdown-toc-一维反卷积-torchnnconvtranspose1d">一维反卷积 torch.nn.ConvTranspose1d</a></li>
+      <li><a href="#三维反卷积-torchnnconvtranspose3d" id="markdown-toc-三维反卷积-torchnnconvtranspose3d">三维反卷积 torch.nn.ConvTranspose3d</a></li>
+    </ul>
+  </li>
+</ul>
 
-<p>A message containing letters from A-Z is being encoded to numbers using the following mapping:</p>
-
-<blockquote>
-  <p>‘A’ -&gt; 1<br />
-‘B’ -&gt; 2<br />
-…<br />
-‘Z’ -&gt; 26</p>
-</blockquote>
-
-<p>Given a non-empty string containing only digits, determine the total number of ways to decode it.</p>
-
-<p><strong>Example 1:</strong></p>
-
-<blockquote>
-  <p>Input: “12”<br />
-Output: 2<br />
-Explanation: It could be decoded as “AB” (1 2) or “L” (12).</p>
-</blockquote>
-
-<p><strong>Example 2:</strong></p>
+<hr />
 
 <blockquote>
-  <p>Input: “226”<br />
-Output: 3<br />
-Explanation: It could be decoded as “BZ” (2 26), “VF” (22 6), or “BBF” (2 2 6).</p>
+  <p>代码：https://pytorch.org/docs/stable/_modules/torch/nn/modules/conv.html <br />
+官方文档：https://pytorch.org/docs/stable/nn.html#convolution-layers  <br />
+动画演示：https://github.com/vdumoulin/conv_arithmetic</p>
 </blockquote>
 
-<pre>
-<code class="cpp">
-class Solution {
-public:
-    int numDecodings(string s) {
-	if (s.empty() || '0' == s.front()) {
-            return 0;
-        }
-	vector &lt;int&gt; comb(1, 1);
-	for (int i = 0; i &lt; s.size(); i++)
-	{
-		if (num % 10 == 0 ||num == 0)
-		{
-			if (num == 0 || num &gt; 20)
-			{
-				return 0;
-			}
-			else
-			{
-				comb.push_back(comb[i - 1]);
-			}
-		}
-		else
-		{
-			if (num &gt;= 10 &amp;&amp; num &lt;= 26 &amp;&amp; num % 10 != 0&amp;&amp;s[i] != '0')
-			{
-				comb.push_back(comb[i - 1] + comb[i]);
-			}
-			else
-			{
-				comb.push_back(comb[i]);
-			}
-		}
-	} 
-	return comb.back();
-	}};
+<h3 id="卷积与互相关计算">卷积与互相关计算</h3>
+
+<p>在深度学习领域，卷积定义为图像矩阵和卷积核的按位点乘，实质这种操作是互相关运算，而卷积需要把卷积核顺时针旋转180度然后再做点乘。</p>
+
+<p><img width="400px" src="/img/201810/Comparison_convolution_correlation.svg" /></p>
+
+<center>卷积、互相关和自相关的比较</center>
+
+<p>在信号处理领域，互相关计算可以用来计算两个信号之间的相似性，也通过与已知信号比较用于寻找未知信号中的特性。</p>
+
+<h3 id="卷积">卷积</h3>
+
+<h4 id="动画演示">动画演示</h4>
+<center>
+<table style="table-layout:fixed;">
+  <tr>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/no_padding_no_strides.gif" /></td>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/arbitrary_padding_no_strides.gif" /></td>
+  </tr>
+  <tr>
+    <td>No padding, no strides</td>
+    <td>Arbitrary padding, no strides</td>
+  </tr>
+  <tr>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/same_padding_no_strides.gif" /></td>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/full_padding_no_strides.gif" /></td>
+  </tr>
+  <tr>
+    <td>Half padding, no strides</td>
+    <td>Full padding, no strides</td>
+  </tr>
+  <tr>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/no_padding_strides.gif" /></td>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/padding_strides.gif" /></td>
+  </tr>
+  <tr>
+    <td>No padding, strides</td>
+    <td>Padding, strides</td>
+  </tr>
+    <tr>
+    <td><img width="100px" src="https://raw.githubusercontent.com/vdumoulin/conv_arithmetic/master/gif/padding_strides_odd.gif" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Padding, strides (odd)</td>
+    <td></td>
+  </tr>
+</table>
+</center>
+<p>N.B.: Blue maps are inputs, and cyan maps are outputs.</p>
+
+<h4 id="二维卷积-torchnnconv2d">二维卷积 torch.nn.Conv2d</h4>
+
+<p>class <strong>torch.nn.Conv2d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)</p>
+
+<p>输入数据大小：$(N, C_{in}, H, W)$</p>
+
+<p>输出数据大小：$(N, C_{out}, H_{out}, W_{out})$</p>
+
+<p>2D 卷积的整个过程以下式表达：</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\text{out}(N_i, C_{out_j}) = \text{bias}(C_{out_j}) +
+                        \sum_{k = 0}^{C_{in} - 1} \text{weight}(C_{out_j}, k) \star \text{input}(N_i, k)
+\end{equation*}</script>
+
+<p>其中 $\star$ 是 2D 互相关操作符, N 表示批（batch）的大小, C 表示通道数, H 输入数据的高（像素）, and W 表示数据的宽（像素）</p>
+
+<p><strong>其他参数</strong></p>
+
+<p>kernel_size (int or tuple)  :  控制卷积核的大小。</p>
+
+<p>stride (int or tuple, optional)  ： 控制互相关的步长。</p>
+
+<p>padding (int or tuple, optional)  ： 控制两侧隐式零填充的数量，以填充每个维度的点数。</p>
+
+<p>dilation (int or tuple, optional)  ： 控制卷积核核点之间的间距。具体操作过程如下图所示，可以很好地显示扩张的作用</p>
+
+<p><img width="200px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/dilation.gif" /></p>
+<center>卷积示意图：No padding, no stride, dilation</center>
+
+<p>groups (int, optional) ： 控制输入和输出的连接。输入数据和输出数据的通道数必须同时被groups整除。例如：groups=1时，所有的输入卷积到所有的输出。groups=2时，有两个并列的卷积层，每个卷积层对应输入数据一半的通道数，同时也对应输出数据一半的通道数。groups= in_channels （输入数据的通道数）时 每个输入通道与对应的大小为 $\left\lfloor\frac{\text{out_channels}}{\text{in_channels}}\right\rfloor$ 的滤波器集合做卷积运算 。</p>
+
+<p>深度卷积：当 groups == in_channels，out_channels == K * in_channels （其中K为正整数）时，被称为深度卷积。</p>
+
+<p>输入数据大小：$(N, C_{in}, H_{in}, W_{in})$</p>
+
+<p>输出数据大小：$(N, C_{out}, H_{out}, W_{out})$</p>
+
+<p>其中：</p>
+
+<script type="math/tex; mode=display">H_{out} = \left\lfloor\frac{H_{in}  + 2 \times \text{padding}[0] - \text{dilation}[0]
+                        \times (\text{kernel_size}[0] - 1) - 1}{\text{stride}[0]} + 1\right\rfloor</script>
+
+<div class="highlighter-rouge">$$           W_{out} = \left\lfloor\frac{W_{in}  + 2 \times \text{padding}[1] - \text{dilation}[1]
+                    \times (\text{kernel_size}[1] - 1) - 1}{\text{stride}[1]} + 1\right\rfloor $$
+</div>
+
+<h4 id="一维卷积-torchnnconv1d">一维卷积 torch.nn.Conv1d</h4>
+
+<p>class <strong>torch.nn.Conv1d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)</p>
+
+<p>输入数据大小：$(N, C_{in}, L)$</p>
+
+<p>输出数据大小： $(N, C_{out}, L_{out})$</p>
+
+<p>1D 卷积的整个过程以下式表达：</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+        \text{out}(N_i, C_{out_j}) = \text{bias}(C_{out_j}) +
+                                \sum_{k = 0}^{C_{in} - 1} \text{weight}(C_{out_j}, k) \star \text{input}(N_i, k)
+        \end{equation*}</script>
+
+<p>其中 $\star$ 是 1D 互相关操作符, N 表示批（batch）的大小, C 表示通道数, L表示一维数据的长度。</p>
+
+<blockquote>
+  <p>多通道一维数据：<br />
+一维卷积常用于序列模型，自然语言处理领域。以声音为例，在同一维度上，不同的通道可以表示不同的音源的声音，通道1：人声，通道2：鼓声。即：不同的通道表示不同属性的一维序列数据。</p>
+</blockquote>
+
+<p>关于一维卷积其余的属性和算法和下文中的二维卷积相似。</p>
+
+<h4 id="三维卷积-torchnnconv3d">三维卷积 torch.nn.Conv3d</h4>
+
+<p>class <strong>torch.nn.Conv3d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)</p>
+
+<p>相比于二维卷积，三维卷积的输入和输出是三维数据。输入数据的大小为：$(N, C_{in}, D, H, W)$，输出数据的大小为：$(N, C_{out}, D_{out}, H_{out}, W_{out})$</p>
+
+<p>其余的概念和算法与二维卷积相同。</p>
+
+<blockquote>
+  <p>三维卷积的应用场景：
+三维卷积常用于医学领域（CT影响），视频处理领域（检测动作及人物行为）</p>
+</blockquote>
+
+<h3 id="反卷积转置卷积">反卷积（转置卷积）</h3>
+
+<p>卷积操作的作用类似神经网络中的编码器，用于对高维数据进行低维特征提取，而 <strong>反卷积</strong> 通常用于将低维特征映射成高维输入，与卷积操作的作用相反。同时也是一种基于学习的上采样实现方法。</p>
+
+<h4 id="动画演示-1">动画演示</h4>
+
+<center>
+<table style="table-layout:fixed;">
+
+ <tr>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/no_padding_no_strides_transposed.gif" /></td>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/arbitrary_padding_no_strides_transposed.gif" /></td>
+  </tr>
+  <tr>
+    <td>No padding, no strides, transposed</td>
+    <td>Arbitrary padding, no strides, transposed</td>
+  </tr>
+   <tr>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/same_padding_no_strides_transposed.gif" /></td>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/full_padding_no_strides_transposed.gif" /></td>
+  </tr>
+  <tr>
+    <td>Half padding, no strides, transposed</td>
+    <td>Full padding, no strides, transposed</td>
+  </tr>
+   <tr>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/no_padding_strides_transposed.gif" /></td>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/padding_strides_transposed.gif" /></td>
+  </tr>
+  <tr>
+    <td>No padding, strides, transposed</td>
+    <td>Padding, strides, transposed</td>
+  </tr>
+   <tr>
+    <td><img width="100px" src="https://github.com/vdumoulin/conv_arithmetic/raw/master/gif/padding_strides_odd_transposed.gif" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Padding, strides, transposed (odd)</td>
+    <td></td>
+  </tr>
+</table></center>
+
+<p>N.B.: Blue maps are inputs, and cyan maps are outputs.</p>
+
+<h4 id="二维反卷积-torchnnconvtranspose2d">二维反卷积 torch.nn.ConvTranspose2d</h4>
+
+<p>class <strong>torch.nn.ConvTranspose2d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, output_padding=0, groups=1, bias=True, dilation=1)</p>
+
+<p>反卷积和卷积在参数上的区别在于padding和output_padding。</p>
+
+<p><strong>padding</strong> ：控制0填充的大小。在输入数据的每个边隐式地添加 (kernel_size - 1 - padding) 个0。而在进行卷积操作时，需要填充的是(padding)个0。</p>
+
+<p><strong>output_padding</strong> Additional size added to one side of each dimension in the output shape</p>
+
+<p>The padding argument effectively adds kernel_size - 1 - padding amount of zero padding to both sizes of the input. This is set so that when a Conv3d and a ConvTranspose3d are initialized with same parameters, they are inverses of each other in regard to the input and output shapes. However, when stride &gt; 1, Conv3d maps multiple input shapes to the same output shape. output_padding is provided to resolve this ambiguity by effectively increasing the calculated output shape on one side. Note that output_padding is only used to find output shape, but does not actually add zero-padding to output.</p>
+
+<p>输入数据大小：$(N, C_{in}, H_{in}, W_{in})$</p>
+
+<p>输出数据大小：$(N, C_{out}, H_{out}, W_{out})$</p>
+
+<p>其中：</p>
+
+<script type="math/tex; mode=display">H_{out} = (H_{in} - 1) \times \text{stride}[0] - 2 \times \text{padding}[0]
+                    + \text{kernel_size}[0] + \text{output_padding}[0]</script>
+
+<script type="math/tex; mode=display">W_{out} = (W_{in} - 1) \times \text{stride}[1] - 2 \times \text{padding}[1]
+                    + \text{kernel_size}[1] + \text{output_padding}[1]</script>
+
+<h4 id="一维反卷积-torchnnconvtranspose1d">一维反卷积 torch.nn.ConvTranspose1d</h4>
+
+<p>class <strong>torch.nn.ConvTranspose1d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, output_padding=0, groups=1, bias=True, dilation=1)</p>
+
+<p>在计算方法和参数设置上与二维反卷积相似。</p>
+
+<h4 id="三维反卷积-torchnnconvtranspose3d">三维反卷积 torch.nn.ConvTranspose3d</h4>
+
+<p>class <strong>torch.nn.ConvTranspose3d</strong> (in_channels, out_channels, kernel_size, stride=1, padding=0, output_padding=0, groups=1, bias=True, dilation=1)</p>
+
+<p>在计算方法和参数设置上与二维反卷积相似。</p>
+
+<!-- ### 张量折叠和展开
+
+#### 折叠 torch.nn.Unfold
+
+class __torch.nn.Unfold__ (kernel_size, dilation=1, padding=0, stride=1)
+
+Extracts sliding local blocks from a batched input tensor.
+
+设有一批输入张量的形状为$(N, C, *)$，其中N为批维度，C为通道维度，$*$表示任意的空间维度。通过这种操作将输入的张量在滑过大小为 kernel_size 大小的块（block）后折叠为形状大小为$(N, C \times \prod(\text{kernel_size}), L)$的张量，其中：$C \times \prod(\text{kernel_size})$为每一个块（block）中数值的个数（每个块中共有$\prod(\text{kernel_size})$个空间位置，每个位置为有C个通道的向量）。
+
+#### 展开 torch.nn.fold
+
+class __torch.nn.Fold__ (output_size, kernel_size, dilation=1, padding=0, stride=1)
+
+Combines an array of sliding local blocks into a large containing tensor. -->
+
+<!-- <pre>
+<code class="python">
+
 </code>
-</pre>
+</pre> -->
 
+<!-- ----
+
+__参考资料：__
+
+1、__opencv中GPU的流操作__ https://blog.csdn.net/eyes366/article/details/48438397
+
+2、__how to use gpu::Stream in OpenCV?__ https://stackoverflow.com/questions/17842827/how-to-use-gpustream-in-opencv
+ -->
+
+<hr />
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/leetcode.html" rel="tag">Leetcode</a>, <a href="/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.html" rel="tag">动态规划</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" rel="tag">卷积层</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -856,6 +1062,45 @@ border-radius:4px;
 				
 					
 						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/hello-pytorch-00">Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/lenet.html" rel="tag">LeNet</a>, <a href="/tag/cifar-10.html" rel="tag">CIFAR-10</a>, <a href="/tag/cnn.html" rel="tag">CNN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 19, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
 					
 						
 					
@@ -867,9 +1112,13 @@ border-radius:4px;
 					
 						
 					
+						
+					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -888,12 +1137,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -901,12 +1144,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -920,17 +1157,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
 						
 					
 				
@@ -938,12 +1164,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -962,12 +1182,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -978,25 +1192,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
 						
 					
 				
@@ -1004,12 +1199,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1028,12 +1217,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -1044,17 +1227,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
 						
 					
 				
@@ -1062,12 +1234,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1086,12 +1252,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
 						
 					
 				
@@ -1102,22 +1262,13 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
 						
 					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -1136,12 +1287,101 @@ border-radius:4px;
 					
 						
 					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
 			
 		
 	
+		
+		<!-- </ul> -->
 		
 
 		<br>
@@ -1492,7 +1732,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/leetcode_91_decode_ways&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-01&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>

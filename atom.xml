@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-10-19T23:10:41+08:00</updated>
+ <updated>2018-10-21T23:03:53+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Hello Pytorch 壹 -- 卷积层原理及实现</title>
+   <link href="http://localhost:4000/hello-pytorch-01"/>
+   <id>http://localhost:4000/hello-pytorch-01</id>
+   <updated>2018-10-20T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#卷积与互相关计算&quot; id=&quot;markdown-toc-卷积与互相关计算&quot;&gt;卷积与互相关计算&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#卷积&quot; id=&quot;markdown-toc-卷积&quot;&gt;卷积&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#动画演示&quot; id=&quot;markdown-toc-动画演示&quot;&gt;动画演示&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#二维卷积-torchnnconv2d&quot; id=&quot;markdown-toc-二维卷积-torchnnconv2d&quot;&gt;二维卷积 torch.nn.Conv2d&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#一维卷积-torchnnconv1d&quot; id=&quot;markdown-toc-一维卷积-torchnnconv1d&quot;&gt;一维卷积 torch.nn.Conv1d&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#三维卷积-torchnnconv3d&quot; id=&quot;markdown-toc-三维卷积-torchnnconv3d&quot;&gt;三维卷积 torch.nn.Conv3d&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#反卷积转置卷积&quot; id=&quot;markdown-toc-反卷积转置卷积&quot;&gt;反卷积（转置卷积）&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#动画演示-1&quot; id=&quot;markdown-toc-动画演示-1&quot;&gt;动画演示&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#二维反卷积-torchnnconvtranspose2d&quot; id=&quot;markdown-toc-二维反卷积-torchnnconvtranspose2d&quot;&gt;二维反卷积 torch.nn.ConvTranspose2d&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#一维反卷积-torchnnconvtranspose1d&quot; id=&quot;markdown-toc-一维反卷积-torchnnconvtranspose1d&quot;&gt;一维反卷积 torch.nn.ConvTranspose1d&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#三维反卷积-torchnnconvtranspose3d&quot; id=&quot;markdown-toc-三维反卷积-torchnnconvtranspose3d&quot;&gt;三维反卷积 torch.nn.ConvTranspose3d&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt;...</content>
+ </entry>
 
  
 
@@ -108,16 +118,6 @@
    <id>http://localhost:4000/compile-opencv-on-ubuntu</id>
    <updated>2018-09-29T00:00:00+08:00</updated>
    <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#所需工具&quot; id=&quot;markdown-toc-所需工具&quot;&gt;所需工具&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#从源码开始安装&quot; id=&quot;markdown-toc-从源码开始安装&quot;&gt;从源码开始安装&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#使用cmake-生成-makefile&quot; id=&quot;markdown-toc-使用cmake-生成-makefile&quot;&gt;使用CMake 生成 makefile&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用make-编译并安装&quot; id=&quot;markdown-toc-使用make-编译并安装&quot;&gt;使用Make 编译并安装&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写demo测试安装结果&quot; id=&quot;markdown-toc-编写demo测试安装结果&quot;&gt;编写Demo测试安装结果&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写cmakeliststxt&quot; id=&quot;markdown-toc-编写cmakeliststxt&quot;&gt;编写CMakeLists.txt&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用cmakemake完成编译&quot; id=&quot;markdown-toc-使用cmakemake完成编译&quot;&gt;使用CMake+Make完成编译&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;所需工具&quot;&gt;所需工具&lt;/h3&gt; &lt;p&gt;Ubuntu 系统：系统版本 Ubuntu 16.04.4 LTS&lt;/p&gt; &lt;p&gt;Cmake： cmake version 3.5.1&lt;/p&gt; &lt;p&gt;Make：...</content>
- </entry>
-
- 
-
- <entry>
-   <title>CUDA并行编程学习（4）-- 内存共享 Share Memory</title>
-   <link href="http://localhost:4000/cuda_learning_04"/>
-   <id>http://localhost:4000/cuda_learning_04</id>
-   <updated>2018-09-27T00:00:00+08:00</updated>
-   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#共享内存的优点&quot; id=&quot;markdown-toc-共享内存的优点&quot;&gt;共享内存的优点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#创建共享内存&quot; id=&quot;markdown-toc-创建共享内存&quot;&gt;创建共享内存&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#例程matrix-multiplication&quot; id=&quot;markdown-toc-例程matrix-multiplication&quot;&gt;例程：Matrix Multiplication&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#不使用共享内存&quot; id=&quot;markdown-toc-不使用共享内存&quot;&gt;不使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明&quot; id=&quot;markdown-toc-算法说明&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用共享内存&quot; id=&quot;markdown-toc-使用共享内存&quot;&gt;使用共享内存&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#算法说明-1&quot; id=&quot;markdown-toc-算法说明-1&quot;&gt;算法说明&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码清单-1&quot; id=&quot;markdown-toc-代码清单-1&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#代码下载&quot; id=&quot;markdown-toc-代码下载&quot;&gt;代码下载&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h4 id=&quot;共享内存的优点&quot;&gt;共享内存的优点&lt;/h4&gt; &lt;p&gt;使用共享内存的优点在于，一般情况下，共享内存比全局内存的访问速度更快。任何可以使用共享内存的地方，都应该将全局内存替换为共享内存。&lt;/p&gt; &lt;h4 id=&quot;创建共享内存&quot;&gt;创建共享内存&lt;/h4&gt;...</content>
  </entry>
 
  
