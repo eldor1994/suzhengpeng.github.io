@@ -9,9 +9,9 @@
 
 	<title>
         
-            OpenCV GPU 模块学习 （1）读取GPU设备信息 - Su'S Blog - SuZhengpeng.COM 
+            Hello Pytorch 贰 -- 常用损失函数 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="使用OpenCV GPU模块读取 GPU设备信息 ">
+  <meta name="description" content="Pytorch 框架的卷积层模块代码阅读笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -432,7 +432,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-1&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -685,15 +685,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Oct 10, 2018 -->
+		<!-- Oct 20, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;OpenCV GPU 模块学习 （1）读取GPU设备信息   </h3>
+	<h3>&nbsp;&nbsp;Hello Pytorch 贰 -- 常用损失函数   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -716,7 +716,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-使用OpenCV GPU模块读取 GPU设备信息<br><br> 
+Pytorch 框架的卷积层模块代码阅读笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -736,88 +736,126 @@
 <br>
 	<div class="content">
 			
-		<!-- * 索引
-{:toc}  -->
+		<ul id="markdown-toc">
+  <li><a href="#损失函数" id="markdown-toc-损失函数">损失函数</a></li>
+  <li><a href="#l1loss-l1-范数损失函数" id="markdown-toc-l1loss-l1-范数损失函数">L1Loss L1-范数损失函数</a></li>
+  <li><a href="#mseloss-均方差损失函数" id="markdown-toc-mseloss-均方差损失函数">MSELoss 均方差损失函数</a></li>
+  <li><a href="#crossentropyloss-交叉熵损失函数" id="markdown-toc-crossentropyloss-交叉熵损失函数">CrossEntropyLoss 交叉熵损失函数</a></li>
+</ul>
 
 <hr />
 
 <blockquote>
-  <p><strong>软件信息</strong>：<br />
-OpenCV Version : 2.4.13.6<br />
-CUDA Version : 8.0</p>
+  <p>官方文档：https://pytorch.org/docs/stable/nn.html#loss-functions</p>
 </blockquote>
 
-<p>在OpenCV GPU 模块中，提供了一些列函数，来读取GPU信息。函数列表如下所列：</p>
+<h3 id="损失函数">损失函数</h3>
 
-<p>https://docs.opencv.org/2.4.13.6/modules/gpu/doc/initalization_and_information.html</p>
+<p>损失函数（loss function）是一个非负实值函数，用来计算模型的预测值f(x)与真实值Y的差异程度。</p>
 
-<p>通过一个例程来测试这些函数的使用方法。</p>
+<h3 id="l1loss-l1-范数损失函数">L1Loss L1-范数损失函数</h3>
+
+<p>计算公式：</p>
+
+<script type="math/tex; mode=display">\ell(x, y) = L = \{l_1,\dots,l_N\}^\top, \quad
+l_n = \left| x_n - y_n \right|,</script>
+
+<p>其中 N 为batch的大小。如果 reduce 为 True：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}\ell(x, y) = \begin{cases}
+    \operatorname{mean}(L), & \text{if}\; \text{size_average} = \text{True},\\
+    \operatorname{sum}(L),  & \text{if}\; \text{size_average} = \text{False}.
+\end{cases}\end{split} %]]></script>
+
+<h3 id="mseloss-均方差损失函数">MSELoss 均方差损失函数</h3>
+
+<p>the Mean Squared Error Loss 均方差损失函数</p>
+
+<p>计算公式：</p>
+
+<script type="math/tex; mode=display">\ell(x, y) = L = \{l_1,\dots,l_N\}^\top, \quad
+l_n = \left( x_n - y_n \right)^2,</script>
+
+<p>其中 N 为batch的大小。如果 reduce 为 True：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}\ell(x, y) = \begin{cases}
+    \operatorname{mean}(L), & \text{if}\; \text{size_average} = \text{True},\\
+    \operatorname{sum}(L),  & \text{if}\; \text{size_average} = \text{False}.
+\end{cases}\end{split} %]]></script>
+
+<h3 id="crossentropyloss-交叉熵损失函数">CrossEntropyLoss 交叉熵损失函数</h3>
+
+<p>常用于训练一个具有$C$个分类的分类器。在多分类问题中，我们可以使用softmax函数，将网络的输出值归一化为概率值。</p>
+
+<p>计算公式：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+loss(x, class) &= -\text{log}\frac{exp(x[class])}{\sum_j exp(x[j]))}\
+               &= -x[class] + log(\sum_j exp(x[j]))
+\end{aligned} %]]></script>
+
+<p>当weight参数被指定的时候，loss的计算公式变为：</p>
+
+<script type="math/tex; mode=display">\text{loss}(x, class) = weight[class] \left(-x[class] + \log\left(\sum_j \exp(x[j])\right)\right)</script>
+
+<p>其中：class 为分类索引号，索引范围为 0 ~ C。输入值x，各个分类上的得分，大小为$(N, C)$或$(N), C, d_1, d_2, …, d_K)$ 的 Tensor 其中 $K \geq 2$ ，表示训练数据的为K维数据时。$\begin{aligned}
+\frac{exp(x[class])}{\sum_j exp(x[j]))}\
+               \end{aligned}$ 表示网络输出在分类class上的概率分布，当其趋近于1时，loss趋向于0；反之当其趋近于0时，loss趋向于无穷大。</p>
+
+<p>如果 size_average  为 true , 则损失函数的计算为batch上所有样本的平均。</p>
+
+<script type="math/tex; mode=display">LOSS = \sum_{s = 1}^{n}  loss_s (x, class)</script>
+
+<p><strong>交叉熵：</strong></p>
+
+<p>交叉熵用来表示两种分布之间的相似程度，相似度越高，交叉熵越低。对于分布p和q，其定义如下：</p>
+
+<script type="math/tex; mode=display">CE(p, q) = -\sum_{x \in X}p(x)log\ q(x)</script>
+
+<p>在分类问题中，设样本分布为p，分类数为5，则向量 T = [0, 1, 0, 0, 0] 表示该样本属于第二个类，其概率值为1。网络模型的输出分布为q，其在经过softmax函数后，得到一个向量 Y = [0.1, 0.8, 0.05, 0.05, 0] 表示该样本属于第二个类的概率值为0.8。计算两个分布的交叉熵则可以得到：</p>
+
+<script type="math/tex; mode=display">loss_{CE} = -\sum_{i = 1}^{C}t_i log(y_i) = -log(y_2)</script>
+
+<p>如果 size_average  为 true，则对所有的样本，我们有以下loss function：</p>
+
+<script type="math/tex; mode=display">loss = -\sum_{s = 1}^{n}\sum_{i = 1}^{C}t_{si} log(y_{ki}) = -\sum_{s = 1}^{n}t_{s2} log(y_{s2})</script>
+
+<p>其中$t_{si}$是样本s属于类别i的概率，$y_{si}$是模型对样本s预测为属于类别i的概率。</p>
+
+<p><strong>Examples：</strong></p>
 
 <pre>
-<code class="cpp">
-#include "opencv2/opencv.hpp"
-#include "opencv2/gpu/gpu.hpp"
-
-int main()
-{
-    // 获取设备的数量
-    int num_devices = cv::gpu::getCudaEnabledDeviceCount();
-
-    // 检测设备的数量，保证设备数量不小于0
-    if (num_devices &lt;= 0)
-    {
-        std::cerr &lt;&lt; "There is no device." &lt;&lt; std::endl;
-        return -1;
-    }
-    int enable_device_id = -1;
-
-    // 计算可用设备的数量
-    for (int i = 0; i &lt; num_devices; i++)
-    {
-        cv::gpu::DeviceInfo dev_info(i);
-        if (dev_info.isCompatible())
-        {
-            enable_device_id = i;
-        }
-    }
-    // 检测可用设备的数量，保证至少有一个可用设备
-    if (enable_device_id &lt; 0)
-    {
-        std::cerr &lt;&lt; "GPU module isn't built for GPU" &lt;&lt; std::endl;
-        return -1;
-    }
-    cv::gpu::setDevice(enable_device_id);
-
-    std::cout &lt;&lt; "GPU is ready, device ID is " &lt;&lt; num_devices &lt;&lt; "\n";
-
-    cv::Mat src_image = cv::imread("/home/video201/imszp/opencv_example/demo/lena.jpg", 1);
-    cv::Mat dst_image;
-
-    // 将主机 host 上的数据传输到设备 device 上
-    cv::gpu::GpuMat d_src_img(src_image);
-    cv::gpu::GpuMat d_dst_img;
-
-    // 在GPU上完成数据的计算
-    cv::gpu::cvtColor(d_src_img, d_dst_img, CV_BGR2GRAY);
-
-    // 将计算完成的数据从设备下载到主机上 
-    d_dst_img.download(dst_image);
-
-    // 将计算结果显示出来
-    cv::namedWindow("test", 0);
-    cv::imshow("test", dst_image);
-    cv::waitKey(0);
-    return 0;
-}
+<code class="python" style="	width:60%;min-width:300px;">
+&gt;&gt;&gt; loss = nn.CrossEntropyLoss()
+&gt;&gt;&gt; input = torch.randn(3, 5, requires_grad=True)
+&gt;&gt;&gt; target = torch.empty(3, dtype=torch.long).random_(5)
+&gt;&gt;&gt; output = loss(input, target)
+&gt;&gt;&gt; output.backward()
 </code>
 </pre>
 
+<!-- ###  NLLLoss                          
+###  PoissonNLLLoss                          
+###  KLDivLoss                          
+###  BCELoss                          
+###  BCEWithLogitsLoss                          
+###  HingeEmbeddingLoss                          
+###  MultiLabelMarginLoss                          
+###  SmoothL1Loss                          
+###  SoftMarginLoss                          
+###  MultiLabelSoftMarginLoss                          
+###  MarginRankingLoss                          
+###  MultiMarginLoss                          
+###  TripletMarginLoss                          
+###  MultiLabelSoftMarginLoss                           -->
 <hr />
-
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" rel="tag">损失函数</a>, <a href="/tag/%E4%BA%A4%E5%8F%89%E7%86%B5.html" rel="tag">交叉熵</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -888,156 +926,23 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
 							
 								<h5 class="page-heading">相关文章:</h5>	
 							
 							
 	
-						<small><a href="/cuda_learning_06">CUDA并行编程学习（6）-- 流</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small>
+						<small><a href="/hello-pytorch-01">Hello Pytorch 壹 -- 卷积层原理及实现</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" rel="tag">卷积层</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
 						    
 						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 						
 						<br>
 						
+						
+					
+						
+					
 						
 					
 						
@@ -1059,9 +964,9 @@ border-radius:4px;
 							
 							
 	
-						<small><a href="/opencv-gpu-module-2">OpenCV GPU 模块学习 （2）GPU的流操作</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small>
+						<small><a href="/hello-pytorch-00">Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/lenet.html" rel="tag">LeNet</a>, <a href="/tag/cifar-10.html" rel="tag">CIFAR-10</a>, <a href="/tag/cnn.html" rel="tag">CNN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 19, 2018</a></small>
 						    
 						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 						
@@ -1073,70 +978,12 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-			
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-							
-							
-	
-						<small><a href="/cuda_learning_05">CUDA并行编程学习（5）-- 异步并行</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
 						
 					
 				
 			
 				
 			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-							
-							
-	
-						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
-						
-					
-						
-					
-						
-					
 				
 			
 				
@@ -1156,6 +1003,20 @@ border-radius:4px;
 					
 						
 					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
 				
 			
 				
@@ -1166,9 +1027,54 @@ border-radius:4px;
 					
 						
 					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
 				
 			
 				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
 					
 						
 					
@@ -1186,17 +1092,7 @@ border-radius:4px;
 				
 					
 						
-							
-							
-	
-						<small><a href="/hello-opencv-4">OpenCV 4.0 Alpha 带来的新变化</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/opencv4.x.html" rel="tag">OpenCV4.x</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Sep 30, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
+					
 						
 					
 						
@@ -1205,6 +1101,28 @@ border-radius:4px;
 					
 				
 			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
@@ -1215,17 +1133,159 @@ border-radius:4px;
 				
 					
 						
-							
-							
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
 	
-						<small><a href="/compile-opencv-on-ubuntu">从源码开始，在Ubuntu上安装OpenCV</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Sep 29, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+			
+		
+			
+			
+				
+					
 						
-						<br>
+					
 						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
 						
 					
 						
@@ -1604,7 +1664,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/opencv-gpu-module-1&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-02&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>

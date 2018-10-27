@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-10-21T23:03:53+08:00</updated>
+ <updated>2018-10-27T16:39:19+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Hello Pytorch 贰 -- 常用损失函数</title>
+   <link href="http://localhost:4000/hello-pytorch-02"/>
+   <id>http://localhost:4000/hello-pytorch-02</id>
+   <updated>2018-10-20T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#损失函数&quot; id=&quot;markdown-toc-损失函数&quot;&gt;损失函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#l1loss-l1-范数损失函数&quot; id=&quot;markdown-toc-l1loss-l1-范数损失函数&quot;&gt;L1Loss L1-范数损失函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#mseloss-均方差损失函数&quot; id=&quot;markdown-toc-mseloss-均方差损失函数&quot;&gt;MSELoss 均方差损失函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#crossentropyloss-交叉熵损失函数&quot; id=&quot;markdown-toc-crossentropyloss-交叉熵损失函数&quot;&gt;CrossEntropyLoss 交叉熵损失函数&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;官方文档：https://pytorch.org/docs/stable/nn.html#loss-functions&lt;/p&gt; &lt;/blockquote&gt; &lt;h3 id=&quot;损失函数&quot;&gt;损失函数&lt;/h3&gt; &lt;p&gt;损失函数（loss function）是一个非负实值函数，用来计算模型的预测值f(x)与真实值Y的差异程度。&lt;/p&gt; &lt;h3 id=&quot;l1loss-l1-范数损失函数&quot;&gt;L1Loss L1-范数损失函数&lt;/h3&gt; &lt;p&gt;计算公式：&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;\ell(x, y) = L = \{l_1,\dots,l_N\}^\top, \quad l_n = \left| x_n - y_n \right|,&lt;/script&gt; &lt;p&gt;其中 N 为batch的大小。如果...</content>
+ </entry>
 
  
 
@@ -108,16 +118,6 @@
    <id>http://localhost:4000/hello-opencv-4</id>
    <updated>2018-09-30T00:00:00+08:00</updated>
    <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;新特性&quot;&gt;新特性&lt;/h3&gt; &lt;p&gt;最近OpenCV发布了全新的OpenCV4.0 alpha版 （下载地址 ~ https://github.com/opencv/opencv/archive/4.0.0-alpha.zip ）&lt;/p&gt; &lt;p&gt;根据其在官网上的说明，4.0是在3.4之上发布的全新版本，对3.4进行了优化，并修复了其中存在的若干BUG。&lt;/p&gt; &lt;blockquote&gt; &lt;ol&gt; &lt;li&gt;ONNX parser has been added to OpenCV DNN module. It supports various classification networks, such as AlexNet, Inception v2, Resnet, VGG etc. The tiny YOLO v2 object detection network is also partially...</content>
- </entry>
-
- 
-
- <entry>
-   <title>从源码开始，在Ubuntu上安装OpenCV</title>
-   <link href="http://localhost:4000/compile-opencv-on-ubuntu"/>
-   <id>http://localhost:4000/compile-opencv-on-ubuntu</id>
-   <updated>2018-09-29T00:00:00+08:00</updated>
-   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#所需工具&quot; id=&quot;markdown-toc-所需工具&quot;&gt;所需工具&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#从源码开始安装&quot; id=&quot;markdown-toc-从源码开始安装&quot;&gt;从源码开始安装&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#使用cmake-生成-makefile&quot; id=&quot;markdown-toc-使用cmake-生成-makefile&quot;&gt;使用CMake 生成 makefile&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用make-编译并安装&quot; id=&quot;markdown-toc-使用make-编译并安装&quot;&gt;使用Make 编译并安装&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写demo测试安装结果&quot; id=&quot;markdown-toc-编写demo测试安装结果&quot;&gt;编写Demo测试安装结果&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#代码清单&quot; id=&quot;markdown-toc-代码清单&quot;&gt;代码清单&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#编写cmakeliststxt&quot; id=&quot;markdown-toc-编写cmakeliststxt&quot;&gt;编写CMakeLists.txt&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#使用cmakemake完成编译&quot; id=&quot;markdown-toc-使用cmakemake完成编译&quot;&gt;使用CMake+Make完成编译&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;所需工具&quot;&gt;所需工具&lt;/h3&gt; &lt;p&gt;Ubuntu 系统：系统版本 Ubuntu 16.04.4 LTS&lt;/p&gt; &lt;p&gt;Cmake： cmake version 3.5.1&lt;/p&gt; &lt;p&gt;Make：...</content>
  </entry>
 
  
