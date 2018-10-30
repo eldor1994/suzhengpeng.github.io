@@ -9,9 +9,9 @@
 
 	<title>
         
-            『穿越河西 慢游敦煌』 壹 - 兰州 - Su'S Blog - SuZhengpeng.COM 
+            Hello Pytorch 叁 -- 简单理解生成对抗网络（GAN） - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="2018年十一假期 兰州-敦煌 小记 ">
+  <meta name="description" content="GAN网络学习笔记 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -446,7 +446,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/2018_1001_1&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -707,15 +707,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Oct 08, 2018 -->
+		<!-- Oct 29, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 08, 2018</a></small> 
-		<small id="posts-relat-source"> <a href="#">微博文章 </a></small>
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Oct 29, 2018</a></small> 
+		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;『穿越河西 慢游敦煌』 壹 - 兰州   </h3>
+	<h3>&nbsp;&nbsp;Hello Pytorch 叁 -- 简单理解生成对抗网络（GAN）   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -738,7 +738,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-2018年十一假期 兰州-敦煌 小记<br><br> 
+GAN网络学习笔记<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -758,19 +758,70 @@
 <br>
 	<div class="content">
 			
-		<!-- * 索引
-{:toc}  -->
+		<ul id="markdown-toc">
+  <li><a href="#零和博弈思想" id="markdown-toc-零和博弈思想">零和博弈思想</a></li>
+  <li><a href="#优化目标函数" id="markdown-toc-优化目标函数">优化目标函数</a>    <ul>
+      <li><a href="#优化方法" id="markdown-toc-优化方法">优化方法</a></li>
+      <li><a href="#优化过程" id="markdown-toc-优化过程">优化过程</a></li>
+    </ul>
+  </li>
+</ul>
 
-<!-- ---- -->
+<hr />
 
-<p><img src="/img/201810/IMG_5620.JPG" width="100%" /></p>
+<h3 id="零和博弈思想">零和博弈思想</h3>
 
-<p><a href="https://weibo.com/ttarticle/p/show?id=2309404293363368122056" target="_blank"><center>进入微博头条文章查看</center></a></p>
+<p>GAN（生产对抗网络，Generative Adversarial Nets）的思想是是一种二人零和博弈思想（two-player game），指参与博弈的各方，在严格竞争下，一方的收益必然意味着另一方的损失，博弈各方的收益和损失相加总和永远为“零”，双方不存在合作的可能。</p>
 
+<p>引申到GAN里面就是可以看成，GAN中有两个这样的博弈者，一个是生成模型（Generator）用来生成一张真实的图片，另一个是判别模型（Discriminator）判别一张图片是生成出来的还是真实存在的。整个博弈的过程，就变成了如下模式：生成模型生成一些图片-&gt;判别模型学习区分生成的图片和真实图片-&gt;生成模型根据判别模型改进自己，生成新的图片-&gt;····  这个博弈的过程直至生成模型与判别模型无法提高自己——即判别模型无法判断一张图片是生成出来的还是真实的而结束，此时生成模型就会成为一个完美的模型。这种博弈式的训练过程，如果采用神经网络作为模型类型，则被称为生成对抗网络（GAN）</p>
+
+<h3 id="优化目标函数">优化目标函数</h3>
+
+<p>这里设x为训练样本，z为随机噪声。训练得到的生成模型为G，判别模型为D。G(z)将这个随机噪声转化为与x具有相同数据结构的图像，D(x)为判别结果是0-1范围内的一个实数。</p>
+
+<p>生成模型的目标是让判别模型无法区分真实图片与生成图片，那么整个的优化目标函数如下：</p>
+
+<p><img width="500px" src="/img/201810/04.jpg" /></p>
+
+<h4 id="优化方法">优化方法</h4>
+
+<p>对这个最大最小化目标函数，最直观的处理办法就是分别对D和G进行交互迭代，固定G，优化D，一段时间后，固定D再优化G，直到过程收敛。</p>
+
+<p>首先，固定G，优化D：</p>
+
+<p><img width="500px" src="/img/201810/05.jpg" /></p>
+
+<p>优化判别模型D的时候，与生成模型G无关，G(z)相当于已经得到的生成样本。当真实样本x（真实样本标签为1）输入的时候，希望得到的判别结果D(x)越接近于1越好，同时目标函数越大越好。对于生成样本G(z)（其标签为0），希望得到的判别结果D(G(z))越接近于0越好，也就是使1-D(G(z))越接近于1越好，而目标函数越大越好。因此将两者同时输入，希望得到的目标函数的和越大越好。</p>
+
+<p>然后，固定D，优化G：</p>
+
+<p><img width="400px" src="/img/201810/06.jpg" /></p>
+
+<p>在优化生成模型G的时候，与判别模型D和真实样本x无关，只有生成样本G(z)，生成模型G的训练目标是使得判别模型D认为生成样本为真实样本，所以优化目标是使D(G(z))越接近于1越好，但是为了统一成1-D(G(z))的形式，那么只能是最小化目标函数。之后将两个优化模型合并，就变成了最开始的那个最大最小目标函数。</p>
+
+<h4 id="优化过程">优化过程</h4>
+
+<p><img width="700px" src="/img/201810/07.png" /></p>
+
+<p>真实样本分布、生成样本分布以及判别模型分别是图中的黑线、绿线和蓝线。</p>
+
+<p>在训练开始时（如图a），判别模型是无法很好地区分真实样本和生成样本的。当我们固定生成模型，而优化判别模型时，优化结果如图b所示，可以看出，这个时候判别模型已经可以较好的区分生成数据和真实数据了。第三步是固定判别模型，改进生成模型，试图让判别模型无法区分生成图片与真实图片，优化结果如图c所示，可以看出由模型生成的图片分布与真实图片分布更加接近，这样的迭代不断进行，直到最终收敛，生成分布和真实分布重合（如图d）。</p>
+
+<hr />
+
+<p>参考资料：</p>
+
+<p>1、最简单易懂的GAN（生成对抗网络）教程：从理论到实践（附代码）：https://www.leiphone.com/news/201706/ty7H504cn7l6EVLd.html</p>
+
+<p>2、到底什么是生成式对抗网络GAN？ https://www.msra.cn/zh-cn/news/features/gan-20170511</p>
+
+<p>3、Goodfellow I, Pouget-Abadie J, Mirza M, et al. Generative adversarial nets[C]//Advances in neural information processing systems. 2014: 2672-2680.</p>
+
+<hr />
 
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/%E6%B8%B8%E8%AE%B0.html" rel="tag">游记</a>, <a href="/tag/%E5%85%B0%E5%B7%9E.html" rel="tag">兰州</a>, <a href="/tag/%E6%95%A6%E7%85%8C.html" rel="tag">敦煌</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C.html" rel="tag">生成对抗网络</a>, <a href="/tag/gan.html" rel="tag">GAN</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -841,6 +892,115 @@ border-radius:4px;
 				
 					
 						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/hello-pytorch-02">Hello Pytorch 贰 -- 常用损失函数</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" rel="tag">损失函数</a>, <a href="/tag/%E4%BA%A4%E5%8F%89%E7%86%B5.html" rel="tag">交叉熵</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/hello-pytorch-01">Hello Pytorch 壹 -- 卷积层原理及实现</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" rel="tag">卷积层</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/hello-pytorch-00">Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/lenet.html" rel="tag">LeNet</a>, <a href="/tag/cifar-10.html" rel="tag">CIFAR-10</a>, <a href="/tag/cnn.html" rel="tag">CNN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 19, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
 					
 						
 					
@@ -856,19 +1016,13 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -891,14 +1045,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -906,29 +1052,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
 					
 						
 					
@@ -946,9 +1069,13 @@ border-radius:4px;
 					
 						
 					
+						
+					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -971,14 +1098,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -991,19 +1110,13 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -1026,14 +1139,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -1046,19 +1151,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -1066,24 +1158,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1106,14 +1180,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -1126,19 +1192,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -1146,14 +1199,6 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-						
-					
-				
-			
-				
 					
 						
 					
@@ -1176,14 +1221,6 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
@@ -1196,24 +1233,13 @@ border-radius:4px;
 					
 						
 					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
 						
 					
 				
 			
 				
+					
+						
 					
 						
 					
@@ -1226,7 +1252,38 @@ border-radius:4px;
 	
 			
 		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+						
+					
+				
+			
 	
+			
+		
+	
+		
+		<!-- </ul> -->
 		
 
 		<br>
@@ -1605,7 +1662,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/2018_1001_1&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-03&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
