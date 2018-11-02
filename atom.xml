@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-10-30T16:59:45+08:00</updated>
+ <updated>2018-11-02T13:14:04+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Hello Pytorch 肆 -- 激活函数</title>
+   <link href="http://localhost:4000/hello-pytorch-04"/>
+   <id>http://localhost:4000/hello-pytorch-04</id>
+   <updated>2018-11-02T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#sigmoid函数&quot; id=&quot;markdown-toc-sigmoid函数&quot;&gt;Sigmoid函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#softmax函数&quot; id=&quot;markdown-toc-softmax函数&quot;&gt;Softmax函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#tanh函数&quot; id=&quot;markdown-toc-tanh函数&quot;&gt;Tanh函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#relu函数&quot; id=&quot;markdown-toc-relu函数&quot;&gt;ReLU函数&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#leakyrelu&quot; id=&quot;markdown-toc-leakyrelu&quot;&gt;LeakyReLU&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;p&gt;激活函数（Activation Function），就是在人工神经网络的神经元上运行的函数，负责将神经元的输入映射到输出端。激活函数的使用给神经元引入了非线性因素，使得神经网络可以任意逼近任何非线性函数，这样神经网络就可以应用到众多的非线性模型中。&lt;/p&gt; &lt;h3 id=&quot;sigmoid函数&quot;&gt;Sigmoid函数&lt;/h3&gt; &lt;p&gt;Sigmoid函数又叫Logistic函数，是皮埃尔·弗朗索瓦·韦吕勒在1844年在研究它与人口增长的关系时命名的。广义Logistic曲线可以模仿一些情况人口增长（P）的 S 形曲线。起初阶段大致是指数增长；然后随着开始变得饱和，增加变慢；最后，达到成熟时增加停止。&lt;/p&gt; &lt;p&gt;之所以叫Sigmoid，是因为函数的图像很想一个字母S。从图像上我们可以观察到一些直观的特性：函数的取值在0-1之间，且在0.5处为中心对称，并且越靠近x=0的取值斜率越大。&lt;/p&gt; &lt;p&gt;Sigmoid函数在物理意义上最为接近生物神经元。(0, 1) 的输出还可以被表示作概率，或用于输入的归一化，代表性的如Sigmoid交叉熵损失函数。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;计算公式：&lt;/strong&gt;&lt;/p&gt; &lt;script type=&quot;math/tex; mode=display&quot;&gt;\text{Sigmoid}(x) = \frac{1}{1 + \exp(-x)}&lt;/script&gt; &lt;p&gt;&lt;strong&gt;函数图像：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;&lt;img width=&quot;400px&quot; src=&quot;/img/201811/Sigmoid.png&quot; /&gt;&lt;/p&gt; &lt;h3 id=&quot;softmax函数&quot;&gt;Softmax函数&lt;/h3&gt; &lt;p&gt;Softmax函数，或称归一化指数函数。用于多分类过程中将多个神经元的输出，映射到（0,1）区间内。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;计算公式：&lt;/strong&gt;&lt;/p&gt; &lt;script type=&quot;math/tex;...</content>
+ </entry>
 
  
 
@@ -99,25 +109,6 @@
    <id>http://localhost:4000/compile-opencv-with-cuda-on-ubuntu</id>
    <updated>2018-10-09T00:00:00+08:00</updated>
    <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;p&gt;编译GPU版本的OpenCV与CPU版本的OpenCV并没有太大的区别，只有几个需要在细节上注意的地方。除此之外，可以参考： &lt;a href=&quot;./compile-opencv-on-ubuntu&quot; target=&quot;_blank&quot;&gt;《从源码开始，在Ubuntu上安装OpenCV》&lt;/a&gt; 这篇文章讲述的方法进行。&lt;/p&gt; &lt;p&gt;在安装之前，要确认已经在电脑中正确安装了 CUDA 开发包和 NVCC 编译器。&lt;/p&gt; &lt;h3 id=&quot;配置cmake&quot;&gt;配置CMAKE&lt;/h3&gt; &lt;p&gt;WITH_CUDA ON&lt;/p&gt; &lt;p&gt;WITH_CUBLAS ON&lt;/p&gt; &lt;p&gt;WITH_CUFFT ON&lt;/p&gt; &lt;p&gt;WITH_NVCUVIDs ON&lt;/p&gt; &lt;p&gt;CUDA_FAST_MATH ON&lt;/p&gt; &lt;p&gt;CUDA_GENERATION Auto&lt;/p&gt; &lt;p&gt;其他的选项默认即可。&lt;/p&gt; &lt;h3 id=&quot;可能会出现的bug&quot;&gt;可能会出现的BUG&lt;/h3&gt; &lt;p&gt;在使用CUDA 9.0的时候，编译OpenCV可能会如下的错误，而且无论是 OpenCV 2.x 还是 OpenCV 3.x 都有出现的可能，但是解决方法略有差别。&lt;/p&gt; &lt;p&gt;所以，推荐使用 CUDA 8.0 配置&lt;/p&gt; &lt;p&gt;&lt;strong&gt;错误信息&lt;/strong&gt; ：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;CMake...</content>
- </entry>
-
- 
-
- <entry>
-   <title>『穿越河西 慢游敦煌』 壹 - 兰州</title>
-   <link href="http://localhost:4000/2018_1001_1"/>
-   <id>http://localhost:4000/2018_1001_1</id>
-   <updated>2018-10-08T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引
-{:toc}  --&gt;
-
-&lt;!-- ---- --&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/201810/IMG_5620.JPG&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://weibo.com/ttarticle/p/show?id=2309404293363368122056&quot; target=&quot;_blank&quot;&gt;&lt;center&gt;进入微博头条文章查看&lt;/center&gt;&lt;/a&gt;&lt;/p&gt;
-
-</content>
  </entry>
 
  

@@ -9,9 +9,9 @@
 
 	<title>
         
-            CUDA并行编程学习（0）-- CUDA和GPU - Su'S Blog - SuZhengpeng.COM 
+            Hello Pytorch 肆 -- 激活函数 - Su'S Blog - SuZhengpeng.COM 
         </title>
-  <meta name="description" content="基于CUDA的并行编程学习笔记 ">
+  <meta name="description" content="常用激活函数性质 ">
 
 	<!-- CSS & fonts -->
 	<link rel="stylesheet" href="/css/main.css">
@@ -453,7 +453,7 @@
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learnning_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-04&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
@@ -718,15 +718,15 @@
 		<main>
 
 			<article id="post-page">
-		<!-- Sep 16, 2018 -->
+		<!-- Nov 02, 2018 -->
 		
 		<!--  -->
 		<br>
-		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Sep 16, 2018</a></small> 
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Nov 02, 2018</a></small> 
 		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
 	<br>
 	<!-- <br> -->
-	<h3>&nbsp;&nbsp;CUDA并行编程学习（0）-- CUDA和GPU   </h3>
+	<h3>&nbsp;&nbsp;Hello Pytorch 肆 -- 激活函数   </h3>
 	<!-- JiaThis Button BEGIN -->
 	
 <div style="padding: 10px; background:#fff;">
@@ -749,7 +749,7 @@
 					border-style: dashed dashed solid dashed; 
 					border-color: transparent transparent #E9F01D transparent;" ></span>
 <div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
-基于CUDA的并行编程学习笔记<br><br> 
+常用激活函数性质<br><br> 
 分享到：<a title="分享到微信" class="bshare-weixin"></a>
 <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
 <a title="分享到Facebook" class="bshare-facebook"></a>
@@ -769,21 +769,106 @@
 <br>
 	<div class="content">
 			
-		<hr />
-
-<p>GPU能够进行并行计算的原因是因为其内部具有成百上千个计算单元，如果我们能够对程序进行拆分，将整个计算过程拆分成大量的独立子任务，这些大量的计算单元就为并行执行这些任务提供了可能性。</p>
-
-<p>CUDA使用了单指令多线程（Single Instruction Multiple Threads、SIMT）的并行模式。CUDA GPU包含了大量的基础计算单元，这些单元被称为核，每个核都包含了一个逻辑计算单元（ALU）和一个浮点计算单元（FLU）。多个核集成在一起被称为 <strong>多流处理器</strong>（Stream Multiprocessor、SM）。</p>
-
-<p>我们将一个计算任务分解为多个子任务，每个子任务被称为线程，多个线程被组织为线程块。线程块被分解为大小与一个SM中核数量相同的 <strong>线程束</strong>（warp）。每个线程束由一个特定的SM处理器执行。SM处理器的控制单元指挥其所有核同时在一个线程束的每个线程中执行同一个指令,这称为SIMT。</p>
-
-<p>在GPU上，芯片的大多数空间被分配给了大量组织成SM处理器的运算大院和共享的控制单元。当一个线程束所需的数据不可获得时，SM处理器会转向执行另一个可获得数据的线程束。GPU关注的是整体的运算吞吐量而不是单个核心的执行速度。</p>
+		<ul id="markdown-toc">
+  <li><a href="#sigmoid函数" id="markdown-toc-sigmoid函数">Sigmoid函数</a></li>
+  <li><a href="#softmax函数" id="markdown-toc-softmax函数">Softmax函数</a></li>
+  <li><a href="#tanh函数" id="markdown-toc-tanh函数">Tanh函数</a></li>
+  <li><a href="#relu函数" id="markdown-toc-relu函数">ReLU函数</a></li>
+  <li><a href="#leakyrelu" id="markdown-toc-leakyrelu">LeakyReLU</a></li>
+</ul>
 
 <hr />
 
+<p>激活函数（Activation Function），就是在人工神经网络的神经元上运行的函数，负责将神经元的输入映射到输出端。激活函数的使用给神经元引入了非线性因素，使得神经网络可以任意逼近任何非线性函数，这样神经网络就可以应用到众多的非线性模型中。</p>
+
+<h3 id="sigmoid函数">Sigmoid函数</h3>
+
+<p>Sigmoid函数又叫Logistic函数，是皮埃尔·弗朗索瓦·韦吕勒在1844年在研究它与人口增长的关系时命名的。广义Logistic曲线可以模仿一些情况人口增长（P）的 S 形曲线。起初阶段大致是指数增长；然后随着开始变得饱和，增加变慢；最后，达到成熟时增加停止。</p>
+
+<p>之所以叫Sigmoid，是因为函数的图像很想一个字母S。从图像上我们可以观察到一些直观的特性：函数的取值在0-1之间，且在0.5处为中心对称，并且越靠近x=0的取值斜率越大。</p>
+
+<p>Sigmoid函数在物理意义上最为接近生物神经元。(0, 1) 的输出还可以被表示作概率，或用于输入的归一化，代表性的如Sigmoid交叉熵损失函数。</p>
+
+<p><strong>计算公式：</strong></p>
+
+<script type="math/tex; mode=display">\text{Sigmoid}(x) = \frac{1}{1 + \exp(-x)}</script>
+
+<p><strong>函数图像：</strong></p>
+
+<p><img width="400px" src="/img/201811/Sigmoid.png" /></p>
+
+<h3 id="softmax函数">Softmax函数</h3>
+
+<p>Softmax函数，或称归一化指数函数。用于多分类过程中将多个神经元的输出，映射到（0,1）区间内。</p>
+
+<p><strong>计算公式：</strong></p>
+
+<script type="math/tex; mode=display">\text{Softmax}(x_{i}) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}</script>
+
+<h3 id="tanh函数">Tanh函数</h3>
+
+<p>双曲正切函数（Tanh）在分类任务中用于替代Sigmoid函数以解决学习缓慢和/或梯度消失问题。</p>
+
+<p><strong>计算公式：</strong></p>
+
+<script type="math/tex; mode=display">\text{Tanh}(x) = \tanh(x) = \frac{e^x - e^{-x}} {e^x + e^{-x}}</script>
+
+<p><img width="400px" src="/img/201811/Tanh.png" /></p>
+
+<h3 id="relu函数">ReLU函数</h3>
+
+<p>线性整流函数（Rectified Linear Unit, ReLU）其实是分段线性函数，把所有的负值都变为0，而正值不变。这种操作被成为单侧抑制，使得神经网络中的神经元也具有了稀疏激活性，在深度神经网络模型(如CNN)中，当模型增加N层之后，理论上ReLU神经元的激活率将降低2的N次方倍。</p>
+
+<p>相比于其它激活函数来说，ReLU有以下优势：对于线性函数而言，ReLU的表达能力更强，尤其体现在深度网络中；而对于非线性函数而言，ReLU由于非负区间的梯度为常数，因此不存在梯度消失问题(Vanishing Gradient Problem)，使得模型的收敛速度维持在一个稳定状态。</p>
+
+<p>稀疏激活性：当训练一个深度分类模型的时候，和目标相关的特征往往也就那么几个，因此通过ReLU实现稀疏后的模型能够更好地挖掘相关特征，拟合训练数据。</p>
+
+<p>梯度消失问题：当梯度小于1时，预测值与真实值之间的误差每传播一层会衰减一次，将导致模型收敛停滞不前 （如：在深层模型中使用sigmoid作为激活函数，这种现象尤为明显）。</p>
+
+<p><strong>计算公式：</strong></p>
+
+<script type="math/tex; mode=display">\text{ReLU}(x)= \max(0, x)</script>
+
+<p><strong>函数图像：</strong></p>
+
+<p><img width="400px" src="/img/201811/ReLU.png" /></p>
+
+<h3 id="leakyrelu">LeakyReLU</h3>
+
+<p>泄露线性整流函数（Leaky Rectified Linear Unit, Leaky ReLU）为ReLU激活函数的变体。其输出对负值输入有很小的坡度，因而导数总是不为零，这能减少静默神经元的出现，允许基于梯度的学习（虽然会很慢）。</p>
+
+<p><strong>计算公式：</strong></p>
+
+<script type="math/tex; mode=display">\text{LeakyReLU}(x) = \max(0, x) + \text{negative_slope} * \min(0, x)</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}\text{LeakyRELU}(x) =
+\begin{cases}
+x, & \text{ if } x \geq 0 \\
+\text{negative_slope} \times x, & \text{ otherwise }
+\end{cases}\end{split} %]]></script>
+
+<p>negative_slope – 控制负值范围内的坡度的大小，默认值为1e-2。</p>
+
+<p><img width="400px" src="/img/201811/LeakyReLU.png" /></p>
+
+<!-- <img width="700px" src="/img/201810/07.png"> -->
+
+<!-- ----
+
+参考资料：
+
+1、最简单易懂的GAN（生成对抗网络）教程：从理论到实践（附代码）：https://www.leiphone.com/news/201706/ty7H504cn7l6EVLd.html
+
+2、到底什么是生成式对抗网络GAN？ https://www.msra.cn/zh-cn/news/features/gan-20170511
+
+3、Goodfellow I, Pouget-Abadie J, Mirza M, et al. Generative adversarial nets[C]//Advances in neural information processing systems. 2014: 2672-2680.
+
+---- -->
+
 		
 	</div>
-	<div id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a> <a href="/tags.html" class="set-1">>></a></div> 
+	<div id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.html" rel="tag">激活函数</a> <a href="/tags.html" class="set-1">>></a></div> 
 
 
 
@@ -854,196 +939,87 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-				
-					
-						
-					
-						
-					
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
 							
 								<h5 class="page-heading">相关文章:</h5>	
 							
 							
 	
-						<small><a href="/cuda_learning_06">CUDA并行编程学习（6）-- 流</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 16, 2018</a></small>
+						<small><a href="/hello-pytorch-03">Hello Pytorch 叁 -- 简单理解生成对抗网络（GAN）</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C.html" rel="tag">生成对抗网络</a>, <a href="/tag/gan.html" rel="tag">GAN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 29, 2018</a></small>
 						    
 						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 						
 						<br>
 						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/hello-pytorch-02">Hello Pytorch 贰 -- 常用损失函数</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.html" rel="tag">损失函数</a>, <a href="/tag/%E4%BA%A4%E5%8F%89%E7%86%B5.html" rel="tag">交叉熵</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+						
+					
+						
+					
+				
+			
+				
+			
+				
+			
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+							
+							
+	
+						<small><a href="/hello-pytorch-01">Hello Pytorch 壹 -- 卷积层原理及实现</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E5%8D%B7%E7%A7%AF%E5%B1%82.html" rel="tag">卷积层</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 20, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
 						
 					
 						
@@ -1062,20 +1038,12 @@ border-radius:4px;
 				
 					
 						
-					
-						
-					
-				
-			
-				
-					
-						
 							
 							
 	
-						<small><a href="/opencv-gpu-module-2">OpenCV GPU 模块学习 （2）GPU的流操作</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 14, 2018</a></small>
+						<small><a href="/hello-pytorch-00">Hello Pytorch 零 -- 搭建年轻人的第一个神经网络：LeNet</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/lenet.html" rel="tag">LeNet</a>, <a href="/tag/cifar-10.html" rel="tag">CIFAR-10</a>, <a href="/tag/cnn.html" rel="tag">CNN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 19, 2018</a></small>
 						    
 						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
 						
@@ -1085,35 +1053,12 @@ border-radius:4px;
 					
 						
 					
-				
-			
-				
-			
-				
-			
-	
-			
-		
-			
-			
-				
-					
-						
-							
-							
-	
-						<small><a href="/cuda_learning_05">CUDA并行编程学习（5）-- 异步并行</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97.html" rel="tag">并行计算</a>, <a href="/tag/%E5%BC%82%E6%AD%A5%E5%B9%B6%E8%A1%8C.html" rel="tag">异步并行</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 13, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
 						
 					
-						
-					
+				
+			
+				
+			
 				
 			
 				
@@ -1131,28 +1076,28 @@ border-radius:4px;
 					
 						
 					
+						
+					
 				
 			
 				
 					
 						
-							
-							
-	
-						<small><a href="/opencv-gpu-module-1">OpenCV GPU 模块学习 （1）读取GPU设备信息</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 10, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
-						
-						<br>
-						
+					
 						
 					
 						
 					
 				
 			
+				
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
@@ -1166,28 +1111,178 @@ border-radius:4px;
 					
 						
 					
+						
+					
 				
 			
 				
 					
 						
-							
-							
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
 	
-						<small><a href="/compile-opencv-with-cuda-on-ubuntu">编译GPU版本的OpenCV</a> </small> 
-						<small id="posts-out-tags"># <a href="/tag/opencv.html" rel="tag">OpenCV</a>, <a href="/tag/cuda.html" rel="tag">CUDA</a>, <a href="/tag/gpu.html" rel="tag">GPU</a> </small> 
-						 <small  id="posts-relat-data"> <a href="#">Oct 09, 2018</a></small>
-						    
-						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+			
+		
+			
+			
+				
+					
 						
-						<br>
-						
+					
 						
 					
 						
 					
 				
 			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+						
+					
 				
 			
 	
@@ -1581,7 +1676,7 @@ border-radius:4px;
 	</div>
 	<div class="footer-three">
 			<div class="footer-qrcode">
-			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/cuda_learnning_00&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/hello-pytorch-04&output=image%2Fgif&error=L&type=0&margin=0&size=4">
 			</div>
 
 			<br>
