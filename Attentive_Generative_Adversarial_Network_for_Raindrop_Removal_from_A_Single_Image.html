@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>
+        
+            Attentive Generative Adversarial Network for Raindrop Removal from A Single Image - Su'S Blog - SuZhengpeng.COM 
+        </title>
+  <meta name="description" content="《Attentive Generative Adversarial Network for Raindrop Removal from A Single Image》阅读笔记 ">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$', '$'],['\\(', '\\)']],
+            displayMath: [['$$', '$$'],["\\[", "\\]"]],
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            processEscapes: true
+        },
+        TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
+            equationNumbers: { autoNumber: ["AMS"],
+			useLabelIds: true
+            },
+            Macros: {hfill: "{}"}
+        },
+        "HTML-CSS": {
+            linebreaks: {automatic: true},
+            availableFonts: ["TeX"],
+            scale: 110
+        },
+        SVG: {
+            linebreaks: {automatic: true}
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+//    src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- Highlight -->
+
+<link rel="stylesheet" href="/styles/atelier-estuary-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+
+<script type="text/javascript" src="/js/jquery-1.8.3.min_2.js"></script>
+<!-- <link href='http://fonts.googleapis.com/css?family=Tauri' rel='styl esheet' type='text/css'> -->
+<style type="text/css">
+	.shang_con{width:100px;margin:20px auto;}
+	.shang_hide_box{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	.shang_box{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	.shang_box img{border:none;border-width:0;}
+	.dashang{display:block;width:100px;margin:5px auto;height:45px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	.dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	.shang_close{display:inline-block;}
+	.shang_logo{display:block;text-align:center;margin:20px auto;}
+	.shang_tit{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	.shang_tit p{color:#a3a3a3;text-align:center;font-size:16px;}
+	.shang_payimg{width:140px;margin:0 auto;border-radius:3px;height:140px;}
+	.shang_payimg img{display:block;text-align:center;width:140px;height:140px; }
+	.pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	.radiobox{width: 16px;height: 16px;background: url('img/ds/radio2.jpg');display: block;float: left;margin-right: 14px; margin-left: 50px;margin-bottom: 10px;}
+	.checked .radiobox{background:url('img/ds/radio1.jpg');}
+	.shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:280px;}
+	.shang_payselect .pay_item{display:inline-block;margin-right:10px;}
+	.shang_info{clear:both;}
+	.shang_info p,.shang_info a{color:#C3C3C3;text-align:center;text-decoration:none;line-height:2em;}
+</style>
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng.COM
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>友情链接</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/Attentive_Generative_Adversarial_Network_for_Raindrop_Removal_from_A_Single_Image&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div>
+
+			<br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng.COM<br><br>
+	 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM  <br><br>
+</div>
+    </div>
+
+
+ <!-- <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div>  -->
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+		<!-- Nov 09, 2018 -->
+		
+		<!--  -->
+		<br>
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Nov 09, 2018</a></small> 
+		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
+	<br>
+	<!-- <br> -->
+	<h3>&nbsp;&nbsp;Attentive Generative Adversarial Network for Raindrop Removal from A Single Image   </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+《Attentive Generative Adversarial Network for Raindrop Removal from A Single Image》阅读笔记<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a>
+<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+<a title="分享到Facebook" class="bshare-facebook"></a>
+<a title="分享到Twitter" class="bshare-twitter"></a>
+<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
+<a title="分享到豆瓣" class="bshare-douban"></a>
+<a title="分享到人人网" class="bshare-renren"></a>
+<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+<span class="BSHARE_COUNT bshare-share-count">0</span>
+<br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+			
+		<ul id="markdown-toc">
+  <li><a href="#论文摘要" id="markdown-toc-论文摘要">论文摘要</a></li>
+  <li><a href="#网络设计" id="markdown-toc-网络设计">网络设计</a>    <ul>
+      <li><a href="#生成网络" id="markdown-toc-生成网络">生成网络</a>        <ul>
+          <li><a href="#注意力递归网络-attentive-recurrent-network" id="markdown-toc-注意力递归网络-attentive-recurrent-network">注意力递归网络 Attentive-Recurrent Network</a></li>
+          <li><a href="#上下文自动解码器-contextual-autoencoder" id="markdown-toc-上下文自动解码器-contextual-autoencoder">上下文自动解码器 Contextual Autoencoder</a></li>
+        </ul>
+      </li>
+      <li><a href="#判别网络" id="markdown-toc-判别网络">判别网络</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p><strong>论文下载地址</strong>：http://openaccess.thecvf.com/content_cvpr_2018/papers/Qian_Attentive_Generative_Adversarial_CVPR_2018_paper.pdf</p>
+
+<h3 id="论文摘要">论文摘要</h3>
+
+<p>相机镜头前的雨滴会妨碍背景场景的可视性并显着降低图像质量。</p>
+
+<p><strong>现实存在的问题：</strong></p>
+
+<p>1、被雨滴遮挡的区域并不会事先给出。</p>
+
+<p>2、被雨滴遮挡的背景信息是完全丢失的。</p>
+
+<p><strong>算法的核心思想：</strong></p>
+
+<p>在生成和分类网络中加入 视觉注意力（visual attention）。</p>
+
+<p>在训练过程中 视觉注意力（visual attention） 学习雨滴及其周边区域，通过将这些信息加入到网络中，生成网络（generative network ）会在雨滴及其周边区域的结构上耗费更多的注意力，而判别网络（discriminative network）则可以用来评估雨滴去除后的区域与背景的一致性。</p>
+
+<p>建立计算模型：</p>
+
+<p><img width="400px" src="/img/201811/15.PNG" /></p>
+
+<p>其中：I 为彩色输入图像，M为二进制掩码（掩码为1时表示这片区域被雨滴遮挡，为0时则表示这片区域为不含雨滴的背景），B为背景图像，R为雨滴所带来的影响（背景信息和环境反射的光线经过复杂的混合，透过粘附在镜头或挡风玻璃上的雨滴，在雨滴及其周边产生影响，但这同时也会携带一些背景信息）。⊙ 表示对应位置相乘（element-wise multiplication）。</p>
+
+<p><img width="500px" src="/img/201811/1.PNG" /></p>
+
+<h3 id="网络设计">网络设计</h3>
+
+<p><img width="800px" src="/img/201811/2.PNG" /></p>
+
+<p>网络结构如上图所示</p>
+
+<h4 id="生成网络">生成网络</h4>
+
+<p>生成网络包括两部分 attentive-recurrent network 和 contextual autoencoder。其中： attentive-recurrent network 用来发现输入图像需要提升注意力的区域。这些区域主要是被雨滴遮盖的部分及其周边的区域，这些区域需要 contextual autoencoder 的关注，以此恢复被雨滴遮盖的区域。同时判别网络会对这些区域进行进行重点评估。</p>
+
+<h5 id="注意力递归网络-attentive-recurrent-network">注意力递归网络 Attentive-Recurrent Network</h5>
+
+<p>视觉注意力模型 （Visual attention models）常被用于确定图像中的目标区域并计算该区域的特征，并且在视觉识别和分类等场景得到了应用。在生成无雨滴背景图像的算法中，视觉注意力模型的作用在于使网络知道哪些区域应该被关注。</p>
+
+<p>在该算法中，使用递归网络（recurrent network） 生成视觉注意力映射图（Visual attention map）。在递归网络中，每个block包含5层ResNet用于提取输入图像的特征和前一个block的mask，以及一个卷积LSTM单元和一个卷积层，用于生成二维的数视觉注意力映射图。</p>
+
+<p><strong>视觉注意力映射图</strong></p>
+
+<p><img width="400px" src="/img/201811/3.PNG" /></p>
+
+<p>在该算法中，通过学习依次得到的映射图（如上图 Figure 3 所示 ），是一个0~1范围内的矩阵。从0到1依次表示没有雨滴的区域到有雨滴的区域，即使在包含雨滴的地方映射图的值也是不同的，因为雨滴及其周边区域的透明度不同，且不完全遮挡背景，从而传达一些背景信息。</p>
+
+<p><strong>LSTM （long short-term memory）单元</strong></p>
+
+<p>LSTM单元包含有：Input Gate $i_t$，Forget Gate $f_t$，Output Gate $o_t$，Cell State $C_t$。state 和 gate 之间的交互遵循时间顺序，如下式所示：</p>
+
+<p><img width="400px" src="/img/201811/5.PNG" /></p>
+
+<p>其中：$X_t$ 是ResNet生成的特征，$C_t$ 将LSTM的Cell State编码送入下一个LSTM，$H_t$ 表示LSTM单元的输出特征，操作符$*$表示卷积操作。</p>
+
+<p>LSTM单元将输出送入一个卷积层，以此生成2D注意力映射图$A_t$。</p>
+
+<p>在模型的训练初始化过程中，映射图初始化为0.5。在每一个时间步过程中，将当前产生的映射图与输入图像串联送入递归网络的下一个block。</p>
+
+<p><strong>Loss Function 损失函数</strong></p>
+
+<p><img width="400px" src="/img/201811/7.PNG" /></p>
+
+<p>损失函数如上式所示。其中$A_t$表示注意力映射图，M为当前训练样本对差值的二进制掩码，损失函数为两者之间的均方差损失（MSE Loss）。整个计算过程共迭代N次，在这里N设置为4，θ设置为0.8，N越大效果越好，但也需要更大的内存空间。</p>
+
+<p><img width="800px" src="/img/201811/8.PNG" /></p>
+
+<p>随着迭代的进行，迭代网络可以更多的关注于 raindrop regions 和 relevant structures</p>
+
+<h5 id="上下文自动解码器-contextual-autoencoder">上下文自动解码器 Contextual Autoencoder</h5>
+
+<p><img width="600px" src="/img/201811/4.PNG" /></p>
+
+<p>上下文自动解码器用来生成去除雨滴的图像。其输入包括两部分，其一是原始的输入图像，其二是通过注意力递归网络所生成的注意力映射图。</p>
+
+<p>在Figure 4中展示了自动解码器的网络结构。在网络中共包含16个 conv-relu block ，skip connection 用来避免输出模糊。</p>
+
+<p><strong>Loss Function 损失函数</strong></p>
+
+<p>在解码器网络中使用了多尺度损失函数（Multi-scale Losses）和感知损失（Perceptual Loss）。</p>
+
+<p>1、多尺度损失函数</p>
+
+<p>通过使用多尺度损失函数，解码器可以在不同的尺度上提取特征。以此得到不同尺度下的上下文信息（Contextual Information）</p>
+
+<p>损失函数定义如下：</p>
+
+<p><img width="400px" src="/img/201811/9.PNG" /></p>
+
+<p>其中：$S_i$为解码层的第i个输出值，$T_i$为第i层的数值的真实值，$\left(λ_i\right)^M_{i=1}$ 为不同尺度的权重值，尺度越大权重越大。在具体的细节上，如Figue 4所示，采用输出的第一层、第三层和第五层，其大小分别为原始图像大小的1/4、1/2 和 1，其对应对应的权重值分别为0.6、0.8 和 1.0 。</p>
+
+<p>2、感知损失</p>
+
+<p>如Figure 4所示，感知损失用来测算 自动编码器输出的特征映射 和 无雨滴的干净图像（ground-truth clean image）的特征映射 的全局差异（global discrepancy）。</p>
+
+<p>损失函数定义如下：</p>
+
+<p><img width="400px" src="/img/201811/10.PNG" /></p>
+
+<p>其中：VGG是预训练的CNN网络VGG-16，用来计算输入图像的特征映射。O是自动编码器的输出，$O = G(I)$，T是无雨滴的干净图像。</p>
+
+<p>3、生成网络的损失值计算</p>
+
+<p>综上，可得整个生成网络的损失函数为：</p>
+
+<p><img width="400px" src="/img/201811/11.PNG" /></p>
+
+<h4 id="判别网络">判别网络</h4>
+
+<p><img width="400px" src="/img/201811/12.PNG" /></p>
+
+<p>判别网络的网络结构如Figure2所示。</p>
+
+<p>在判别网络中共有7层卷积核为3×3的卷积层，一个大小为1024的全连接层，最后使用一个 sigmoid 激活函数，将输出映射到(0,1)区间内，值的大小表示判断为真的概率。</p>
+
+<p>在去雨滴问题网络模型并不知道雨滴在图像中的哪个区域，因此判别网络需要自己去判断图像中的哪些区域被雨滴遮挡。在该算法中使用注意力判别（attentive discriminator）判断雨滴遮挡的区域，通过注意力递归网络（attentive-recurrent network.）生成注意力映射来实现注意力判别。</p>
+
+<p><strong>Loss Function 损失函数</strong></p>
+
+<p><img width="400px" src="/img/201811/13.PNG" /></p>
+
+<p>其中：$L_{map}$ 是判别器内部网络层提取的特征和最终的注意力映射图之间的loss。$γ$的值设置为 0.05。其计算值如下：</p>
+
+<p><img width="400px" src="/img/201811/14.PNG" /></p>
+
+<p>其中：$D_{map}$表示判别网络内部网络层生成2D图像特征。$D_{map}(O)$为生成网络生成的雨滴去除后的图像在判别网络中提取到的2D图像特征，$D_{map}(R)$为训练数据集中没有雨滴的图像的在判别网络中提取到的2D图像特征。</p>
+
+<p>上式的第一部分表示：$D_{map}(O)$ 与 $A_N$ (最终生成的注意力映射图) 计算 MSE Loss。第二部分表示：$D_{map}(R)$ 与 0 （全部值为0的注意力映射图，由注意力映射图的定义可知，全为0表示图像中不包含雨滴，不需要额外的注意。）计算MSE Loss。</p>
+
+<hr />
+
+<!-- ----
+
+参考资料：
+
+1、最简单易懂的GAN（生成对抗网络）教程：从理论到实践（附代码）：https://www.leiphone.com/news/201706/ty7H504cn7l6EVLd.html
+
+2、到底什么是生成式对抗网络GAN？ https://www.msra.cn/zh-cn/news/features/gan-20170511
+
+3、Goodfellow I, Pouget-Abadie J, Mirza M, et al. Generative adversarial nets[C]//Advances in neural information processing systems. 2014: 2672-2680.
+
+---- -->
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB.html" rel="tag">论文阅读</a>, <a href="/tag/gan.html" rel="tag">GAN</a> <a href="/tags.html" class="set-1">>></a></div> 
+
+
+
+	<div class="shang_con">
+			<p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+			<div class="shang_hide_box"></div>
+			<div class="shang_box">
+					<br>
+				<div class="shang_tit">
+					<p>感谢您的支持，我会继续努力的!</p>
+				</div>
+				<div class="shang_payimg">
+					<img src="img/ds/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+				</div>
+				<div class="shang_payselect">
+					<div class="pay_item checked" data-id="alipay">
+						<span class="radiobox"></span>
+						<span class="pay_logo"><img src="img/ds/alipay.jpg" alt="支付宝" /></span>
+					</div>
+					<div class="pay_item" data-id="weipay">
+						<span class="radiobox"></span>
+						<span class="pay_logo"><img src="img/ds/wechat.jpg" alt="微信" /></span>
+					</div>
+				</div>
+				<br>
+				<div class="shang_info">
+					<p>长按识别二维码或打开<span id="shang_pay_txt">支付宝</span>扫一扫 完成打赏<br>
+					或 使用<a href="HTTPS://QR.ALIPAY.COM/FKX08963JL6LVJZYLYGZ13" ><支付宝链接></a>打赏
+				</p>
+
+				</div>
+				<br>
+		
+				<center><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">关闭</a></center>
+			</div>
+			</div>
+			
+			<script type="text/javascript">
+			$(function(){
+				$(".pay_item").click(function(){
+					$(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+					var dataid=$(this).attr('data-id');
+					$(".shang_payimg img").attr("src","img/ds/"+dataid+"img.jpg");
+					$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+				});
+			});
+			function dashangToggle(){
+				$(".shang_hide_box").fadeToggle();
+				$(".shang_box").fadeToggle();
+			}
+			</script>
+
+<div style="position: relative; 
+/* border: 2px solid #E9F01D;  */
+padding: 10px; 
+padding-bottom:20px;
+/* width:80%;
+min-width:300px; */
+/* background:#E9F01D; */
+color:#404040;
+border-radius:4px;
+" >
+<div class="bsPromo bsPromo2"></div>
+		
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+							
+								<h5 class="page-heading">相关文章:</h5>	
+							
+							
+	
+						<small><a href="/hello-pytorch-03">Hello Pytorch 叁 -- 简单理解生成对抗网络（GAN）</a> </small> 
+						<small id="posts-out-tags"># <a href="/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0.html" rel="tag">深度学习</a>, <a href="/tag/pytorch.html" rel="tag">Pytorch</a>, <a href="/tag/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C.html" rel="tag">生成对抗网络</a>, <a href="/tag/gan.html" rel="tag">GAN</a> </small> 
+						 <small  id="posts-relat-data"> <a href="#">Oct 29, 2018</a></small>
+						    
+						 <small id="posts-relat-source"> <a href="#">原创文章 </a></small> 
+						
+						<br>
+						
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+	
+		
+		<!-- </ul> -->
+		
+
+		<br>
+		
+
+		<div class="bshare-custom">
+			<!-- <div class="bsPromo bsPromo2"></div> -->
+分享到：<a title="分享到微信" class="bshare-weixin"></a>
+<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+<a title="分享到Facebook" class="bshare-facebook"></a>
+<a title="分享到Twitter" class="bshare-twitter"></a>
+<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
+<a title="分享到豆瓣" class="bshare-douban"></a>
+<a title="分享到人人网" class="bshare-renren"></a>
+<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+<span class="BSHARE_COUNT bshare-share-count">0</span>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	
+
+	</div>
+
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng.COM
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>友情链接</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/Attentive_Generative_Adversarial_Network_for_Raindrop_Removal_from_A_Single_Image&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div>
+
+			<br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>

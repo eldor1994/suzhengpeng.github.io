@@ -4,12 +4,22 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-11-02T13:14:04+08:00</updated>
+ <updated>2018-11-13T19:33:01+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>Attentive Generative Adversarial Network for Raindrop Removal from A Single Image</title>
+   <link href="http://localhost:4000/Attentive_Generative_Adversarial_Network_for_Raindrop_Removal_from_A_Single_Image"/>
+   <id>http://localhost:4000/Attentive_Generative_Adversarial_Network_for_Raindrop_Removal_from_A_Single_Image</id>
+   <updated>2018-11-09T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#论文摘要&quot; id=&quot;markdown-toc-论文摘要&quot;&gt;论文摘要&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#网络设计&quot; id=&quot;markdown-toc-网络设计&quot;&gt;网络设计&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#生成网络&quot; id=&quot;markdown-toc-生成网络&quot;&gt;生成网络&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#注意力递归网络-attentive-recurrent-network&quot; id=&quot;markdown-toc-注意力递归网络-attentive-recurrent-network&quot;&gt;注意力递归网络 Attentive-Recurrent Network&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#上下文自动解码器-contextual-autoencoder&quot; id=&quot;markdown-toc-上下文自动解码器-contextual-autoencoder&quot;&gt;上下文自动解码器 Contextual Autoencoder&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#判别网络&quot; id=&quot;markdown-toc-判别网络&quot;&gt;判别网络&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;p&gt;&lt;strong&gt;论文下载地址&lt;/strong&gt;：http://openaccess.thecvf.com/content_cvpr_2018/papers/Qian_Attentive_Generative_Adversarial_CVPR_2018_paper.pdf&lt;/p&gt; &lt;h3 id=&quot;论文摘要&quot;&gt;论文摘要&lt;/h3&gt; &lt;p&gt;相机镜头前的雨滴会妨碍背景场景的可视性并显着降低图像质量。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;现实存在的问题：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;1、被雨滴遮挡的区域并不会事先给出。&lt;/p&gt; &lt;p&gt;2、被雨滴遮挡的背景信息是完全丢失的。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;算法的核心思想：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;在生成和分类网络中加入 视觉注意力（visual attention）。&lt;/p&gt; &lt;p&gt;在训练过程中 视觉注意力（visual attention） 学习雨滴及其周边区域，通过将这些信息加入到网络中，生成网络（generative network ）会在雨滴及其周边区域的结构上耗费更多的注意力，而判别网络（discriminative...</content>
+ </entry>
 
  
 
@@ -99,16 +109,6 @@
    <id>http://localhost:4000/opencv-gpu-module-1</id>
    <updated>2018-10-10T00:00:00+08:00</updated>
    <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;软件信息&lt;/strong&gt;：&lt;br /&gt; OpenCV Version : 2.4.13.6&lt;br /&gt; CUDA Version : 8.0&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;在OpenCV GPU 模块中，提供了一些列函数，来读取GPU信息。函数列表如下所列：&lt;/p&gt; &lt;p&gt;https://docs.opencv.org/2.4.13.6/modules/gpu/doc/initalization_and_information.html&lt;/p&gt; &lt;p&gt;通过一个例程来测试这些函数的使用方法。&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &quot;opencv2/opencv.hpp&quot; #include &quot;opencv2/gpu/gpu.hpp&quot; int main() { // 获取设备的数量 int num_devices = cv::gpu::getCudaEnabledDeviceCount(); // 检测设备的数量，保证设备数量不小于0 if (num_devices &amp;lt;= 0) { std::cerr &amp;lt;&amp;lt;...</content>
- </entry>
-
- 
-
- <entry>
-   <title>编译GPU版本的OpenCV</title>
-   <link href="http://localhost:4000/compile-opencv-with-cuda-on-ubuntu"/>
-   <id>http://localhost:4000/compile-opencv-with-cuda-on-ubuntu</id>
-   <updated>2018-10-09T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;p&gt;编译GPU版本的OpenCV与CPU版本的OpenCV并没有太大的区别，只有几个需要在细节上注意的地方。除此之外，可以参考： &lt;a href=&quot;./compile-opencv-on-ubuntu&quot; target=&quot;_blank&quot;&gt;《从源码开始，在Ubuntu上安装OpenCV》&lt;/a&gt; 这篇文章讲述的方法进行。&lt;/p&gt; &lt;p&gt;在安装之前，要确认已经在电脑中正确安装了 CUDA 开发包和 NVCC 编译器。&lt;/p&gt; &lt;h3 id=&quot;配置cmake&quot;&gt;配置CMAKE&lt;/h3&gt; &lt;p&gt;WITH_CUDA ON&lt;/p&gt; &lt;p&gt;WITH_CUBLAS ON&lt;/p&gt; &lt;p&gt;WITH_CUFFT ON&lt;/p&gt; &lt;p&gt;WITH_NVCUVIDs ON&lt;/p&gt; &lt;p&gt;CUDA_FAST_MATH ON&lt;/p&gt; &lt;p&gt;CUDA_GENERATION Auto&lt;/p&gt; &lt;p&gt;其他的选项默认即可。&lt;/p&gt; &lt;h3 id=&quot;可能会出现的bug&quot;&gt;可能会出现的BUG&lt;/h3&gt; &lt;p&gt;在使用CUDA 9.0的时候，编译OpenCV可能会如下的错误，而且无论是 OpenCV 2.x 还是 OpenCV 3.x 都有出现的可能，但是解决方法略有差别。&lt;/p&gt; &lt;p&gt;所以，推荐使用 CUDA 8.0 配置&lt;/p&gt; &lt;p&gt;&lt;strong&gt;错误信息&lt;/strong&gt; ：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;CMake...</content>
  </entry>
 
  
