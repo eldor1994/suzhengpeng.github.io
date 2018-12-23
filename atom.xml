@@ -4,7 +4,7 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-12-23T14:58:57+08:00</updated>
+ <updated>2018-12-23T15:11:02+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
@@ -18,7 +18,7 @@
    <link href="http://localhost:4000/cvabc-01"/>
    <id>http://localhost:4000/cvabc-01</id>
    <updated>2018-12-22T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;等距圆柱投影法&quot;&gt;等距圆柱投影法&lt;/h3&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201812/1.jpg&quot; /&gt;&lt;/p&gt; &lt;center&gt;等距圆柱投影法示意图&lt;/center&gt; &lt;p&gt;等距圆柱投影（equidistant cylindrical projection）是一种简单的地图投影方法，在这种投影方法中：假设球面和圆柱面相切于赤道, 将球面上的经纬线投影到圆柱面上, 然后沿圆柱面的一条母线展开成平面的一种投影。&lt;/p&gt; &lt;h3 id=&quot;投影坐标换算&quot;&gt;投影坐标换算&lt;/h3&gt; &lt;p&gt;假设鱼眼图的大小Hd Wd，将其使用等距圆柱投影法投影到大小为Hs Ws的矩形图内。&lt;/p&gt; &lt;h4 id=&quot;在矩形图中建立经纬度笛卡尔坐标系统&quot;&gt;在矩形图中建立经纬度笛卡尔坐标系统&lt;/h4&gt; &lt;p&gt;代码示例：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;ys, xs = np.indices((Hs, Ws), np.float32)&lt;br /&gt; y_proj = Hs / 2.0 - ys&lt;br /&gt; x_proj = xs - Ws / 2.0&lt;/p&gt;...</content>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;!-- ---- --&gt; &lt;h3 id=&quot;等距圆柱投影法&quot;&gt;等距圆柱投影法&lt;/h3&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201812/1.jpg&quot; /&gt;&lt;/p&gt; &lt;center&gt;等距圆柱投影法示意图&lt;/center&gt; &lt;p&gt;等距圆柱投影（equidistant cylindrical projection）是一种简单的地图投影方法，在这种投影方法中：假设球面和圆柱面相切于赤道, 将球面上的经纬线投影到圆柱面上, 然后沿圆柱面的一条母线展开成平面的一种投影。&lt;/p&gt; &lt;h3 id=&quot;投影坐标换算&quot;&gt;投影坐标换算&lt;/h3&gt; &lt;p&gt;假设鱼眼图的大小Hd Wd，将其使用等距圆柱投影法投影到大小为Hs Ws的矩形图内。&lt;/p&gt; &lt;h4 id=&quot;在矩形图中建立经纬度笛卡尔坐标系统&quot;&gt;在矩形图中建立经纬度笛卡尔坐标系统&lt;/h4&gt; &lt;p&gt;代码示例：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;ys, xs = np.indices((Hs, Ws), np.float32)&lt;br /&gt; y_proj = Hs / 2.0 - ys&lt;br /&gt; x_proj = xs - Ws /...</content>
  </entry>
 
  
