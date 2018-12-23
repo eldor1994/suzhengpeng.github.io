@@ -4,12 +4,32 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-11-13T19:33:01+08:00</updated>
+ <updated>2018-12-23T14:58:57+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>计算机视觉基本知识：等距圆柱投影法 Equidistant Cylindrical Projection</title>
+   <link href="http://localhost:4000/cvabc-01"/>
+   <id>http://localhost:4000/cvabc-01</id>
+   <updated>2018-12-22T00:00:00+08:00</updated>
+   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;等距圆柱投影法&quot;&gt;等距圆柱投影法&lt;/h3&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201812/1.jpg&quot; /&gt;&lt;/p&gt; &lt;center&gt;等距圆柱投影法示意图&lt;/center&gt; &lt;p&gt;等距圆柱投影（equidistant cylindrical projection）是一种简单的地图投影方法，在这种投影方法中：假设球面和圆柱面相切于赤道, 将球面上的经纬线投影到圆柱面上, 然后沿圆柱面的一条母线展开成平面的一种投影。&lt;/p&gt; &lt;h3 id=&quot;投影坐标换算&quot;&gt;投影坐标换算&lt;/h3&gt; &lt;p&gt;假设鱼眼图的大小Hd Wd，将其使用等距圆柱投影法投影到大小为Hs Ws的矩形图内。&lt;/p&gt; &lt;h4 id=&quot;在矩形图中建立经纬度笛卡尔坐标系统&quot;&gt;在矩形图中建立经纬度笛卡尔坐标系统&lt;/h4&gt; &lt;p&gt;代码示例：&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;ys, xs = np.indices((Hs, Ws), np.float32)&lt;br /&gt; y_proj = Hs / 2.0 - ys&lt;br /&gt; x_proj = xs - Ws / 2.0&lt;/p&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>理解 Long Short-term Memory 长短期记忆网络</title>
+   <link href="http://localhost:4000/LSTM"/>
+   <id>http://localhost:4000/LSTM</id>
+   <updated>2018-11-15T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#递归循环神经网络-recurrent-neural-networks&quot; id=&quot;markdown-toc-递归循环神经网络-recurrent-neural-networks&quot;&gt;递归（循环）神经网络 Recurrent Neural Networks&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#长期依赖long-term-dependencies问题&quot; id=&quot;markdown-toc-长期依赖long-term-dependencies问题&quot;&gt;长期依赖（Long-Term Dependencies）问题&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#长短期记忆网络-long-short-term-memory&quot; id=&quot;markdown-toc-长短期记忆网络-long-short-term-memory&quot;&gt;长短期记忆网络 Long Short-term Memory&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#lstm-的基本结构&quot; id=&quot;markdown-toc-lstm-的基本结构&quot;&gt;LSTM 的基本结构&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#lstm-公式推导&quot; id=&quot;markdown-toc-lstm-公式推导&quot;&gt;LSTM 公式推导&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#lstm-的变种&quot; id=&quot;markdown-toc-lstm-的变种&quot;&gt;LSTM 的变种&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;递归循环神经网络-recurrent-neural-networks&quot;&gt;递归（循环）神经网络 Recurrent Neural Networks&lt;/h3&gt; &lt;p&gt;设计递归神经网络的目的是使网络具有记忆性，如果在计算过程中需要保持对之前网络状态的记忆就使用到递归神经网络RNN。&lt;/p&gt; &lt;p&gt;&lt;img width=&quot;100px&quot; src=&quot;/img/201811/16.png&quot; /&gt;&lt;/p&gt; &lt;p&gt;如上图所示RNN具有循环结构，A表示网络结构，$x_t$为网络的输入，而$h_t$为当前时刻的网络输出。循环可以使得信息可以从当前步传递到下一步。RNN 可以被看做是同一神经网络的多次复制，每个神经网络模块会把消息传递给下一个。所以，如果我们将这个循环展开，可以得到下图：&lt;/p&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201811/17.png&quot; /&gt;&lt;/p&gt; &lt;h3...</content>
+ </entry>
 
  
 
@@ -89,26 +109,6 @@
    <id>http://localhost:4000/opencv-gpu-module-2</id>
    <updated>2018-10-14T00:00:00+08:00</updated>
    <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;软件信息&lt;/strong&gt;：&lt;br /&gt; OpenCV Version : 2.4.13.6&lt;br /&gt; CUDA Version : 8.0&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;OpenCV gpu::Stream 手册&lt;/strong&gt;&lt;br /&gt; https://docs.opencv.org/2.4.13.6/modules/gpu/doc/data_structures.html#gpu::Stream&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;OpenCV 通过 gpu::Stream 类封装了一个异步调用。&lt;/p&gt; &lt;p&gt;在OpenCV的gpu模块中提供的一些函数具有附加 gpu::Stream 参数的重载，这些函数可以进行初始化工作，启动GPU核函数，并且可以在结果计算完成之前返回。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;编程思想：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;新建一个Stream队列，使用 gpu::Strean::enqueueUpload() 将需要操作的数据放入队列中，然后在队列中进行所需要的操作，可以通过gpu::Stream::queryIfComplete() 和 gpu::Stream::waitForCompletion() 判断和检测操作是否完成。等待队列中的操作完成，使用 gpu::strean::enqueueDownload() 将数据返回。相较于默认的数据传输方法，使用Stream队列实现了数据的异步调用，不需要等待数据全部上传完成后再对数据进行操作，只需要在确定所需的数据，即可在上传数据的同时对数据进行操作，达到GPU计算的同时进行GPU与CPU之间的数据交换，从而达到提升效率的目。&lt;/p&gt; &lt;p&gt;关于CPU和GPU异步并行的概念和意义详见：&lt;a href=&quot;/cuda_learning_05&quot; target=&quot;_blank&quot;&gt;《CUDA并行编程学习（5）– 异步并行》&lt;/a&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;类的内容：&lt;/strong&gt;&lt;/p&gt; &lt;pre&gt; &lt;code...</content>
- </entry>
-
- 
-
- <entry>
-   <title>CUDA并行编程学习（5）-- 异步并行</title>
-   <link href="http://localhost:4000/cuda_learning_05"/>
-   <id>http://localhost:4000/cuda_learning_05</id>
-   <updated>2018-10-13T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;h3 id=&quot;什么是异步并行&quot;&gt;什么是异步并行&lt;/h3&gt; &lt;p&gt;异步并行，即：控制GPU在没有完成任务请求之前返回CPU。&lt;/p&gt; &lt;h3 id=&quot;异步并行的意义&quot;&gt;异步并行的意义&lt;/h3&gt; &lt;p&gt;默认情况下，CPU在调用GPU函数时，主机将等待调用完成并返回结果，这就意味着在GPU计算的时候CPU并不会执行任何任务。&lt;/p&gt; &lt;p&gt;而在执行异步并行时，处于同一数据流内的计算与数据传输是依次进行的，但一个流内的计算可以和另一个流的数据传输可以同时进行。&lt;/p&gt; &lt;p&gt;1、通过异步执行就能够使GPU中的执行单元与存储器单元同时工作，更好地压榨GPU的性能。&lt;/p&gt; &lt;p&gt;2、当GPU在进行计算或者数据传输时就返回给主机线程，主机不必等待GPU运行完毕就可以进行进行一些计算，更好地压榨了CPU的性能。&lt;/p&gt; &lt;h3 id=&quot;例程&quot;&gt;例程&lt;/h3&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &quot;cuda_runtime.h&quot; #include &quot;device_launch_parameters.h&quot; #include &quot;stdio.h&quot; #include &quot;memory.h&quot; #include &quot;time.h&quot; #include &quot;helper_timer.h&quot; // 定义核函数 __global__ void increment_kernel(int *g_data, int inc_value) { int idx = blockIdx.x*blockDim.x + threadIdx.x; g_data[idx] =...</content>
- </entry>
-
- 
-
- <entry>
-   <title>OpenCV GPU 模块学习 （1）读取GPU设备信息</title>
-   <link href="http://localhost:4000/opencv-gpu-module-1"/>
-   <id>http://localhost:4000/opencv-gpu-module-1</id>
-   <updated>2018-10-10T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;软件信息&lt;/strong&gt;：&lt;br /&gt; OpenCV Version : 2.4.13.6&lt;br /&gt; CUDA Version : 8.0&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;在OpenCV GPU 模块中，提供了一些列函数，来读取GPU信息。函数列表如下所列：&lt;/p&gt; &lt;p&gt;https://docs.opencv.org/2.4.13.6/modules/gpu/doc/initalization_and_information.html&lt;/p&gt; &lt;p&gt;通过一个例程来测试这些函数的使用方法。&lt;/p&gt; &lt;pre&gt; &lt;code class=&quot;cpp&quot;&gt; #include &quot;opencv2/opencv.hpp&quot; #include &quot;opencv2/gpu/gpu.hpp&quot; int main() { // 获取设备的数量 int num_devices = cv::gpu::getCudaEnabledDeviceCount(); // 检测设备的数量，保证设备数量不小于0 if (num_devices &amp;lt;= 0) { std::cerr &amp;lt;&amp;lt;...</content>
  </entry>
 
  

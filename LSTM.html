@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="generator" content="Jekyll">
+
+	<title>
+        
+            理解 Long Short-term Memory 长短期记忆网络 - Su'S Blog - SuZhengpeng.COM 
+        </title>
+  <meta name="description" content="Hi!Welcome to Suzhengpeng'S Blog">
+
+	<!-- CSS & fonts -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!-- RSS -->
+	<link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    <style type="text/css">
+
+</style>
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$', '$'],['\\(', '\\)']],
+            displayMath: [['$$', '$$'],["\\[", "\\]"]],
+			skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'],
+            processEscapes: true
+        },
+        TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js"],
+            equationNumbers: { autoNumber: ["AMS"],
+			useLabelIds: true
+            },
+            Macros: {hfill: "{}"}
+        },
+        "HTML-CSS": {
+            linebreaks: {automatic: true},
+            availableFonts: ["TeX"],
+            scale: 110
+        },
+        SVG: {
+            linebreaks: {automatic: true}
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+//    src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- Highlight -->
+
+<link rel="stylesheet" href="/styles/atelier-estuary-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>  
+
+<script type="text/javascript" src="/js/jquery-1.8.3.min_2.js"></script>
+<!-- <link href='http://fonts.googleapis.com/css?family=Tauri' rel='styl esheet' type='text/css'> -->
+<style type="text/css">
+	.shang_con{width:100px;margin:20px auto;}
+	.shang_hide_box{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+	.shang_box{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+	.shang_box img{border:none;border-width:0;}
+	.dashang{display:block;width:100px;margin:5px auto;height:45px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+	.dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+	.shang_close{display:inline-block;}
+	.shang_logo{display:block;text-align:center;margin:20px auto;}
+	.shang_tit{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+	.shang_tit p{color:#a3a3a3;text-align:center;font-size:16px;}
+	.shang_payimg{width:140px;margin:0 auto;border-radius:3px;height:140px;}
+	.shang_payimg img{display:block;text-align:center;width:140px;height:140px; }
+	.pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+	.radiobox{width: 16px;height: 16px;background: url('img/ds/radio2.jpg');display: block;float: left;margin-right: 14px; margin-left: 50px;margin-bottom: 10px;}
+	.checked .radiobox{background:url('img/ds/radio1.jpg');}
+	.shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:280px;}
+	.shang_payselect .pay_item{display:inline-block;margin-right:10px;}
+	.shang_info{clear:both;}
+	.shang_info p,.shang_info a{color:#C3C3C3;text-align:center;text-decoration:none;line-height:2em;}
+</style>
+		</head>
+
+
+<body>
+	<div id="wrap">
+	  	
+	  	<!-- Navigation -->
+	  	
+
+<nav id="nav">
+
+    <!-- Nav links -->
+	  
+
+  
+  <!-- Nav footer 
+	
+	  <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng.COM
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>友情链接</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/LSTM&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div>
+
+			<br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+	-->
+ <a href="/"><div class="footer-ico">
+</div></a>
+<br><br>
+	<div id="nav-list">
+		<!-- Nav pages -->
+
+		
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;
+		
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		
+	    
+		<br>
+
+	 <br>Suzhengpeng.COM<br><br>
+	 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM  <br><br>
+</div>
+    </div>
+
+
+ <!-- <div class="footer-ico-con">
+ <table><tr>
+<td><a href="http://space.bilibili.com/15155880" target="_blank"><img src="/img/ico/bilibili.ico"/></a> </td>
+<td><a href="https://github.com/suzhengpeng" target="_blank"><img src="/img/ico/github.ico"/></a> </td>
+<td><a href="http://weibo.com/sdustem" target="_blank"><img src="/img/ico/weibo.ico"/></a> </td>
+<td><a href="https://www.douban.com/people/imsus/" target="_blank"><img src="/img/ico/douban.ico"/></a> </td>
+<td><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261868763'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261868763%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></td>
+</tr></table>
+</div>  -->
+
+
+<small>
+		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  		
+				
+	  
+	 <br> 
+</small>
+ 
+<br>
+	</nav>
+    
+    <!-- Icon menu -->
+	  <a id="nav-menu">
+	  	<div id="menu"></div>
+	  </a>
+
+      <!-- Header -->
+      
+        <header id="header" class="parent justify-spaceBetween">
+  <div class="inner w100 relative">
+    <div class="f-logo">  
+      <a href="/">
+        <h1>
+          <span>Su</span>'S Blog
+        </h1>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+      
+
+    <!-- Main content -->
+	  <div id="container">
+		  
+		<main>
+
+			<article id="post-page">
+		<!-- Nov 15, 2018 -->
+		
+		<!--  -->
+		<br>
+		&nbsp;&nbsp;<small  id="posts-relat-data"> <a href="#">Nov 15, 2018</a></small> 
+		<small id="posts-relat-source"> <a href="#">原创文章 </a></small>
+	<br>
+	<!-- <br> -->
+	<h3>&nbsp;&nbsp;理解 Long Short-term Memory 长短期记忆网络   </h3>
+	<!-- JiaThis Button BEGIN -->
+	
+<div style="padding: 10px; background:#fff;">
+
+	<div style="position: relative; 
+				border: 2px solid #E9F01D; 
+				padding: 10px; 
+				padding-bottom:20px;
+				width:60%;
+				min-width:300px;
+				background:#E9F01D;
+				color:#404040;
+				border-radius:4px;
+				" >
+		<span style="position: absolute; 
+					left: 30px; top: -32px; 
+					width: 0; height: 0; 
+					font-size: 0; 
+					border-width: 16px; 
+					border-style: dashed dashed solid dashed; 
+					border-color: transparent transparent #E9F01D transparent;" ></span>
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div>
+<br><br> 
+分享到：<a title="分享到微信" class="bshare-weixin"></a>
+<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+<a title="分享到Facebook" class="bshare-facebook"></a>
+<a title="分享到Twitter" class="bshare-twitter"></a>
+<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
+<a title="分享到豆瓣" class="bshare-douban"></a>
+<a title="分享到人人网" class="bshare-renren"></a>
+<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+<span class="BSHARE_COUNT bshare-share-count">0</span>
+<br><br> 请保证您的浏览器支持MathJax插件，以免数学公式无法显示</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	</div>
+</div>
+
+<!-- JiaThis Button END -->
+<br>
+	<div class="content">
+			
+		<ul id="markdown-toc">
+  <li><a href="#递归循环神经网络-recurrent-neural-networks" id="markdown-toc-递归循环神经网络-recurrent-neural-networks">递归（循环）神经网络 Recurrent Neural Networks</a></li>
+  <li><a href="#长期依赖long-term-dependencies问题" id="markdown-toc-长期依赖long-term-dependencies问题">长期依赖（Long-Term Dependencies）问题</a></li>
+  <li><a href="#长短期记忆网络-long-short-term-memory" id="markdown-toc-长短期记忆网络-long-short-term-memory">长短期记忆网络 Long Short-term Memory</a></li>
+  <li><a href="#lstm-的基本结构" id="markdown-toc-lstm-的基本结构">LSTM 的基本结构</a></li>
+  <li><a href="#lstm-公式推导" id="markdown-toc-lstm-公式推导">LSTM 公式推导</a></li>
+  <li><a href="#lstm-的变种" id="markdown-toc-lstm-的变种">LSTM 的变种</a></li>
+</ul>
+
+<hr />
+
+<h3 id="递归循环神经网络-recurrent-neural-networks">递归（循环）神经网络 Recurrent Neural Networks</h3>
+
+<p>设计递归神经网络的目的是使网络具有记忆性，如果在计算过程中需要保持对之前网络状态的记忆就使用到递归神经网络RNN。</p>
+
+<p><img width="100px" src="/img/201811/16.png" /></p>
+
+<p>如上图所示RNN具有循环结构，A表示网络结构，$x_t$为网络的输入，而$h_t$为当前时刻的网络输出。循环可以使得信息可以从当前步传递到下一步。RNN 可以被看做是同一神经网络的多次复制，每个神经网络模块会把消息传递给下一个。所以，如果我们将这个循环展开，可以得到下图：</p>
+
+<p><img width="500px" src="/img/201811/17.png" /></p>
+
+<h3 id="长期依赖long-term-dependencies问题">长期依赖（Long-Term Dependencies）问题</h3>
+
+<p>长期依赖问题是指当前系统的状态，可能受很长时间之前系统状态的影响，是RNN中无法解决的一个问题。如果从“这块冰糖味道真？”来预测下一个词，是很容易得出“甜”结果的。但是如果有这么一句话，“他吃了一口菜，被辣的流出了眼泪，满脸通红。旁边的人赶紧给他倒了一杯凉水，他咕咚咕咚喝了两口，才逐渐恢复正常。他气愤地说道：这个菜味道真？”，让你从这句话来预测下一个词，确实很难预测的。因为出现了长期依赖，预测结果要依赖于很长时间之前的信息。</p>
+
+<p>理论上，通过调整参数，RNN是可以学习到时间久远的信息的。但是，实践中的结论是，RNN很难学习到这种信息的，因为经过许多阶段传播后的梯度倾向于消失（大部分情况）或爆炸（很少，但对优化过程影响很大）。RNN 会丧失学习时间价格较大的信息的能力，导致长期记忆失效。</p>
+
+<p><strong>数学推导：</strong></p>
+
+<p>由RNN的网络结构可知，其连接关系可以表述为：</p>
+
+<script type="math/tex; mode=display">h^{t} = Wh^{t-1} + Ux^{t} + b</script>
+
+<p>如果$abs(W)&lt;1$，当$h^{0}$传递到t时刻时，其权重值为$W^{t}$，对此时的输$h^{t}$几乎不产生影响，也就是0时刻的信息几乎被遗忘，由此导致长期记忆失效。</p>
+
+<p>解决长期依赖问题有很多方法的，其中长短期记忆网络（LSTM）是比较常用的一个。</p>
+
+<h3 id="长短期记忆网络-long-short-term-memory">长短期记忆网络 Long Short-term Memory</h3>
+
+<p>LSTM ——是一种 RNN 特殊的类型，可以学习长期依赖信息。LSTM 由Hochreiter &amp; Schmidhuber (1997)提出，并在近期被Alex Graves进行了改良和推广。</p>
+
+<p><img width="500px" src="/img/201811/18.png" /></p>
+
+<p>在标准的RNN中，具有如上图所示的循环结构。LSTM的结构与之类似，但是每个循环结构中具有四层网络。如下图所示：</p>
+
+<p><img width="500px" src="/img/201811/19.png" /></p>
+
+<h3 id="lstm-的基本结构">LSTM 的基本结构</h3>
+
+<p>LSTM $x_t$ 表示网络的输入，$x_t$</p>
+
+<p><img width="500px" src="/img/201811/21.png" /></p>
+
+<p>单元状态（cell state）类似于传送带是LSTM的关键。直接在整个链上运行，只有一些少量的线性交互。信息在上面流传保持不变会很容易。</p>
+
+<p><img width="100px" src="/img/201811/22.png" /></p>
+
+<p>在LSTM中使用门结构控制信息通过的数量。由SIgmoid函数和点乘计算组成，Sigmoid函数可以输入映射到0~~1之间，0 表示 let nothing through ，1 表示 let every thing through。</p>
+
+<h3 id="lstm-公式推导">LSTM 公式推导</h3>
+
+<p><img width="500px" src="/img/201811/23.png" /></p>
+
+<p>在 LSTM 网络中，第一步是决定我们会从单元状态中丢弃（忘记）什么信息。如上图，其中 Sigmoid 被称作 forget gate layer，通过读取$h_{t-1}$和$x_t$，输出一个在 0 到 1 之间的数值给单元状态$C_{t-1}$。1 表示 completely keep this ，0 表示 completely get rid of this 。</p>
+
+<p><img width="500px" src="/img/201811/24.png" /></p>
+
+<p>第二步是决定在单元状态中保存什么信息。这一步共分为两部分，第一部分 Sigmoid 被称为 input gate layer ，决定了哪些值将会在下一步更新；第二部分使用 tanh 创建一个新的候选值向量$\tilde{C}_t$，添加到单元状态中。</p>
+
+<p><img width="500px" src="/img/201811/24.png" /></p>
+
+<p>第三步是更新单元状态。将前两步的计算结果结合到一起，计算新的单元状态。</p>
+
+<p><img width="500px" src="/img/201811/25.png" /></p>
+
+<p>最后一步是计算网络的输出值。如上图所示，网络的输出值由当前时刻的单元状态决定。其中 Sigmoid 决定了当前的单元状态有多少可以作为网络的输出，tanh 将单元状态映射到 -1 到 1 之间。</p>
+
+<h3 id="lstm-的变种">LSTM 的变种</h3>
+
+<p>LSTM具有多种变种，常见的有以下三种：</p>
+
+<p><strong>1、增加 Peephole Connections</strong></p>
+
+<p><img width="500px" src="/img/201811/30.png" /></p>
+
+<p>这种LSTM在经典LSTM的基础上增加了 peephole connections 。如上图所示，这种网络结构中的每个gate layer的输入都增加了上一时刻的单元状态作为输入。（ Gers &amp; Schmidhuber (2000)）</p>
+
+<p><strong>2、耦合 input gate 和 forget gate</strong></p>
+
+<p><img width="500px" src="/img/201811/31.png" /></p>
+
+<p>在这种LSTM网络中，将丢弃（忘记）信息和保存（输入）信息耦合计算，即：同时决定需要丢弃和保存的信息，而不是分开计算。</p>
+
+<p><strong>3、the Gated Recurrent Unit</strong></p>
+
+<p><img width="500px" src="/img/201811/32.png" /></p>
+
+<p>如上图所示，将forget gate和input gate结合，成为update gate。同时把单元状态和隐藏状态合并，这种LSTM比标准LSTM更简单，也更受欢迎。</p>
+
+<hr />
+
+<p>参考资料：</p>
+
+<p>1、Understanding LSTM Networks：http://colah.github.io/posts/2015-08-Understanding-LSTMs/</p>
+
+<p>1、[译] 理解 LSTM(Long Short-Term Memory, LSTM) 网络：https://www.cnblogs.com/wangduo/p/6773601.html</p>
+
+<p>2、【神经网络】循环神经网络(RNN)的长期依赖问题：https://www.jianshu.com/p/6815da2d413d</p>
+
+<hr />
+
+		
+	</div>
+	<div id="posts-out-tags"># <a href="/tag/lstm.html" rel="tag">LSTM</a>, <a href="/tag/rnn.html" rel="tag">RNN</a> <a href="/tags.html" class="set-1">>></a></div> 
+
+
+
+	<div class="shang_con">
+			<p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏</a></p>
+			<div class="shang_hide_box"></div>
+			<div class="shang_box">
+					<br>
+				<div class="shang_tit">
+					<p>感谢您的支持，我会继续努力的!</p>
+				</div>
+				<div class="shang_payimg">
+					<img src="img/ds/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+				</div>
+				<div class="shang_payselect">
+					<div class="pay_item checked" data-id="alipay">
+						<span class="radiobox"></span>
+						<span class="pay_logo"><img src="img/ds/alipay.jpg" alt="支付宝" /></span>
+					</div>
+					<div class="pay_item" data-id="weipay">
+						<span class="radiobox"></span>
+						<span class="pay_logo"><img src="img/ds/wechat.jpg" alt="微信" /></span>
+					</div>
+				</div>
+				<br>
+				<div class="shang_info">
+					<p>长按识别二维码或打开<span id="shang_pay_txt">支付宝</span>扫一扫 完成打赏<br>
+					或 使用<a href="HTTPS://QR.ALIPAY.COM/FKX08963JL6LVJZYLYGZ13" ><支付宝链接></a>打赏
+				</p>
+
+				</div>
+				<br>
+		
+				<center><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()" title="关闭">关闭</a></center>
+			</div>
+			</div>
+			
+			<script type="text/javascript">
+			$(function(){
+				$(".pay_item").click(function(){
+					$(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+					var dataid=$(this).attr('data-id');
+					$(".shang_payimg img").attr("src","img/ds/"+dataid+"img.jpg");
+					$("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+				});
+			});
+			function dashangToggle(){
+				$(".shang_hide_box").fadeToggle();
+				$(".shang_box").fadeToggle();
+			}
+			</script>
+
+<div style="position: relative; 
+/* border: 2px solid #E9F01D;  */
+padding: 10px; 
+padding-bottom:20px;
+/* width:80%;
+min-width:300px; */
+/* background:#E9F01D; */
+color:#404040;
+border-radius:4px;
+" >
+<div class="bsPromo bsPromo2"></div>
+		
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+			
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+				
+					
+						
+					
+						
+					
+				
+			
+	
+			
+		
+	
+		
+
+		<br>
+		
+
+		<div class="bshare-custom">
+			<!-- <div class="bsPromo bsPromo2"></div> -->
+分享到：<a title="分享到微信" class="bshare-weixin"></a>
+<a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+<a title="分享到Facebook" class="bshare-facebook"></a>
+<a title="分享到Twitter" class="bshare-twitter"></a>
+<a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
+<a title="分享到豆瓣" class="bshare-douban"></a>
+<a title="分享到人人网" class="bshare-renren"></a>
+<a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+<span class="BSHARE_COUNT bshare-share-count">0</span>
+</div>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b17f1493-0201-428b-be37-0724d8ab69a2&amp;pophcol=3&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	
+
+	</div>
+
+</article>
+
+
+
+	  </main>
+		
+		  <!-- Pagination links -->
+      
+
+	  </div>
+	    
+	    <!-- Footer -->
+	    <footer><span>
+
+<div class="footer" id="nav-links">
+
+	<div class="footer-one">
+	
+		<div class="footer-ico"></div>
+		<br>
+		Suzhengpeng.COM
+		<br>
+			 <div class="footer-power">
+		Proudly hosted by Github and powered by Jekyll <br> All designed by Suzhengpeng.COM </div>
+		<br>
+	
+	</div>
+	
+	<div class="footer-two">
+	
+		
+
+	    
+		
+			<a href="/pages/page/about" title="关于博主">关于博主</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+			<a href="/pages/page/contact" title="联系方式">联系方式</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+			<a href="/pages/page/copyright" title="版权声明">版权声明</a>&nbsp;&nbsp;<br>
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		
+
+	    
+		<br>
+
+	</div>
+	<div class="footer-two">
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<a href="/pages/data/link" title="常用链接">常用链接</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-two-1">
+	<b><small>友情链接</small></b>
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<br><a href="http://www.yushuai.me/" title="小奥の专属领地" target="_blank">小奥の专属领地</a>&nbsp;&nbsp;
+		
+				
+				
+			<br><a href="https://www.zning.net.cn/" title="张宁网" target="_blank">张宁网</a>&nbsp;&nbsp;
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		
+	</div>
+	<div class="footer-three">
+			<div class="footer-qrcode">
+			<img src="http://tool.oschina.net/action/qrcode/generate?data=http://www.suzhengpeng.com/LSTM&output=image%2Fgif&error=L&type=0&margin=0&size=4">
+			</div>
+
+			<br>
+
+
+	</div>
+
+
+</div>
+</span>
+
+
+
+ </footer>
+
+	    <!-- Script -->
+      <script src="/js/main.js"></script>
+
+	
+
+
+	</div>
+</body>
+</html>
