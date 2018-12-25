@@ -903,7 +903,7 @@ z = np.cos(theta_alt) * np.cos(phi_alt)\</p>
 如上图所示，theta为线段OM与z轴正方向的夹角，phi为z轴和点M的半平面与平面zox所构成的角。则由笛卡尔坐标点 (x,y,z) 计算theta和phi的公式如下：</p>
 
 <script type="math/tex; mode=display">\begin{cases}
-theta = arctan(\frac {x}{y}),   \\
+theta = arctan(\frac {y}{x}),   \\
 phi = arctan(\frac {\sqrt{x^2 + y^2}}{z})
 \end{cases}</script>
 
@@ -924,8 +924,8 @@ x_{fish} = p * cos(theta)
 <p>将鱼眼图的坐标原点从图形中央移至左上角，则以左上角为坐标原点的坐标为：</p>
 
 <script type="math/tex; mode=display">\begin{cases}
-ymap = Hd / 2 - y_fish \\ 
-xmap = Wd / 2 - x_fish
+ymap = Hd / 2 - y_{fish} \\ 
+xmap = Wd / 2 - x_{fish}
 \end{cases}</script>
 
 <p>代码示例：</p>
