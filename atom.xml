@@ -4,12 +4,32 @@
  <title>Suzhengpeng'S Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-12-25T17:07:05+08:00</updated>
+ <updated>2019-01-05T15:39:52+08:00</updated>
  <author>
    <name>Su Zhengpeng</name>
    <uri></uri>
    <email>suzhengpeng@hotmail.com</email>
  </author>
+
+ 
+
+ <entry>
+   <title>特征检测与匹配 - SIFT 与 SURF</title>
+   <link href="http://localhost:4000/Feature_detection_and_matching_01"/>
+   <id>http://localhost:4000/Feature_detection_and_matching_01</id>
+   <updated>2019-01-03T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#特征检测&quot; id=&quot;markdown-toc-特征检测&quot;&gt;特征检测&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#sift-scale-invariant-feature-transform&quot; id=&quot;markdown-toc-sift-scale-invariant-feature-transform&quot;&gt;SIFT Scale Invariant Feature Transform&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#查找特征点&quot; id=&quot;markdown-toc-查找特征点&quot;&gt;查找特征点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#确定特征点的位置&quot; id=&quot;markdown-toc-确定特征点的位置&quot;&gt;确定特征点的位置&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#确定特征点的主方向&quot; id=&quot;markdown-toc-确定特征点的主方向&quot;&gt;确定特征点的主方向&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#建立特征点描述子&quot; id=&quot;markdown-toc-建立特征点描述子&quot;&gt;建立特征点描述子&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#surf-speed-up-robust-features&quot; id=&quot;markdown-toc-surf-speed-up-robust-features&quot;&gt;SURF Speed Up Robust Features&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#查找特征点-1&quot; id=&quot;markdown-toc-查找特征点-1&quot;&gt;查找特征点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#确定特征点的位置-1&quot; id=&quot;markdown-toc-确定特征点的位置-1&quot;&gt;确定特征点的位置&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#确定特征点的主方向-1&quot; id=&quot;markdown-toc-确定特征点的主方向-1&quot;&gt;确定特征点的主方向&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#建立特征点描述子-1&quot; id=&quot;markdown-toc-建立特征点描述子-1&quot;&gt;建立特征点描述子&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt;...</content>
+ </entry>
+
+ 
+
+ <entry>
+   <title>初识VGG网络模型</title>
+   <link href="http://localhost:4000/vgg-networks"/>
+   <id>http://localhost:4000/vgg-networks</id>
+   <updated>2018-12-24T00:00:00+08:00</updated>
+   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#简述&quot; id=&quot;markdown-toc-简述&quot;&gt;简述&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#网络结构&quot; id=&quot;markdown-toc-网络结构&quot;&gt;网络结构&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#网络细节&quot; id=&quot;markdown-toc-网络细节&quot;&gt;网络细节&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#网络训练测试&quot; id=&quot;markdown-toc-网络训练测试&quot;&gt;网络训练、测试&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#网络训练&quot; id=&quot;markdown-toc-网络训练&quot;&gt;网络训练&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#网络测试&quot; id=&quot;markdown-toc-网络测试&quot;&gt;网络测试&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;简述&quot;&gt;简述&lt;/h3&gt; &lt;p&gt;VGG由Oxford的Visual Geometry Group提出，并取得了ILSVRC2014比赛分类项目的第二名（第一名是GoogLeNet，也是同年提出的）和定位项目的第一名。主要工作是通过设计了不同深度的网络 &lt;strong&gt;证明了增加网络的深度能够在一定程度上影响网络最终的性能&lt;/strong&gt; 。&lt;/p&gt; &lt;h3 id=&quot;网络结构&quot;&gt;网络结构&lt;/h3&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201812/5.PNG&quot; /&gt;&lt;/p&gt; &lt;center&gt;不同深度的VGG网络&lt;/center&gt; &lt;p&gt;如上图所示，VGG网络共有6种不同深度的形式，每个卷积层的参数使用 conv &lt;感知域大小&gt;-&lt;通道数&gt; 表示。而每个形式的网络其通道数（即：卷积层的宽度）由64逐步增加到512。&lt;/通道数&gt;&lt;/感知域大小&gt;&lt;/p&gt; &lt;p&gt;&lt;img width=&quot;500px&quot; src=&quot;/img/201812/6.PNG&quot; /&gt;&lt;/p&gt; &lt;center&gt;不同深度的VGG网络的参数数量&lt;/center&gt; &lt;p&gt;上图总结了不同深度的VGG网络的参数数量。由此可见，随着网络深度的增加，参数的数量并不会明显的增加。&lt;/p&gt;...</content>
+ </entry>
 
  
 
@@ -89,26 +109,6 @@
    <id>http://localhost:4000/hello-pytorch-00</id>
    <updated>2018-10-19T00:00:00+08:00</updated>
    <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#经典网络模型lenet&quot; id=&quot;markdown-toc-经典网络模型lenet&quot;&gt;经典网络模型：LeNet&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#网络结构&quot; id=&quot;markdown-toc-网络结构&quot;&gt;网络结构&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#理解网络&quot; id=&quot;markdown-toc-理解网络&quot;&gt;理解网络&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#cifar-10训练集&quot; id=&quot;markdown-toc-cifar-10训练集&quot;&gt;CIFAR-10训练集&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#搭建网络&quot; id=&quot;markdown-toc-搭建网络&quot;&gt;搭建网络&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#代码示例&quot; id=&quot;markdown-toc-代码示例&quot;&gt;代码示例&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#导入所需的包&quot; id=&quot;markdown-toc-导入所需的包&quot;&gt;导入所需的包&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#定义对数据的预处理&quot; id=&quot;markdown-toc-定义对数据的预处理&quot;&gt;定义对数据的预处理&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#定义训练集&quot; id=&quot;markdown-toc-定义训练集&quot;&gt;定义训练集&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#定义测试集&quot; id=&quot;markdown-toc-定义测试集&quot;&gt;定义测试集&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#定义网络&quot; id=&quot;markdown-toc-定义网络&quot;&gt;定义网络&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#定义损失函数和优化器&quot; id=&quot;markdown-toc-定义损失函数和优化器&quot;&gt;定义损失函数和优化器&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#训练网络&quot; id=&quot;markdown-toc-训练网络&quot;&gt;训练网络&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#测试效果&quot; id=&quot;markdown-toc-测试效果&quot;&gt;测试效果&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a...</content>
- </entry>
-
- 
-
- <entry>
-   <title>CUDA并行编程学习（6）-- 流</title>
-   <link href="http://localhost:4000/cuda_learning_06"/>
-   <id>http://localhost:4000/cuda_learning_06</id>
-   <updated>2018-10-16T00:00:00+08:00</updated>
-   <content type="html">&lt;ul id=&quot;markdown-toc&quot;&gt; &lt;li&gt;&lt;a href=&quot;#关于流&quot; id=&quot;markdown-toc-关于流&quot;&gt;关于流&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#流并行&quot; id=&quot;markdown-toc-流并行&quot;&gt;流并行&lt;/a&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;#页锁内存的概念&quot; id=&quot;markdown-toc-页锁内存的概念&quot;&gt;页锁内存的概念&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#流的运行机制&quot; id=&quot;markdown-toc-流的运行机制&quot;&gt;流的运行机制&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#多个流的调度&quot; id=&quot;markdown-toc-多个流的调度&quot;&gt;多个流的调度&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt; &lt;hr /&gt; &lt;h3 id=&quot;关于流&quot;&gt;关于流&lt;/h3&gt; &lt;p&gt;在GPU上，流是执行异步并行的主要载体。在GPU上，每个流都可以看作是一个独立的任务，每个流中的代码操作顺序执行。&lt;/p&gt; &lt;p&gt;关于CPU和GPU的异步并行详见：&lt;a href=&quot;/cuda_learning_05&quot; target=&quot;_blank&quot;&gt;《CUDA并行编程学习（5）– 异步并行》&lt;/a&gt;&lt;/p&gt; &lt;h3 id=&quot;流并行&quot;&gt;流并行&lt;/h3&gt; &lt;p&gt;流并行是指我们可以创建多个流来执行多个任务， 但每个流都是一个需要按照顺序执行的操作队列。&lt;/p&gt; &lt;h4 id=&quot;页锁内存的概念&quot;&gt;页锁内存的概念&lt;/h4&gt; &lt;p&gt;&lt;strong&gt;使用页锁内存的意义&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;想要实现流并行，需要主机使用一块固定的内存，一般称之为页锁内存（Page Locked Memory），而一般情况下经过分配得到的内存为可分页内存（Pagable Memory）。而可分页内存面临着重定位的问题，因此使用可分页内存进行复制时，复制可能执行两次操作：从可分页内存复制到一块“临时”页锁定内存，然后从页锁定内存复制到GPU。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;页锁内存的性质&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;页锁内存 （Page Locked Memory）又称为固定内存（Pinned Memory）或者不可分页内存。 操作系统将不会对这块内存分页并交换到磁盘上，从而确保了该内存始终驻留在物理内存中，因为这块内存将不会被破坏或者重新定位。 由于gpu知道内存的物理地址，因此可以通过“直接内存访问（Direct Memory...</content>
- </entry>
-
- 
-
- <entry>
-   <title>OpenCV GPU 模块学习 （2）GPU的流操作</title>
-   <link href="http://localhost:4000/opencv-gpu-module-2"/>
-   <id>http://localhost:4000/opencv-gpu-module-2</id>
-   <updated>2018-10-14T00:00:00+08:00</updated>
-   <content type="html">&lt;!-- * 索引 {:toc} --&gt; &lt;hr /&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;软件信息&lt;/strong&gt;：&lt;br /&gt; OpenCV Version : 2.4.13.6&lt;br /&gt; CUDA Version : 8.0&lt;/p&gt; &lt;/blockquote&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;OpenCV gpu::Stream 手册&lt;/strong&gt;&lt;br /&gt; https://docs.opencv.org/2.4.13.6/modules/gpu/doc/data_structures.html#gpu::Stream&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;OpenCV 通过 gpu::Stream 类封装了一个异步调用。&lt;/p&gt; &lt;p&gt;在OpenCV的gpu模块中提供的一些函数具有附加 gpu::Stream 参数的重载，这些函数可以进行初始化工作，启动GPU核函数，并且可以在结果计算完成之前返回。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;编程思想：&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;新建一个Stream队列，使用 gpu::Strean::enqueueUpload() 将需要操作的数据放入队列中，然后在队列中进行所需要的操作，可以通过gpu::Stream::queryIfComplete() 和 gpu::Stream::waitForCompletion() 判断和检测操作是否完成。等待队列中的操作完成，使用 gpu::strean::enqueueDownload() 将数据返回。相较于默认的数据传输方法，使用Stream队列实现了数据的异步调用，不需要等待数据全部上传完成后再对数据进行操作，只需要在确定所需的数据，即可在上传数据的同时对数据进行操作，达到GPU计算的同时进行GPU与CPU之间的数据交换，从而达到提升效率的目。&lt;/p&gt; &lt;p&gt;关于CPU和GPU异步并行的概念和意义详见：&lt;a href=&quot;/cuda_learning_05&quot; target=&quot;_blank&quot;&gt;《CUDA并行编程学习（5）– 异步并行》&lt;/a&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;类的内容：&lt;/strong&gt;&lt;/p&gt; &lt;pre&gt; &lt;code...</content>
  </entry>
 
  
